@@ -23,10 +23,42 @@ knitr::opts_chunk$set(echo = FALSE)
 This course offers a gentle introduction to the R statistical programming language with practical applications for psychological science. We start with basic coding and workflow protocols, data wrangling and visualisation, and elementary regression, and gradually progress to more complex multilevel models.  The practical skills you acquire will prepare you for advanced research in psychological science  as well as for work in other areas of science, government, and industry. No prior familiarity with R or computer programming is required. 
 
 
-## Navigation
-Weekly lesson and problem sets are located in the `_posts/` directory. 
+## Where to find material
 
-You will find also your weekly workbook assignments in this directory. 
+Weekly problem sets are located in the `assessments` directory
+
+Weekly lectures are in the `_posts/` directory. 
+
+
+
+## What do I need to do
+
+### Attend (or follow) Lectures
+
+Each week, students will attend (or follow) a weekly lecture.  
+
+In these lectures we will demonstrate how R works and cover basic principles of statistics. The goal is to enable students to use R to conduct psychological science.  
+ 
+
+### Attend Weekly labs
+
+There will be a  2- hour practicum each week in which students cultivate their skills by applying what the learn to data.  Learning applied statistics in R is like learning a language. Progress comes from immersing yourself in the langague You need to speak often, and you need to make lots of mistakes.  The weekly labs will provide you with opportunity to *do R*.  The labs will consist of problem sets that we will do together. 
+
+### Commplete weekly "workbooks" 
+
+Weekly assignments allow you to further develop you skills, and to build the statistical intuitions that will enable them to flexibly address a broad range of scientific problems. 
+
+The focus of these assignments will be on *thinking* about coding and statistics, documenting *requests* for help, and *offers* for help. 
+
+### Tests
+
+There are 2 x tests which will offer the opportunity to consolidate the skills you'll get from the workbooks. The format of the tests will be problem sets of the kind you will be getting in your workbooks. 
+
+
+### Project
+
+The course culminates with an in-depth project in which students work on data from their own area of interest combining R with contemporary tools of collaborative (GitHub) and open science (OSF). Student presentations will afford students with the opportunity to present their projects and offer each other constructive feedback.
+
 
 
 ## Outline

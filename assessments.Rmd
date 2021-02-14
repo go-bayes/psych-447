@@ -18,27 +18,4 @@ knitr::opts_chunk$set(echo = FALSE)
 
 
 
-## Overview of assessments
-
-
-### Lectures
-Each week, students will attend (or follow) a 1-hour lectures.  Here, we will demonstrate how R works and cover basic principles of statistics. The goal is to enable students to use R to conduct psychological science.  
-
-Because the research tools are constantly changing, to be an applied researcher requires the skills for learning.  The focus of our teaching, and of our assignments, will be on developing your skills for independent learning.  And not just that. We hope to cultivate an *interest* in learning.  The R programming language can sometimes be frustrating.  Thoughtful data analysis is hard work.  However, applied statistics in R can also be hugely gratifying. The lectures hope to put you in touch with the fun. To this end, our lectures will  provide you with some basic understanding, useful tips, and some guide rails for learning. Our main task is to give you the confidence, and the inspiration, for independent learning. 
-
-### Weekly labs
-There will be a  2- hour practicum each week in which students cultivate their skills by applying what the learn to data.  Learning applied statistics in R is like learning a language. Progress comes from immersing yourself in the langague You need to speak often, and you need to make lots of mistakes.  The weekly labs will provide you with opportunity to *do R*.  The labs will consist of problem sets that we will do together. 
-
-### Weekly "workbooks" 
-Weekly assignments allow you to further develop you skills, and to build the statistical intuitions that will enable them to flexibly address a broad range of scientific problems. 
-
-The focus of these assignments will be on *thinking* about coding and statistics, documenting *requests* for help, and *offers* for help. 
-
-### Tests
-There are 2 x tests which will offer the opportunity to consolidate the skills you'll get from the workbooks. The format of the tests will be problem sets of the kind you will be getting in your workbooks. 
-
-
-### Project
-
-The course culminates with an in-depth project in which students work on data from their own area of interest combining R with contemporary tools of collaborative (GitHub) and open science (OSF). Student presentations will afford students with the opportunity to present their projects and offer each other constructive feedback.
 
