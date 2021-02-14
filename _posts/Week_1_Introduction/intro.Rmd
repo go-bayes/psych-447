@@ -42,15 +42,51 @@ colorize <- function(x, color) {
 }
 ```
 
-# R and You {#r-you}
+##  Who is this course for? 
 
-## Who will benefit from this course?
+For those of you who always wanted to learn R but never thought they could, this course is for you. 
+
+
+## How will you benefit from this course?
+
+You'll learn how to use R, and Github, and we'll teach you the fundamentals of statistics with a focus thinking not on rules. 
+
+By the end of the course, you'll know how to:
+
+Data skills:
+
+ 1. perform your data analysis in R
+ 2. document your analysis and collaborate in GitHub
+ 3. create a publication-ready article, with tables and graphs
+ 4. create a free personal website on github.
+ 
+ Statistical skills:
+ 
+ 1. learn the importance of knowing your question
+ 2. learn how to collect data that bears on your question
+ 3. learn how to explore your data visually
+ 4. learn how to avoid common modelling pitfalls
+ 5. learn how to improve your inference using multi-level models 
+
+and much else ...
+
 
 ## What is R? 
 
-R is a free programming language and software environment for statistical computing (for download links see here: [Windows](https://cran.r-project.org/bin/windows/base/), [Mac](https://cran.r-project.org/bin/macosx/)). R is the brainchild of Ross Ihaka and Robert Gentleman and is based on the older S language. R was conceived to be a flexible language for data analysis usable by researchers. Since the initial beta release of R in  2000 the language has gained substantial popularity inside and outside of academia ([have a look at this blog post for an interesting analysis](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)). New versions of R are released periodically and can be downloaded and installed to replace the older R version. 
+R is a free programming language and software environment for statistical computing (for download links see here: [Windows](https://cran.r-project.org/bin/windows/base/), [Mac](https://cran.r-project.org/bin/macosx/)). 
 
-While the base R command line interface is sufficient for analysis purpose, we recommend installing an Integrated Development Environment (IDE) such as [R Studio](https://rstudio.com/). R Studio provides an interface with a number of user-friendly options, including a separate console and editor that has various help and syntax-auto-complete functions, and various tools for plotting, history, data visualization, debugging and work space management. It is important to remember that R and R Studio are not the same thing. There are a wide range of alternative IDEs that allow you to run R code, such as [Atom](https://atom.io/), [Sublime](https://www.sublimetext.com/), or [Visual Studio Code](https://code.visualstudio.com/), but in this course we will use Rstudio as it is the most straightforward for beginners.
+R is the brainchild of [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/) and [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician). It was created at the University of Auckland, where Ross Ihaka remains a professor of statistics.
+
+
+R was conceived to be a flexible language for data analysis usable by researchers. Since the initial beta release of R in  2000 the language has gained substantial popularity inside and outside of academia ([have a look at this blog post for an interesting analysis](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)). New versions of R are released periodically and can be downloaded and installed to replace the older R version. 
+
+## What is R Studio?
+
+The are many ways for using R on your computer. For the purposes of getting started, we will be useing the Integrated Development Environment (IDE): [R Studio](https://rstudio.com/). 
+
+R Studio provides an interface with a number of user-friendly options, including a separate console and editor that has various help and syntax-auto-complete functions, and various tools for plotting, history, data visualization, debugging and work space management. It is important to remember that R and R Studio are not the same thing. There are a wide range of alternative IDEs that allow you to run R code, such as [Atom](https://atom.io/), [Sublime](https://www.sublimetext.com/), or [Visual Studio Code](https://code.visualstudio.com/), but in this course we will use Rstudio as it is the most straightforward for beginners.
+
+**Our goal this week is to teach you how to use R-Studio.**
 
 ## A quick walk through R Studio
 
