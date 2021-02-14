@@ -1,0 +1,21 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "description": "Some additional details about the website",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2021-02-14T18:49:57+13:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Psych 447",
+      "description": "Welcome to the website. I hope you enjoy it!\n",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2021-02-14T18:49:58+13:00"
+    }
+  ],
+  "collections": []
+}

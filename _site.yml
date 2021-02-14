@@ -1,0 +1,12 @@
+name: "psych-447"
+title: "Psych 447"
+description: |
+  Psych 447
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article
