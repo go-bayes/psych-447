@@ -1,0 +1,46 @@
+---
+title: "Introduction"
+subtitle: "R and You"
+author: "Johannes Karl and Joseph Bulbulia, Victoria University"
+date: "2021-22-02"
+output: 
+  ioslides_presentation:
+    incremental: true
+    transition: 0
+    smaller: true
+---
+
+```{r setup, include=FALSE}
+# Packages
+library(scales)
+library(here)
+library(knitr)
+library(kableExtra)
+library(ggdist)
+library(bayesplot)
+library(tidyverse)
+# knitr chunk options
+opts_chunk$set(
+  echo = FALSE, 
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  dev = "svg",
+  fig.align = 'center'
+  )
+# Bayesplot color theme
+color_scheme_set("darkgray")
+```
+
+# A gentle introduction to R
+ - This
+ - That
+ - The Other
+ 
+## What is it? {.build}
+ - This 
+ - That
+ 
+
+
+

@@ -1,10 +1,123 @@
 ---
-title: "About this site"
-description: |
-  Some additional details about the website
+title: "VUW Psych 447: Methods"
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl 
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+
+
+## Learning objectives
+
+This course offers a gentle introduction to the R statistical programming language with practical applications for psychological science. We start with basic coding and workflow protocols, data wrangling and visualisation, and elementary regression, and gradually progress to more complex multilevel models.  The practical skills you acquire will prepare you for advanced research in psychological science  as well as for work in other areas of science, government, and industry. No prior familiarity with R or computer programming is required. 
+
+
+## Navigation
+Weekly lesson and problem sets are located in the `_posts/` directory. 
+
+You will find also your weekly workbook assignments in this directory. 
+
+
+## Outline
+
+The course outline is as follows
+
+### Week 1 (a): Introduction: R and you
+
+  -	Who will benefit from this course?
+  -	What is R? 
+  -	Downloading R and Rstudio (what is the difference).
+  - What is GitHub
+  - Why do I need these tools? 
+
+### Week 1 (b): Setting up
+
+  -	Using R as a calculator
+  -	Creating (and saving) a project using Rstudio
+  - Loading Data
+  -	The basics of your workflow
+  -	The elements of Rmarkdown   
+  -	Your first Rmarkdown document
+  -	GitHub 
+  -	Packages
+
+### Week 2 (a): Data visualisation
+
+  -	Data visualisation with ggplot2 
+  -	Creating a graph
+  -	Layers
+  -	Facets
+  -	Understanding your data through graphs…
+
+
+[USEFUL](https://m-clark.github.io/exploratory-data-analysis-tools/)
+
+### Week 2 (b): Coding basics
+
+  -	Basic types  of data in R
+    - Numbers and integers 
+  -	Factors (ordered, unordered)
+  -	Characters
+  -	Lists, Arrays, Matrices & data frames
+  -	Assignment 
+    - Functions
+    - Coding etiquette… etc 
+
+### Week 3 (a): Data transformation
+
+  -	Pipe operators
+  -	Select, filter, operators, missing values, arrange.
+  -	Mutate & data transformation
+  -	Tidy data
+
+### Week 3 (b):  Rolling your own functions: when, why, and how
+
+  - TBA
+
+### Week 4: TEST 
+
+### Week 5 (a):  Samples and parameters: observation and inference
+
+### Week 5 (b): Linear and non-linear relationships with one co-variate
+
+### Week 6 (a): Two covariates & the spectre of confounding
+
+### Week 6 (b): An introduction to causal DAGS (using ggdag) 
+
+### Week 7 (a): Modelling binary data  
+
+### Week 7 (b): Modelling count data + zero inflation
+
+### Week 8 (a): Introduction to multilevel models: group-level intercepts 
+
+### Week 8 (b): Introduction to multilevel models: group-level slopes
+
+### Week 9 (a): Multivariate multilevel regression.
+
+### Week 9 (b): Longitudinal inference: within and between-individual effects, the when and when-not of mediation.
+
+### Week 10 (a): Missing data and other measurement opportunities.
+
+### Week 10 (b):  Test
+
+###  Week 11: Student presentations of projects: using Rstudio & GitHub/OSF
+
+### Week 12:  Student presentations of projects: using Rstudio & GitHub/OSF
+
+
+
+## Acknowledgments
+  -  Set up of site: Matti Vuorre (former VUW psych student): https://vuorre.netlify.app/
+  -  Statistical approaches: Richard McElreath's Statistical Rethinking: https://github.com/rmcelreath/stat_rethinking_2020 
 

@@ -1,18 +1,30 @@
 ---
-title: "Psych 447"
-description: |
-  Welcome to the website. I hope you enjoy it!
+title: "VUW Psych 447: Methods in R"
 site: distill::distill_website
+listing: 
+  posts:
+    - Week_1_Introduction
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+```
 
-# Learn more about creating websites with Distill at:
-# https://rstudio.github.io/distill/website.html
+```{r, include = FALSE}
+library(here)
+# GitHub pages
+file.create("docs/.nojekyll", showWarnings = FALSE)
+# Ensure directories exist
+dir.create("data", FALSE)
+dir.create("models", FALSE)
+```
 
-# Learn more about publishing to GitHub Pages at:
-# https://rstudio.github.io/distill/publish_website.html#github-pages
-
+```{r render-everything, include = FALSE, eval = FALSE}
+# Use to render all posts (article and slide deck) if needed
+library(rmarkdown)
+posts <- list.files(
+  "_posts", recursive = TRUE, pattern = ".Rmd", full.names = TRUE
+  )
+purrr::walk(posts, render)
 ```
 

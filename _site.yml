@@ -1,12 +1,33 @@
 name: "psych-447"
 title: "Psych 447"
 description: |
-  Psych 447
+  VUW Psych 477: Methods in R
 output_dir: "docs"
+base_url: https://vuw-psych-447.netlify.app/
+repository_url: https://github.com/go-bayes/github.io-447-methods
+creative_commons: CC BY
+google_analytics: "G-X058WW5WJZ"
+twitter:
+  site: "@go_bayes"
+  creator: "@go_bayes"
+collections:
+  posts:
+    feed_item_max: false
 navbar:
-  right:
-    - text: "Home"
-      href: index.html
+  source_url: https://github.com/go-bayes/github.io-447-methods
+  search: true
+  left:
     - text: "About"
       href: about.html
-output: distill::distill_article
+    - text: "Materials"
+      href: index.html
+    - text: "Assessments"
+      href: assessments.html
+output:
+  distill::distill_article:
+    toc: yes
+    toc_level: 1
+
+
+
+

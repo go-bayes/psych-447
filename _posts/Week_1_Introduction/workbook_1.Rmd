@@ -1,0 +1,15 @@
+---
+title: "Workbook 1.Rmd"
+author: "Joseph Bulbulia"
+date: "14/02/2021"
+output: html_document
+---
+
+## Problem 1
+
+Open R and add to numbers together $\dots$
+
+
+## Problem 2
+
+What is the R code for `square root`? 
