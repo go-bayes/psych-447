@@ -16,6 +16,29 @@ author:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+Assessments are due the Friday following a weeks lecture and tutorial.  
+
+During lab time, you will have the opportunity for help you with your problem sets. 
+
+
+# Assessment Schedule
+
+## Week 1
+
+1. Following the course and lab instructions, download git and Github. Choose a username that will be OK for professional purposes. Set yourseful up with an account, and create your first repository.
+
+
+2.  Follow the lecture instructions and download R and R-Studio. 
+
+- Create a GitHub project in Rstudio
+- Create your first Rmarkdown document, and title it "My Journal" 
+- Record your impressions of the process of getting set up with RStudio and GitHub
+- Record any help you have offered to other people, and any help you have sought from other people, along the way. 
+- Save the document and commit it to GitHub. 
+
+
+## Week 2
+
 
 
 
