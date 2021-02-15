@@ -1,0 +1,38 @@
+---
+title: "Set up"
+description: |
+  The purpose of this week is to get you set up to write in R markdown
+author:
+  - name: Johannes Karl 
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
+date: 2021-FEB-25
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+---
+
+
+## Rmarkdown and You
+
+Rmarkdown merges two very powerful ideas together; first R as a coding based tool to make your analysis repeatable, and markdown an approach to writing text that allows for the direct embedding of code output. 
+
+This is an immensely powerful approach that can be used for everything, from writing research papers, to writing complex technical documentation. This website is written Rmarkdown.
+
+You will be creating a website similar to [Johannes Karl'swebsite](https://johannes-karl.com/) and [Joseph Bulbulia's website](https://josephbulbulia.netlify.app/)and you will do this by written using Rmarkdown). 
+
+You might think that writing in R markdown is only a nice technical trick for people really into coding, but in reality it addresses a central problem of statistical analysis. 
+
+The majority of errors in quantitative research papers (some meta-researchers indiate values as high as 80%) are human errors in transcribing values from the statistical software they are using to the final document (for a marginally entertaining story around this issue see this [post](https://www.mcgill.ca/oss/article/food-health-news-quirky-science/setting-facts-straight-about-iron-spinach)).  
+
+## How to keep track of everything
+
+Now that we have our repeatable code, our repeatable document, the last thing we need is a transparent way to document what we are doing and share with others. For that we come to our last tool that in a similar confusing way to R and Rstudio is split in to parts; git and Github.
+
+
+
+
+
