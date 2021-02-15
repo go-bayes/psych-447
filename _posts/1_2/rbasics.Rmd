@@ -27,7 +27,7 @@ A `console`runs all your code in R
 
 A `source page` runs all your code in R.
 
-A `working directory`is where R will look for raw data and other material. 
+A `working directory` is where R will look for raw data and other material. 
 
 In R-studio, (for starters) you can can use the `file` tab to import and save your material. 
 
