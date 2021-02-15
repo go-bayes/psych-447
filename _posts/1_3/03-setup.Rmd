@@ -32,23 +32,29 @@ Rmarkdown is a format for combing code with ordinary writing.
 
 The Rmarkdown code we used to write the opening paragraph looks like this.
 
-
-~~~~
+<style>
+div.blue{ background-color:#e6f0ff}
+</style>
+<div class = "blue"> 
+~~~
 ## TO DO
-
 Read Danielle Navarro's brief account of Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)
-
-
-## Markdown is a format for writing
-
-Rmarkdown is a format for combing code with ordinary writing.
-~~~~
+~~~ 
+</div>
 
 The `##` makes a heading. We write as ordinary, and we include a link by typing `[here](https://slides.djnavarro.net/starting-rmarkdown/#8)`
 
 Think of rmarkdown as writing in word but without having to use your mouse all the time. 
 
-You can read more about Rmarkdown [here](https://rmarkdown.rstudio.com/)
+You can read more about Rmarkdown [here](https://rmarkdown.rstudio.com/).  Figure \@ref(fig:ss) shows Rmarkdown in the rconsole (upper left).
+
+
+
+```{r ss, fig.cap ="\\label{fig:ss}Screenshot of Rmarkdown document (upper left)", echo=F}
+knitr::include_graphics("rmark.png")
+```
+
+
 
 ## Rmarkdown and You
 
@@ -69,6 +75,9 @@ The majority of errors in quantitative research papers (some meta-researchers in
 Now that we have our repeatable code, our repeatable document, the last thing we need is a transparent way to document what we are doing and share with others. For that we come to our last tool that in a similar confusing way to R and Rstudio is split in to parts; git and Github.
 
 
+## Some useful sites
 
+[coding tips](https://holtzy.github.io/Pimp-my-rmd/)
+[Rmarkdown website](https://rmarkdown.rstudio.com/gallery.html)
 
 

@@ -51,23 +51,29 @@ Any readings will be linked at to the lecture link. If there are no readings tha
 ## Assements 
 
 1. **Weekly journal entries** (about 100 - 200 words) 
-(10 X journals = 10%)
+(10 X journals = **10%**)
+
+These are **due every Friday** during term at midnight. Ordinarily we expect you to submit these on your GitHub page, however, we can make special accommodation for those who prefer VUW blackboard (see us).
 
 Format: you will document your insights, questions, and frustrations in a weekly journal.  This record should include how you have sought help to address your questions, and how you have offered help. The purpose of the journals are to cultivate skills for interacting with the R community, and for documenting the research process. 
   
-2. **Weekly problem sets** 
+2. **Weekly workbook problem sets** 
 
-You will find the problem sets [Here](). 
-(10 x problem sets = 50%)
+You will find the problem sets [Here](https://go-bayes.github.io/psych-447/assessments.html). 
+(10 x problem sets **= 50%**)
+
+These are **due every Friday** during term at midnight. Ordinarily we expect you to submit these on your GitHub page, however, we can make special accommodation for those who prefer VUW blackboard (see us).
 
 
 3. **Final project** consisting of:
 
-  - A short report of an analysis of a research question using a dataset (problem and dataset to be developed with your instructors by March 30th): 20%
-  - A 7 minute class presentation of your report: 10%
-  - A github website profiling your CV: 10%
+  - 1 x short report of an analysis of a research question using a dataset (problem and dataset to be developed with your instructors by March 30th): 20%
+  - 1 x 7-minute class presentation of your report: 10%
+  - 1 x github website profiling your CV: 10%
+  
+  **= 40%**
 
-You will find a description of the project [TBA](). 
+The final project will be due 31st May 2021. Eventually, you will find materials to help you with you final project here [TBA](). 
 
 ## Communication of additional information and submissions
 
@@ -79,6 +85,8 @@ Any information relating to Psyc 447or any last-minute changes to the course wil
 
 Written work will be submitted via Github, unless otherwise specified.
 
+The written components of the final project is **due every Friday** during term at midnight.
+
 ## Important dates
 
 Trimester dates: 22 February to 20 June
@@ -86,16 +94,16 @@ Teaching dates: 22 February to 28 May
 
 Mid-trimester break: 5 April to 18 April
 
-Last assessment item due: Final assessment (research proposal) will need to be submitted on 31st May (see [Assessments](https://go-bayes.github.io/psych-423/assessments.html))
+Last assessment item due: Final assessment (project) will need to be submitted on 31st May (see [Assessments](https://go-bayes.github.io/psych-423/assessments.html))
 
 Study Examination/Assessment Period: 
 Note: students who enrol in courses with examinations must be able to attend an examination at the University at any time during the scheduled examination period.
 Withdrawal dates: Refer to [Withdrawing](www.victoria.ac.nz/home/admisenrol/payments/withdrawalsrefunds)
 If you cannot complete an assignment or sit a test or examination (aegrotats), refer to [Aegrotats](www.victoria.ac.nz/home/study/exams-and-assessments/aegrotat)
 
-## Teaching Format
+## Teaching format
 
-Psyc423 is a 15pt course which represents approx. 150 hours of total work for an average student.
+Psyc 447 is a 15pt course which represents approx. 150 hours of total work for an average student.
 
 In-class time involves (approx. 22hrs):
 
@@ -107,7 +115,7 @@ In-class time involves (approx. 22hrs):
 
 
 
-## We expect you will spend at least 128hrs out of lecture/workshops on this course:
+## This course will demand 128hrs outside of lecture/workshops:
 
 1.	Reading articles, (curated) R websites, and (curated) statistics websites  before & following class.
 2.	Journal entries x 10 
@@ -133,7 +141,7 @@ Students must turn in all assignments on time by due dates. If students do not t
 a personal computer will be essential for completing this course. If you do not have access to a personal computer let your instructor know as soon as possible. 
 
 **A github education account** 
-will be useful, even if not strictly necessary.
+This will be useful, even if not strictly necessary (i.e. you can set up an ordinary github account)
 
 You should apply for a github education account as soon as possible here:
 https://education.github.com/pack/offers
