@@ -10,14 +10,21 @@ author:
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0001-5166-0728
+bibliography: bibliography.bib
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
 ---
+
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
-## The following workbooks are due the Friday after lecture. You will be marked on 10 submissions
+The following "workbooks" are due on Fridays after lecture. You will be marked on 10 x workbook submissions
 
 ## Week 1: Due FRIDAY 27th February
 
@@ -40,6 +47,31 @@ knitr::opts_chunk$set(echo = FALSE)
   cc: joseph.bulbulia@vuw.ac.nz 
   
 This journal will count as both your weekly journal entry and your weekly workbook.  
+
+
+### Grade points
+
+- Your Rmarkdown document must include eachig of the following 
+
+1.
+> ## Heading
+
+2.
+> ~~crossed out text~~
+
+3.
+> link to a [website](https://www.theonion.com/)
+
+4.
+> A footnote ^[Humanities scholars love footnotes.]
+
+5. 
+> An inspirational quote
+
+6. 
+> BONUS point: figure out how to add a bibliographic citation, like: [@darwin2009origin]
+
+
 
 
 ## Week 2: Due March 5th

@@ -109,3 +109,7 @@ These functions can be bundled into **packages**.  R's capacity for creating pac
 These packages can be installed in R with the command install.packages("package name"). 
 
 It is important that you only need to install a package once on your machine, expect if you want to upgrade the package. Generally speaking you regularly want to upgrade your packages, but keep a permanent note in your code which version of a package you used when it was initially written.
+
+## Recommended reading
+
+[An introduction to R and Rstudio](https://crimebythenumbers.com/r-markdown.html)
