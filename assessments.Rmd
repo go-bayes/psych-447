@@ -16,30 +16,71 @@ author:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Assessments are due the Friday following a weeks lecture and tutorial.  
 
-During lab time, you will have the opportunity for help you with your problem sets. 
+## The following workbooks are due the Friday after lecture. You will be marked on 10 submissions
+
+## Week 1: Due FRIDAY 27th February
+
+  1.  Set up a github account. Choose a username that will be OK for professional purposes.
+
+  2.  Create your first repository
+  
+  3.  Create a GitHub project in Rstudio for this repository
+
+  4.  Commit your first  Rmarkdown journal
+  - Create your first Rmarkdown document, and title it "My Journal" 
+  - Record your impressions of the process of getting set up with RStudio and GitHub
+  - Record any help you have offered to other people, and any help you have sought from other people, along the way. 
+  - Save the document and commit it to GitHub. 
+
+  5.  Email a link to your repository to: 
+  johannes.karl@vuw.ac.nz 
+  cc: joseph.bulbulia@vuw.ac.nz 
+  
+This journal will count as both your weekly journal entry and your weekly workbook.  
 
 
-# Assessment Schedule
+## Week 2: Due March 5th
 
-## Week 1
-
-1. Following the course and lab instructions, download git and Github. Choose a username that will be OK for professional purposes. Set yourseful up with an account, and create your first repository.
+TBA
 
 
-2.  Follow the lecture instructions and download R and R-Studio. 
-
-- Create a GitHub project in Rstudio
-- Create your first Rmarkdown document, and title it "My Journal" 
-- Record your impressions of the process of getting set up with RStudio and GitHub
-- Record any help you have offered to other people, and any help you have sought from other people, along the way. 
-- Save the document and commit it to GitHub. 
+## Week 3: Due March 12th
+TBA
 
 
-## Week 2
+## Week 4: Due March 19th
+TBA
 
-Tba
+## Week 5: Due March 26th
+TBA
+
+## Week 6: Due April 2nd
+TBA
+
+## Week 7: Due April 23rd 
+TBA
+
+## Week 8: April 30th 
+TBA
+
+## Week 9: May 7th
+TBA
+
+## Week 10: May 14th
+TBA
+
+## Week 11: May 21st
+TBA
+
+## Week 12: Due May 28th
+TBA
+
+
+
+
+
+
 
 
 

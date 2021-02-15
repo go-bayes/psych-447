@@ -17,6 +17,22 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
+## Class times and locations
+**Lectures**
+Tuesdays: 4:10 - 5:00 pm
+Room: EA402  
+
+**Workshops**
+Wednesdays: 3:30 -- 5:20 PM
+
+## Names and contact details
+
+Course coordinator & Lecturer: Prof. Joseph Bulbulia 
+Email: joseph.bulbulia@vuw.ac.nz 
+
+Lecturer & lab coordinator: Johannes Karl
+Email: johannes.karl@vuw.ac.nz
+
 
 ## Learning objectives
 
@@ -25,24 +41,166 @@ This course offers a gentle introduction to the R statistical programming langua
 
 ## Where to find material
 
-Weekly problem sets are located in the `assessments` directory
+Weekly lectures and course resources are located [here]()
 
-Weekly lectures are in the `_posts/` directory. 
+Weekly problem sets are located [here]()
 
 
+
+## Assements 
+
+1. **Weekly journal entries** (about 100 - 200 words) 
+(10 X journals = 10%)
+
+Format: you will document your insights, questions, and frustrations in a weekly journal.  This record should include how you have sought help to address your questions, and how you have offered help. The purpose of the journals are to cultivate skills for interacting with the R community, and for documenting the research process. 
+  
+2. **Weekly problem sets** 
+You will find the problem sets [Here](). 
+(10 x problem sets = 50%)
+
+
+3. **Final project** consisting of:
+
+  - A short report of an analysis of a research question using a dataset (problem and dataset to be developed with your instructors by March 30th): 20%
+  - A 7 minute class presentation of your report: 10%
+  - A github website profiling your CV: 10%
+
+You will find a description of the project [TBA](). 
+
+## Communication of additional information and submissions
+
+Lectures will be posted to: https://go-bayes.github.io/psych-423/
+
+Course-related notices will appear on VUW Blackboard
+
+Any information relating to Psyc 447or any last-minute changes to the course will be posted on Blackboard. 
+
+Students must submit all written work to VUW Blackboard.
+
+## Important dates
+
+Trimester dates: 22 February to 20 June
+Teaching dates: 22 February to 28 May
+
+Mid-trimester break: 5 April to 18 April
+
+Last assessment item due: Final assessment (research proposal) will need to be submitted on 31st May (see [Assessments](https://go-bayes.github.io/psych-423/assessments.html))
+
+Study Examination/Assessment Period: 
+Note: students who enrol in courses with examinations must be able to attend an examination at the University at any time during the scheduled examination period.
+Withdrawal dates: Refer to [Withdrawing](www.victoria.ac.nz/home/admisenrol/payments/withdrawalsrefunds)
+If you cannot complete an assignment or sit a test or examination (aegrotats), refer to [Aegrotats](www.victoria.ac.nz/home/study/exams-and-assessments/aegrotat)
+
+## Teaching Format
+
+Psyc423 is a 15pt course which represents approx. 150 hours of total work for an average student.
+
+In-class time involves (approx. 22hrs):
+
+  1. Lectures by academic staff: Lectures will introducing the topics. These will be based on weekly readings.
+
+  2. Class participation: you need to follow the lectures or else you will risk falling behind.
+  
+  3. Workshops/labs: the weekly workshops/labs are where you will receive hands on training. Again, you need to attend or follow these or else you will risk falling behind. 
+
+
+
+## Out-of-class time involves (approx. 128hrs):
+
+1.	Reading articles before & following class.
+2.	Journal entries x 10 
+3.  Problem sets/workbooks x 10
+4.	Final project
+
+
+## Mandatory course requirements 
+
+There are no mandatory course requirements.
+
+## Workload
+
+Given that Psyc 447 is a 15 point course, the expected workload is no less than 150 hours in total. This would mean roughly 15 hours per week. This should be viewed as a minimum - how much you get out of this course will depend on the work you put in.
+
+## Penalties
+
+Students must turn in all assignments on time by due dates. If students do not turn in an essay or assignment at a designated time, they will receive a zero for assignment this will be counted toward the final grade. 
+
+## Materials and equipment and/or additional expenses
+
+**Computer** 
+a personal computer will be essential for completing this course. If you do not have access to a personal computer let your instructor know as soon as possible. 
+
+**A github education account** 
+will be useful, even if not strictly necessary.
+
+You should apply for a github education account as soon as possible here:
+https://education.github.com/pack/offers
+
+
+
+## Recommended reading 
+
+Most of the material students will be expected to read is published in journals academic websites and, in some cases, in books. Students will generally need to read between one and five articles per week. Set readings will mostly be supplied throughout the course (please check this website). However, students will also be required to conduct their own independent reviews of the literature for assignment purposes.
+
+## Other important information
+
+The information above is specific to this course.  There is other important information that students must familiarise themselves with, including:
+
+  - [Academic Integrity/Plagiarism](https://www.wgtn.ac.nz/students/support/student-interest-and-conflict-resolution/academic-integrity)
+  
+  - [Academic Progress](https://www.victoria.ac.nz/students/study/progress/academic-progess)
+  
+  - [Dates and deadlines](https://www.victoria.ac.nz/students/study/dates) 
+  
+  - [Faculty of Science Student and Academic Services Office](https://www.victoria.ac.nz/science/student-administration) 
+  
+  - [Grades](https://www.victoria.ac.nz/students/study/progress/grades) 
+  
+  - Special passes Refer to the [Assessment Handbook](https://www.victoria.ac.nz/documents/policy/staff-policy/assessment-handbook.pdf) 
+  - [Statutes and policies](https://www.victoria.ac.nz/about/governance/strategy)
+  
+  - [Student support](https://www.victoria.ac.nz/students/support)
+  
+  - [Students with disabilities](https://www.victoria.ac.nz/st_services/disability/) 
+  
+  - [Student Charter](https://www.wgtn.ac.nz/learning-teaching/partnership/student-charter) 
+  
+  - [Terms and Conditions](https://www.wgtn.ac.nz/study/apply-enrol/terms-conditions/student-contract) 
+  
+  - [Turnitin](https://www.cad.vuw.ac.nz/wiki/index.php/Turnitin) 
+  
+  - [University structure](https://www.victoria.ac.nz/about/governance/structure) 
+  
+  - [VUWSA](https://www.vuwsa.org.nz)
+  
 
 ## What do I need to do
 
-### Attend (or follow) Lectures
+###  Attend Lectures 
 
-Each week, students will attend (or follow) a weekly lecture.  
+Lecture dates are:
 
-In these lectures we will demonstrate how R works and cover basic principles of statistics. The goal is to enable students to use R to conduct psychological science.  
+  - FEB 23
+  - MAR 2
+  - MAR 9
+  - MAR 16
+  - MAR 23
+  - MAR 30
+  - BREAK
+  - APRI 20
+  - APRIL 27
+  - MAY 4
+  - MAY 11
+  - MAY 18: Presentations
+  - MAY 25: Presentations
+
  
 
 ### Attend Weekly labs
 
-There will be a  2- hour practicum each week in which students cultivate their skills by applying what the learn to data.  Learning applied statistics in R is like learning a language. Progress comes from immersing yourself in the langague You need to speak often, and you need to make lots of mistakes.  The weekly labs will provide you with opportunity to *do R*.  The labs will consist of problem sets that we will do together. 
+There will be a  1.5-hour practicum each week in which students cultivate their skills by applying what the learn to data.  Learning applied statistics in R is like learning a language. Progress comes from immersing yourself in the language. You need to speak often, and you need to make lots of mistakes.  The weekly labs will provide you with opportunity to *do R*.  The labs will consist of problem sets that we will do together. 
+
+The weekly labs on the *Wednesdays* after the *Tuesday* lectures.
 
 ### Commplete weekly "workbooks" 
 
@@ -50,20 +208,14 @@ Weekly assignments allow you to further develop you skills, and to build the sta
 
 The focus of these assignments will be on *thinking* about coding and statistics, documenting *requests* for help, and *offers* for help. 
 
-### Tests
-
-There are 2 x tests which will offer the opportunity to consolidate the skills you'll get from the workbooks. The format of the tests will be problem sets of the kind you will be getting in your workbooks. 
-
 
 ### Project
 
 The course culminates with an in-depth project in which students work on data from their own area of interest combining R with contemporary tools of collaborative (GitHub) and open science (OSF). Student presentations will afford students with the opportunity to present their projects and offer each other constructive feedback.
 
 
-
 ## Outline
 
-The course outline is as follows
 
 ### Week 1 (a): Introduction: R and you
 
@@ -73,12 +225,14 @@ The course outline is as follows
   - What is GitHub
   - Why do I need these tools? 
 
-### Week 1 (b): Setting up
+### Week 1 (b): R basics
 
   -	Using R as a calculator
   -	Creating (and saving) a project using Rstudio
   - Loading Data
   -	The basics of your workflow
+
+### Week 1 (c): R Markdown
   -	The elements of Rmarkdown   
   -	Your first Rmarkdown document
   -	GitHub 
@@ -115,9 +269,8 @@ The course outline is as follows
 
 ### Week 3 (b):  Rolling your own functions: when, why, and how
 
-  - TBA
 
-### Week 4: TEST 
+### Week 4: CONSOLODATION OF SKILLS IN R 
 
 ### Week 5 (a):  Samples and parameters: observation and inference
 
@@ -141,15 +294,16 @@ The course outline is as follows
 
 ### Week 10 (a): Missing data and other measurement opportunities.
 
-### Week 10 (b):  Test
+### Week 10 (b):  CONSOLIDATION OF STATISTICS
 
-###  Week 11: Student presentations of projects: using Rstudio & GitHub/OSF
+### Week 11: Student presentations of projects: using Rstudio & GitHub/OSF
 
 ### Week 12:  Student presentations of projects: using Rstudio & GitHub/OSF
 
 
 
 ## Acknowledgments
-  -  Set up of site: Matti Vuorre (former VUW psych student): https://vuorre.netlify.app/
+
+  -  Some code used in creating this course website comes from: Matti Vuorre (former VUW psych student): https://vuorre.netlify.app/
   -  Statistical approaches: Richard McElreath's Statistical Rethinking: https://github.com/rmcelreath/stat_rethinking_2020 
 
