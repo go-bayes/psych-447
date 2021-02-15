@@ -21,6 +21,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Week 1: Due FRIDAY 27th February
 
+** Note we will be working with you in the first week's workshop to get you through this assessment task. We don't expect that you will be able to do any of this before the first week. 
+
   1.  Set up a github account. Choose a username that will be OK for professional purposes.
 
   2.  Create your first repository
