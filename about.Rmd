@@ -219,7 +219,7 @@ Workshop dates:
   - MAY 25: (focus on your project)
 
 
-### Commplete weekly "workbooks" 
+### Complete weekly "workbooks" 
 
 Weekly assignments allow you to further develop you skills, and to build the statistical intuitions that will enable them to flexibly address a broad range of scientific problems. 
 
