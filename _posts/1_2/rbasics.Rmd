@@ -79,7 +79,7 @@ The four main elements of every R code are:
 
   - objects, 
   - functions, 
-  - <span style="color:red">`arguments`</span>
+  - <span style="color:orange">`arguments`</span>
   - <span style="color:blue">`operators`</span>. 
   
 Figure \@ref(fig:syntax-figure) provides a simple example, that produces a new object which contains the mean of variable x.

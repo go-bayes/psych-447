@@ -187,7 +187,7 @@ The information above is specific to this course.  There is other important info
 
 ## What do you need to do?
 
-###  Attend Lectures 
+###  Attend lectures 
 
 Lecture dates are:
 
@@ -205,7 +205,7 @@ Lecture dates are:
   - MAY 18: Presentations
   - MAY 25: Presentations
 
-### Attend Weekly Workshops
+### Attend weekly workshops
 
 There will be a  1.5-hour practicum each week in which students cultivate their skills by applying what the learn to data.  Learning applied statistics in R is like learning a language. Progress comes from immersing yourself in the language. You need to speak often, and you need to make lots of mistakes.  The weekly workshops will provide you with opportunity to *do R*.  The workshops will consist of your weekly problem sets + additional support. The are the place were we will help you individually and in groups, and were you will help each other. 
 
