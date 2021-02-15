@@ -38,21 +38,31 @@ div.blue{ background-color:#e6f0ff}
 <div class = "blue"> 
 ~~~
 ## TO DO
-Read Danielle Navarro's brief account of Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)
+Read Danielle Navarro's brief account of 
+Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)
 ~~~ 
 </div>
 
-The `##` makes a heading. We write as ordinary, and we include a link by typing `[here](https://slides.djnavarro.net/starting-rmarkdown/#8)`
+The: 
 
-Think of rmarkdown as writing in word but without having to use your mouse all the time. 
+>`##` 
 
-You can read more about Rmarkdown [here](https://rmarkdown.rstudio.com/).  Figure \@ref(fig:ss) shows Rmarkdown in the rconsole (upper left).
+makes a heading. We write as ordinary,
+
+> Read Danielle Navarro's brief account of  Rmarkdown
+
+and we include a link by typing
+
+>`[here](https://slides.djnavarro.net/starting-rmarkdown/#8)`
+
+Think of rmarkdown as writing in word but without having to use your mouse all the time. The really great thing about Rmarkdown is that you can write document and do the analysis in a single stop shop.  Figure \@ref(fig:ss) shows Rmarkdown in the rconsole (upper left).
 
 
 
 ```{r ss, fig.cap ="\\label{fig:ss}Screenshot of Rmarkdown document (upper left)", echo=F}
 knitr::include_graphics("rmark.png")
 ```
+
 
 
 
