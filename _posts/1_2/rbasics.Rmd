@@ -3,6 +3,11 @@ title: "R basics"
 description: |
   The purpose of this week is to get you set up to write in R markdown
 author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
   - name: Johannes Karl 
     url: https://johannes-karl.com
     affiliation: Victoria University of Wellington
@@ -16,6 +21,18 @@ output:
 ---
 
 # Fundamentals of R
+
+
+A `console`runs all your code in R
+
+A `source page` runs all your code in R.
+
+A `working directory`is where R will look for raw data and other material. 
+
+In R-studio, (for starters) you can can use the `file` tab to import and save your material. 
+
+Similarly, in R-studio, (for starters) you can can use install packages by clicking the `Install` tab  in the package pane (generally lower right pane) to install packagees.
+
 
 ## Using R as calculator
 

@@ -27,10 +27,10 @@ Wednesdays: 3:30 -- 5:20 PM
 
 ## Names and contact details
 
-Course coordinator & Lecturer: Prof. Joseph Bulbulia 
+Lecturer & course coordinator: Prof. Joseph Bulbulia 
 Email: joseph.bulbulia@vuw.ac.nz 
 
-Lecturer & lab coordinator: Johannes Karl
+Lecturer & workshop coordinator: Johannes Karl
 Email: johannes.karl@vuw.ac.nz
 
 
@@ -41,10 +41,11 @@ This course offers a gentle introduction to the R statistical programming langua
 
 ## Where to find material
 
-Weekly lectures and course resources are located [here]()
+Weekly lectures and course resources are located [here](https://go-bayes.github.io/psych-423/)
 
-Weekly problem sets are located [here]()
+Weekly problem sets are located [here](https://go-bayes.github.io/psych-423/assessments.html)
 
+Any readings will be linked at to the lecture link. If there are no readings that week we will specify: **no readings**
 
 
 ## Assements 
@@ -55,6 +56,7 @@ Weekly problem sets are located [here]()
 Format: you will document your insights, questions, and frustrations in a weekly journal.  This record should include how you have sought help to address your questions, and how you have offered help. The purpose of the journals are to cultivate skills for interacting with the R community, and for documenting the research process. 
   
 2. **Weekly problem sets** 
+
 You will find the problem sets [Here](). 
 (10 x problem sets = 50%)
 
@@ -75,7 +77,7 @@ Course-related notices will appear on VUW Blackboard
 
 Any information relating to Psyc 447or any last-minute changes to the course will be posted on Blackboard. 
 
-Students must submit all written work to VUW Blackboard.
+Written work will be submitted via Github, unless otherwise specified.
 
 ## Important dates
 
@@ -101,16 +103,16 @@ In-class time involves (approx. 22hrs):
 
   2. Class participation: you need to follow the lectures or else you will risk falling behind.
   
-  3. Workshops/labs: the weekly workshops/labs are where you will receive hands on training. Again, you need to attend or follow these or else you will risk falling behind. 
+  3. Workshops: the weekly workshops are where you will receive hands on training. Again, you need to attend or follow these or else you will risk falling behind. 
 
 
 
-## Out-of-class time involves (approx. 128hrs):
+## We expect you will spend at least 128hrs out of lecture/workshops on this course:
 
-1.	Reading articles before & following class.
+1.	Reading articles, (curated) R websites, and (curated) statistics websites  before & following class.
 2.	Journal entries x 10 
 3.  Problem sets/workbooks x 10
-4.	Final project
+4.	Final project x 1 (including class presentation)
 
 
 ## Mandatory course requirements 
@@ -174,7 +176,7 @@ The information above is specific to this course.  There is other important info
   - [VUWSA](https://www.vuwsa.org.nz)
   
 
-## What do I need to do
+## What do you need to do?
 
 ###  Attend Lectures 
 
@@ -194,13 +196,28 @@ Lecture dates are:
   - MAY 18: Presentations
   - MAY 25: Presentations
 
- 
+### Attend Weekly Workshops
 
-### Attend Weekly labs
-
-There will be a  1.5-hour practicum each week in which students cultivate their skills by applying what the learn to data.  Learning applied statistics in R is like learning a language. Progress comes from immersing yourself in the language. You need to speak often, and you need to make lots of mistakes.  The weekly labs will provide you with opportunity to *do R*.  The labs will consist of problem sets that we will do together. 
+There will be a  1.5-hour practicum each week in which students cultivate their skills by applying what the learn to data.  Learning applied statistics in R is like learning a language. Progress comes from immersing yourself in the language. You need to speak often, and you need to make lots of mistakes.  The weekly workshops will provide you with opportunity to *do R*.  The workshops will consist of your weekly problem sets + additional support. The are the place were we will help you individually and in groups, and were you will help each other. 
 
 The weekly labs on the *Wednesdays* after the *Tuesday* lectures.
+
+Workshop dates:
+
+  - FEB 24
+  - MAR 3
+  - MAR 10
+  - MAR 17
+  - MAR 24
+  - MAR 31
+  - BREAK
+  - APRI 21
+  - APRIL 28
+  - MAY 5
+  - MAY 12
+  - MAY 19: (focus on your project)
+  - MAY 25: (focus on your project)
+
 
 ### Commplete weekly "workbooks" 
 

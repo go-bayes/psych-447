@@ -3,6 +3,11 @@ title: "Set up"
 description: |
   The purpose of this week is to get you set up to write in R markdown
 author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
   - name: Johannes Karl 
     url: https://johannes-karl.com
     affiliation: Victoria University of Wellington
@@ -15,10 +20,41 @@ output:
     toc: true
 ---
 
+## TO DO
+
+Read Daniell Navarro's brief account of Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)
+
+
+## Markdown is a format for writing
+
+Rmarkdown is a format for combing code with ordinary writing.
+
+
+The Rmarkdown code we used to write the opening paragraph looks like this.
+
+
+~~~~
+## TO DO
+
+Read Danielle Navarro's brief account of Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)
+
+
+## Markdown is a format for writing
+
+Rmarkdown is a format for combing code with ordinary writing.
+~~~~
+
+The `##` makes a heading. We write as ordinary, and we include a link by typing `[here](https://slides.djnavarro.net/starting-rmarkdown/#8)`
+
+Think of rmarkdown as writing in word but without having to use your mouse all the time. 
+
+You can read more about Rmarkdown [here](https://rmarkdown.rstudio.com/)
 
 ## Rmarkdown and You
 
-Rmarkdown merges two very powerful ideas together; first R as a coding based tool to make your analysis repeatable, and markdown an approach to writing text that allows for the direct embedding of code output. 
+Rmarkdown merges two very powerful ideas: 
+  1. R as a coding based tool to make your analysis repeatable;
+  2. markdown an approach to writing text that allows for the direct embedding of code output. 
 
 This is an immensely powerful approach that can be used for everything, from writing research papers, to writing complex technical documentation. This website is written Rmarkdown.
 

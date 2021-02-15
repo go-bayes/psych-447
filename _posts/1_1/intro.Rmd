@@ -1,7 +1,7 @@
 ---
-title: "Introduction"
+title: "Course Philosophy"
 description: |
-  An introduction to the course
+  Goals: to descibe the course and tell you a little bit about R and R-studio
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
@@ -41,6 +41,37 @@ colorize <- function(x, color) {
   } else x
 }
 ```
+
+
+
+## TO DO: download R
+
+R is freely available for download at: 
+
+https://www.r-project.org/
+
+Please make sure that you have a current version of R-studio desktop on your machine
+
+<aside>
+```{r rlogo, echo=F}
+knitr::include_graphics("Rlogo.png")
+```
+</aside>
+
+## TO DO: download R-studio desktop
+
+Rstudio desktop is also freely available for download at:
+
+https://rstudio.com/products/rstudio/download/#download
+
+
+Please make sure that you have the current version of R-studio desktop on your machine
+
+<aside>
+```{r rstudiologo, echo=F}
+knitr::include_graphics("rs.png")
+```
+</aside>
 
 ##  Who is this course for? 
 
@@ -84,14 +115,17 @@ R is a free programming language and software environment for statistical comput
 
 R is the brainchild of [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/) and [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician). It was created at the University of Auckland, where Ross Ihaka remains a professor of statistics.
 
-
 R was conceived to be a flexible language for data analysis usable by researchers. Since the initial beta release of R in  2000 the language has gained substantial popularity inside and outside of academia ([have a look at this blog post for an interesting analysis](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)). New versions of R are released periodically and can be downloaded and installed to replace the older R version. 
 
 ## What is R Studio?
 
-The are many ways for using R on your computer. For the purposes of getting started, we will be useing the Integrated Development Environment (IDE): [R Studio](https://rstudio.com/). 
+The are many ways for using R on your computer. For the purposes of getting started, we will be using the Integrated Development Environment (IDE): [R Studio](https://rstudio.com/). 
 
-R Studio provides an interface with a number of user-friendly options, including a separate console and editor that has various help and syntax-auto-complete functions, and various tools for plotting, history, data visualization, debugging and work space management. It is important to remember that R and R Studio are not the same thing. There are a wide range of alternative IDEs that allow you to run R code, such as [Atom](https://atom.io/), [Sublime](https://www.sublimetext.com/), or [Visual Studio Code](https://code.visualstudio.com/), but in this course we will use Rstudio as it is the most straightforward for beginners.
+R Studio provides an interface with a number of user-friendly options, including a separate console and editor that has various help and syntax-auto-complete functions, and various tools for plotting, history, data visualization, debugging and work space management. It is important to remember that R and R Studio are not the same thing. 
+
+
+<!-- There are a wide range of alternative IDEs that allow you to run R code, such as [Atom](https://atom.io/), [Sublime](https://www.sublimetext.com/), or [Visual Studio Code](https://code.visualstudio.com/), but in this course we will use Rstudio as it is the most straightforward for beginners. -->
+
 
 **Our goal this week is to teach you how to use R-Studio.**
 
@@ -99,7 +133,7 @@ R Studio provides an interface with a number of user-friendly options, including
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/haYxa3vWA28" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Why quantitative psychology has to change (Why can't I use SPSS)
+## Why quantitative psychology has to change (Why can't I use SPSS) by Johannes Karl
 
 Quantitative psychology has long struggled with replicability of it's results both in substantive and also statistical areas. Concerns around these topics have already been raised on works by authors such as Joseph Banks Rhine the founder of modern parapsychology in the 1930s. Numerous authors, even at the time criticized both methods of the experiment and of the analysis [@gulliksenExtraSensoryPerceptionWhat1938]. In modern times, Deryl Bem's article "Feeling the Future" that reported evidence in favor of Extra Sensory Perception revived this debate and led to an increased uptake of Open Science methods. Importantly, this is not only an issue in psychology, but instead affects all quantitative fields such as [biology](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000246), [chemistry](https://www.fosteropenscience.eu/content/what-could-open-science-really-mean-chemistry), and [physics](https://ioppublishing.org/open-access-week-2019/open-science-and-open-physics/). Out of the many issues that are addressed as part of the open science movement (if you are interested in getting active in it have a look at [ANZORN](https://www.anzopenresearch.org/)) we will focus mostly on aspects of reproducability in analysis.  
 
@@ -128,18 +162,11 @@ Additionally, some changes made by researchers were extremely difficult to accou
 <!-- xaringanExtra::embed_xaringan(url = "slides.html", ratio = "4:3") -->
 <!-- ``` -->
 
-## Workbook
-
-Click [here](workbook_1.html) to go to this week's workbook
-
-
-## Key Concepts
 
 
 ## Recommended reading
 
-The three books cited in this lesson are all highly recommended readings. For beginners to Bayesian statistics, I recommend starting with Kruschke [-@kruschke2014], or McElreath [-@mcelreath2020]. Bayesian Data Analysis by Gelman et al. [-@gelman2013] is the definitive textbook on the topic, and recommended for more mathematically oriented and/or advanced readers.
 
+A very good, and free introduction to [R for Data Science](https://r4ds.had.co.nz/introduction.html)
 
-
-
+<!-- Some descent Rstudio tutorials [here](https://bcrf.biochem.wisc.edu/all-tutorials/tutorial-materials-r-rstudio/) -->
