@@ -1,0 +1,57 @@
+# Fundamentals of R and a good workflow
+
+## Using R as calculator
+
+The simplest and most straightforward way to use R is to use it as calculator. You can run any mathematical operation you would normally use by entering it into the console
+
+```{r calculator}
+## Addition
+x = 3 + 2
+x
+
+## Subtraction
+x = 3 - 2
+x
+
+## Multiplication
+x = 3 * 2
+x
+
+## Division
+x = 3 / 2
+x
+
+## Modulus (Remainder from division)
+x = 3 %% 2
+x
+
+## Exponentiation
+x = 3 ^ 2
+x
+
+## Integer Division (Number of times denominator fits in numerator)
+x = 3 %/% 2
+x
+```
+
+]
+## The basic structure of R commands
+
+While using R as calculator might be interesting, it does not get us very far in analysing our data. To really unlock the full potential of R we first need to understand the basic structure of most R code and learn some terms.
+The four main elements of every R code are objects, functions, `r colorize("arguments", "orange")`, and `r colorize("operators", "blue")`. Figure \@ref(fig:syntax-figure) provides a simple example, that produces a new object which contains the mean of variable x.
+
+```{r syntax-figure, echo = F, fig.cap = "\\label{fig:syntax-figure}The Basic Syntax of R"}
+knitr::include_graphics("images/syntax.png")
+```
+
+The function mean generates the arithmetic mean of an input object. The object needs to be specified inside of the function brackets as the x argument, in this case we define x = df . Last, we assign the result of this function for later us via the <- operator to an object which we decided to call object.
+In other words, we create a new object that can be further manipulated and contains information about the mean of a previously created object "x". This structure represents the foundation of most operations in R.
+Instead calling the mean function as above one could manually add all values of x dividing it by the number of x values. Nevertheless, this would be very cumbersome. For this reason, functions (pre-assembled lines of code) exist to reduce the amount of coding necessary. These functions can be bundled into packages, which is the main appeal of R as a statistical tool because community developed functions are available from a central repository called CRAN in the form of packages. These packages can be installed in R with the command install.packages("package name"). It is important that you only need to install a package once on your machine, expect if you want to upgrade the package. Generally speaking you regularly want to upgrade your packages, but keep a permanent note in your code which version of a package you used when it was initially written.
+
+## Rmarkdown and You
+
+Rmarkdown merges two very powerful ideas together; first R as a coding based tool to make your analysis repeatable, and markdown an approach to writing text that allows for the direct embedding of code output. This is an immensely powerful approach that can be used for everything, from writing research papers, to writting complex technical documentation (this whole book is written in Rmarkdown), to even creating whole websites (for example [my website](https://johannes-karl.com/) is largely written using Rmarkdown). You might think that this is only a nice technical trick for people really into coding, but in reality it addresses a central problem of statistical analysis. The majority of errors in quantitative research papers (some meta-researchers indiate values as high as 80%) are human errors in transcribing values from the statistical software they are using to the final document (for a marginally entertaining story around this issue see this [post](https://www.mcgill.ca/oss/article/food-health-news-quirky-science/setting-facts-straight-about-iron-spinach)).  
+
+## How to keep track of everything
+
+Now that we have our repeatable code, our repeatable document, the last thing we need is a transparent way to document what we are doing and share with others. For that we come to our last tool that in a similar confusing way to R and Rstudio is split in to parts; git and Github.
