@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://vuw-psych-447.netlify.app/about.html</loc>
-    <lastmod>2021-02-16T00:45:21+13:00</lastmod>
+    <lastmod>2021-02-19T18:39:16+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/assessments.html</loc>
-    <lastmod>2021-02-19T18:15:03+13:00</lastmod>
+    <lastmod>2021-02-19T18:37:25+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/</loc>
-    <lastmod>2021-02-15T23:59:40+13:00</lastmod>
+    <lastmod>2021-02-19T18:34:58+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/posts/2_1/</loc>
     <lastmod>2021-02-19T18:33:46+13:00</lastmod>
   </url>
   <url>
+    <loc>https://vuw-psych-447.netlify.app/posts/1_1/</loc>
+    <lastmod>2021-02-19T18:36:16+13:00</lastmod>
+  </url>
+  <url>
     <loc>https://vuw-psych-447.netlify.app/posts/1_2/</loc>
-    <lastmod>2021-02-16T00:46:35+13:00</lastmod>
+    <lastmod>2021-02-19T18:35:55+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/posts/1_3/</loc>
-    <lastmod>2021-02-19T18:22:15+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/1_1/</loc>
-    <lastmod>2021-02-19T18:18:04+13:00</lastmod>
+    <lastmod>2021-02-19T18:36:56+13:00</lastmod>
   </url>
 </urlset>
