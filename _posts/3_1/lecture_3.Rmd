@@ -1,5 +1,5 @@
 ---
-title: "Visualisation and Coding"
+title: "Visualisation & Coding Part 2"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -26,7 +26,7 @@ output:
 
 
 ```{r  echo=F}
-knitr::include_graphics("op.jpg")
+knitr::include_graphics("timeline.png")
 ```
 
 

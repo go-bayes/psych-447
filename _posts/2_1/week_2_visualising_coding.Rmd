@@ -1,5 +1,5 @@
 ---
-title: "Visualisation and Coding"
+title: "Visualisation & Coding Basics Part 1"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -26,7 +26,7 @@ output:
 
 
 ```{r spss-old, echo=F}
-knitr::include_graphics("timeline.PNG")
+knitr::include_graphics("op.jpg")
 ```
 
 
