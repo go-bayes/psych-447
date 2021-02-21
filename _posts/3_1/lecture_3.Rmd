@@ -19,9 +19,6 @@ output:
     toc: true
 ---
 
-
-
-
 ## Data transformation
 
 
