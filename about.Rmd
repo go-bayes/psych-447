@@ -16,7 +16,6 @@ author:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-
 ## Class times and locations
 **Lectures**
 Tuesdays: 4:10 - 5:00 pm
