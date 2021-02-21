@@ -78,7 +78,7 @@ The final project will be due 31st May 2021. Eventually, you will find materials
 
 ## Communication of additional information and submissions
 
-Lectures will be posted to: https://go-bayes.github.io/psych-423/
+Lectures will be posted to: https://github.com/go-bayes/psych-447
 
 Course-related notices will appear on VUW Blackboard
 
@@ -95,7 +95,7 @@ Teaching dates: 22 February to 28 May
 
 Mid-trimester break: 5 April to 18 April
 
-Last assessment item due: Final assessment (project) will need to be submitted on 31st May (see [Assessments](https://go-bayes.github.io/psych-423/assessments.html))
+Last assessment item due: Final assessment (project) will need to be submitted on 31st May (see [Assessments](https://go-bayes.github.io/psych-447/assessments.html))
 
 Study Examination/Assessment Period: 
 Note: students who enrol in courses with examinations must be able to attend an examination at the University at any time during the scheduled examination period.
@@ -240,91 +240,91 @@ The focus of these assignments will be on *thinking* about coding and statistics
 The course culminates with an in-depth project in which students work on data from their own area of interest combining R with contemporary tools of collaborative (GitHub) and open science (OSF). Student presentations will afford students with the opportunity to present their projects and offer each other constructive feedback.
 
 
-## Outline
+<!-- ## Outline -->
 
 
-### Week 1 FEB 23 (a): Introduction: R and you
+<!-- ### Week 1 FEB 23 (a): Introduction: R and you -->
 
-  -	Who will benefit from this course?
-  -	What is R? 
-  -	Downloading R and Rstudio (what is the difference).
-  - What is GitHub
-  - Why do I need these tools? 
+<!--   -	Who will benefit from this course? -->
+<!--   -	What is R?  -->
+<!--   -	Downloading R and Rstudio (what is the difference). -->
+<!--   - What is GitHub -->
+<!--   - Why do I need these tools?  -->
 
-### Week 1 (b): R basics
+<!-- ### Week 1 (b): R basics -->
 
-  -	Using R as a calculator
-  -	Creating (and saving) a project using Rstudio
-  - Loading Data
-  -	The basics of your workflow
+<!--   -	Using R as a calculator -->
+<!--   -	Creating (and saving) a project using Rstudio -->
+<!--   - Loading Data -->
+<!--   -	The basics of your workflow -->
 
-### Week 1 (c): R Markdown
-  -	The elements of Rmarkdown   
-  -	Your first Rmarkdown document
-  -	GitHub 
-  -	Packages
+<!-- ### Week 1 (c): R Markdown -->
+<!--   -	The elements of Rmarkdown    -->
+<!--   -	Your first Rmarkdown document -->
+<!--   -	GitHub  -->
+<!--   -	Packages -->
 
-### Week 2 (a): Data visualisation
+<!-- ### Week 2 (a): Data visualisation -->
 
-  -	Data visualisation with ggplot2 
-  -	Creating a graph
-  -	Layers
-  -	Facets
-  -	Understanding your data through graphs…
-
-
-[USEFUL](https://m-clark.github.io/exploratory-data-analysis-tools/)
-
-### Week 2 (b): Coding basics
-
-  -	Basic types  of data in R
-    - Numbers and integers 
-  -	Factors (ordered, unordered)
-  -	Characters
-  -	Lists, Arrays, Matrices & data frames
-  -	Assignment 
-    - Functions
-    - Coding etiquette… etc 
-
-### Week 3 (a): Data transformation
-
-  -	Pipe operators
-  -	Select, filter, operators, missing values, arrange.
-  -	Mutate & data transformation
-  -	Tidy data
-
-### Week 3 (b):  Rolling your own functions: when, why, and how
+<!--   -	Data visualisation with ggplot2  -->
+<!--   -	Creating a graph -->
+<!--   -	Layers -->
+<!--   -	Facets -->
+<!--   -	Understanding your data through graphs… -->
 
 
-### Week 4: CONSOLODATION OF SKILLS IN R 
+<!-- [USEFUL](https://m-clark.github.io/exploratory-data-analysis-tools/) -->
 
-### Week 5 (a):  Samples and parameters: observation and inference
+<!-- ### Week 2 (b): Coding basics -->
 
-### Week 5 (b): Linear and non-linear relationships with one co-variate
+<!--   -	Basic types  of data in R -->
+<!--     - Numbers and integers  -->
+<!--   -	Factors (ordered, unordered) -->
+<!--   -	Characters -->
+<!--   -	Lists, Arrays, Matrices & data frames -->
+<!--   -	Assignment  -->
+<!--     - Functions -->
+<!--     - Coding etiquette… etc  -->
 
-### Week 6 (a): Two covariates & the spectre of confounding
+<!-- ### Week 3 (a): Data transformation -->
 
-### Week 6 (b): An introduction to causal DAGS (using ggdag) 
+<!--   -	Pipe operators -->
+<!--   -	Select, filter, operators, missing values, arrange. -->
+<!--   -	Mutate & data transformation -->
+<!--   -	Tidy data -->
 
-### Week 7 (a): Modelling binary data  
+<!-- ### Week 3 (b):  Rolling your own functions: when, why, and how -->
 
-### Week 7 (b): Modelling count data + zero inflation
 
-### Week 8 (a): Introduction to multilevel models: group-level intercepts 
+<!-- ### Week 4: Consolidation of skills in R  -->
 
-### Week 8 (b): Introduction to multilevel models: group-level slopes
+<!-- ### Week 5 (a):  Samples and parameters: observation and inference -->
 
-### Week 9 (a): Multivariate multilevel regression.
+<!-- ### Week 5 (b): Linear and non-linear relationships with one co-variate -->
 
-### Week 9 (b): Longitudinal inference: within and between-individual effects, the when and when-not of mediation.
+<!-- ### Week 6 (a): Two covariates & the spectre of confounding -->
 
-### Week 10 (a): Missing data and other measurement opportunities.
+<!-- ### Week 6 (b): An introduction to causal DAGS (using ggdag)  -->
 
-### Week 10 (b):  CONSOLIDATION OF STATISTICS
+<!-- ### Week 7 (a): Modelling binary data   -->
 
-### Week 11: Student presentations of projects: using Rstudio & GitHub/OSF
+<!-- ### Week 7 (b): Modelling count data + zero inflation -->
 
-### Week 12:  Student presentations of projects: using Rstudio & GitHub/OSF
+<!-- ### Week 8 (a): Introduction to multilevel models: group-level intercepts  -->
+
+<!-- ### Week 8 (b): Introduction to multilevel models: group-level slopes -->
+
+<!-- ### Week 9 (a): Multivariate multilevel regression. -->
+
+<!-- ### Week 9 (b): Longitudinal inference: within and between-individual effects, the when and when-not of mediation. -->
+
+<!-- ### Week 10 (a): Missing data and other measurement opportunities. -->
+
+<!-- ### Week 10 (b):  CONSOLIDATION OF STATISTICS -->
+
+<!-- ### Week 11: Student presentations of projects: using Rstudio & GitHub/OSF -->
+
+<!-- ### Week 12:  Student presentations of projects: using Rstudio & GitHub/OSF -->
 
 
 

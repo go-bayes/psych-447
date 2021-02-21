@@ -1,5 +1,233 @@
 [
   {
+    "path": "posts/12_1/",
+    "title": "Bayesian inference and consolidation of statistics",
+    "description": "\"With an excursion into the whens and when nots of mediation\"",
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-05-25",
+    "categories": [],
+    "contents": "\n\nContents\n\n\n\n\n\nUncertainty\nFuture Horizons\n\n\n\n",
+    "preview": "posts/12_1/distill-preview.png",
+    "last_modified": "2021-02-21T23:49:42+13:00",
+    "input_file": {},
+    "preview_width": 1023,
+    "preview_height": 876
+  },
+  {
+    "path": "posts/11_1/",
+    "title": "Missing Data and Measurement",
+    "description": "\"With an excursion into the whens and when nots of mediation\"",
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-05-18",
+    "categories": [],
+    "contents": "\n\nContents\n\n\n\n\n\nRemember: parameters are not observed\nMeasurement error\nMissing eata\n\n\n\n",
+    "preview": "posts/11_1/distill-preview.png",
+    "last_modified": "2021-02-21T23:47:21+13:00",
+    "input_file": {},
+    "preview_width": 1106,
+    "preview_height": 553
+  },
+  {
+    "path": "posts/10_1/",
+    "title": "Longitudinal data: within and between-individual effects",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-05-11",
+    "categories": [],
+    "contents": "\n\nContents\nLongitudional data and the multi-level model\nMediation from the vantage point of causal inference (when and when not)\n\nLongitudional data and the multi-level model\n\n\n\nMediation from the vantage point of causal inference (when and when not)\n\n\n\n",
+    "preview": "posts/10_1/op2.png",
+    "last_modified": "2021-02-21T23:41:58+13:00",
+    "input_file": {},
+    "preview_width": 1800,
+    "preview_height": 600
+  },
+  {
+    "path": "posts/9_1/",
+    "title": "Introduction to multilevel models: group-level slopes",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-05-04",
+    "categories": [],
+    "contents": "\n\nContents\nCovariance\n\nCovariance\n\n\n\n\n\n\n",
+    "preview": "posts/9_1/op.png",
+    "last_modified": "2021-02-21T23:39:28+13:00",
+    "input_file": {},
+    "preview_width": 1920,
+    "preview_height": 1536
+  },
+  {
+    "path": "posts/8_1/",
+    "title": "Introduction to multilevel models: group-level intercepts",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-04-27",
+    "categories": [],
+    "contents": "\n\nContents\nPartial pooling\nRandom intercepts\n\nPartial pooling\nRandom intercepts\n\n\n\n\n\n\n",
+    "preview": "posts/8_1/op2.png",
+    "last_modified": "2021-02-21T23:38:41+13:00",
+    "input_file": {},
+    "preview_width": 2304,
+    "preview_height": 1536
+  },
+  {
+    "path": "posts/7_1/",
+    "title": "Modelling binary and count data",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-04-20",
+    "categories": [],
+    "contents": "\n\nContents\nBinary Data\nCount data\nZero infalted data\nOrdinal data\n\nBinary Data\nCount data\nZero infalted data\nOrdinal data\n\n\n\n\n\n\n",
+    "preview": "posts/7_1/op.png",
+    "last_modified": "2021-02-21T23:32:04+13:00",
+    "input_file": {},
+    "preview_width": 1000,
+    "preview_height": 1000
+  },
+  {
+    "path": "posts/6_1/",
+    "title": "An introduction to directed acyclic graphs ",
+    "description": "\"Control is killing your model\"",
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-03-30",
+    "categories": [],
+    "contents": "\n\nContents\nWhat is causal confounding?\nThe difference between prediction and explanation?\n\nWhat is causal confounding?\n\n\n\nThe difference between prediction and explanation?\n\n\n\n",
+    "preview": "posts/6_1/op2.png",
+    "last_modified": "2021-02-21T23:31:22+13:00",
+    "input_file": {},
+    "preview_width": 1200,
+    "preview_height": 800
+  },
+  {
+    "path": "posts/4_1/",
+    "title": "Consolidation of Skills",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-03-16",
+    "categories": [],
+    "contents": "\n\nContents\nReview\n\nReview\n\n\n\n\n\n\n",
+    "preview": "posts/4_1/op.png",
+    "last_modified": "2021-02-21T23:50:16+13:00",
+    "input_file": {},
+    "preview_width": 10241,
+    "preview_height": 8450
+  },
+  {
+    "path": "posts/3_1/",
+    "title": "Visualisation and Coding",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-03-09",
+    "categories": [],
+    "contents": "\n\nContents\nData transformation\nRolling your own functions: when, why, how\n\nData transformation\n\n\n\nRolling your own functions: when, why, how\n\n\n\n",
+    "preview": "posts/3_1/op.jpg",
+    "last_modified": "2021-02-21T23:23:28+13:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/5_1/",
+    "title": "Samples, paramaters, and elements of a linear model",
+    "description": "\"What is a statistical model?\"",
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-03-09",
+    "categories": [],
+    "contents": "\n\nContents\n\n\nSamples and parameters: observation and inference\n\n\n\nLinear relationships with one co-variate\nNon-linear relationships with one co-variate\n\n\n\n",
+    "preview": "posts/5_1/distill-preview.png",
+    "last_modified": "2021-02-21T23:50:31+13:00",
+    "input_file": {},
+    "preview_width": 2500,
+    "preview_height": 2500
+  },
+  {
     "path": "posts/2_1/",
     "title": "Visualisation and Coding",
     "description": {},

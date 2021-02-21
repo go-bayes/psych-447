@@ -1,0 +1,35 @@
+---
+title: "Visualisation and Coding"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
+date: 2021-MAR-9
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+---
+
+
+
+
+## Data transformation
+
+
+```{r  echo=F}
+knitr::include_graphics("op.jpg")
+```
+
+
+# Rolling your own functions: when, why, how
+
+

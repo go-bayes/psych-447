@@ -1,0 +1,34 @@
+---
+title: "Samples, paramaters, and elements of a linear model"
+description: |
+  "What is a statistical model?" 
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
+date: 2021-MAR-9
+output:
+  distill::distill_article:
+  self_contained: false
+toc: true
+---
+
+
+
+## Samples and parameters: observation and inference
+
+```{r figopen, echo=F}
+knitr::include_graphics("op.png")
+```
+
+
+## Linear relationships with one co-variate
+
+## Non-linear relationships with one co-variate
