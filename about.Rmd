@@ -21,6 +21,10 @@ knitr::opts_chunk$set(echo = FALSE)
 Tuesdays: 4:10 - 5:00 pm
 Room: EA402  
 
+**Office hours**
+Thursdays 11-11:50
+Room: EA421 (or by appointment)
+
 **Workshops**
 Wednesdays: 3:30 -- 5:20 PM
 Room: EA402
