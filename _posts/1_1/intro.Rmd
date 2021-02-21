@@ -316,7 +316,6 @@ The majority of errors in quantitative research papers (some meta-researchers in
 
 Now that we have our repeatable code, our repeatable document, the last thing we need is a transparent way to document what we are doing and share with others. For that we come to our last tool that in a similar confusing way to R and Rstudio is split in to parts; git and Github.
 
-
 ## Some useful sites
 
 [coding tips](https://holtzy.github.io/Pimp-my-rmd/)
