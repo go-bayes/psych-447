@@ -1,0 +1,14 @@
+# Notes
+
+
+Useful for ggplot
+https://ggplot2-book.org/annotations.html
+
+https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/
+
+
+https://openresearchsoftware.metajnl.com/articles/10.5334/jors.160/
+
+
+## Mediation package
+regmedint
