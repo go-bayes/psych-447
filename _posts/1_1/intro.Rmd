@@ -329,7 +329,6 @@ Now that we have our repeatable code, our repeatable document, the last thing we
 <!-- xaringanExtra::embed_xaringan(url = "slides.html", ratio = "4:3") -->
 <!-- ``` -->
 
-
 ## Recommended reading
 
 
