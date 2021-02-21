@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-subtitle: "R and You"
+subtitle: "R and Rmardown"
 author: "Johannes Karl and Joseph Bulbulia, Victoria University"
 date: "2021-22-02"
 output: 
@@ -32,15 +32,6 @@ opts_chunk$set(
 color_scheme_set("darkgray")
 ```
 
-# A gentle introduction to R
- - This
- - That
- - The Other
- 
-## What is it? {.build}
- - This 
- - That
- 
 
 
 
