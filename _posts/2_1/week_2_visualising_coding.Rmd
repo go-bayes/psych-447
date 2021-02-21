@@ -21,6 +21,13 @@ output:
 
 
 
+## To do:
+
+
+A very good, and free introduction to [R for Data Science](https://r4ds.had.co.nz/introduction.html)
+Chapters: 2-8 
+
+
 
 ## Data visualisation with ggplot2
 

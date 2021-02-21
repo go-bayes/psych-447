@@ -1,5 +1,5 @@
 ---
-title: "Course Philosophy"
+title: "Course basics"
 description: |
   Goals: (1) Download Rstudio (2) Get Git (3) Essentials of Rmarkdown
 author:
@@ -44,7 +44,9 @@ colorize <- function(x, color) {
 
 
 
-## TO DO: download R
+## To do: 
+
+### Download R
 
 R is freely available for download at: 
 
@@ -58,7 +60,7 @@ knitr::include_graphics("Rlogo.png")
 ```
 </aside>
 
-## TO DO: download R-studio desktop
+### Download R-studio desktop
 
 Rstudio desktop is also freely available for download at:
 
@@ -73,9 +75,23 @@ knitr::include_graphics("rs.png")
 ```
 </aside>
 
+### Read about Rmarkdown 
+
+[Rmarkdown slideshow by D Navarro](https://slides.djnavarro.net/starting-rmarkdown/#8)
+
+
+### Recommended work
+
+This is a thorough rmarkdown workshop. You might quickly feel lost. Don't worry about. We only expect you to acquire the basics this week. 
+
+[Rmarkdown workshop](https://resulumit.com/teaching/rmd_workshop.html#18)
+
+
+
 ##  Who is this course for? 
 
 For those of you who always wanted to learn R but never thought they could, this course is for you. 
+
 
 
 ## How will you benefit from this course?
@@ -154,15 +170,6 @@ knitr::include_graphics("spss-code.PNG")
 
 Additionally, some changes made by researchers were extremely difficult to account for. For example, when a researcher recoded a variable say reversing its direction there was no way of knowing that this had taken place if you later looked at the data set. Together with the rise in complex analysis in psychology this has led to a steady decline in the use of SPSS and most psychology departments, as well as private, and governmental stake holder now require a certain fluency in R or similar coding based languages.
 
-
-
-
-
-
-
-## TO DO
-
-Read Daniell Navarro's brief account of Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)
 
 
 ## Markdown is a format for writing
@@ -300,6 +307,53 @@ It is important that you only need to install a package once on your machine, ex
 
 # PART III Rmarkdown and You
 
+
+## TO DO
+
+Read Daniell Navarro's brief account of Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)
+
+
+## Markdown is a format for writing
+
+Rmarkdown is a format for combing code with ordinary writing.
+
+
+The Rmarkdown code we used to write the opening paragraph looks like this.
+
+<style>
+div.blue{ background-color:#e6f0ff}
+</style>
+<div class = "blue"> 
+~~~
+## TO DO
+Read Danielle Navarro's brief account of 
+Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)
+~~~ 
+</div>
+
+The: 
+
+>`##` 
+
+makes a heading. We write as ordinary,
+
+> Read Danielle Navarro's brief account of  Rmarkdown
+
+and we include a link by typing
+
+>`[here](https://slides.djnavarro.net/starting-rmarkdown/#8)`
+
+Think of rmarkdown as writing in word but without having to use your mouse all the time. The really great thing about Rmarkdown is that you can write document and do the analysis in a single stop shop.  Figure \@ref(fig:sf) shows Rmarkdown in the rconsole (upper left).
+
+
+
+```{r sf, fig.cap ="\\label{fig:sf}Screenshot of Rmarkdown document (upper left)", echo=F}
+knitr::include_graphics("rmark.png")
+```
+
+
+## Why is Rmarkdown useful? 
+
 Rmarkdown merges two very powerful ideas: 
   1. R as a coding based tool to make your analysis repeatable;
   2. markdown an approach to writing text that allows for the direct embedding of code output. 
@@ -311,6 +365,7 @@ You will be creating a website similar to [Johannes Karl'swebsite](https://johan
 You might think that writing in R markdown is only a nice technical trick for people really into coding, but in reality it addresses a central problem of statistical analysis. 
 
 The majority of errors in quantitative research papers (some meta-researchers indiate values as high as 80%) are human errors in transcribing values from the statistical software they are using to the final document (for a marginally entertaining story around this issue see this [post](https://www.mcgill.ca/oss/article/food-health-news-quirky-science/setting-facts-straight-about-iron-spinach)).  
+
 
 ## How to keep track of everything
 
@@ -328,9 +383,69 @@ Now that we have our repeatable code, our repeatable document, the last thing we
 <!-- xaringanExtra::embed_xaringan(url = "slides.html", ratio = "4:3") -->
 <!-- ``` -->
 
-## Recommended reading
+
+# Weekly problem sets
+
+** Note we will be working with you in the first week's workshop to get you through this assessment task. We don't expect that you will be able to do any of this before the first week. 
 
 
-A very good, and free introduction to [R for Data Science](https://r4ds.had.co.nz/introduction.html)
+## Task 1 Apply for a github education account 
 
-<!-- Some descent Rstudio tutorials [here](https://bcrf.biochem.wisc.edu/all-tutorials/tutorial-materials-r-rstudio/) -->
+  - apply here: https://education.github.com/pack/offers
+  - set up a github account. 
+  - choose a username that will be OK for professional purposes (e.g. your name)
+
+## Task 2 Download R for free here:
+
+https://www.r-project.org
+
+## Task 3 Download Rstudio for free here:
+
+https://rstudio.com/products/rstudio/download/#download
+
+Update R and Rstudio to the latest versions.  Don't worry if you have problems, we'll be working through your problems in the first week, and throughout the course. We assume no prior experience with R or Git/GitHub
+
+
+## Task 4 Create your first repository
+  
+
+##  Task 5 Commit your first  Rmarkdown journal
+
+  - Create your first Rmarkdown document, and title it "My Journal" 
+  - Record your impressions of the process of getting set up with RStudio and GitHub
+  - Record any help you have offered to other people, and any help you have sought from other people, along the way. 
+  - Save the document and commit it to GitHub. 
+  - Note: set your github repository to private if you wish the account to be private
+
+
+## Submit to Blackboard
+
+  - Either a link to your repository, or the document you created in Rmarkdown (HTML or PDF) 
+  - This journal will count as both your weekly journal entry and your weekly workbook.  
+
+
+## Grade points
+
+- Your Rmarkdown document must include eachig of the following 
+
+1.
+> ## Heading
+
+2.
+> ~~crossed out text~~
+
+3.
+> link to a [website](https://www.theonion.com/)
+
+4.
+> A footnote ^[Humanities scholars love footnotes.]
+
+5. 
+> An inspirational quote
+
+6. 
+> BONUS: figure out how to add a bibliographic citation, such as [@darwin1964origin]
+
+
+
+

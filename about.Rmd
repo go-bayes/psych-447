@@ -49,7 +49,7 @@ Weekly lectures and course resources are located [here](https://go-bayes.github.
 
 Weekly problem sets are located [here](https://go-bayes.github.io/psych-423/assessments.html)
 
-Any readings will be linked at to the lecture link. If there are no readings that week we will specify: **no readings**
+Any readings will be linked in to the lecture page for the reelvant day. If there are no readings that week we will specify: **no readings**
 
 
 ## Assements 
@@ -57,22 +57,24 @@ Any readings will be linked at to the lecture link. If there are no readings tha
 1. **Weekly journal entries** (about 100 - 200 words) 
 (10 X journals = **10%**)
 
-These are **due every Friday** during term at midnight. Ordinarily we expect you to submit these on your GitHub page, however, we can make special accommodation for those who prefer VUW blackboard (see us).
+These are **due every Friday** during term at midnight. All submissions will be on Blackboard, but you may link a submission to your GitHub page. 
 
 Format: you will document your insights, questions, and frustrations in a weekly journal.  This record should include how you have sought help to address your questions, and how you have offered help. The purpose of the journals are to cultivate skills for interacting with the R community, and for documenting the research process. 
   
 2. **Weekly workbook problem sets** 
 
-You will find the problem sets [Here](https://go-bayes.github.io/psych-447/assessments.html). 
+You will find the problem sets at the end of a given week's  lecture page. 
 (10 x problem sets **= 50%**)
 
-These are **due every Friday** during term at midnight. Ordinarily we expect you to submit these on your GitHub page, however, we can make special accommodation for those who prefer VUW blackboard (see us).
+We will have 12 problem sets, but you will only be marked on your best 10. This means there are two weeks during the trimester in which you will not need to do the problem sets
+
+Problem sets are also **due every Friday** during term at midnight. Ordinarily we expect you to submit these on your GitHub page, however, we can make special accommodation for those who prefer VUW blackboard (see us).
 
 
 3. **Final project** consisting of:
 
   - 1 x short report of an analysis of a research question using a dataset (problem and dataset to be developed with your instructors by March 30th): 20%
-  - 1 x 7-minute class presentation of your report: 10%
+  - 1 x 7-minute **video** presentation of your report: 10% (assessment to be discussed in our labs)
   - 1 x github website profiling your CV: 10%
   
   **= 40%**
