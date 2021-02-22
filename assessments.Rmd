@@ -39,7 +39,7 @@ https://go-bayes.github.io/psych-447/posts/1_1/
 
 We will have 12 problem sets, but you will only be marked on your best 10. This means there are two weeks during the trimester in which you will not need to do the problem sets
 
-Problem sets are also **due every Friday** during term at midnight. Ordinarily we expect you to submit these on your GitHub page, however, we can make special accommodation for those who prefer VUW blackboard (see us).
+Problem sets are also **due every Friday** during term at midnight. Submit on Blackboard (e.g. a url to your GitHub page).
 
 
 3. **Final project** consisting of:

@@ -5,9 +5,11 @@ author: "Joseph Bulbulia Victoria University"
 date: "2021-FEB-23"
 output: 
   ioslides_presentation:
-    incremental: true
+    incremental: false
     transition: 0
+    widescreen: true
     smaller: true
+    css: style.css
 ---
 
 ```{r setup, include=FALSE}
@@ -32,7 +34,8 @@ opts_chunk$set(
 #color_scheme_set("darkgray")
 ```
 
-# Mihi
+## Mihi
+
 - Tihe mauri ora! 	  
 - Ko (Uber) te waka	
 - Ko (Chestnut Ridge
@@ -41,11 +44,118 @@ opts_chunk$set(
 - Ko (Bulbulia) te hapū 	
 - Ko (Joseph) ahau
 
- 
-## What is it? {.build}
- - This 
- - That
- 
+
+## Your trial by fire in R
+
+```{r out.width = "700px"}
+knitr::include_graphics("sp_firewalk.gif")
+```
+
+<div class="notes">
+I started learning R sometime ~ 2009. 
+The process started at the San Pedro Firewalking Study (https://www.pnas.org/content/108/20/8514)
+</div>
+
+## Emotonal expressions as signals?
+
+```{r  out.width = "700px"}
+knitr::include_graphics("fw.png")
+```
 
 
+## Dynamics? {.flexbox .vcenter}
+
+```{r out.width = "1000px", }
+knitr::include_graphics("faces.png")
+```
+
+
+## Two years over the coals {.flexbox .vcenter}
+
+
+
+```{r out.width = "1000px"}
+knitr::include_graphics("article_frontiers.jpg")
+```
+
+
+## What happened? 
+
+
+
+```{r out.width = "500px"}
+knitr::include_graphics("frontiers.jpg")
+```
+
+
+## Topics
+
+<div style="float: left; width: 50%;">
+1. Course basics
+2. Coding basics
+3. Graphs
+4. Consolidation of basic coding skills in R
+5. (non)Linear Regression with 1 x covariate/2 x covariates
+6. Confounding & causal dags 
+</div>
+
+<div style="float: right; width: 50%;">
+7.  Binary, count, ordinal data
+8.  Multilevel models: group-level intercept
+9.  Multilevel models: group-level slopes
+10. Timeseries data: within/between effects
+11. Measurement + missing data
+12. Bayesian inference/consolidation of statistics
+</div>
+
+
+## Where to find material
+
+Weekly lectures and course resources are located [here](https://go-bayes.github.io/psych-447/)
+
+**Problem sets are located at the *end* of each week's lecture page.**
+
+Any readings will be linked in to the lecture page for the relevant day. If there are no readings that week we will specify: **no readings**
+
+
+## Journals
+<div style="float: left; width: 50%;">
+-  **Weekly journal entries** (about 100 - 200 words) 
+(10 X journals = **10%**)
+
+- These are **due every Friday** during term at midnight. 
+
+- All submissions will be on Blackboard, but you may link the Blackboard submission to your GitHub page. (Not our rules!)
+</div>
+
+<div style="float: right; width: 50%;">
+
+
+- Format: document your insights, questions, and frustrations in a weekly journal.  
+
+- This record should include how you have sought help to address your questions, and how you have offered help. 
+
+- **The purpose of the journals are to cultivate skills for interacting with the R community, and for documenting the research process.**
+</div>
+
+## Weekly problem sets
+
+- You will find the problem sets at the end of a given week's lecture page.  
+E.g. the first problem set is at the end of this page:
+https://go-bayes.github.io/psych-447/posts/1_1/
+
+- (10 x problem sets **= 50%**)
+
+- There will be 12 problem sets, but you will only be marked on your best 10. 
+
+- Problem sets are **due every Friday** during term at midnight. 
+
+-- Ordinarily we expect you to submit these on Blackboard
+
+
+
+## Assements 
+
+See information under the `Assessments` url:
+https://go-bayes.github.io/psych-447/assessments.html
 
