@@ -1,7 +1,7 @@
 ---
 title: "Course basics"
 description: |
-  Goals: (1) Download Rstudio (2) Get Git (3) Essentials of Rmarkdown
+  Goals: (1) Download Rstudio (2) Get Git (3) Teach you the essentials of Rmarkdown (4) Integrate (1)-(3).
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
@@ -19,7 +19,6 @@ output:
     self_contained: false
     toc: true
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE, cache = TRUE, fig.align = 'center', message = FALSE
@@ -45,17 +44,13 @@ colorize <- function(x, color) {
 ### Download R
 
 R is freely available for download at:
-
 <https://www.r-project.org/>
-
 Please make sure that you have a current version of R-studio desktop on your machine
 
 <aside>
-
 ```{r rlogo, echo=F}
 knitr::include_graphics("Rlogo.png")
 ```
-
 </aside>
 
 ### Download R-Studio desktop
@@ -67,11 +62,9 @@ Rstudio desktop is also freely available for download at:
 Please make sure that you have the current version of R-studio desktop on your machine
 
 <aside>
-
 ```{r rstudiologo, echo=F}
 knitr::include_graphics("rs.png")
 ```
-
 </aside>
 
 ### Read about Rmarkdown
@@ -84,19 +77,15 @@ This is a thorough rmarkdown workshop. You might quickly feel lost. Don't worry 
 
 [Rmarkdown workshop](https://resulumit.com/teaching/rmd_workshop.html#18)
 
-## R and you
-
-We're excited to be teaching you R because we believe R will:
-
--   Provide you with a resource and community for life-long learning
--   Enable you to be come a more reflective and conscientious data scientist
--   Allow you to become more effective as a data scientist.
-
-What R will not do:
-
--   There's no substitute for **thinking**
--   This course isn't about R. It is an introduction to graduate level statistical science using R
--   Your workflow can help your thinking, but it is no substitute for thinking.
+<!-- ## R and you -->
+<!-- We're excited to be teaching you statistics in R because we believe R will: -->
+<!-- -   Provide you with a resource and community for life-long learning -->
+<!-- -   Enable you to be come a more reflective and conscientious data scientist -->
+<!-- -   Allow you to become more effective as a data scientist. -->
+<!-- What R will not do: -->
+<!-- -   There's no substitute for **thinking** -->
+<!-- -   This course isn't about R. It is an introduction to graduate level statistical science using R -->
+<!-- -   Your workflow can help your thinking, but it is no substitute for thinking. -->
 
 ### Who is this course for?
 
@@ -125,7 +114,7 @@ Statistical skills:
 4.  learn how to avoid common modelling pitfalls
 5.  learn how to improve your inference using multi-level models
 
-### Our approach
+## Our approach to teaching and learning
 
 <!-- This course is designed to develop your skills for independent learning. Independent learning is important because research tools are constantly changing, To be an applied researcher requires a combination of **modelling skills**, **analytic skills**, **creativity**, and **reasoning**. This is all in addition to the specialist scientific knowledge that forms the backbone of any scientific research programme. -->
 
@@ -135,13 +124,20 @@ This course is designed to provide you with basic understanding, useful tips, an
 
 ## What is R?
 
+### In a nutshell
 R is a free programming language and software environment for statistical computing (for download links see here: [Windows](https://cran.r-project.org/bin/windows/base/), [Mac](https://cran.r-project.org/bin/macosx/)).
 
+### History 
+
 R is the brainchild of [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/) and [Robert Gentleman]([https://en.wikipedia.org/wiki/Robert_Gentleman\_(statistician)](https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician)){.uri}. It was created at the University of Auckland, where Ross Ihaka remains a professor of statistics.
+
+### Purpose
 
 R was conceived to be a flexible language for data analysis usable by researchers. Since the initial beta release of R in 2000 the language has gained substantial popularity inside and outside of academia ([have a look at this blog post for an interesting analysis](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)). New versions of R are released periodically and can be downloaded and installed to replace the older R version.
 
 ## What is R Studio?
+
+### The IDE
 
 The are many ways for using R on your computer. For the purposes of getting started, we will be using the Integrated Development Environment (IDE): [R Studio](https://rstudio.com/).
 
@@ -149,19 +145,141 @@ R Studio provides an interface with a number of user-friendly options, including
 
 <!-- There are a wide range of alternative IDEs that allow you to run R code, such as [Atom](https://atom.io/), [Sublime](https://www.sublimetext.com/), or [Visual Studio Code](https://code.visualstudio.com/), but in this course we will use Rstudio as it is the most straightforward for beginners. -->
 
-**Our goal this week is to teach you how to use R-Studio.**
 
-## A quick walk through R Studio with Johannes Karl
+### A quick walk through R Studio
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/haYxa3vWA28" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 </iframe>
 
+
+## GitHub
+
+### What is Git/GitHub? 
+
+Github is a version control system.  It's similar to Google docs, though for code. It is useful for collaboration because code easily breaks. It is only rarely possible to simultaneously work in real time on the same code because it will eventually break. Where and how is not easy to assess. 
+
+A second function of GitHub is that it allows us to reconstruct histories of analysis. This is critical for open and reproducible science. This is the main function that we will be examining here. 
+
+A third function, which pertains to single users, is that when writing code you can rewind and recover from your mistakes. This will save you a whole lot of time in the end.
+
+Note that GitHub has an interface with Rstudio. You will be using GitHub with Rstudio throughout this course. 
+
+
+### Install Git
+
+We suggested installing the educational version because this will allow you to have private repositories. 
+
+If you haven't done that, but want to get started you can open a free account and retrospectively add your educational account later. 
+
+**PRO TIP** Pick a user name that will be OK for professional purposes. If in doubt use your name. 
+
+
+Directions for installing Git can be found [http://github.com](http://github.com)
+
+
+
+### Create a repository 
+
+First create a repository on GitHub
+```{r}
+knitr::include_graphics("git1.gif")
+```
+
+
+### Next copy the location
+
+```{r}
+knitr::include_graphics("git2.gif")
+```
+
+### Then open a new project in Rstudio as a git project
+
+```{r}
+knitr::include_graphics("git3.gif")
+```
+
+
+## Then open an Rmarkdown document, write and save it
+
+
+First, make sure that Rmarkdown is installed:
+
+```{r  message=FALSE, warning=FALSE, echo = TRUE}
+# run this code
+if (!requireNamespace("devtools"))
+  install.packages('devtools')
+devtools::install_github('rstudio/rmarkdown')
+```
+
+
+
+Next, create a document
+
+```{r}
+knitr::include_graphics("git4.gif")
+```
+
+
+Make sure you save your document
+
+Press <kbd>&#8984;</kbd> + <kbd>S</kbd> </kbd>  is the command for "save"
+
+###  Then commit your Rmarkdown document by including a message, and "pushing" to GitHub
+
+
+Note that we don't want want to push .Rproj files to GitHub (this will mess up your collaborations), so I edited my `.gitignore`  file.  
+
+Typically you won't want to be pushing large html files back and forth to GitHub (that can cause GitHub to freeze).
+
+You can edit your gitingore file by adding a `*` like so:
+
+`/*.html`
+
+
+see: https://git-scm.com/docs/gitig
+
+
+
+### Next commit!
+
+
+```{r}
+knitr::include_graphics("git5.gif")
+```
+
+
+Voila!
+
+
+### Extra information
+
+
+#### JB's recommendations for using Git and Rstudio
+
+This is a very good tutorial on github and Rstudio:
+[link](https://github.com/llendway/github_for_collaboration/blob/master/github_for_collaboration.md)
+
+Video
+[link](https:///www.youtube.com/watch?v=QLFc9gw_Hfs)
+
+A very brief setup video for Mac Users
+[Link](https://www.youtube.com/watch?v=-c2uNqEE6-c)
+
+
+
+#### JK's recommendations for using Git and Rstuio
+
+[setup](https://www.youtube.com/watch?v=ub9GfRziCtU)
+
+
 ## RMarkdown
 
 ## What is Rmarkdown?
 
-Rmarkdown is a format for combing code with ordinary writing.
+In the example above we breezed through Rmarkdown without exampling it. What is Rmarkdown? 
+
+Rmarkdown is a format for combining data-analysis with ordinary writing using a simple markup language.
 
 The Rmarkdown code we used to write the opening paragraph looks like this.
 
@@ -204,14 +322,8 @@ You might think that writing in R markdown is only a nice technical trick for pe
 
 The majority of errors in quantitative research papers (some meta-researchers indicate values as high as 80%) are human errors in transcribing values from the statistical software they are using to the final document (for a marginally entertaining story around this issue see this [post](https://www.mcgill.ca/oss/article/food-health-news-quirky-science/setting-facts-straight-about-iron-spinach)).
 
-### GIT how to keep track of everything
-
-Now that we have our repeatable code, our repeatable document, the last thing we need is a transparent way to document what we are doing and share with others. For that we come to our last tool that in a similar confusing way to R and Rstudio is split in to parts; git and Github.
-
-### We'll be going over Git and GitHub in lab this week. For now, read this:
-
+Resources:
 [coding tips](https://holtzy.github.io/Pimp-my-rmd/) 
-
 [Rmarkdown website](https://rmarkdown.rstudio.com/gallery.html)
 
 
@@ -226,12 +338,31 @@ Now that we have our repeatable code, our repeatable document, the last thing we
 
 <!-- ``` -->
 
-### Tips and Tricks (go-bayes)
+
+
+
+<!-- ## GitHub -->
+<!-- Now that we have our repeatable code, our repeatable document, the last thing we need is a transparent way to document what we are doing and share with others. For that we come to our last tool that in a similar confusing way to R and Rstudio is split in to parts; git and Github. -->
+<!-- Rstudio has a great page for getting started: [link](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN) -->
+<!-- ### After you have set up GitHub -->
+<!-- Pushing and pulling your work to your repository is (mostly) straightforward. Remember to: -->
+<!--   - Save your progress -->
+<!--   - Write a commit message -->
+<!--   - Push your commit -->
+<!-- Tips and tricks: -->
+<!--   - Set up GitHub with an  -->
+<!-- JB just uses GitHub desktop, as below: -->
+<!-- ```{r gt-gif, echo=F, message=FALSE, warning=FALSE} -->
+<!-- knitr::include_graphics("gt.gif") -->
+<!-- ``` -->
+
+
+### Tips and tricks (JB)
 
 One day, someone might ask you to collaborate in $\LaTeX$  (pronounced "Lay-Tek").  $\LaTeX$ is a document preparation system developed by Leslie Lamport in the 1980s that uses $\TeX$, a typesetting system that Donald Knuth developed in the 1970s to create mathematical documents.  Writing in LaTeX is only a little more complicated than writing in markdown. For example, instead of writing `# Heading`, `## Subheading`, `## Subsubheading`, you would write `\section{Heading}` `\subsection{Subheading}`, `\subsubsection{Subsubheading}`.  However, the principles of mouseless composition that make Rmarkdown so nice, also make LaTeX nice.  Rmarkdown shares features for bibliographic referencing with LaTeX that we'll cover in later weeks. For now, since we are teaching you about Rmarkdown, we thought it'd be useful to teach about LaTeX too.  Stay tuned for more.
 
 
-### Final thought: why quantitative psychology has to change (Why can't I use SPSS) by Johannes Karl
+### Final thought: why quantitative psychology has to change (Why can't I use SPSS, JK)
 
 Quantitative psychology has long struggled with replicability of it's results both in substantive and also statistical areas. Concerns around these topics have already been raised on works by authors such as Joseph Banks Rhine the founder of modern parapsychology in the 1930s. Numerous authors, even at the time criticized both methods of the experiment and of the analysis [@gulliksenExtraSensoryPerceptionWhat1938]. In modern times, Deryl Bem's article "Feeling the Future" that reported evidence in favor of Extra Sensory Perception revived this debate and led to an increased uptake of Open Science methods. Importantly, this is not only an issue in psychology, but instead affects all quantitative fields such as [biology](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000246), [chemistry](https://www.fosteropenscience.eu/content/what-could-open-science-really-mean-chemistry), and [physics](https://ioppublishing.org/open-access-week-2019/open-science-and-open-physics/). Out of the many issues that are addressed as part of the open science movement (if you are interested in getting active in it have a look at [ANZORN](https://www.anzopenresearch.org/)) we will focus mostly on aspects of reproducability in analysis.
 
@@ -248,36 +379,6 @@ knitr::include_graphics("spss-code.PNG")
 ```
 
 Additionally, some changes made by researchers were extremely difficult to account for. For example, when a researcher recoded a variable say reversing its direction there was no way of knowing that this had taken place if you later looked at the data set. Together with the rise in complex analysis in psychology this has led to a steady decline in the use of SPSS and most psychology departments, as well as private, and governmental stake holder now require a certain fluency in R or similar coding based languages.
-
-## Getting started
-
-First, make sure that Rmarkdown is installed:
-
-```{r  message=FALSE, warning=FALSE, echo = TRUE}
-# run this code
-if (!requireNamespace("devtools"))
-  install.packages('devtools')
-devtools::install_github('rstudio/rmarkdown')
-```
-
-
-
-Next, open a document in Rstudio (File-->New File --Rmarkdown)
-
-Then type away!
-
-```{r rm-gif, echo=F, message=FALSE, warning=FALSE}
-knitr::include_graphics("rm.gif")
-```
-
-
-Make sure you save your document
-
-Press <kbd>&#8984;</kbd> + <kbd>S</kbd> </kbd>  is the command for "save"
-
-
-
-
 
 
 ## Weekly problem sets
