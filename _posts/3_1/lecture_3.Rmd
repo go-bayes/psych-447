@@ -19,14 +19,25 @@ output:
     toc: true
 ---
 
-## Data transformation
 
 
-```{r  echo=F}
-knitr::include_graphics("op2.png")
+## Data visualisation with ggplot2
+
+
+```{r spss-old, echo=F}
+knitr::include_graphics("op.png")
 ```
 
 
-# Rolling your own functions: when, why, how
 
+### Creating a graph
+
+
+### Layers
+
+
+### Facets
+
+
+### Understanding your data through graphs
 

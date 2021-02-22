@@ -73,13 +73,14 @@ Problem sets are also **due every Friday** during term at midnight. Ordinarily w
 
 3. **Final project** consisting of:
 
-  - 1 x short report of an analysis of a research question using a dataset (problem and dataset to be developed with your instructors by March 30th): 20%
-  - 1 x 7-minute **video** presentation of your report: 10% (assessment to be discussed in our labs)
-  - 1 x github website profiling your CV: 10%
+
+  - 1 x short report of an analysis of a research question using a dataset (project due May 31): 35%
+  - 1 x github website profiling your CV (project due May 31): 5%
   
   **= 40%**
 
-The final project will be due 31st May 2021. Eventually, you will find materials to help you with you final project here [TBA](). 
+The final project will be due 31st May 2021. Eventually, you will find materials to help you with you final project on this page [TBA](https://go-bayes.github.io/psych-447/assessments.html). 
+
 
 ## Communication of additional information and submissions
 
@@ -89,9 +90,12 @@ Course-related notices will appear on VUW Blackboard
 
 Any information relating to Psyc 447or any last-minute changes to the course will be posted on Blackboard. 
 
-Written work will be submitted via Github, unless otherwise specified.
+Written work will be submitted via Blackboard, unless otherwise specified.
 
-The written components of the final project is **due every Friday** during term at midnight.
+The problem sets and journal are **due every Friday** during term at midnight.
+
+You will be marked out of your best 10 x submissions for the problem sets 
+Only 10 x journal entries will count.
 
 ## Important dates
 
@@ -207,8 +211,8 @@ Lecture dates are:
   - APRIL 27
   - MAY 4
   - MAY 11
-  - MAY 18: Presentations
-  - MAY 25: Presentations
+  - MAY 18 
+  - MAY 25
 
 ### Attend weekly workshops
 
@@ -240,9 +244,9 @@ Weekly assignments allow you to further develop you skills, and to build the sta
 The focus of these assignments will be on *thinking* about coding and statistics, documenting *requests* for help, and *offers* for help. 
 
 
-### Project
+### Final Project + Github CV
 
-The course culminates with an in-depth project in which students work on data from their own area of interest combining R with contemporary tools of collaborative (GitHub) and open science (OSF). Student presentations will afford students with the opportunity to present their projects and offer each other constructive feedback.
+The course culminates with an in-depth project in which students work on data from their own area of interest combining R with contemporary tools of collaborative (GitHub) and open science (OSF). Student CVs will afford students with the opportunity to present themselves for employers or graduate school admissions committees.
 
 
 <!-- ## Outline -->
@@ -335,6 +339,6 @@ The course culminates with an in-depth project in which students work on data fr
 
 ## Acknowledgments
 
-  -  Some code used in creating this course website comes from: Matti Vuorre (former VUW psych student): https://vuorre.netlify.app/
-  -  Statistical approaches: Richard McElreath's Statistical Rethinking: https://github.com/rmcelreath/stat_rethinking_2020 
+  -  Some code used in creating this course website comes from: Matti Vuorre (former VUW psych student!): https://vuorre.netlify.app/
+  -  Statistical approaches owes a heavy debt to Richard McElreath's Statistical Rethinking: https://github.com/rmcelreath/stat_rethinking_2020 
 

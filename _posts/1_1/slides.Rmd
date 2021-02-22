@@ -1,8 +1,8 @@
 ---
 title: "Introduction"
-subtitle: "Bayesian data analysis and models"
-author: "Johannes Karl and Joseph Bulbulia, Victoria University"
-date: "Methods >> 2021-22-02"
+subtitle: "447: Psychological Science in R"
+author: "Joseph Bulbulia Victoria University"
+date: "2021-FEB-23"
 output: 
   ioslides_presentation:
     incremental: true
@@ -17,8 +17,8 @@ library(here)
 library(knitr)
 library(kableExtra)
 library(ggdist)
-library(bayesplot)
-library(tidyverse)
+#library(bayesplot)
+#library(tidyverse)
 # knitr chunk options
 opts_chunk$set(
   echo = FALSE, 
@@ -29,13 +29,18 @@ opts_chunk$set(
   fig.align = 'center'
   )
 # Bayesplot color theme
-color_scheme_set("darkgray")
+#color_scheme_set("darkgray")
 ```
 
-# A gentle introduction to R
- - This
- - That
- - The Other
+# Mihi
+- Tihe mauri ora! 	  
+- Ko (Uber) te waka	
+- Ko (Chestnut Ridge
+- Ko (Niagra) te awa 	 	
+- Ko (Ameliká) te iwi 		
+- Ko (Bulbulia) te hapū 	
+- Ko (Joseph) ahau
+
  
 ## What is it? {.build}
  - This 

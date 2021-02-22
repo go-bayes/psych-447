@@ -20,19 +20,18 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -52,7 +51,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
@@ -140,7 +139,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["f1.png","intro_files/anchor-4.2.2/anchor.min.js","intro_files/bowser-1.9.3/bowser.min.js","intro_files/distill-2.2.21/template.v2.js","intro_files/fitvids-2.1.1/fitvids.min.js","intro_files/jquery-1.11.3/jquery.min.js","intro_files/popper-2.6.0/popper.min.js","intro_files/tippy-6.2.7/tippy-bundle.umd.min.js","intro_files/tippy-6.2.7/tippy-light-border.css","intro_files/tippy-6.2.7/tippy.css","intro_files/tippy-6.2.7/tippy.umd.min.js","intro_files/webcomponents-2.0.0/webcomponents.js","Rlogo.png","rmark.png","rs.png","slides_1.html","slides.html","spss-code.PNG","spss.PNG","syntax.png","workbook_1.html"]}
+  {"type":"character","attributes":{},"value":["f1.png","intro_files/anchor-4.2.2/anchor.min.js","intro_files/bowser-1.9.3/bowser.min.js","intro_files/distill-2.2.21/template.v2.js","intro_files/fitvids-2.1.1/fitvids.min.js","intro_files/header-attrs-2.6/header-attrs.js","intro_files/header-attrs-2.7.1/header-attrs.js","intro_files/jquery-1.11.3/jquery.min.js","intro_files/popper-2.6.0/popper.min.js","intro_files/tippy-6.2.7/tippy-bundle.umd.min.js","intro_files/tippy-6.2.7/tippy-light-border.css","intro_files/tippy-6.2.7/tippy.css","intro_files/tippy-6.2.7/tippy.umd.min.js","intro_files/webcomponents-2.0.0/webcomponents.js","Rlogo.png","rm.gif","rmark.png","rs.png","slides_1.html","slides.html","spss-code.PNG","spss.PNG","workbook_1.html"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2064,6 +2063,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.7.1/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2137,40 +2137,41 @@ gtag('config', 'G-X058WW5WJZ');
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#to-do">To do:</a><ul>
+<li><a href="#to-do">To do:</a>
+<ul>
 <li><a href="#download-r">Download R</a></li>
-<li><a href="#download-r-studio-desktop">Download R-studio desktop</a></li>
+<li><a href="#download-r-studio-desktop">Download R-Studio desktop</a></li>
 <li><a href="#read-about-rmarkdown">Read about Rmarkdown</a></li>
-<li><a href="#recommended-work">Recommended work</a></li>
+<li><a href="#recommended-reading">Recommended reading</a></li>
 </ul></li>
+<li><a href="#r-and-you">R and you</a>
+<ul>
 <li><a href="#who-is-this-course-for">Who is this course for?</a></li>
 <li><a href="#how-will-you-benefit-from-this-course">How will you benefit from this course?</a></li>
 <li><a href="#our-approach">Our approach</a></li>
+</ul></li>
 <li><a href="#what-is-r">What is R?</a></li>
 <li><a href="#what-is-r-studio">What is R Studio?</a></li>
 <li><a href="#a-quick-walk-through-r-studio-with-johannes-karl">A quick walk through R Studio with Johannes Karl</a></li>
-<li><a href="#why-quantitative-psychology-has-to-change-why-cant-i-use-spss-by-johannes-karl">Why quantitative psychology has to change (Why can’t I use SPSS) by Johannes Karl</a></li>
-<li><a href="#markdown-is-a-format-for-writing">Markdown is a format for writing</a></li>
-<li><a href="#part-ii-fundamentals-of-r">PART II: Fundamentals of R</a><ul>
-<li><a href="#using-r-as-calculator">Using R as calculator</a></li>
-<li><a href="#the-basic-structure-of-r-commands">The basic structure of R commands</a></li>
-<li><a href="#recommended-reading">Recommended reading</a></li>
-</ul></li>
-<li><a href="#part-iii-rmarkdown-and-you">PART III Rmarkdown and You</a><ul>
-<li><a href="#to-do-1">TO DO</a></li>
-<li><a href="#markdown-is-a-format-for-writing-1">Markdown is a format for writing</a></li>
+<li><a href="#rmarkdown">RMarkdown</a></li>
+<li><a href="#what-is-rmarkdown">What is Rmarkdown?</a>
+<ul>
 <li><a href="#why-is-rmarkdown-useful">Why is Rmarkdown useful?</a></li>
-<li><a href="#how-to-keep-track-of-everything">How to keep track of everything</a></li>
-<li><a href="#some-useful-sites">Some useful sites</a></li>
+<li><a href="#git-how-to-keep-track-of-everything">GIT how to keep track of everything</a></li>
+<li><a href="#well-be-going-over-git-and-github-in-lab-this-week.-for-now-read-this">We’ll be going over Git and GitHub in lab this week. For now, read this:</a></li>
+<li><a href="#tips-and-tricks-go-bayes">Tips and Tricks (go-bayes)</a></li>
+<li><a href="#final-thought-why-quantitative-psychology-has-to-change-why-cant-i-use-spss-by-johannes-karl">Final thought: why quantitative psychology has to change (Why can’t I use SPSS) by Johannes Karl</a></li>
 </ul></li>
-<li><a href="#weekly-problem-sets">Weekly problem sets</a><ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#weekly-problem-sets">Weekly problem sets</a>
+<ul>
 <li><a href="#task-1-apply-for-a-github-education-account">Task 1 Apply for a github education account</a></li>
 <li><a href="#task-2-download-r-for-free-here">Task 2 Download R for free here:</a></li>
 <li><a href="#task-3-download-rstudio-for-free-here">Task 3 Download Rstudio for free here:</a></li>
 <li><a href="#task-4-create-your-first-repository">Task 4 Create your first repository</a></li>
 <li><a href="#task-5-commit-your-first-rmarkdown-journal">Task 5 Commit your first Rmarkdown journal</a></li>
-<li><a href="#submit-to-blackboard">Submit to Blackboard</a></li>
-<li><a href="#grade-points">Grade points</a></li>
+<li><a href="#grading-points">Grading points</a></li>
+<li><a href="#submit-a-link-to-your-journal-on-blackboard.">Submit a link to your journal on Blackboard.</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -2185,7 +2186,7 @@ gtag('config', 'G-X058WW5WJZ');
 <p><img src="Rlogo.png" width="362" style="display: block; margin: auto;" /></p>
 </div>
 </aside>
-<h3 id="download-r-studio-desktop">Download R-studio desktop</h3>
+<h3 id="download-r-studio-desktop">Download R-Studio desktop</h3>
 <p>Rstudio desktop is also freely available for download at:</p>
 <p><a href="https://rstudio.com/products/rstudio/download/#download" class="uri">https://rstudio.com/products/rstudio/download/#download</a></p>
 <p>Please make sure that you have the current version of R-studio desktop on your machine</p>
@@ -2195,14 +2196,28 @@ gtag('config', 'G-X058WW5WJZ');
 </div>
 </aside>
 <h3 id="read-about-rmarkdown">Read about Rmarkdown</h3>
-<p><a href="https://slides.djnavarro.net/starting-rmarkdown/#8">Rmarkdown slideshow by D Navarro</a></p>
-<h3 id="recommended-work">Recommended work</h3>
+<p>Read Danielle Navarro’s brief account of Rmarkdown <a href="https://slides.djnavarro.net/starting-rmarkdown/#8">here</a></p>
+<h3 id="recommended-reading">Recommended reading</h3>
 <p>This is a thorough rmarkdown workshop. You might quickly feel lost. Don’t worry about. We only expect you to acquire the basics this week.</p>
 <p><a href="https://resulumit.com/teaching/rmd_workshop.html#18">Rmarkdown workshop</a></p>
-<h2 id="who-is-this-course-for">Who is this course for?</h2>
+<h2 id="r-and-you">R and you</h2>
+<p>We’re excited to be teaching you R because we believe R will:</p>
+<ul>
+<li>Provide you with a resource and community for life-long learning</li>
+<li>Enable you to be come a more reflective and conscientious data scientist</li>
+<li>Allow you to become more effective as a data scientist.</li>
+</ul>
+<p>What R will not do:</p>
+<ul>
+<li>There’s no substitute for <strong>thinking</strong></li>
+<li>This course isn’t about R. It is an introduction to graduate level statistical science using R</li>
+<li>Your workflow can help your thinking, but it is no substitute for thinking.</li>
+</ul>
+<h3 id="who-is-this-course-for">Who is this course for?</h3>
 <p>For those of you who always wanted to learn R but never thought they could, this course is for you.</p>
-<h2 id="how-will-you-benefit-from-this-course">How will you benefit from this course?</h2>
+<h3 id="how-will-you-benefit-from-this-course">How will you benefit from this course?</h3>
 <p>You’ll learn how to use R, and Github, and we’ll teach you the fundamentals of statistics with a focus thinking not on rules.</p>
+<p>You’ll learn how to learn – that is, how to obtain the resources you need to address a problem at hand.</p>
 <p>By the end of the course, you’ll know how to:</p>
 <p>Data skills:</p>
 <ol type="1">
@@ -2219,10 +2234,10 @@ gtag('config', 'G-X058WW5WJZ');
 <li>learn how to avoid common modelling pitfalls</li>
 <li>learn how to improve your inference using multi-level models</li>
 </ol>
-<h2 id="our-approach">Our approach</h2>
-<p>This course is designed to develop your skills for independent learning. Independent learning is important because research tools are constantly changing, To be an applied researcher requires a combination of <strong>modelling skills</strong>, <strong>analytic skills</strong>, <strong>creativity</strong>, and <strong>reasoning</strong>. This is all in addition to the specialist scientific knowledge that forms the backbone of any scientific research programme.</p>
-<p>If these skills are the engine room of learning, it is an <em>interest</em> in learning, that will be essential to your progress in data science. We’re both fascinated with learning, and it is this fascination that has motivated us to teach this course for you.</p>
-<p>To summarise this course is designed to provide you with basic understanding, useful tips, and some guide rails for learning. Our main task is to give you the confidence, and the inspiration, for independent learning.</p>
+<h3 id="our-approach">Our approach</h3>
+<!-- This course is designed to develop your skills for independent learning. Independent learning is important because research tools are constantly changing, To be an applied researcher requires a combination of **modelling skills**, **analytic skills**, **creativity**, and **reasoning**. This is all in addition to the specialist scientific knowledge that forms the backbone of any scientific research programme. -->
+<!-- If these skills are the engine room of learning, it is an *interest* in learning, that will be essential to your progress in data science. We're both fascinated with learning, and it is this fascination that has motivated us to teach this course for you. -->
+<p>This course is designed to provide you with basic understanding, useful tips, and some guide rails for learning. Our main task is to give you the confidence, and the inspiration, for independent learning.</p>
 <h2 id="what-is-r">What is R?</h2>
 <p>R is a free programming language and software environment for statistical computing (for download links see here: <a href="https://cran.r-project.org/bin/windows/base/">Windows</a>, <a href="https://cran.r-project.org/bin/macosx/">Mac</a>).</p>
 <p>R is the brainchild of <a href="https://www.stat.auckland.ac.nz/~ihaka/">Ross Ihaka</a> and [Robert Gentleman](<a href="https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician)" class="uri">https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician)</a>. It was created at the University of Auckland, where Ross Ihaka remains a professor of statistics.</p>
@@ -2235,7 +2250,51 @@ gtag('config', 'G-X058WW5WJZ');
 <h2 id="a-quick-walk-through-r-studio-with-johannes-karl">A quick walk through R Studio with Johannes Karl</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/haYxa3vWA28" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
-<h2 id="why-quantitative-psychology-has-to-change-why-cant-i-use-spss-by-johannes-karl">Why quantitative psychology has to change (Why can’t I use SPSS) by Johannes Karl</h2>
+<h2 id="rmarkdown">RMarkdown</h2>
+<h2 id="what-is-rmarkdown">What is Rmarkdown?</h2>
+<p>Rmarkdown is a format for combing code with ordinary writing.</p>
+<p>The Rmarkdown code we used to write the opening paragraph looks like this.</p>
+<style>
+div.blue{ background-color:#e6f0ff}
+</style>
+<div class="blue">
+<pre><code>## To do
+Read Danielle Navarro&#39;s brief account of 
+Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)</code></pre>
+</div>
+<p>The:</p>
+<blockquote>
+<p><code>##</code></p>
+</blockquote>
+<p>makes a heading. Then we write as we ordinarily would write:</p>
+<blockquote>
+<p>Read Danielle Navarro’s brief account of Rmarkdown</p>
+</blockquote>
+<p>and we include a link by typing</p>
+<blockquote>
+<p><code>[here](https://slides.djnavarro.net/starting-rmarkdown/#8)</code></p>
+</blockquote>
+<p>Think of rmarkdown as writing in word but without having to use your mouse all the time, and you can write up your analysis while writing in a one0stop shop.</p>
+<p><strong>Rmarkdown is just an efficient method for composing text without having to reach for your mouse, and a way of documenting and reporting your analysis</strong></p>
+<h3 id="why-is-rmarkdown-useful">Why is Rmarkdown useful?</h3>
+<p>Rmarkdown merges two very powerful ideas: 1. R as a coding based tool to make your analysis repeatable; 2. markdown an approach to writing text that allows for the direct embedding of code output.</p>
+<p>This is an immensely powerful approach that can be used for everything, from writing research papers, to writing complex technical documentation. This website is written Rmarkdown.</p>
+<p>You will be creating a website similar to <a href="https://johannes-karl.com/">Johannes Karl’swebsite</a> and <a href="https://josephbulbulia.netlify.app/">Joseph Bulbulia’s website</a>and you will do this by written using Rmarkdown).</p>
+<p>You might think that writing in R markdown is only a nice technical trick for people really into coding, but in reality it addresses a central problem of statistical analysis.</p>
+<p>The majority of errors in quantitative research papers (some meta-researchers indicate values as high as 80%) are human errors in transcribing values from the statistical software they are using to the final document (for a marginally entertaining story around this issue see this <a href="https://www.mcgill.ca/oss/article/food-health-news-quirky-science/setting-facts-straight-about-iron-spinach">post</a>).</p>
+<h3 id="git-how-to-keep-track-of-everything">GIT how to keep track of everything</h3>
+<p>Now that we have our repeatable code, our repeatable document, the last thing we need is a transparent way to document what we are doing and share with others. For that we come to our last tool that in a similar confusing way to R and Rstudio is split in to parts; git and Github.</p>
+<h3 id="well-be-going-over-git-and-github-in-lab-this-week.-for-now-read-this">We’ll be going over Git and GitHub in lab this week. For now, read this:</h3>
+<p><a href="https://holtzy.github.io/Pimp-my-rmd/">coding tips</a></p>
+<p><a href="https://rmarkdown.rstudio.com/gallery.html">Rmarkdown website</a></p>
+<!-- ## Slide deck -->
+<!-- Click [here](slides_1.hmm) to go to the slide deck. -->
+<!-- ```{r embed-xaringan, layout="l-body-outset"} -->
+<!-- xaringanExtra::embed_xaringan(url = "slides.html", ratio = "4:3") -->
+<!-- ``` -->
+<h3 id="tips-and-tricks-go-bayes">Tips and Tricks (go-bayes)</h3>
+<p>One day, someone might ask you to collaborate in <span class="math inline">\(\LaTeX\)</span> (pronounced “Lay-Tek”). <span class="math inline">\(\LaTeX\)</span> is a document preparation system developed by Leslie Lamport in the 1980s that uses <span class="math inline">\(\TeX\)</span>, a typesetting system that Donald Knuth developed in the 1970s to create mathematical documents. Writing in LaTeX is only a little more complicated than writing in markdown. For example, instead of writing <code># Heading</code>, <code>## Subheading</code>, <code>## Subsubheading</code>, you would write <code>\section{Heading}</code> <code>\subsection{Subheading}</code>, <code>\subsubsection{Subsubheading}</code>. However, the principles of mouseless composition that make Rmarkdown so nice, also make LaTeX nice. Rmarkdown shares features for bibliographic referencing with LaTeX that we’ll cover in later weeks. For now, since we are teaching you about Rmarkdown, we thought it’d be useful to teach about LaTeX too. Stay tuned for more.</p>
+<h3 id="final-thought-why-quantitative-psychology-has-to-change-why-cant-i-use-spss-by-johannes-karl">Final thought: why quantitative psychology has to change (Why can’t I use SPSS) by Johannes Karl</h3>
 <p>Quantitative psychology has long struggled with replicability of it’s results both in substantive and also statistical areas. Concerns around these topics have already been raised on works by authors such as Joseph Banks Rhine the founder of modern parapsychology in the 1930s. Numerous authors, even at the time criticized both methods of the experiment and of the analysis <span class="citation" data-cites="gulliksenExtraSensoryPerceptionWhat1938">[@gulliksenExtraSensoryPerceptionWhat1938]</span>. In modern times, Deryl Bem’s article “Feeling the Future” that reported evidence in favor of Extra Sensory Perception revived this debate and led to an increased uptake of Open Science methods. Importantly, this is not only an issue in psychology, but instead affects all quantitative fields such as <a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000246">biology</a>, <a href="https://www.fosteropenscience.eu/content/what-could-open-science-really-mean-chemistry">chemistry</a>, and <a href="https://ioppublishing.org/open-access-week-2019/open-science-and-open-physics/">physics</a>. Out of the many issues that are addressed as part of the open science movement (if you are interested in getting active in it have a look at <a href="https://www.anzopenresearch.org/">ANZORN</a>) we will focus mostly on aspects of reproducability in analysis.</p>
 <p>Until recently IBMs SPSS (Statistical Package for the Social Sciences), which originally launched in 1968 dominated the research space in psychology. If you never had the fortune of working with SPSS this is what it looked like:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2246,166 +2305,49 @@ gtag('config', 'G-X058WW5WJZ');
 <p><img src="spss-code.PNG" width="960" style="display: block; margin: auto;" /></p>
 </div>
 <p>Additionally, some changes made by researchers were extremely difficult to account for. For example, when a researcher recoded a variable say reversing its direction there was no way of knowing that this had taken place if you later looked at the data set. Together with the rise in complex analysis in psychology this has led to a steady decline in the use of SPSS and most psychology departments, as well as private, and governmental stake holder now require a certain fluency in R or similar coding based languages.</p>
-<h2 id="markdown-is-a-format-for-writing">Markdown is a format for writing</h2>
-<p>Rmarkdown is a format for combing code with ordinary writing.</p>
-<p>The Rmarkdown code we used to write the opening paragraph looks like this.</p>
-<style>
-div.blue{ background-color:#e6f0ff}
-</style>
-<div class="blue">
-<pre><code>## TO DO
-Read Danielle Navarro&#39;s brief account of 
-Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)</code></pre>
-</div>
-<p>The:</p>
-<blockquote>
-<p><code>##</code></p>
-</blockquote>
-<p>makes a heading. We write as ordinary,</p>
-<blockquote>
-<p>Read Danielle Navarro’s brief account of Rmarkdown</p>
-</blockquote>
-<p>and we include a link by typing</p>
-<blockquote>
-<p><code>[here](https://slides.djnavarro.net/starting-rmarkdown/#8)</code></p>
-</blockquote>
-<p>Think of rmarkdown as writing in word but without having to use your mouse all the time. The really great thing about Rmarkdown is that you can write document and do the analysis in a single stop shop. Figure <a href="#fig:ss">1</a> shows Rmarkdown in the rconsole (upper left).</p>
+<h2 id="getting-started">Getting started</h2>
+<p>First, make sure that Rmarkdown is installed:</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="figure" style="text-align: center"><span id="fig:ss"></span>
-<img src="rmark.png" alt="\label{fig:ss}Screenshot of Rmarkdown document (upper left)" width="1792" />
-<p class="caption">
-Figure 1: Screenshot of Rmarkdown document (upper left)
-</p>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># run this code</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"devtools"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'devtools'</span><span class='op'>)</span>
+<span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>'rstudio/rmarkdown'</span><span class='op'>)</span>
+</code></pre>
 </div>
 </div>
-<h1 id="part-ii-fundamentals-of-r">PART II: Fundamentals of R</h1>
-<p>A <code>console</code>runs all your code in R</p>
-<p>A <code>source page</code> runs all your code in R.</p>
-<p>A <code>working directory</code> is where R will look for raw data and other material.</p>
-<p>In R-studio, (for starters) you can can use the <code>file</code> tab to import and save your material.</p>
-<p>Similarly, in R-studio, (for starters) you can can use install packages by clicking the <code>Install</code> tab in the package pane (generally lower right pane) to install packagees.</p>
-<h2 id="using-r-as-calculator">Using R as calculator</h2>
-<p>We can use R as a calculator. You can run any mathematical operation you would normally use by entering it into the console:</p>
+<p>Open a document in Rstudio (File–&gt;New File –Rmarkdown)</p>
+<p>Then type away!</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code>[1] 5</code></pre>
-<pre><code>[1] 1</code></pre>
-<pre><code>[1] 6</code></pre>
-<pre><code>[1] 1.5</code></pre>
-<pre><code>[1] 1</code></pre>
-<pre><code>[1] 9</code></pre>
-<pre><code>[1] 1</code></pre>
+<p><img src="rm.gif" style="display: block; margin: auto;" /></p>
 </div>
-<h2 id="the-basic-structure-of-r-commands">The basic structure of R commands</h2>
-<p>While using R as calculator might be interesting, it does not get us very far in analysing our data.</p>
-<p>To really unlock the full potential of R we first need to understand the basic structure of most R code and learn some terms.</p>
-<p>The four main elements of every R code are:</p>
-<ul>
-<li>objects,</li>
-<li>functions,</li>
-<li><span style="color:orange"><code>arguments</code></span></li>
-<li><span style="color:blue"><code>operators</code></span>.</li>
-</ul>
-<p>Figure <a href="#fig:syntax-figure">2</a> provides a simple example, that produces a new object which contains the mean of variable x.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="figure" style="text-align: center"><span id="fig:syntax-figure"></span>
-<img src="syntax.png" alt="\label{fig:syntax-figure}The Basic Syntax of R" width="642" />
-<p class="caption">
-Figure 2: The Basic Syntax of R
-</p>
-</div>
-</div>
-<p>The function mean generates the arithmetic mean of an input object.</p>
-<p>The object needs to be specified inside of the function brackets as the x argument, in this case we define x = df .</p>
-<p>Last, we assign the result of this function for later us via the &lt;- operator to an object which we decided to call object.</p>
-<p>In other words, we create a new object that can be further manipulated and contains information about the mean of a previously created object “x”. This structure represents the foundation of most operations in R.</p>
-<p>Instead calling the mean function as above one could manually add all values of x dividing it by the number of x values.</p>
-<p>Nevertheless, this would be very cumbersome.</p>
-<p>For this reason, functions (pre-assembled lines of code) exist to reduce the amount of coding necessary.</p>
-<p>These functions can be bundled into <strong>packages</strong>. R’s capacity for creating packages is main appeal of R as a statistical tool because community developed functions are available from a central repository called CRAN in the form of packages.</p>
-<p>These packages can be installed in R with the command install.packages(“package name”).</p>
-<p>It is important that you only need to install a package once on your machine, expect if you want to upgrade the package. Generally speaking you regularly want to upgrade your packages, but keep a permanent note in your code which version of a package you used when it was initially written.</p>
-<h2 id="recommended-reading">Recommended reading</h2>
-<p><a href="https://crimebythenumbers.com/r-markdown.html">An introduction to R and Rstudio</a></p>
-<h1 id="part-iii-rmarkdown-and-you">PART III Rmarkdown and You</h1>
-<h2 id="to-do-1">TO DO</h2>
-<p>Read Daniell Navarro’s brief account of Rmarkdown <a href="https://slides.djnavarro.net/starting-rmarkdown/#8">here</a></p>
-<h2 id="markdown-is-a-format-for-writing-1">Markdown is a format for writing</h2>
-<p>Rmarkdown is a format for combing code with ordinary writing.</p>
-<p>The Rmarkdown code we used to write the opening paragraph looks like this.</p>
-<style>
-div.blue{ background-color:#e6f0ff}
-</style>
-<div class="blue">
-<pre><code>## TO DO
-Read Danielle Navarro&#39;s brief account of 
-Rmarkdown [here](https://slides.djnavarro.net/starting-rmarkdown/#8)</code></pre>
-</div>
-<p>The:</p>
-<blockquote>
-<p><code>##</code></p>
-</blockquote>
-<p>makes a heading. We write as ordinary,</p>
-<blockquote>
-<p>Read Danielle Navarro’s brief account of Rmarkdown</p>
-</blockquote>
-<p>and we include a link by typing</p>
-<blockquote>
-<p><code>[here](https://slides.djnavarro.net/starting-rmarkdown/#8)</code></p>
-</blockquote>
-<p>Think of rmarkdown as writing in word but without having to use your mouse all the time. The really great thing about Rmarkdown is that you can write document and do the analysis in a single stop shop. Figure <a href="#fig:sf">3</a> shows Rmarkdown in the rconsole (upper left).</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="figure" style="text-align: center"><span id="fig:sf"></span>
-<img src="rmark.png" alt="\label{fig:sf}Screenshot of Rmarkdown document (upper left)" width="1792" />
-<p class="caption">
-Figure 3: Screenshot of Rmarkdown document (upper left)
-</p>
-</div>
-</div>
-<h2 id="why-is-rmarkdown-useful">Why is Rmarkdown useful?</h2>
-<p>Rmarkdown merges two very powerful ideas: 1. R as a coding based tool to make your analysis repeatable; 2. markdown an approach to writing text that allows for the direct embedding of code output.</p>
-<p>This is an immensely powerful approach that can be used for everything, from writing research papers, to writing complex technical documentation. This website is written Rmarkdown.</p>
-<p>You will be creating a website similar to <a href="https://johannes-karl.com/">Johannes Karl’swebsite</a> and <a href="https://josephbulbulia.netlify.app/">Joseph Bulbulia’s website</a>and you will do this by written using Rmarkdown).</p>
-<p>You might think that writing in R markdown is only a nice technical trick for people really into coding, but in reality it addresses a central problem of statistical analysis.</p>
-<p>The majority of errors in quantitative research papers (some meta-researchers indiate values as high as 80%) are human errors in transcribing values from the statistical software they are using to the final document (for a marginally entertaining story around this issue see this <a href="https://www.mcgill.ca/oss/article/food-health-news-quirky-science/setting-facts-straight-about-iron-spinach">post</a>).</p>
-<h2 id="how-to-keep-track-of-everything">How to keep track of everything</h2>
-<p>Now that we have our repeatable code, our repeatable document, the last thing we need is a transparent way to document what we are doing and share with others. For that we come to our last tool that in a similar confusing way to R and Rstudio is split in to parts; git and Github.</p>
-<h2 id="some-useful-sites">Some useful sites</h2>
-<p><a href="https://holtzy.github.io/Pimp-my-rmd/">coding tips</a> <a href="https://rmarkdown.rstudio.com/gallery.html">Rmarkdown website</a></p>
-<!-- ## Slide deck -->
-<!-- Click [here](slides_1.html) to go to the slide deck. -->
-<!-- ```{r embed-xaringan, layout="l-body-outset"} -->
-<!-- xaringanExtra::embed_xaringan(url = "slides.html", ratio = "4:3") -->
-<!-- ``` -->
-<h1 id="weekly-problem-sets">Weekly problem sets</h1>
+<p>Make sure you save your document</p>
+<p>Press <kbd>⌘</kbd> + <kbd>S</kbd> </kbd> is the command for “save”</p>
+<h2 id="weekly-problem-sets">Weekly problem sets</h2>
 <p>** Note we will be working with you in the first week’s workshop to get you through this assessment task. We don’t expect that you will be able to do any of this before the first week.</p>
-<h2 id="task-1-apply-for-a-github-education-account">Task 1 Apply for a github education account</h2>
+<h3 id="task-1-apply-for-a-github-education-account">Task 1 Apply for a github education account</h3>
 <ul>
 <li>apply here: <a href="https://education.github.com/pack/offers" class="uri">https://education.github.com/pack/offers</a></li>
 <li>set up a github account.</li>
 <li>choose a username that will be OK for professional purposes (e.g. your name)</li>
 </ul>
-<h2 id="task-2-download-r-for-free-here">Task 2 Download R for free here:</h2>
+<h3 id="task-2-download-r-for-free-here">Task 2 Download R for free here:</h3>
 <p><a href="https://www.r-project.org" class="uri">https://www.r-project.org</a></p>
-<h2 id="task-3-download-rstudio-for-free-here">Task 3 Download Rstudio for free here:</h2>
+<h3 id="task-3-download-rstudio-for-free-here">Task 3 Download Rstudio for free here:</h3>
 <p><a href="https://rstudio.com/products/rstudio/download/#download" class="uri">https://rstudio.com/products/rstudio/download/#download</a></p>
 <p>Update R and Rstudio to the latest versions. Don’t worry if you have problems, we’ll be working through your problems in the first week, and throughout the course. We assume no prior experience with R or Git/GitHub</p>
-<h2 id="task-4-create-your-first-repository">Task 4 Create your first repository</h2>
-<h2 id="task-5-commit-your-first-rmarkdown-journal">Task 5 Commit your first Rmarkdown journal</h2>
+<h3 id="task-4-create-your-first-repository">Task 4 Create your first repository</h3>
+<h3 id="task-5-commit-your-first-rmarkdown-journal">Task 5 Commit your first Rmarkdown journal</h3>
 <ul>
 <li>Create your first Rmarkdown document, and title it “My Journal”</li>
 <li>Record your impressions of the process of getting set up with RStudio and GitHub</li>
-<li>Record any help you have offered to other people, and any help you have sought from other people, along the way.</li>
+<li><strong>Record any help you have offered to other people,</strong> and any help you have sought from other people, along the way.</li>
 <li>Save the document and commit it to GitHub.</li>
 <li>Note: set your github repository to private if you wish the account to be private</li>
 </ul>
-<h2 id="submit-to-blackboard">Submit to Blackboard</h2>
+<h3 id="grading-points">Grading points</h3>
 <ul>
-<li>Either a link to your repository, or the document you created in Rmarkdown (HTML or PDF)</li>
-<li>This journal will count as both your weekly journal entry and your weekly workbook.</li>
-</ul>
-<h2 id="grade-points">Grade points</h2>
-<ul>
-<li>Your Rmarkdown document must include eachig of the following</li>
+<li>Your Rmarkdown document must include each of the following</li>
 </ul>
 <ol type="1">
 <li><blockquote>
@@ -2426,8 +2368,17 @@ Figure 3: Screenshot of Rmarkdown document (upper left)
 <li><blockquote>
 <p>BONUS: figure out how to add a bibliographic citation, such as <span class="citation" data-cites="darwin1964origin">[@darwin1964origin]</span></p>
 </blockquote></li>
+<li><blockquote>
+<p>A record of help you sought and offered.</p>
+</blockquote></li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h3 id="submit-a-link-to-your-journal-on-blackboard.">Submit a link to your journal on Blackboard.</h3>
+<p>Blackboard isn’t our favourite tool, however, we need to respect the norms of our community. For this reason, presently all of your assessments need to be uploade through Blackboard. In future iterations of this course, we’ll try to allow submissions by github. For now, we press on with Blackboard.</p>
+<ul>
+<li>On Blackboard, pass us a link to your github document on Blackboard for weekly assessments</li>
+<li>This journal will count as both your weekly journal entry and your weekly workbook – double credits!</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
@@ -2441,6 +2392,15 @@ Figure 3: Screenshot of Rmarkdown document (upper left)
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

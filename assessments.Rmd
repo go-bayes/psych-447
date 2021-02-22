@@ -24,96 +24,70 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
-The following "workbooks" are due on Fridays after lecture. You will be marked on 10 x workbook submissions
+1. **Weekly journal entries** (about 100 - 200 words) 
+(10 X journals = **10%**)
 
-## Week 1: Due FRIDAY 27th February
+These are **due every Friday** during term at midnight. All submissions will be on Blackboard, but you may link a submission to your GitHub page. 
 
-** Note we will be working with you in the first week's workshop to get you through this assessment task. We don't expect that you will be able to do any of this before the first week. 
-
-  1.  Set up a github account. Choose a username that will be OK for professional purposes.
-
-  2.  Create your first repository
+Format: you will document your insights, questions, and frustrations in a weekly journal.  This record should include how you have sought help to address your questions, and how you have offered help. The purpose of the journals are to cultivate skills for interacting with the R community, and for documenting the research process. 
   
-  3.  Create a GitHub project in Rstudio for this repository
+2. **Weekly workbook problem sets** 
 
-  4.  Commit your first  Rmarkdown journal
-  - Create your first Rmarkdown document, and title it "My Journal" 
-  - Record your impressions of the process of getting set up with RStudio and GitHub
-  - Record any help you have offered to other people, and any help you have sought from other people, along the way. 
-  - Save the document and commit it to GitHub. 
+You will find the problem sets at the end of a given week's  lecture page. 
+(10 x problem sets **= 50%**)
 
-  5.  Email a link to your repository to: 
-  johannes.karl@vuw.ac.nz 
-  cc: joseph.bulbulia@vuw.ac.nz 
+We will have 12 problem sets, but you will only be marked on your best 10. This means there are two weeks during the trimester in which you will not need to do the problem sets
+
+Problem sets are also **due every Friday** during term at midnight. Ordinarily we expect you to submit these on your GitHub page, however, we can make special accommodation for those who prefer VUW blackboard (see us).
+
+
+3. **Final project** consisting of:
+
+  - 1 x short report of an analysis of a research question using a dataset (project due May 31): 35%
+  - 1 x github website profiling your CV (project due May 31): 5%
   
-This journal will count as both your weekly journal entry and your weekly workbook.  
+  **= 40%**
+
+The final project will be due 31st May 2021. Eventually, you will find materials to help you with you final project on this page [TBA](https://go-bayes.github.io/psych-447/assessments.html). 
 
 
-### Grade points
+## Due dates for journals:
 
-- Your Rmarkdown document must include eachig of the following 
-
-1.
-> ## Heading
-
-2.
-> ~~crossed out text~~
-
-3.
-> link to a [website](https://www.theonion.com/)
-
-4.
-> A footnote ^[Humanities scholars love footnotes.]
-
-5. 
-> An inspirational quote
-
-6. 
-> BONUS: figure out how to add a bibliographic citation, such as [@darwin1964origin]
+Week 1: Due FRIDAY 27th February
+Week 2: FRIDAY Due March 5th
+Week 3: FRIDAY Due March 12th
+Week 4: FRIDAY Due March 19th
+Week 5: FRIDAY Due March 26th
+Week 6: FRIDAY Due April 2nd
+Week 7: FRIDAY Due April 23rd
+Week 8: FRIDAY April 30th
+Week 9: FRIDAY May 7th
+Week 10: FRIDAY May 14th
+Week 11: FRIDAY May 21st
+Week 12: FRIDAY Due May 28th
 
 
+## Due dates for problem sets (same)
+
+Week 1: Due FRIDAY 27th February
+Week 2: FRIDAY Due March 5th
+Week 3: FRIDAY Due March 12th
+Week 4: FRIDAY Due March 19th
+Week 5: FRIDAY Due March 26th
+Week 6: FRIDAY Due April 2nd
+Week 7: FRIDAY Due April 23rd
+Week 8: FRIDAY April 30th
+Week 9: FRIDAY May 7th
+Week 10: FRIDAY May 14th
+Week 11: FRIDAY May 21st
+Week 12: FRIDAY Due May 28th
 
 
-## Week 2: Due March 5th
+## Due date for final project
+Monday May 31st
 
-
-
-
-
-
-
-## Week 3: Due March 12th
-TBA
-
-
-## Week 4: Due March 19th
-TBA
-
-## Week 5: Due March 26th
-TBA
-
-## Week 6: Due April 2nd
-TBA
-
-## Week 7: Due April 23rd 
-TBA
-
-## Week 8: April 30th 
-TBA
-
-## Week 9: May 7th
-TBA
-
-## Week 10: May 14th
-TBA
-
-## Week 11: May 21st
-TBA
-
-## Week 12: Due May 28th
-TBA
-
-
+## Due date for Github CV
+Monday May 31st
 
 
 
