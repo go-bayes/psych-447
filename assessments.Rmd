@@ -53,39 +53,43 @@ The final project will be due 31st May 2021. Eventually, you will find materials
 
 ## Due dates for journals:
 
-Week 1: Due FRIDAY 27th February
-Week 2: FRIDAY Due March 5th
-Week 3: FRIDAY Due March 12th
-Week 4: FRIDAY Due March 19th
-Week 5: FRIDAY Due March 26th
-Week 6: FRIDAY Due April 2nd
-Week 7: FRIDAY Due April 23rd
-Week 8: FRIDAY April 30th
-Week 9: FRIDAY May 7th
-Week 10: FRIDAY May 14th
-Week 11: FRIDAY May 21st
-Week 12: FRIDAY Due May 28th
+  - Week 1: Due FRIDAY 27th February
+  - Week 2: FRIDAY Due March 5th
+  - Week 3: FRIDAY Due March 12th
+  - Week 4: FRIDAY Due March 19th
+  - Week 5: FRIDAY Due March 26th
+  - Week 6: FRIDAY Due April 2nd
+  - Week 7: FRIDAY Due April 23rd
+  - Week 8: FRIDAY April 30th
+  - Week 9: FRIDAY May 7th
+  - Week 10: FRIDAY May 14th
+  - Week 11: FRIDAY May 21st
+  - Week 12: FRIDAY Due May 28th
 
 
 ## Due dates for problem sets (same)
 
-Week 1: Due FRIDAY 27th February
-Week 2: FRIDAY Due March 5th
-Week 3: FRIDAY Due March 12th
-Week 4: FRIDAY Due March 19th
-Week 5: FRIDAY Due March 26th
-Week 6: FRIDAY Due April 2nd
-Week 7: FRIDAY Due April 23rd
-Week 8: FRIDAY April 30th
-Week 9: FRIDAY May 7th
-Week 10: FRIDAY May 14th
-Week 11: FRIDAY May 21st
-Week 12: FRIDAY Due May 28th
+  - Week 1: Due FRIDAY 27th February
+  - Week 2: FRIDAY Due March 5th
+  - Week 3: FRIDAY Due March 12th
+  - Week 4: FRIDAY Due March 19th
+  - Week 5: FRIDAY Due March 26th
+  - Week 6: FRIDAY Due April 2nd
+  - Week 7: FRIDAY Due April 23rd
+  - Week 8: FRIDAY April 30th
+  - Week 9: FRIDAY May 7th
+  - Week 10: FRIDAY May 14th
+  - Week 11: FRIDAY May 21st
+  - Week 12: FRIDAY Due May 28th
+
+
 
 ## Due date for final project
+
 Monday May 31st
 
 ## Due date for Github CV
+
 Monday May 31st
 
 
