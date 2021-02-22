@@ -44,8 +44,9 @@ Problem sets are also **due every Friday** during term at midnight. Submit on Bl
 
 3. **Final project** consisting of:
 
-  - 1 x short report of an analysis of a research question using a dataset (project due May 31): 35%
-  - 1 x github website profiling your CV (project due May 31): 5%
+  - 1 x short article (2500 word max): project due May 31 2021: 35%
+  - 1 x github website profiling your CV: project CV due May 31 2021: 5%
+  - **Note** we require your project idea by the lab meeting on 31 March 2021.
   
   **= 40%**
 
@@ -87,7 +88,7 @@ The final project will be due 31st May 2021. Eventually, you will find materials
 
 Monday May 31st
 
-## Due date for Github CV
+## Due date for GitHub CV
 
 Monday May 31st
 

@@ -39,6 +39,8 @@ colorize <- function(x, color) {
 }
 ```
 
+
+
 ## To do:
 
 ### Download R
@@ -157,7 +159,7 @@ R Studio provides an interface with a number of user-friendly options, including
 
 ### What is Git/GitHub? 
 
-Github is a version control system.  It's similar to Google docs, though for code. It is useful for collaboration because code easily breaks. It is only rarely possible to simultaneously work in real time on the same code because it will eventually break. Where and how is not easy to assess. 
+Github is a version control system.  It is similar to Google docs, though for code. It is useful for collaboration because code easily breaks. It is only rarely possible to simultaneously work in real time on the same code because it will eventually break. Where and how is not easy to assess. 
 
 A second function of GitHub is that it allows us to reconstruct histories of analysis. This is critical for open and reproducible science. This is the main function that we will be examining here. 
 
@@ -322,21 +324,13 @@ You might think that writing in R markdown is only a nice technical trick for pe
 
 The majority of errors in quantitative research papers (some meta-researchers indicate values as high as 80%) are human errors in transcribing values from the statistical software they are using to the final document (for a marginally entertaining story around this issue see this [post](https://www.mcgill.ca/oss/article/food-health-news-quirky-science/setting-facts-straight-about-iron-spinach)).
 
-Resources:
+### Extra information 
 [coding tips](https://holtzy.github.io/Pimp-my-rmd/) 
 [Rmarkdown website](https://rmarkdown.rstudio.com/gallery.html)
 
+JB's recommendation for a very short introduction to Rmarkdown:
+https://rpubs.com/bpbond/626346
 
-
-<!-- ## Slide deck -->
-
-<!-- Click [here](slides_1.hmm) to go to the slide deck. -->
-
-<!-- ```{r embed-xaringan, layout="l-body-outset"} -->
-
-<!-- xaringanExtra::embed_xaringan(url = "slides.html", ratio = "4:3") -->
-
-<!-- ``` -->
 
 
 
@@ -378,10 +372,23 @@ SPSS presented the user with a GUI (Graphical User Interface) through which they
 knitr::include_graphics("spss-code.PNG")
 ```
 
-Additionally, some changes made by researchers were extremely difficult to account for. For example, when a researcher recoded a variable say reversing its direction there was no way of knowing that this had taken place if you later looked at the data set. Together with the rise in complex analysis in psychology this has led to a steady decline in the use of SPSS and most psychology departments, as well as private, and governmental stake holder now require a certain fluency in R or similar coding based languages.
+Additionally, some changes made by researchers were extremely difficult to account for. For example, when a researcher re-coded a variable say reversing its direction there was no way of knowing that this had taken place if you later looked at the data set. Together with the rise in complex analysis in psychology this has led to a steady decline in the use of SPSS and most psychology departments, as well as private, and governmental stake holder now require a certain fluency in R or similar coding based languages.
 
 
-## Weekly problem sets
+
+## Lecture slide deck
+
+## Slide deck
+
+
+Click [here](slides.html) to go to the slide deck.
+
+```{r embed-xaringan, layout="l-body-outset"}
+xaringanExtra::embed_xaringan(url = "slides.html", ratio = "4:3")
+```
+
+
+# Weekly problem sets
 
 \*\* Note we will be working with you in the first week's workshop to get you through this assessment task. We don't expect that you will be able to do any of this before the first week.
 
@@ -446,7 +453,7 @@ Update R and Rstudio to the latest versions. Don't worry if you have problems, w
 
 ### Submit a link to your journal on Blackboard.
 
-Blackboard isn't our favourite tool, however, we need to respect the norms of our community. For this reason, presently all of your assessments need to be uploade through Blackboard. In future iterations of this course, we'll try to allow submissions by github. For now, we press on with Blackboard.
+Blackboard isn't our favourite tool, however, we need to respect the norms of our community. For this reason, presently all of your assessments need to be uploaded through Blackboard. 
 
--   On Blackboard, pass us a link to your github document on Blackboard for weekly assessments
+-   On Blackboard, pass us a link to your GitHub document on Blackboard for weekly assessments
 -   This journal will count as both your weekly journal entry and your weekly workbook -- double credits!

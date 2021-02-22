@@ -1,5 +1,5 @@
 ---
-title: "Missing Data and Measurement"
+title: "Missing data and measurement error"
 description: |
   "With an excursion into the whens and when nots of mediation"
 author:

@@ -81,8 +81,6 @@ knitr::include_graphics("article_frontiers.jpg")
 
 ## What happened? 
 
-
-
 ```{r out.width = "500px"}
 knitr::include_graphics("frontiers.jpg")
 ```
@@ -150,12 +148,104 @@ https://go-bayes.github.io/psych-447/posts/1_1/
 
 - Problem sets are **due every Friday** during term at midnight. 
 
--- Ordinarily we expect you to submit these on Blackboard
+- Ordinarily we expect you to submit these on Blackboard -- but you can simply link to your GitHub page
 
 
 
-## Assements 
+## Assements page
 
 See information under the `Assessments` url:
 https://go-bayes.github.io/psych-447/assessments.html
+
+
+## 1 x final project consisting of
+
+  - 1 x short article (2500 word max): project due May 31 2021: 35%
+  - 1 x github website profiling your CV: project CV due May 31 2021: 5%
+  - NOTE: we require your project idea by the lab meeting on 31 March 2021.
+  
+  **= 40%**
+
+The final project are due 31st May 2021. 
+
+
+## Labs/Workshops
+
+Wednesdays: 3:30 -- 5:20 PM
+Room: EA402
+
+- Help with setting up 
+- Problem sets (no we won't do them for you, but we can give you a steer)
+- Follow up on lecture concepts
+- You won't get full credit on your journal if you don't discuss your lab.
+
+
+
+## Three interrelated tools: (1) Rstudio IDE {.flexbox .vcenter}
+
+
+```{r out.width = "1000px"}
+knitr::include_graphics("rstudio.png",)
+```
+
+
+
+## Three interrelated tools: (2a) GitHub {.flexbox .vcenter}
+
+```{r out.width = "1000px"}
+knitr::include_graphics("git1.gif",)
+```
+
+
+## Three interrelated tools: (2b) GitHub {.flexbox .vcenter}
+
+```{r out.width = "1000px"}
+knitr::include_graphics("git2.gif",)
+```
+
+## Three interrelated tools: (2c) GitHub {.flexbox .vcenter}
+
+```{r out.width = "1000px"}
+knitr::include_graphics("git3.gif",)
+```
+
+## Three interrelated tools: (2d) GitHub {.flexbox .vcenter}
+
+```{r out.width = "1000px"}
+knitr::include_graphics("git4.gif",)
+```
+
+
+
+## Three interrelated tools: (2e) GitHub {.flexbox .vcenter}
+
+```{r out.width = "1000px"}
+knitr::include_graphics("git5.gif",)
+```
+
+
+
+## Three interrelated tools: (3) Rmarkdown {.flexbox .vcenter}
+
+```{r out.width = "1000px"}
+knitr::include_graphics("cs.png")
+```
+# Discussion| time permitting
+
+## Recall these faces? {.flexbox .vcenter}
+
+```{r out.width = "1000px", }
+knitr::include_graphics("faces.png")
+```
+
+
+
+## Strengths/weaknesses of these graphs?{.flexbox .vcenter}
+
+```{r out.width = "500px"}
+knitr::include_graphics("frontiers.jpg")
+```
+
+
+
 

@@ -5,11 +5,8 @@ date: "14/02/2021"
 output: html_document
 ---
 
-## Problem 1
+## Do these exercises
 
-Open R and add to numbers together $\dots$
+https://commonmark.org/help/tutorial/
 
 
-## Problem 2
-
-What is the R code for `square root`? 

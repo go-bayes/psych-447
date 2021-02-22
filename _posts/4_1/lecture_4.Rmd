@@ -1,5 +1,5 @@
 ---
-title: "Consolidation of Skills"
+title: "Consolidation of skills"
 description: |
 author:
   - name: Joseph Bulbulia
