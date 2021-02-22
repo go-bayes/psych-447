@@ -1,5 +1,5 @@
 ---
-title: "Modelling binary and count data"
+title: "Modelling binary, count data, and ordinal data"
 description: |
 author:
   - name: Joseph Bulbulia

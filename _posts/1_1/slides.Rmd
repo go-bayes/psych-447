@@ -56,7 +56,7 @@ I started learning R sometime ~ 2009.
 The process started at the San Pedro Firewalking Study (https://www.pnas.org/content/108/20/8514)
 </div>
 
-## Emotonal expressions as signals?
+## My interested started with a Question| Are emotional expressions signals?
 
 ```{r  out.width = "700px"}
 knitr::include_graphics("fw.png")
@@ -116,7 +116,8 @@ Weekly lectures and course resources are located [here](https://go-bayes.github.
 Any readings will be linked in to the lecture page for the relevant day. If there are no readings that week we will specify: **no readings**
 
 
-## Journals
+## Weekly journals
+
 <div style="float: left; width: 50%;">
 -  **Weekly journal entries** (about 100 - 200 words) 
 (10 X journals = **10%**)
@@ -169,7 +170,7 @@ https://go-bayes.github.io/psych-447/assessments.html
 The final project are due 31st May 2021. 
 
 
-## Labs/Workshops
+## Labs/workshops
 
 Wednesdays: 3:30 -- 5:20 PM
 Room: EA402

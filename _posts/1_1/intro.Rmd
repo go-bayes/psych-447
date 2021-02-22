@@ -376,15 +376,12 @@ Additionally, some changes made by researchers were extremely difficult to accou
 
 
 
-## Lecture slide deck
+## Lecture slides
 
-## Slide deck
-
-
-Click [here](slides.html) to go to the slide deck.
+Click [here](slides.html) to go to the lecture slides.
 
 ```{r embed-xaringan, layout="l-body-outset"}
-xaringanExtra::embed_xaringan(url = "slides.html", ratio = "4:3")
+xaringanExtra::embed_xaringan(url = "slides.html", ratio = "16:9")
 ```
 
 
