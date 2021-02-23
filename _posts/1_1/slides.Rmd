@@ -44,7 +44,7 @@ Email: joseph.bulbulia@vuw.ac.nz
 Email: johannes.karl@vuw.ac.nz
 
   - Course admin support: Dr. Jiun Youn (Extension, technical issues and other housekeeping matters) 
-Email: jiun.youn@vuw.ac.nzCourse 
+Email: jiun.youn@vuw.ac.nz
 
 
 ## Mihi
@@ -69,7 +69,7 @@ I started learning R sometime ~ 2009.
 The process started at the San Pedro Firewalking Study (https://www.pnas.org/content/108/20/8514)
 </div>
 
-## My interested started with a Question| Are emotional expressions signals?
+## My interested started with a question| Are emotional expressions signals?
 
 ```{r  out.width = "700px"}
 knitr::include_graphics("fw.png")
@@ -172,7 +172,7 @@ See information under the `Assessments` url:
 https://go-bayes.github.io/psych-447/assessments.html
 
 
-## 1 x final project consisting of
+## 1 x Final project consisting of
 
   - 1 x short article (2500 word max): project due May 31 2021: 35%
   - 1 x github website profiling your CV: project CV due May 31 2021: 5%
@@ -192,6 +192,7 @@ Room: EA402
 - Problem sets (no we won't do them for you, but we can give you a steer)
 - Follow up on lecture concepts
 - You won't get full credit on your journal if you don't discuss your lab.
+- Found under the "Labs" page of the GitHub page
 
 
 
@@ -220,13 +221,13 @@ knitr::include_graphics("git2.gif",)
 ## Three interrelated tools: (2c) GitHub {.flexbox .vcenter}
 
 ```{r out.width = "1000px"}
-knitr::include_graphics("git3.gif",)
+knitr::include_graphics("git3.gif")
 ```
 
 ## Three interrelated tools: (2d) GitHub {.flexbox .vcenter}
 
 ```{r out.width = "1000px"}
-knitr::include_graphics("git4.gif",)
+knitr::include_graphics("git4.gif")
 ```
 
 
@@ -234,7 +235,7 @@ knitr::include_graphics("git4.gif",)
 ## Three interrelated tools: (2e) GitHub {.flexbox .vcenter}
 
 ```{r out.width = "1000px"}
-knitr::include_graphics("git5.gif",)
+knitr::include_graphics("git5.gif")
 ```
 
 
@@ -244,15 +245,16 @@ knitr::include_graphics("git5.gif",)
 ```{r out.width = "1000px"}
 knitr::include_graphics("cs.png")
 ```
-## Final though
+## Final thought
 
-  - R, Rstudio, GitHub, R-markown ... these are just tools that fit our task
-  - Our main task in this course is to develop statistical intuition and workflows that will enable you to do better science.
+  - R, Rstudio, GitHub, R-markdown ... these are just tools that fit our task
+  - Our main task in this course is to develop statistical intuition and work-flows that will enable you to **do better science.**
 
 
 ## Thanks for your attention
 
- - See you tomorrow "in the shed" (at our workshop.)
+ - See you tomorrow "in the shed."
+ 
 
 <!-- ## Recall these faces? {.flexbox .vcenter} -->
 

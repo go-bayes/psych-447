@@ -195,7 +195,7 @@ knitr::include_graphics("git1.gif")
 knitr::include_graphics("git2.gif")
 ```
 
-### Then open a new project in Rstudio as a git project
+### Then open a new project in Rstudio as a GitHub project
 
 ```{r}
 knitr::include_graphics("git3.gif")
