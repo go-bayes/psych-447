@@ -7,17 +7,13 @@
       {
         "name": "Joseph Bulbulia",
         "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
       }
     ],
     "date": "2021-05-25",
     "categories": [],
     "contents": "\n\nContents\n\n\n\n\n\nUncertainty\nFuture Horizons\n\n\n\n",
     "preview": "posts/12_1/distill-preview.png",
-    "last_modified": "2021-02-21T23:49:42+13:00",
+    "last_modified": "2021-02-23T15:07:02+13:00",
     "input_file": {},
     "preview_width": 1023,
     "preview_height": 876
@@ -30,17 +26,13 @@
       {
         "name": "Joseph Bulbulia",
         "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
       }
     ],
     "date": "2021-05-18",
     "categories": [],
     "contents": "\n\nContents\n\n\n\n\n\nRemember: parameters are not observed\nMeasurement error\nMissing eata\n\n\n\n",
     "preview": "posts/11_1/distill-preview.png",
-    "last_modified": "2021-02-23T00:39:13+13:00",
+    "last_modified": "2021-02-23T15:06:35+13:00",
     "input_file": {},
     "preview_width": 1106,
     "preview_height": 553
@@ -53,17 +45,13 @@
       {
         "name": "Joseph Bulbulia",
         "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
       }
     ],
     "date": "2021-05-11",
     "categories": [],
     "contents": "\n\nContents\nLongitudional data and the multi-level model\nMediation from the vantage point of causal inference (when and when not)\n\nLongitudional data and the multi-level model\n\n\n\nMediation from the vantage point of causal inference (when and when not)\n\n\n\n",
     "preview": "posts/10_1/op2.png",
-    "last_modified": "2021-02-21T23:41:58+13:00",
+    "last_modified": "2021-02-23T15:06:10+13:00",
     "input_file": {},
     "preview_width": 1800,
     "preview_height": 600
@@ -76,17 +64,13 @@
       {
         "name": "Joseph Bulbulia",
         "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
       }
     ],
     "date": "2021-05-04",
     "categories": [],
     "contents": "\n\nContents\nCovariance\n\nCovariance\n\n\n\n\n\n\n",
     "preview": "posts/9_1/op.png",
-    "last_modified": "2021-02-21T23:39:28+13:00",
+    "last_modified": "2021-02-23T15:05:58+13:00",
     "input_file": {},
     "preview_width": 1920,
     "preview_height": 1536
@@ -99,17 +83,13 @@
       {
         "name": "Joseph Bulbulia",
         "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
       }
     ],
     "date": "2021-04-27",
     "categories": [],
     "contents": "\n\nContents\nPartial pooling\nRandom intercepts\n\nPartial pooling\nRandom intercepts\n\n\n\n\n\n\n",
     "preview": "posts/8_1/op2.png",
-    "last_modified": "2021-02-21T23:38:41+13:00",
+    "last_modified": "2021-02-23T15:05:36+13:00",
     "input_file": {},
     "preview_width": 2304,
     "preview_height": 1536
@@ -122,17 +102,13 @@
       {
         "name": "Joseph Bulbulia",
         "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
       }
     ],
     "date": "2021-04-20",
     "categories": [],
     "contents": "\n\nContents\nBinary Data\nCount data\nZero infalted data\nOrdinal data\n\nBinary Data\nCount data\nZero infalted data\nOrdinal data\n\n\n\n\n\n\n",
     "preview": "posts/7_1/op.png",
-    "last_modified": "2021-02-23T00:49:40+13:00",
+    "last_modified": "2021-02-23T15:05:19+13:00",
     "input_file": {},
     "preview_width": 1000,
     "preview_height": 1000
@@ -145,17 +121,13 @@
       {
         "name": "Joseph Bulbulia",
         "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
       }
     ],
     "date": "2021-03-30",
     "categories": [],
     "contents": "\n\nContents\nWhat is causal confounding?\nThe difference between prediction and explanation?\n\nWhat is causal confounding?\n\n\n\nThe difference between prediction and explanation?\n\n\n\n",
     "preview": "posts/6_1/op2.png",
-    "last_modified": "2021-02-21T23:31:22+13:00",
+    "last_modified": "2021-02-23T15:05:04+13:00",
     "input_file": {},
     "preview_width": 1200,
     "preview_height": 800
@@ -212,17 +184,13 @@
       {
         "name": "Joseph Bulbulia",
         "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
       }
     ],
     "date": "2021-03-09",
     "categories": [],
     "contents": "\n\nContents\n\n\nSamples and parameters: observation and inference\n\n\n\nLinear relationships with one co-variate\nNon-linear relationships with one co-variate\n\n\n\n",
     "preview": "posts/5_1/distill-preview.png",
-    "last_modified": "2021-02-21T23:50:31+13:00",
+    "last_modified": "2021-02-23T15:04:48+13:00",
     "input_file": {},
     "preview_width": 2500,
     "preview_height": 2500
