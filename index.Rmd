@@ -15,8 +15,6 @@ listing:
     - 10_1
     - 11_1
     - 12_1
-  labs:
-    - L_1
 ---
 
 ```{r setup, include=FALSE}
