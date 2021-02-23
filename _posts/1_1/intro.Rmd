@@ -375,6 +375,12 @@ knitr::include_graphics("spss-code.PNG")
 Additionally, some changes made by researchers were extremely difficult to account for. For example, when a researcher re-coded a variable say reversing its direction there was no way of knowing that this had taken place if you later looked at the data set. Together with the rise in complex analysis in psychology this has led to a steady decline in the use of SPSS and most psychology departments, as well as private, and governmental stake holder now require a certain fluency in R or similar coding based languages.
 
 
+## Final though
+
+  - R, Rstudio, GitHub, R-markdown $\dots$ these are just tools that fit our task
+  - Our main task in this course is to develop statistical intuition and workflows that will enable you to do better science.
+
+
 
 ## Lecture slides
 

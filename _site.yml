@@ -23,6 +23,8 @@ navbar:
       href: index.html
     - text: "Assessments"
       href: assessments.html
+    - text: "Labs"
+      href: index_labs.html
 output:
   distill::distill_article:
     toc: yes

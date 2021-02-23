@@ -34,6 +34,19 @@ opts_chunk$set(
 #color_scheme_set("darkgray")
 ```
 
+## Team
+
+
+  - Lecturer & course coordinator: Prof. Joseph Bulbulia 
+Email: joseph.bulbulia@vuw.ac.nz 
+
+  - Lecturer & workshop coordinator: Johannes Karl
+Email: johannes.karl@vuw.ac.nz
+
+  - Course admin support: Dr. Jiun Youn (Extension, technical issues and other housekeeping matters) 
+Email: jiun.youn@vuw.ac.nzCourse 
+
+
 ## Mihi
 
 - Tihe mauri ora! 	  
@@ -45,7 +58,7 @@ opts_chunk$set(
 - Ko (Joseph) ahau
 
 
-## Your trial by fire in R
+## Our trial by fire in R
 
 ```{r out.width = "700px"}
 knitr::include_graphics("sp_firewalk.gif")
@@ -231,21 +244,29 @@ knitr::include_graphics("git5.gif",)
 ```{r out.width = "1000px"}
 knitr::include_graphics("cs.png")
 ```
-# Discussion| time permitting
+## Final though
 
-## Recall these faces? {.flexbox .vcenter}
-
-```{r out.width = "1000px", }
-knitr::include_graphics("faces.png")
-```
+  - R, Rstudio, GitHub, R-markown ... these are just tools that fit our task
+  - Our main task in this course is to develop statistical intuition and workflows that will enable you to do better science.
 
 
+## Thanks for your attention
 
-## Strengths/weaknesses of these graphs?{.flexbox .vcenter}
+ - See you tomorrow "in the shed" (at our workshop.)
 
-```{r out.width = "500px"}
-knitr::include_graphics("frontiers.jpg")
-```
+<!-- ## Recall these faces? {.flexbox .vcenter} -->
+
+<!-- ```{r out.width = "1000px", } -->
+<!-- knitr::include_graphics("faces.png") -->
+<!-- ``` -->
+
+
+
+<!-- ## Strengths/weaknesses of these graphs?{.flexbox .vcenter} -->
+
+<!-- ```{r out.width = "500px"} -->
+<!-- knitr::include_graphics("frontiers.jpg") -->
+<!-- ``` -->
 
 
 

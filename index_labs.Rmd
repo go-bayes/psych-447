@@ -1,0 +1,7 @@
+---
+title: "Lab index"
+site: distill::distill_website
+listing: 
+  labs:
+    - L_1
+---

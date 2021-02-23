@@ -1,0 +1,77 @@
+---
+title: "Week 1 Lab"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+---
+
+
+## Skills
+
+Do these excercises:
+
+<https://commonmark.org/help/tutorial/>
+
+## Assemble 
+
+Assemble into groups of 2 - 4 people 
+
+### Introductions
+
+Learn each others names and interests and prepare a brief introduction for the other(s)
+
+### Questions
+
+  - How do you set a working directory
+  - How do you open and close an Rmarkdown document? 
+  - Where is the difference between "source" and "console" and when might we use each?
+  - What is "YAML" 
+  
+Clarify how you found your answers
+  
+
+###  Define the following terms related to Rmarkdown, and describe how to do them:
+
+  -   "Knit"
+  -   "Show Outline"
+  -   "CMD-S" (command-S)
+
+
+Clarify how you found the answers. 
+
+### Answer the following questions in 1 or 2 sentences: 
+
+  1. Why is it important to knit often? 
+  2. What is "reproducible" research? 
+  3. How might describing your analysis in Rmarkdown improve research? 
+  4. What are some limitations of Rmarkdown for improving reproducible research? 
+
+### Rmarkdown Presentation
+
+  - Create a 2-5 slide presentation in Rmarkdown (no images required) on Rstudio GitHub, Ramrkdown
+  - (You will not be assessed on the content of the slides -- so bullet poits are up to you!)
+  - List advantages and disadvantates of Rmarkdown presentations
+
+
+## Introductions
+
+
+###  Assignment: creating a journal and upload it to Blackboard
+
+  1. Check that you have Rstudio and GitHub setup.  If not, seek help
+
+### Commit your first Rmarkdown journal
+
+-   Create your first Rmarkdown document, and title it "My Journal"
+-   Record your impressions of the process of getting set up with RStudio and GitHub
+-   **Record any help you have offered to other people,** and any help you have sought from other people, along the way.
+-   Save the document and commit it to GitHub.
+-   Note: set your GitHub repository to private if you wish the account to be private
