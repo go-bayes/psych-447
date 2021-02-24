@@ -42,5 +42,10 @@ labs <- list.files(
   "_labs", recursive = TRUE, pattern = ".Rmd", full.names = TRUE
   )
 purrr::walk(labs, render)
+
+workbooks <- list.files(
+  "_workbooks", recursive = TRUE, pattern = ".Rmd", full.names = TRUE
+  )
+purrr::walk(workbooks, render)
 ```
 

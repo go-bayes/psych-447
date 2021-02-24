@@ -7,6 +7,11 @@ author:
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl 
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
 output:
   distill::distill_article:
     self_contained: false
@@ -75,3 +80,5 @@ Clarify how you found the answers.
 -   **Record any help you have offered to other people,** and any help you have sought from other people, along the way.
 -   Save the document and commit it to GitHub.
 -   Note: set your GitHub repository to private if you wish the account to be private
+-   Further instructions under "Labs --> Workbook_1" 
+

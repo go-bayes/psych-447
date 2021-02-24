@@ -13,6 +13,10 @@ twitter:
 collections:
   posts:
     feed_item_max: false
+  labs:
+    feed_item_max: false
+  workbooks:
+    feed_item_max: false
 navbar:
   source_url: https://github.com/go-bayes/github.io-447-methods
   search: true
@@ -25,10 +29,12 @@ navbar:
       href: assessments.html
     - text: "Labs"
       href: index_labs.html
+    - text: "Workbooks"
+      href: index_workbooks.html
 output:
   distill::distill_article:
     toc: yes
-    toc_level: 1
+    toc_level: 2
 
 
 
