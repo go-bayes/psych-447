@@ -1,0 +1,19 @@
+[
+  {
+    "path": "workbooks/W_1/",
+    "title": "Week 1 Workbook",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      }
+    ],
+    "date": "2021-02-24",
+    "categories": [],
+    "contents": "\n\nContents\nTask 1 Apply for a github education account\nTask 2 Download R for free here:\nTask 3 Download Rstudio for free here:\nTask 4 Create your first repository\nTask 5 Commit your first Rmarkdown journal\nGrading points\nSubmit a link to your journal on Blackboard.\n\nTask 1 Apply for a github education account\napply here: https://education.github.com/pack/offers\nset up a github account.\nchoose a username that will be OK for professional purposes (e.g. your name)\nTask 2 Download R for free here:\nhttps://www.r-project.org\nTask 3 Download Rstudio for free here:\nhttps://rstudio.com/products/rstudio/download/#download\nUpdate R and Rstudio to the latest versions. Don’t worry if you have problems, we’ll be working through your problems in the first week, and throughout the course. We assume no prior experience with R or Git/GitHub\nTask 4 Create your first repository\nTask 5 Commit your first Rmarkdown journal\nCreate your first Rmarkdown document, and title it “My Journal”\nRecord your impressions of the process of getting set up with RStudio and GitHub\nRecord any help you have offered to other people, and any help you have sought from other people, along the way.\nSave the document and commit it to GitHub.\nNote: set your github repository to private if you wish the account to be private\nGrading points\nYour Rmarkdown document must include each of the following\n\nHeading\n\n\ncrossed out text\n\n\nlink to a website\n\n\nA footnote 1\n\n\nAn inspirational quote\n\n\nBONUS: figure out how to add a bibliographic citation, such as [@darwin1964origin]\n\n\nA record of help you sought and offered.\n\nSubmit a link to your journal on Blackboard.\nBlackboard isn’t our favourite tool, however, we need to respect the norms of our community. For this reason, presently all of your assessments need to be uploaded through Blackboard.\nOn Blackboard, pass us a link to your GitHub document on Blackboard for weekly assessments\nThis journal will count as both your weekly journal entry and your weekly workbook – double credits!\n\nHumanities scholars love footnotes.↩︎\n",
+    "preview": {},
+    "last_modified": "2021-02-24T18:56:41+13:00",
+    "input_file": "workbook_1.utf8.md"
+  }
+]

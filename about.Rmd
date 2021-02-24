@@ -41,16 +41,13 @@ This course offers a gentle introduction to the R statistical programming langua
 
 ## Where to find material
 
-Weekly lectures and course resources are located [here](https://go-bayes.github.io/psych-447/)
+Weekly lectures and course resources are located under the lecture tab [here](https://go-bayes.github.io/psych-447/)
 
-**Problem sets are located at the *end* of each week's lecture page.**
-
-Any readings will be linked in to the lecture page for the relevant day. If there are no readings that week we will specify: **no readings**
-
-Lab materials can be found under the tab: [Labs](https://go-bayes.github.io/psych-447/index_labs.html)
+** Weekly workbooks can be found under the workbook tab [here]
+(https://go-bayes.github.io/psych-447/index_workbooks.html)
 
 
-## Assements 
+## Assessments 
 
 See information under the `Assessments` tab here:
 https://go-bayes.github.io/psych-447/assessments.html
@@ -210,7 +207,7 @@ Workshop dates:
   - MAY 25: (focus on your project)
 
 
-### Complete weekly "workbooks" 
+### Complete weekly workbooks and weekly journals
 
 Weekly assignments allow you to further develop you skills, and to build the statistical intuitions that will enable them to flexibly address a broad range of scientific problems. 
 

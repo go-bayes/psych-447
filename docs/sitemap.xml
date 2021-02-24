@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://vuw-psych-447.netlify.app/about.html</loc>
-    <lastmod>2021-02-23T15:03:57+13:00</lastmod>
+    <lastmod>2021-02-24T18:54:50+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/assessments.html</loc>
-    <lastmod>2021-02-23T15:03:18+13:00</lastmod>
+    <lastmod>2021-02-24T18:53:23+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/index_labs.html</loc>
@@ -14,11 +14,11 @@
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/index_workbooks.html</loc>
-    <lastmod>2021-02-24T18:25:49+13:00</lastmod>
+    <lastmod>2021-02-24T18:50:00+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/</loc>
-    <lastmod>2021-02-24T18:30:40+13:00</lastmod>
+    <lastmod>2021-02-24T18:51:04+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/posts/12_1/</loc>
@@ -78,6 +78,10 @@
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/labs/L_1/</loc>
-    <lastmod>2021-02-24T18:18:51+13:00</lastmod>
+    <lastmod>2021-02-24T18:56:24+13:00</lastmod>
+  </url>
+  <url>
+    <loc>https://vuw-psych-447.netlify.app/workbooks/W_1/</loc>
+    <lastmod>2021-02-24T18:56:41+13:00</lastmod>
   </url>
 </urlset>
