@@ -19,14 +19,9 @@ output:
     toc: true
 ---
 
-
-
 ## To do:
 
-
-A good, and free introduction to [R for Data Science](https://r4ds.had.co.nz/introduction.html)
-Read chapters: 2-8 (they are short chapters.)
-
+A good, and free introduction to [R for Data Science](https://r4ds.had.co.nz/introduction.html) Read chapters: 2-8 (they are short chapters.)
 
 ## Fundamentals of R
 
@@ -74,7 +69,6 @@ x = 3 %/% 2
 x
 ```
 
-
 ## Inspecting data
 
 In a moment, we'll teach you how to import data into R. For now, let's work with a dataset that is already present in your R environment, the `iris` dataset.
@@ -82,6 +76,7 @@ In a moment, we'll teach you how to import data into R. For now, let's work with
 Here are some useful commands for inspecting data
 
 ### check head of dataset sing `head`
+
 ```{r}
 # the top rows and columns of the dataset
 head(iris)
@@ -94,6 +89,7 @@ str(iris)
 ```
 
 ### names
+
 ```{r}
 #names of the columns
 names(iris)
@@ -107,8 +103,8 @@ rownames(iris)
 head(iris)
 ```
 
-
 ### table (and use of `$`)
+
 ```{r}
 # create a table
 table(iris$Species)
@@ -129,12 +125,14 @@ head(irisdat2)
 ## Basic data structures
 
 ### vectors of numbers ( and use of `c` and `i:x` )
+
 ```{r}
 go_vector <- c(1:5)
 go_vector
 ```
 
 ### vectors of characters
+
 ```{r}
 go_vector2 <- c("hello", "world")
 go_vector2
@@ -146,7 +144,7 @@ as.vector(irisdat2$s_l)
 
 ### dataframes (2 dimensional square arrays of vectors)
 
-2 x dimensional "square" array with equal column and row lengths. Can contain data with multiple formats characters, facotors, integers, etc. 
+2 x dimensional "square" array with equal column and row lengths. Can contain data with multiple formats characters, facotors, integers, etc.
 
 ```{r}
 yuk <- data.frame(c("the", "enumeration", "of", "the", "constitution"), 6:10)
@@ -171,19 +169,19 @@ yok
 
 ### lists
 
-Arrays with constraints on "squareness" or data types. 
+Arrays with constraints on "squareness" or data types.
 
 ```{r}
 lok <- list(yok, yuk)
 lok
 ```
 
-
 ## Classes in R
 
 ### `numeric` and `integer`
 
 `numeric` means number
+
 ```{r}
 is.numeric(4.2)
 ```
@@ -195,6 +193,7 @@ is.integer(4.2)
 ```
 
 Note the default here:
+
 ```{r}
 is.integer(4)
 ```
@@ -203,7 +202,7 @@ is.integer(4)
 is.integer(as.integer(4))
 ```
 
-We'll need to ensure that certain numbers are integers later on, when we are estimating poisson models and/or doing bayesian data analysis. 
+We'll need to ensure that certain numbers are integers later on, when we are estimating poisson models and/or doing bayesian data analysis.
 
 #### characters
 
@@ -224,38 +223,39 @@ A factor is a category. It can be ordered (e.g. an ordinal scale) or unordered (
 str(iris)
 ```
 
-It's really important to check that ordered categories are really ordered categories in your dataset. 
+It's really important to check that ordered categories are really ordered categories in your dataset.
 
 There was is a famous retraction recently where a group found that religion was associated with immorality, however the countries in the the study had been coded as numbers, not as factors. The study's effect entirely disappeared once this error was corrected!
-
-
 
 ## Indexing in R
 
 ### columns
+
 ```{r}
 # select second column of "yuk"
 yuk[, 2]
 ```
 
 ### rows
+
 ```{r}
 # select second row of yuk
 yuk[2, ]
 ```
 
 ### rows and columns
+
 ```{r}
 #select first row and first column of yuk
 yuk[1, 2]
 ```
 
 ### selection by negation
+
 ```{r}
 # negate the first column of yuk
 yuk[, -1]
 ```
-
 
 ```{r}
 # negate the second column of yuk
@@ -264,15 +264,16 @@ yuk[,-2]
 
 ## Basic data wrangling in R
 
-#### `c` 
+#### `c`
+
 ```{r}
 # select only the first and second cols of iris
 iris_short2 <- iris[ ,c( 1, 2 ) ]
 head(iris_short2)
 ```
 
+#### `-c`
 
-####  `-c`
 ```{r}
 # select all columns but the first and second of iris
 iris_short <- iris[ ,-c( 1, 2 ) ]
@@ -288,12 +289,11 @@ yokyuk
 str(yokyuk)
 ```
 
-
 #### `rbind`
+
 ```{r}
 rbind(yuk[,],yok[2:3])
 ```
-
 
 #### use of `$` and []
 
@@ -309,44 +309,44 @@ iris_short$Petal.Width[5]
 iris_short$Petal.Width[5:25]
 ```
 
-
 ## Indexing for logical operations
 
-### definitions 
+### definitions
 
-  * `==` means "equals to"
-  *  `!=` means "not equals to"
-  * `>` means "greater than"
-  * `<` means "less than"
-  * `>=`means "greater than or equal"
-  * `<=` means "less than or equal"
-  * `!` means "not"
-  * `&` means "and"
-  * `|` means "or"!
-  * `is.na` means "is missing" (missing values are coded in R as NA) 
-  
+-   `==` means "equals to"
+-   `!=` means "not equals to"
+-   `>` means "greater than"
+-   `<` means "less than"
+-   `>=`means "greater than or equal"
+-   `<=` means "less than or equal"
+-   `!` means "not"
+-   `&` means "and"
+-   `|` means "or"!
+-   `is.na` means "is missing" (missing values are coded in R as NA)
+
 <aside>
-`> -9999 == 666`
-`> TRUE` !!! :)
-</aside>
 
+`> -9999 == 666` `> TRUE` !!! :)
+
+</aside>
 
 ### evaluation using logical operators
 
-
 #### create dataframe
+
 ```{r}
 # create data frame
 df<-data.frame( x = c(1:10),y = c(11:20) )
 ```
 
 #### evaluate cases
+
 ```{r}
 #evaluate cases in y that greater  than 15
 df[,"y"] > 15
 ```
 
-#### sum instances 
+#### sum instances
 
 ```{r}
 # count these cases
@@ -354,40 +354,41 @@ sum(df[,"y"] > 15)
 ```
 
 #### sum instances with a different operator
+
 ```{r}
 # count cases greater than or equal to 15
 sum(df[,"y"] >= 15)
 ```
 
 #### another methods
+
 ```{r}
 # another approach
 sum(df$y >= 15)
 ```
 
-
 #### using the `or` function
+
 ```{r}
 # combine operators
 sum(df$y >= 15 | df$y <=11)
 ```
 
-
 #### go meta
+
 ```{r}
 # go "meta"
 sum(df$y >= 15 | df$y <= 11) == sum(df$x >=5 | df$x <=1 )
 ```
 
-#### go meta-meta! 
+#### go meta-meta!
+
 ```{r}
 # go meta-meta
 sum(sum(df$y >= 15 | df$y <= 11) == sum(df$x >=5 | df$x <=1 ))
 ```
 
-
-
-#### use operators to modify data 
+#### use operators to modify data
 
 ```{r}
 # using assignment to modify data
@@ -433,9 +434,10 @@ The function `mean` generates the arithmetic mean of an input object:
 mean(iris$Sepal.Length)
 ```
 
-###  `sd` 
+### `sd`
 
 The function `sd` gives us the standard deviation:
+
 ```{r}
 # standard deviation of Sepal.Length
 sd(iris$Sepal.Length)
@@ -452,7 +454,6 @@ summary(iris$Sepal.Length)
 # summary of the Iris data set
 summary(iris)
 ```
-
 
 ### Coding
 
@@ -474,42 +475,48 @@ These packages can be installed in R with the command install.packages("package 
 
 It is important that you only need to install a package once on your machine, expect if you want to upgrade the package. Generally speaking you regularly want to upgrade your packages, but keep a permanent note in your code which version of a package you used when it was initially written.
 
-### Intalling package
+### Installing package
 
-#### install these packages
+#### install these packages (we'll be using them later)
 
 ```{r eval=FALSE}
-install.packages("devtools")
+install.packages("devtools") # installing packages
 ```
 
 ```{r  eval=FALSE}
-install.packages("remotes")
+install.packages("remotes") # installing packages
 ```
 
 ```{r eval=FALSE}
-install.packages("tidyverse")
+install.packages("tidyverse") ## data wrangling and visualisation
 ```
 
 ```{r eval=FALSE}
-install.packages("lme4")
+install.packages("lme4") # multilevel modelling
 ```
 
 ```{r eval=FALSE}
-install.packages("patchwork")
+install.packages("patchwork") # arranging multiple graphs
 ```
 
 ```{r eval=FALSE}
 library(devtools)
-devtools::install_github("strengejacke/sjPlot")
+devtools::install_github("strengejacke/sjPlot") # plots and tables
+```
+
+```{r eval=FALSE}
+install.packages("papaja")  # writing APA documents
+```
+
+```{r eval=FALSE}
+install.packages("table1") # summary tables
 ```
 
 #### extra credit
 
-
 ```{r eval=FALSE}
 devtools::install_github("easystats/easystats")
 ```
-
 
 ```{r eval=FALSE}
 devtools::install_github("strengejacke/ggeffects")
@@ -528,10 +535,9 @@ remotes::install_github("paul-buerkner/brms")
 devtools::install_github("stan-dev/cmdstanr")
 ```
 
+## Rolling your own code
 
-##  Rolling your own code
-
-Let's use R to write a function. Recall that a factorial for a number  $n$ is the product of all positive inters less than or equal to $n$. Thus the factorial for 5 = $$1 \times 2 \times 3 \times 4 \times 5$$
+Let's use R to write a function. Recall that a factorial for a number $n$ is the product of all positive inters less than or equal to $n$. Thus the factorial for 5 = $$1 \times 2 \times 3 \times 4 \times 5$$
 
 In R we can write a function:
 
@@ -560,7 +566,7 @@ Let's see if this is the number that R's `factorial` function produces:
 factorial(5)
 ```
 
-We can use R's ``==`` relational operator to evaluate whether the two functions are the same
+We can use R's `==` relational operator to evaluate whether the two functions are the same
 
 ```{r}
 # are the two functions equivalent for factorial five
@@ -568,13 +574,14 @@ go_factorial(5) == factorial(5)
 ```
 
 <aside>
+
 For more information about relational operators type the following into your console:
 
 ```{r, eval=FALSE}
 ?`==`
 ```
-</aside>
 
+</aside>
 
 We can make more complicated functions:
 
@@ -597,7 +604,7 @@ go_bayes_factorial <- function (x) {
 }
 ```
 
-We'll come back to functions later. It's useful to look at an example of a function so that you can see that R is much more than a calcultor. It is a tool to empower you for doing data anlysis in new and creative ways. 
+We'll come back to functions later. It's useful to look at an example of a function so that you can see that R is much more than a calcultor. It is a tool to empower you for doing data anlysis in new and creative ways.
 
 ### Coding etiquette
 
@@ -610,6 +617,7 @@ df1<-data.frame(a=rnorm(10,1,1),b=rnorm(10,4,8),c=rnorm(10,8,1),d=rnorm(10,7,2))
 ```
 
 Why is this better code?
+
 ```{r}
 
 # Create a data frame with four columns of randomly generated numbers specifying different means and standard deviations 
@@ -621,17 +629,92 @@ df1 <- data.frame(
 )
 ```
 
+## using R!
 
-## using R! 
-
+### data summary
 
 ```{r}
+# basic summary
+summary(iris)
+```
 
+```{r}
+table1::table1(~ Sepal.Length   + Sepal.Width   + Petal.Length  + Petal.Width |Species, data = iris  )
+```
+
+```{r}
+# plot relationship (what is happening here? )
+plot( Sepal.Length   ~ Sepal.Width , data = iris )
+```
+
+### model
+
+```{r}
+library("tidyverse")  # plotting
+library("ggeffects")  # plotting
+library("ggplot2")  # plotting
+library("patchwork") # arrange multiple plots
+library("sjPlot")  # tables and plots
+
+# basic model
+m1<- lm(Sepal.Length ~ Sepal.Width, data = iris)
+summary(m1)
+```
+
+### results
+
+```{r}
+# better summary method
+sjPlot::tab_model(m1)
+```
+
+```{r}
+# plot the coefficients
+sjPlot::plot_model(m1)
+```
+
+### graph predicted effects
+
+
+```{r fig.fullwidth = TRUE, fig.width=12, fig.height=12}
+# plot the predicted relationship of Sepal Width on Sepal Length
+p1 <- ggeffects::ggpredict(m1, terms = "Sepal.Width")
+plot(p1)
+```
+
+### What is the advantage of this graph? 
+
+```{r}
+pp1 <- plot(p1,
+            add.data = TRUE,
+            dot.alpha = .8,
+            jitter = .2)
+pp1
+```
+
+### try another model
+
+```{r}
+head(iris)
+summary (m2 <- lm(Petal.Length ~ Petal.Width, data = iris)) 
+```
+
+```{r fig.fullwidth = TRUE, fig.width=12, fig.height=12}
+pp2<-plot(
+  p2 <- ggeffects::ggpredict(m2, terms = "Petal.Width"),
+  add.data = TRUE,
+  dot.alpha = .8,
+  jitter = .2
+) 
+pp2
 ```
 
 
+```{r fig.fullwidth = TRUE, fig.width=12, fig.height=12}
+## arange plots
+library(patchwork)
+pp1 / pp2 + plot_annotation(title = "two plots", tag_levels = "i")
+```
 
 
-
-
-
+## to be continued

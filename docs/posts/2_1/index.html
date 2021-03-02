@@ -136,7 +136,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["bib.bib","bibpng2.png","bibpng3.png","syntax.png","week_2_visualising_coding_files/anchor-4.2.2/anchor.min.js","week_2_visualising_coding_files/bowser-1.9.3/bowser.min.js","week_2_visualising_coding_files/distill-2.2.21/template.v2.js","week_2_visualising_coding_files/header-attrs-2.6/header-attrs.js","week_2_visualising_coding_files/header-attrs-2.7.1/header-attrs.js","week_2_visualising_coding_files/jquery-1.11.3/jquery.min.js","week_2_visualising_coding_files/popper-2.6.0/popper.min.js","week_2_visualising_coding_files/tippy-6.2.7/tippy-bundle.umd.min.js","week_2_visualising_coding_files/tippy-6.2.7/tippy-light-border.css","week_2_visualising_coding_files/tippy-6.2.7/tippy.css","week_2_visualising_coding_files/tippy-6.2.7/tippy.umd.min.js","week_2_visualising_coding_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["bib.bib","bibpng2.png","bibpng3.png","syntax.png","week_2_visualising_coding_files/anchor-4.2.2/anchor.min.js","week_2_visualising_coding_files/bowser-1.9.3/bowser.min.js","week_2_visualising_coding_files/distill-2.2.21/template.v2.js","week_2_visualising_coding_files/figure-html5/unnamed-chunk-69-1.png","week_2_visualising_coding_files/figure-html5/unnamed-chunk-72-1.png","week_2_visualising_coding_files/figure-html5/unnamed-chunk-73-1.png","week_2_visualising_coding_files/figure-html5/unnamed-chunk-74-1.png","week_2_visualising_coding_files/figure-html5/unnamed-chunk-76-1.png","week_2_visualising_coding_files/figure-html5/unnamed-chunk-77-1.png","week_2_visualising_coding_files/header-attrs-2.6/header-attrs.js","week_2_visualising_coding_files/header-attrs-2.7.1/header-attrs.js","week_2_visualising_coding_files/jquery-1.11.3/jquery.min.js","week_2_visualising_coding_files/popper-2.6.0/popper.min.js","week_2_visualising_coding_files/table1-1.0/table1_defaults.css","week_2_visualising_coding_files/tippy-6.2.7/tippy-bundle.umd.min.js","week_2_visualising_coding_files/tippy-6.2.7/tippy-light-border.css","week_2_visualising_coding_files/tippy-6.2.7/tippy.css","week_2_visualising_coding_files/tippy-6.2.7/tippy.umd.min.js","week_2_visualising_coding_files/webcomponents-2.0.0/webcomponents.js","zoom_link.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -1802,6 +1802,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!--/radix_placeholder_distill-->
   <script src="../../site_libs/header-attrs-2.7.1/header-attrs.js"></script>
+  <link href="../../site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1924,13 +1925,22 @@ gtag('config', 'G-X058WW5WJZ');
 <li><a href="#sd"><code>sd</code></a></li>
 <li><a href="#summary"><code>summary</code></a></li>
 <li><a href="#coding">Coding</a></li>
-<li><a href="#intalling-package">Intalling package</a></li>
+<li><a href="#installing-package">Installing package</a></li>
 </ul></li>
 <li><a href="#rolling-your-own-code">Rolling your own code</a>
 <ul>
 <li><a href="#coding-etiquette">Coding etiquette</a></li>
 </ul></li>
-<li><a href="#using-r">using R!</a></li>
+<li><a href="#using-r">using R!</a>
+<ul>
+<li><a href="#data-summary">data summary</a></li>
+<li><a href="#model">model</a></li>
+<li><a href="#results">results</a></li>
+<li><a href="#graph-predicted-effects">graph predicted effects</a></li>
+<li><a href="#what-is-the-advantage-of-this-graph">What is the advantage of this graph?</a></li>
+<li><a href="#try-another-model">try another model</a></li>
+</ul></li>
+<li><a href="#to-be-continued">to be continued</a></li>
 </ul>
 </nav>
 </div>
@@ -2206,7 +2216,7 @@ gtag('config', 'G-X058WW5WJZ');
 </div>
 <h2 id="classes-in-r">Classes in R</h2>
 <h3 id="numeric-and-integer"><code>numeric</code> and <code>integer</code></h3>
-<code>numeric</code> means number
+<p><code>numeric</code> means number</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='fl'>4.2</span><span class='op'>)</span>
@@ -2222,7 +2232,7 @@ gtag('config', 'G-X058WW5WJZ');
 </div>
 <pre><code>[1] FALSE</code></pre>
 </div>
-Note the default here:
+<p>Note the default here:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>
@@ -2422,7 +2432,7 @@ Note the default here:
 <li><code>is.na</code> means “is missing” (missing values are coded in R as NA)</li>
 </ul>
 <aside>
-<code>&gt; -9999 == 666</code> <code>&gt; TRUE</code> !!! :)
+<p><code>&gt; -9999 == 666</code> <code>&gt; TRUE</code> !!! :)</p>
 </aside>
 <h3 id="evaluation-using-logical-operators">evaluation using logical operators</h3>
 <h4 id="create-dataframe">create dataframe</h4>
@@ -2566,7 +2576,7 @@ Figure 1: The Basic Syntax of R
 <pre><code>[1] 5.843333</code></pre>
 </div>
 <h3 id="sd"><code>sd</code></h3>
-The function <code>sd</code> gives us the standard deviation:
+<p>The function <code>sd</code> gives us the standard deviation:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># standard deviation of Sepal.Length</span>
@@ -2616,42 +2626,54 @@ The function <code>sd</code> gives us the standard deviation:
 <p>These functions can be bundled into <strong>packages</strong>. R’s capacity for creating packages is main appeal of R as a statistical tool because community developed functions are available from a central repository called CRAN in the form of packages.</p>
 <p>These packages can be installed in R with the command install.packages(“package name”).</p>
 <p>It is important that you only need to install a package once on your machine, expect if you want to upgrade the package. Generally speaking you regularly want to upgrade your packages, but keep a permanent note in your code which version of a package you used when it was initially written.</p>
-<h3 id="intalling-package">Intalling package</h3>
-<h4 id="install-these-packages">install these packages</h4>
+<h3 id="installing-package">Installing package</h3>
+<h4 id="install-these-packages-well-be-using-them-later">install these packages (we’ll be using them later)</h4>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"devtools"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"devtools"</span><span class='op'>)</span> <span class='co'># installing packages</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"remotes"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"remotes"</span><span class='op'>)</span> <span class='co'># installing packages</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"tidyverse"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"tidyverse"</span><span class='op'>)</span> <span class='co'>## data wrangling and visualisation</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"lme4"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"lme4"</span><span class='op'>)</span> <span class='co'># multilevel modelling</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"patchwork"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"patchwork"</span><span class='op'>)</span> <span class='co'># arranging multiple graphs</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://devtools.r-lib.org/'>devtools</a></span><span class='op'>)</span>
-<span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"strengejacke/sjPlot"</span><span class='op'>)</span>
+<span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"strengejacke/sjPlot"</span><span class='op'>)</span> <span class='co'># plots and tables</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"papaja"</span><span class='op'>)</span>  <span class='co'># writing APA documents</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"table1"</span><span class='op'>)</span> <span class='co'># summary tables</span>
 </code></pre>
 </div>
 </div>
@@ -2769,7 +2791,7 @@ The function <code>sd</code> gives us the standard deviation:
 </code></pre>
 </div>
 </div>
-Why is this better code?
+<p>Why is this better code?</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Create a data frame with four columns of randomly generated numbers specifying different means and standard deviations </span>
@@ -2783,10 +2805,339 @@ Why is this better code?
 </div>
 </div>
 <h2 id="using-r">using R!</h2>
+<h3 id="data-summary">data summary</h3>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># basic summary</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+</code></pre>
 </div>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
+                
+                
+                </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>table1</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/table1/man/table1.html'>table1</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>Sepal.Length</span>   <span class='op'>+</span> <span class='va'>Sepal.Width</span>   <span class='op'>+</span> <span class='va'>Petal.Length</span>  <span class='op'>+</span> <span class='va'>Petal.Width</span> <span class='op'>|</span><span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span>  <span class='op'>)</span>
+</code></pre>
+</div>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'>setosa<br><span class='stratn'>(N=50)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>versicolor<br><span class='stratn'>(N=50)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>virginica<br><span class='stratn'>(N=50)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Overall<br><span class='stratn'>(N=150)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='rowlabel firstrow'><span class='varlabel'>Sepal.Length</span></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>5.01 (0.352)</td>
+<td>5.94 (0.516)</td>
+<td>6.59 (0.636)</td>
+<td>5.84 (0.828)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>5.00 [4.30, 5.80]</td>
+<td class='lastrow'>5.90 [4.90, 7.00]</td>
+<td class='lastrow'>6.50 [4.90, 7.90]</td>
+<td class='lastrow'>5.80 [4.30, 7.90]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'><span class='varlabel'>Sepal.Width</span></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>3.43 (0.379)</td>
+<td>2.77 (0.314)</td>
+<td>2.97 (0.322)</td>
+<td>3.06 (0.436)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>3.40 [2.30, 4.40]</td>
+<td class='lastrow'>2.80 [2.00, 3.40]</td>
+<td class='lastrow'>3.00 [2.20, 3.80]</td>
+<td class='lastrow'>3.00 [2.00, 4.40]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'><span class='varlabel'>Petal.Length</span></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>1.46 (0.174)</td>
+<td>4.26 (0.470)</td>
+<td>5.55 (0.552)</td>
+<td>3.76 (1.77)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>1.50 [1.00, 1.90]</td>
+<td class='lastrow'>4.35 [3.00, 5.10]</td>
+<td class='lastrow'>5.55 [4.50, 6.90]</td>
+<td class='lastrow'>4.35 [1.00, 6.90]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'><span class='varlabel'>Petal.Width</span></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>0.246 (0.105)</td>
+<td>1.33 (0.198)</td>
+<td>2.03 (0.275)</td>
+<td>1.20 (0.762)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>0.200 [0.100, 0.600]</td>
+<td class='lastrow'>1.30 [1.00, 1.80]</td>
+<td class='lastrow'>2.00 [1.40, 2.50]</td>
+<td class='lastrow'>1.30 [0.100, 2.50]</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># plot relationship (what is happening here? )</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span> <span class='va'>Sepal.Length</span>   <span class='op'>~</span> <span class='va'>Sepal.Width</span> , data <span class='op'>=</span> <span class='va'>iris</span> <span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-69-1.png" width="624" /></p>
+</div>
+<h3 id="model">model</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>  <span class='co'># plotting</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://strengejacke.github.io/ggeffects/'>"ggeffects"</a></span><span class='op'>)</span>  <span class='co'># plotting</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ggplot2.tidyverse.org'>"ggplot2"</a></span><span class='op'>)</span>  <span class='co'># plotting</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://patchwork.data-imaginist.com'>"patchwork"</a></span><span class='op'>)</span> <span class='co'># arrange multiple plots</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://strengejacke.github.io/sjPlot/'>"sjPlot"</a></span><span class='op'>)</span>  <span class='co'># tables and plots</span>
+
+<span class='co'># basic model</span>
+<span class='va'>m1</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = Sepal.Length ~ Sepal.Width, data = iris)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.5561 -0.6333 -0.1120  0.5579  2.2226 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   6.5262     0.4789   13.63   &lt;2e-16 ***
+Sepal.Width  -0.2234     0.1551   -1.44    0.152    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.8251 on 148 degrees of freedom
+Multiple R-squared:  0.01382,   Adjusted R-squared:  0.007159 
+F-statistic: 2.074 on 1 and 148 DF,  p-value: 0.1519</code></pre>
+</div>
+<h3 id="results">results</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># better summary method</span>
+<span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Sepal.Length
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+6.53
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+5.58 – 7.47
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Sepal.Width
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.22
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.53 – 0.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.152
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+150
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.014 / 0.007
+</td>
+</tr>
+</table>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># plot the coefficients</span>
+<span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/plot_model.html'>plot_model</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-72-1.png" width="624" /></p>
+</div>
+<h3 id="graph-predicted-effects">graph predicted effects</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># plot the predicted relationship of Sepal Width on Sepal Length</span>
+<span class='va'>p1</span> <span class='op'>&lt;-</span> <span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>m1</span>, terms <span class='op'>=</span> <span class='st'>"Sepal.Width"</span><span class='op'>)</span>
+<span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>p1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-73-1.png" width="1152" /></p>
+</div>
+<h3 id="what-is-the-advantage-of-this-graph">What is the advantage of this graph?</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pp1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>p1</span>,
+            add.data <span class='op'>=</span> <span class='cn'>TRUE</span>,
+            dot.alpha <span class='op'>=</span> <span class='fl'>.8</span>,
+            jitter <span class='op'>=</span> <span class='fl'>.2</span><span class='op'>)</span>
+<span class='va'>pp1</span>
+</code></pre>
+</div>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-74-1.png" width="624" /></p>
+</div>
+<h3 id="try-another-model">try another model</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span> <span class='op'>(</span><span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Petal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span> 
+</code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = Petal.Length ~ Petal.Width, data = iris)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.33542 -0.30347 -0.02955  0.25776  1.39453 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.08356    0.07297   14.85   &lt;2e-16 ***
+Petal.Width  2.22994    0.05140   43.39   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.4782 on 148 degrees of freedom
+Multiple R-squared:  0.9271,    Adjusted R-squared:  0.9266 
+F-statistic:  1882 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pp2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>m2</span>, terms <span class='op'>=</span> <span class='st'>"Petal.Width"</span><span class='op'>)</span>,
+  add.data <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  dot.alpha <span class='op'>=</span> <span class='fl'>.8</span>,
+  jitter <span class='op'>=</span> <span class='fl'>.2</span>
+<span class='op'>)</span> 
+<span class='va'>pp2</span>
+</code></pre>
+</div>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-76-1.png" width="1152" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## arange plots</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://patchwork.data-imaginist.com'>patchwork</a></span><span class='op'>)</span>
+<span class='va'>pp1</span> <span class='op'>/</span> <span class='va'>pp2</span> <span class='op'>+</span> <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_annotation.html'>plot_annotation</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"two plots"</span>, tag_levels <span class='op'>=</span> <span class='st'>"i"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-77-1.png" width="1152" /></p>
+</div>
+<h2 id="to-be-continued">to be continued</h2>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
