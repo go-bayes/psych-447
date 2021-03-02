@@ -41,23 +41,23 @@ We can use R as a calculator. You can run any mathematical operation you would n
 
 ```{r calculator}
 ## Addition
-x = 3 + 2
+x <- 3 + 2
 x
 
 ## Subtraction
-x = 3 - 2
+x <-  3 - 2
 x
 
 ## Multiplication
-x = 3 * 2
+x <-  3 * 2
 x
 
 ## Division
-x = 3 / 2
+x <-  3 / 2
 x
 
 ## Modulus (Remainder from division)
-x = 3 %% 2
+x <-  3 %% 2
 x
 
 ## Exponentiation

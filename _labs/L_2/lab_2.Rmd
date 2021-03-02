@@ -28,7 +28,7 @@ Mine is called "GIT".
 
 Using the methods you learned last week:
 
-### Create Repos
+### Create Repos (if you have not already)
 
   1. Create a repository for 447-journals (if you don't have one already)
   2. Create a repository for your 447-workbooks. 
@@ -40,7 +40,7 @@ Using the methods you learned last week:
   1. Create R-projects in each of these repositories.
   2. In your workbooks folder, using the `+ New Folder` command, create a folder called `data` (or similar) This is where you'll store your data.
   4. Create a file called `figs` (where you'll stor your figures)
-  4. Create a folder called `workbooks`, or similar this is where you'll store your weekly workbooks. 
+  5 Create a folder called `workbooks`, or similar this is where you'll store your weekly workbooks. 
   
 ### Workbook 2
 
@@ -52,18 +52,11 @@ Using the methods you learned last week:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-
   3. Find the keyboard shortcuts menu. 
   4. Memorise the keyboard shortcut for insert code chunk which is: ⌥⌘I
   5. Use the mac to insert a code chunk. 
-  6. Memorise the shortcut for evaluate which is ⌘-return^[there are several flavours of evaluation, COMMAND-RETURN is generically useful.
-  
-
-```{r, echo = TRUE}
-# Use r to calculate 10 calculations
-3*3
-```
+  6. Memorise the shortcut for evaluate which is ⌘-return^  use for all tasks in this workbook. 
+  7. Use R to do 10 mathematical calculations 
   
 ```{r}
 4+5
@@ -73,100 +66,91 @@ knitr::opts_chunk$set(echo = TRUE)
 3^3
 ```
 
+Show your work 
+
+
+
+  8. Using R, find the square root of 324
+  9. In the `iris` dataset, find the flower with the longest Sepal.Length. (hint, use the `max` function.)  Show the column details for this flower only. 
+  10. In the `iris` dataset, find the flower with the shortest Sepal.Length. (hint, use the `min` function.)
+  11. Calculate the difference bewteen the flower with the longest and shortest Sepal.Length
+  12. Make a 7 column  x  100 row dataframe using `c`, `:`, `dataframe`
+  13. Rename the columns of the dataframe using the names of snow white dwarfs, or any names.
+  14. Using the dataset `woman`, write a linear model for `height ~ weight`
+  15. Create a table and coefficient plot for this model
+  16. Using `ggeffects`, create a prediction plot for this model.
+
+<aside>
+Next week we'll be creating plots like this
 ```{r}
-factorial(10)/2
+library(ggplot2)
+ggplot2::ggplot(data = women) + 
+  geom_point(mapping = aes(x = height, y = weight)) + geom_smooth(method = lm, aes(x = height, y = weight)) + theme_classic() 
+```
+<\aside>
+
+
+  17.  Explain what is being calculated here
+
+```{r}
+sum(women$weight > 140) / length(women$weight)
+```
+   
+  18. Calculate the proportion of women who are over the mean weight of women
+
+```{r eval = FALSE, echo = FALSE}
+mw <- mean(women$weight)
+sum(women$weight > mw)/ length(women$weight)
+```
+  
+```{r eval = FALSE, echo = FALSE}
+mh<-mean(women$height)
+sum(women$height > mh)/ length(women$height)
 ```
 
-Use assignment for a calculation
+
+  19. What are the advantages and disadvantages of creating more breaks in the Petal.Length indicator?  Clarify your answer in a paragraph. 
 
 ```{r}
-a <- 9
-b <-2
-a + b
-(a * 2)/b
-sqrt(a) + b
+hist(iris$Petal.Length)
 ```
-
-
-So you can see how to use R as a calculator
-
-## Data types
-
-What is a factor? 
-
-What is an number?
-
-What is an integer?
-
-What is a character? 
-
-
-## Inspecting data
-
-1. Use the `str` command to describe the `iris dataset
-2. Create a histogram for `Petal.Length`
-3. Create a histogram for Petal.Length
-
-4. What are the advantages and disadvantages of creating more breaks in the Petal.Length indicator? 
 
 ```{r}
 hist(iris$Petal.Length, breaks = 100)
 ```
 
-## Extra
+  20. Spot the error in this code
+  
+```{r eval = FALSE, echo = FALSE}
+mh<-mean(women$height)
+sum(women$weight > mh)/ length(women$height)
+```
 
-In class we wrote the function
+  21. Reorder the columns of the `woman` dataset so that weight comes before height. Then rename the columns "w" and "h". 
 
-```{r}
-go_bayes_factorial <- function (x) {
-  # check is the number is negative, positive or zero
-  if (x  < 0) {
-    print("not even Ashley Bloomfield could make a factorial for a negative number")
-  } else if (x == 0) {
-    print("the factorial of zero is defined as 1")
-  } else {
-    for (i in 1:x)
-      y <- 1
-    for (i in 1:x) {
-      y <- y * ((1:x)[i])
-    }
-    print(y)
-  }
-}
+```{r, eval = FALSE, echo = FALSE}
+head(women)
+dfa <-cbind.data.frame(women$weight,women$height)
+names(dfa)[]<-c("w","h")
+
+```
+
+  22. 
+  
+  
+  
+```{r echo = FALSE, eval = FALSE}
+library(tidyverse)
+n <- 100
+yourtibble <-tibble(
+  id = 1:n, 
+  weight = rnorm(n, 80,20), 
+  height = rnorm(n, weight*2, 10)
+)
+saveRDS(yourtibble, here::here("data", "yourtibble.rds"))
 ```
 
 
-Note that this gets the r factorial function correct for whole integers
-
-```{r}
-go_bayes_factorial(7) == factorial(7)
-```
-
-However, what is happening here? 
-
-```{r}
-go_bayes_factorial(7.1) == factorial(7.1)
-```
-
-Can you rewrite the go_bayes_factorial function so that it yeilds the R function? 
-
-```{r}
-go_bayes_factorial2 <- function (x) {
-  # check is the number is negative, positive or zero
-  if (x  < 0) {
-    print("not even Ashley Bloomfield could make a factorial for a negative number")
-  } else if (x == 0) {
-    print("the factorial of zero is defined as 1")
-  } else {
-    for (i in 1:x)
-      y <- 1
-    for (i in 1:x) {
-      y <- y * ((1:x)[i])
-    }
-    print(y)
-  }
-}
-```
 
 
 
