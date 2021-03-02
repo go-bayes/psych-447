@@ -1,0 +1,172 @@
+---
+title: "Week 2 Lab"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl 
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+---
+
+
+## Workflow
+
+If you haven't already, set a folder for your R projects. Choose a location on our Hard drive. It is best *not* to use a shared folder (iCloud, Dropbox, Google Drive) because this can sometime cause problems. GitHub will be your place to store your code. 
+
+Mine is called "GIT".
+
+
+Using the methods you learned last week:
+
+### Create Repos
+
+  1. Create a repository for 447-journals (if you don't have one already)
+  2. Create a repository for your 447-workbooks. 
+  3. You should initialise a Readme statement and a .gitignore document (make sure to click the R .gitignore) 
+
+
+### Create R projects
+
+  1. Create R-projects in each of these repositories.
+  2. In your workbooks folder, using the `+ New Folder` command, create a folder called `data` (or similar) This is where you'll store your data.
+  4. Create a file called `figs` (where you'll stor your figures)
+  4. Create a folder called `workbooks`, or similar this is where you'll store your weekly workbooks. 
+  
+### Workbook 2
+
+  1. Open an R markdown document, and filling in your name
+  2. The first code chunk is for your preferences. 
+
+
+```{r setup, include=TRUE, eval = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+  3. Find the keyboard shortcuts menu. 
+  4. Memorise the keyboard shortcut for insert code chunk which is: ⌥⌘I
+  5. Use the mac to insert a code chunk. 
+  6. Memorise the shortcut for evaluate which is ⌘-return^[there are several flavours of evaluation, COMMAND-RETURN is generically useful.
+  
+
+```{r, echo = TRUE}
+# Use r to calculate 10 calculations
+3*3
+```
+  
+```{r}
+4+5
+```
+
+```{r}
+3^3
+```
+
+```{r}
+factorial(10)/2
+```
+
+Use assignment for a calculation
+
+```{r}
+a <- 9
+b <-2
+a + b
+(a * 2)/b
+sqrt(a) + b
+```
+
+
+So you can see how to use R as a calculator
+
+## Data types
+
+What is a factor? 
+
+What is an number?
+
+What is an integer?
+
+What is a character? 
+
+
+## Inspecting data
+
+1. Use the `str` command to describe the `iris dataset
+2. Create a histogram for `Petal.Length`
+3. Create a histogram for Petal.Length
+
+4. What are the advantages and disadvantages of creating more breaks in the Petal.Length indicator? 
+
+```{r}
+hist(iris$Petal.Length, breaks = 100)
+```
+
+## Extra
+
+In class we wrote the function
+
+```{r}
+go_bayes_factorial <- function (x) {
+  # check is the number is negative, positive or zero
+  if (x  < 0) {
+    print("not even Ashley Bloomfield could make a factorial for a negative number")
+  } else if (x == 0) {
+    print("the factorial of zero is defined as 1")
+  } else {
+    for (i in 1:x)
+      y <- 1
+    for (i in 1:x) {
+      y <- y * ((1:x)[i])
+    }
+    print(y)
+  }
+}
+```
+
+
+Note that this gets the r factorial function correct for whole integers
+
+```{r}
+go_bayes_factorial(7) == factorial(7)
+```
+
+However, what is happening here? 
+
+```{r}
+go_bayes_factorial(7.1) == factorial(7.1)
+```
+
+Can you rewrite the go_bayes_factorial function so that it yeilds the R function? 
+
+```{r}
+go_bayes_factorial2 <- function (x) {
+  # check is the number is negative, positive or zero
+  if (x  < 0) {
+    print("not even Ashley Bloomfield could make a factorial for a negative number")
+  } else if (x == 0) {
+    print("the factorial of zero is defined as 1")
+  } else {
+    for (i in 1:x)
+      y <- 1
+    for (i in 1:x) {
+      y <- y * ((1:x)[i])
+    }
+    print(y)
+  }
+}
+```
+
+
+

@@ -21,7 +21,7 @@ output:
 
 ## Skills
 
-Do these excercises:
+Do these exercises:
 
 <https://commonmark.org/help/tutorial/>
 

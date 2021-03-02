@@ -78,7 +78,7 @@ knitr::include_graphics("fw.png")
 
 ## Dynamics? {.flexbox .vcenter}
 
-```{r out.width = "1000px", }
+```{r out.width = "1000px"}
 knitr::include_graphics("faces.png")
 ```
 
