@@ -40,7 +40,6 @@ vignettes/*.pdf
 .Rhistory
 .RData
 .Ruserdata
-*data/
 *_cache/
 *models/
 _posts/**/*.html
