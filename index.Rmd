@@ -15,6 +15,12 @@ listing:
     - 10_1
     - 11_1
     - 12_1
+  labs:
+    - L_1
+    - L_2
+  workbooks:
+    - W_1
+    - W_2
 ---
 
 ```{r setup, include=FALSE}
