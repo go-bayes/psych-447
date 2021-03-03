@@ -4,4 +4,5 @@ site: distill::distill_website
 listing: 
   workbooks:
     - W_1
+    - W_2
 ---

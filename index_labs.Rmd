@@ -4,4 +4,5 @@ site: distill::distill_website
 listing: 
   labs:
     - L_1
+    - L_2
 ---
