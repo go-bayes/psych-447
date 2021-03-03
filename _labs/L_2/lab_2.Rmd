@@ -147,13 +147,20 @@ yourtibble <-tibble(
   weight = rnorm(n, 80,20), 
   height = rnorm(n, weight*2, 10)
 )
+
+testdata1<-data.frame(yourtibble)
+write_csv(testdata1,here::here("data", "testdata1.csv"))
+
+
 saveRDS(yourtibble, here::here("data", "yourtibble.RDS"))
 ```
 
 
 
 ```{r}
-testdata<-readRDS(url("https://github.com/go-bayes/psych-447/blob/main/data/yourtibble.RDS"))
+library (readr)
+testdata<- url("https://github.com/go-bayes/psych-447/blob/main/data/testdata1.csv")
+head(testdata)
 ```
 
 
