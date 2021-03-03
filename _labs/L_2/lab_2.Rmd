@@ -87,7 +87,7 @@ library(ggplot2)
 ggplot2::ggplot(data = women) + 
   geom_point(mapping = aes(x = height, y = weight)) + geom_smooth(method = lm, aes(x = height, y = weight)) + theme_classic() 
 ```
-<\aside>
+</aside>
 
 
   17.  Explain what is being calculated here
@@ -100,12 +100,12 @@ sum(women$weight > 140) / length(women$weight)
 
 ```{r eval = FALSE, echo = FALSE}
 mw <- mean(women$weight)
-sum(women$weight > mw)/ length(women$weight)
+sum(women$weight > mw) / length(women$weight)
 ```
   
 ```{r eval = FALSE, echo = FALSE}
-mh<-mean(women$height)
-sum(women$height > mh)/ length(women$height)
+mh <- mean(women$height)
+sum(women$height > mh) / length(women$height)
 ```
 
 
@@ -121,47 +121,81 @@ hist(iris$Petal.Length, breaks = 100)
 
   20. Spot the error in this code
   
-```{r eval = FALSE, echo = FALSE}
-mh<-mean(women$height)
-sum(women$weight > mh)/ length(women$height)
+```{r eval = FALSE, echo = TRUE}
+# here is one method. 
+mh <- mean(women$height)
+sum(women$weight > mh) / length(women$height)
 ```
 
   21. Reorder the columns of the `woman` dataset so that weight comes before height. Then rename the columns "w" and "h". 
 
 ```{r, eval = FALSE, echo = FALSE}
-head(women)
-dfa <-cbind.data.frame(women$weight,women$height)
-names(dfa)[]<-c("w","h")
+# here is one method
+# Bind columns as data frame
+dfa <- cbind.data.frame(women$weight, women$height)
+# change names
+names(dfa)[] <- c("w", "h")
 
 ```
 
-  22. 
+  22.  Read data into R using the following method:
   
-  
-  
+
 ```{r echo = FALSE, eval = FALSE}
+
+# g-bayes making data (internal)
 library(tidyverse)
 n <- 100
 yourtibble <-tibble(
   id = 1:n, 
   weight = rnorm(n, 80,20), 
-  height = rnorm(n, weight*2, 10)
+  height = rnorm(n, (weight+10)*1.8, 10)
 )
-
+plot( height ~ weight, yourtibble)
 testdata1<-data.frame(yourtibble)
 write_csv(testdata1,here::here("data", "testdata1.csv"))
-
-
-saveRDS(yourtibble, here::here("data", "yourtibble.RDS"))
 ```
 
 
-
-```{r}
-library (readr)
-testdata<- url("https://github.com/go-bayes/psych-447/blob/main/data/testdata1.csv")
-head(testdata)
+```{r eval = FALSE, echo = TRUE}
+# read data from file
+library("readr")
+testdata<- readr::read_csv(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/testdata1.csv"))
+str(testdata)
 ```
+
+   Save data into your data folder using the following method
+   
+```{r eval=FALSE, echo = TRUE}
+library("here")
+# save data using here
+saveRDS(testdata, here::here("data", "td.RDS"))
+```
+   
+   Read data back into R
+   
+```{r eval = FALSE}
+td <- readRDS(here::here("data", "td.RDS"))
+str(td)
+```
+
+  23. Using the `td` dataset, write a linear model for `height ~ weight` as above
+
+```{r echo = FALSE, eval = FALSE}
+m1<-lm(height ~ weight, data = td)
+summary(m1)
+plot(height ~ weight, data = td)
+```
+
+  24. Create a coefficient plot
+  25. Create a prediction plot
+  
+Extra credit, **how would you interpret the intercept in this model?***
+
+
+
+  
+  
 
 
 
