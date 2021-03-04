@@ -29,7 +29,6 @@ knitr::include_graphics("op.jpg")
 ```
 
 
-
 ### Creating a graph
 
 

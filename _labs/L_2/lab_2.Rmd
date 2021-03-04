@@ -66,6 +66,8 @@ knitr::opts_chunk$set(echo = TRUE)
 3^3
 ```
 
+
+
 Show your work 
 
 
@@ -73,7 +75,13 @@ Show your work
   8. Using R, find the square root of 324
   9. In the `iris` dataset, find the flower with the longest Sepal.Length. (hint, use the `max` function.)  Show the column details for this flower only. 
   10. In the `iris` dataset, find the flower with the shortest Sepal.Length. (hint, use the `min` function.)
-  11. Calculate the difference bewteen the flower with the longest and shortest Sepal.Length
+```{r}
+min(iris$Sepal.Length)
+?min
+```
+  
+  
+  11. Calculate the difference between the flower with the longest and shortest Sepal.Length
   12. Make a 7 column  x  100 row dataframe using `c`, `:`, `dataframe`
   13. Rename the columns of the dataframe using the names of snow white dwarfs, or any names.
   14. Using the dataset `woman`, write a linear model for `height ~ weight`
