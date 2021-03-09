@@ -18,6 +18,13 @@ output:
     toc: true
 ---
 
+### Libraries we will need
+```{r}
+library("tidyverse")
+library("patchwork")
+library("readr")
+```
+
 
 
 ### Question Question: Why is this graph not printing any output? 
@@ -103,9 +110,10 @@ g2 <-ggplot(data = mpg) +
   ylab("Highway miles per liter") 
 ```
   
-```{r}
+```{r layout="l-body-outset", fig.width=12, fig.height=12}
 library("patchwork")
-g1 / g2 + plot_annotation(title = "Which plot do you preer and why?")
+
+g1 / g2 + plot_annotation(title = "Which plot do you prefer and why?", tag_levels = 'a')
 ```
 
 ### Answer
@@ -136,10 +144,10 @@ ggplot(data = mpg) +
 ```
 
 
-### Question 7.  which graph is more informative and why
+### Question 7.  which graph is more informative and why?
 
 
-```{r}
+```{r  dualfig, layout="l-body-outset", fig.width=12, fig.height=12, echo = FALSE}
 g3 <- ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = class))
 
@@ -151,17 +159,18 @@ g3 / g4 + plot_annotation("Which graph is more informative and why?", tag_levels
 ```
 
 
-### Answer. 
+### Answer
 
-Arguably the facets mae the role of class more evident by making the class indicator more salient. Where possible,  it is a good idea to declutter your graph.   
+Arguably the facets make the role of class more evident by making the class indicator more salient. Where possible,i t is a good idea to declutter your graph.   
 
 
 #### Question 8.  remove the legend from the facet graph above (g4)
 
+
 ```{r}
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
-  facet_wrap( ~ class, nrow = 2) 
+  facet_wrap( ~ class, nrow = 2)
 ```
 
 ### Answer
@@ -174,41 +183,54 @@ ggplot(data = mpg) +
 ```
 
 
-### Question  9  Graph the relationship betweeen `religiousity` (x-axis) and `rightwing`` (y-axis) in the ISSP dataset
+### Question  9  Convert the y variable to "numeric" and graph the relationship betweeen `religiousity` (x-axis) and `thr_mus`` (y-axis) in the ISSP dataset. Create new axis labels
+
+Download the ISSP questionaire used in this study here: 
+https://github.com/go-bayes/psych-447/blob/main/data_raw/ISSP/ISSP_2018_Religion_Questionnaire_final_version1-2.pdf
+
 
 ```{r}
 # read the issp dataset for questionaire see: ISSP_2018_Religion_Questionnaire_final_version1-2.pdf
 # 
 # subset of data from the issp dataset
 issp <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/issp.csv"))
-
-spec(issp)
 ```
 
-Need to get data into shape
+
+```{r eval=FALSE}
+# note that we need to check our data
+head(issp)
+
+# when we do we find that classes of the variables need to be adjusted
+str(issp)
+```
+
+Let's get the data into shape using dplyr. Run this code below
+
 ```{r}
-issp <- issp %>%
+ip <- issp %>%
   mutate(
     id = factor(id),
-    thr_ath = factor(thr_ath),
-    thr_bd = factor(thr_bd),
-    thr_ch = factor(thr_ch),
-    thr_hd = factor(thr_hd),
-    thr_jw = factor(thr_jw),
-    thr_ms = factor(thr_ms),
-    neg_ath = factor(neg_ath),
-    neg_bd = factor(neg_bd),
-    neg_ch = factor(neg_ch),
-    neg_hd  = factor(neg_hd),
-    neg_jw = factor(neg_jw),
-    neg_ms = factor(neg_ms),
-    wave  = factor(wave),
-    nzeuro = factor(nzeuro),
-    eduyears = numeric(years),
-    male = factor(male),
-    age = numeric(age),
-    rightwing = numeric(rightwing),
-    religiosity = numeric(religiosity)
+    thr_ath = as.factor(thr_ath),
+    thr_bd = as.factor(thr_bd),
+    thr_ch = as.factor(thr_ch),
+    thr_hd = as.factor(thr_hd),
+    thr_jw = as.factor(thr_jw),
+    thr_ms = as.factor(thr_ms),
+    neg_ath = as.factor(neg_ath),
+    neg_bd = as.factor(neg_bd),
+    neg_ch = as.factor(neg_ch),
+    neg_hd  = as.factor(neg_hd),
+    neg_jw = as.factor(neg_jw),
+    neg_ms = as.factor(neg_ms),
+    wave  = as.factor(wave),
+    nzeuro = as.factor(nzeuro),
+    eduyears = as.numeric(eduyears),
+    male = as.factor(male),
+    age = as.numeric(age),
+    rightwing = as.numeric(rightwing),
+    rural = as.factor(rural),
+    religiosity = as.numeric(religiosity)
   )
 ```
 
@@ -218,8 +240,27 @@ issp <- issp %>%
 
 ```{r}
 library(ggplot2)
-ggplot(data = issp, aes(y = rightwing, x = religiosity, colour = wave)) + 
-  stat_smooth(method = lm, fullrange = TRUE, alpha = 0.1) +  geom_point(alpha = .01)
+ggplot(data = ip, aes(y = as.numeric(thr_ms), x = religiosity, colour = wave)) + 
+  geom_smooth(method = lm, fullrange = FALSE, alpha = 0.1) + 
+  labs(title = "Religiosity predict Muslim acceptance post-Christchurch shootings") + 
+  xlab( x = "Level of Religiosity (scale 1-7) ") + ylab ("acceptance of Muslims (1-4)")
 ```
 
 
+### 
+
+```{r}
+library(ggplot2)
+ggplot(data = ip, aes(y = as.numeric(thr_ms), x = religiosity, colour = wave))  +  geom_jitter(alpha = .1) + 
+  geom_smooth(method = lm, fullrange = FALSE, alpha = 0.1) +
+   scale_y_continuous(limits = c(1,4))
+```
+
+
+
+```{r}
+library(ggplot2)
+ggplot(data = issp, aes(y = as.numeric(thr_ms), x = rightwing, colour = wave)) + 
+  geom_smooth(method = lm, fullrange = FALSE, alpha = 0.1) +
+  scale_y_continuous(limits = c(0,4))
+```
