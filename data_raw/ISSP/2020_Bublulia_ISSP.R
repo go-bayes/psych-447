@@ -375,9 +375,6 @@ inner_join(
     arrange(id)
 ) -> df14
 
-df14
-
-
 
 inner_join(
   df14,
@@ -547,50 +544,47 @@ df24
 
 ## GET DATA IN ORDER
 
-isdat <- df24 %>% mutate(
-  Negative.Muslims = attitudemus,
-  Negative.Hindus  = attitudehin,
-  Negative.Buddhists = attitudebud,
-  Negative.Christians = attitudechr,
-  Negative.Jews = attitudejew,
-  Negative.Atheists = attitudeath,
-  Threatened.Muslims = 5 - threatmus,
-  Threatened.Hindus = 5 - threathin,
-  Threatened.Buddhists = 5 - threatbud,
-  Threatened.Christians = 5 - threatchr,
-  Threatened.Jews = 5 - threatjew,
-  Threatened.Atheists = 5 - threatath
-) %>%
+isdat <- df24 %>%
   dplyr::mutate(
-    age.c = scale(age, scale = F, center = T),
-    age.decade.c = scale(age, scale = F, center = T) / 10,
-    rural = factor(rural),
+    neg_ms = attitudemus,
+    neg_hd  = attitudehin,
+    neg_bd = attitudebud,
+    neg_ch = attitudechr,
+    neg_jw = attitudejew,
+    neg_ath = attitudeath,
+    thr_ms = 5 - threatmus,
+    thr_hd = 5 - threathin,
+    thr_bd = 5 - threatbud,
+    thr_ch = 5 - threatchr,
+    thr_jw = 5 - threatjew,
+    thr_ath = 5 - threatath
+  ) %>%
+  dplyr::mutate(
+    a_c = scale(age, scale = F, center = T),
+    a_10c = scale(age, scale = F, center = T) / 10,
+    ru = factor(rural),
     male = factor(male),
-    highestqual  = as.numeric(highestqual),
+    edu  = as.numeric(highestqual),
     # relaccept.S = scale(religaccept,center=TRUE,scale=T),
-    rightwing.S = scale(rightwing, center = TRUE, scale = T),
+    rw_s = scale(rightwing, center = TRUE, scale = T),
     r_s = scale(religiousity),
-    highestqual.c = scale(highestqual, center = T, scale =
-                            T)
+    edu_s = scale(highestqual, center = T, scale =  T)
   ) %>%
   arrange(id)
 
 
 
 
-summary(isdat$religiousity)
+
 
 # For tables
 tbdat <- isdat
 
 
-table(tbdat$notreligious)
 
-
-
-tbdat$Negative.Muslims <-
+tbdat$neg_ms <-
   factor(
-    tbdat$Negative.Muslims ,
+    tbdat$neg_ms ,
     levels = c(1:5),
     labels = c(
       "Very positive",
@@ -603,9 +597,9 @@ tbdat$Negative.Muslims <-
 
 
 
-tbdat$Negative.Hindus <-
+tbdat$neg_hd <-
   factor(
-    tbdat$Negative.Hindus ,
+    tbdat$neg_hd ,
     levels = c(1:5),
     labels = c(
       "Very positive",
@@ -618,9 +612,9 @@ tbdat$Negative.Hindus <-
 
 
 
-tbdat$Negative.Buddhists <-
+tbdat$neg_bd <-
   factor(
-    tbdat$Negative.Buddhists ,
+    tbdat$neg_bd ,
     levels = c(1:5),
     labels = c(
       "Very positive",
@@ -633,9 +627,9 @@ tbdat$Negative.Buddhists <-
 
 
 
-tbdat$Negative.Christians <-
+tbdat$neg_ch <-
   factor(
-    tbdat$Negative.Christians ,
+    tbdat$neg_ch ,
     levels = c(1:5),
     labels = c(
       "Very positive",
@@ -649,8 +643,8 @@ tbdat$Negative.Christians <-
 
 
 
-tbdat$Negative.Jews <- factor(
-  tbdat$Negative.Jews ,
+tbdat$neg_jw <- factor(
+  tbdat$neg_jw ,
   levels = c(1:5),
   labels = c(
     "Very positive",
@@ -661,9 +655,9 @@ tbdat$Negative.Jews <- factor(
   )
 )
 
-tbdat$Negative.Atheists <-
+tbdat$neg_ath <-
   factor(
-    tbdat$Negative.Atheists ,
+    tbdat$neg_ath ,
     levels = c(1:5),
     labels = c(
       "Very positive",
@@ -675,9 +669,9 @@ tbdat$Negative.Atheists <-
   )
 
 
-tbdat$Threatened.Muslims <-
+tbdat$thr_ms <-
   factor(
-    tbdat$Threatened.Muslims ,
+    tbdat$thr_ms ,
     levels = c(1:4),
     labels = c(
       "Not threatening at all",
@@ -689,9 +683,9 @@ tbdat$Threatened.Muslims <-
 
 
 
-tbdat$Threatened.Hindus <-
+tbdat$thr_hd <-
   factor(
-    tbdat$Threatened.Hindus ,
+    tbdat$thr_hd ,
     levels = c(1:4),
     labels = c(
       "Not threatening at all",
@@ -702,23 +696,9 @@ tbdat$Threatened.Hindus <-
   )
 
 
-tbdat$Threatened.Buddhists <-
+tbdat$thr_bd <-
   factor(
-    tbdat$Threatened.Buddhists ,
-    levels = c(1:4),
-    labels = c(
-      "Not threatening at all",
-      "Not very threatening",
-      "Somewhat threatening",
-      "Very threatening"
-    )
-  )
-
-
-
-tbdat$Threatened.Christians <-
-  factor(
-    tbdat$Threatened.Christians ,
+    tbdat$thr_bd ,
     levels = c(1:4),
     labels = c(
       "Not threatening at all",
@@ -730,10 +710,9 @@ tbdat$Threatened.Christians <-
 
 
 
-
-tbdat$Threatened.Jews <-
+tbdat$thr_ch <-
   factor(
-    tbdat$Threatened.Jews ,
+    tbdat$thr_ch ,
     levels = c(1:4),
     labels = c(
       "Not threatening at all",
@@ -745,7 +724,22 @@ tbdat$Threatened.Jews <-
 
 
 
-tbdat$Threatened.Atheists <-
+
+tbdat$thr_jw <-
+  factor(
+    tbdat$thr_jw ,
+    levels = c(1:4),
+    labels = c(
+      "Not threatening at all",
+      "Not very threatening",
+      "Somewhat threatening",
+      "Very threatening"
+    )
+  )
+
+
+
+tbdat$thr_ath <-
   factor(
     tbdat$Threatened.Atheists ,
     levels = c(1:4),
@@ -1273,8 +1267,6 @@ mod.threat.mus %>%
 
 
 ## THIS IS COOL
-# cons <- make_conditions(tbdat, vars = c("wave"))
-# cons
 
 me <- conditional_effects(
   mt,

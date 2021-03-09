@@ -1,0 +1,173 @@
+---
+title: "Week 3 Lab"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl 
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+---
+
+
+
+### Question Question: Why is this graph not printing any output? 
+
+```{r}
+library("tidyverse")
+ggplot(data = mtcars) + 
+  aes(mpg, wt, colour=factor(cyl))
+```
+
+
+### Answer, there are no layers.
+
+
+### Question 2. Using the mpg dataset, graph the relationship between city milage and highway mileage by year manufacture
+
+
+### Answer
+```{r}
+ggplot(mpg,aes(x = hwy, y = cty, color=year)) + geom_point()+geom_smooth(method = loess)
+```
+
+
+### Question 3. Edit this graph so that the x axis and the y axis both start at 0
+
+
+```{r}
+# Create graph and add title
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter")
+```
+
+
+###  Answer
+
+```{r}
+  ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") + 
+  expand_limits(x = 0, y = 0)
+```
+
+
+### Question 4: what is one benefits and one limitation of this graph (in which the x and y values start at 0?)
+
+
+### Answer
+
+Example benefits:
+
+  1. We clearly see that engine displacement starts at just below
+  2. We clearly understand that no highway mileage below 10 mpg doesn't exist.
+  
+Example weakness
+
+  1. Even if the thresholds are not evident, we can already see the thresholds without starting at graphs at zero (i.e. there is no information)
+  2. Zero engine displacement and zero highway miles per gallon are not physically meaningful concepts, so starting the graphs at these thresholds adds no new information. 
+  
+
+### Quetion 5.  Which of these two graphs do you prefer and why? 
+
+```{r}
+g1 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, colour =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+
+```
+
+
+
+```{r}
+g2 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+```
+  
+```{r}
+library("patchwork")
+g1 / g2 + plot_annotation(title = "Which plot do you preer and why?")
+```
+
+### Answer
+
+Arguably, patterns are easier to detect using the colour aesthetic but there are no hard and fast rules
+
+
+
+### Quetion 6.  add a facets to this graph for the "class" variable
+
+```{r}
+g2 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+```
+
+
+### Answer
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+```
+
+
+### Question 7.  which graph is more informative and why
+
+
+```{r}
+g3 <- ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+
+g4 <- ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  facet_wrap( ~ class, nrow = 2)
+
+g3 / g4 + plot_annotation("Which graph is more informative and why?", tag_levels = 'a')
+```
+
+
+### Answer. 
+
+Arguably the facets mae the role of class more evident by making the class indicator more salient. Where possible,  it is a good idea to declutter your graph.   
+
+
+#### Question 8.  remove the legend from the facet graph above (g4)
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  facet_wrap( ~ class, nrow = 2) + 
+  theme(legend.position = "none") 
+```
+
+#### Question 9. 
+
+`
+
+
+
