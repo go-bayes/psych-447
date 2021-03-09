@@ -818,7 +818,6 @@ issp <- tbdat %>%
     nzeuro,
     religiousity,
     rightwing,
-    rural,
     neg_ath,
     neg_bd,
     neg_ch,
@@ -830,6 +829,7 @@ issp <- tbdat %>%
     thr_ch,
     thr_hd,
     thr_jw,
+    rural,
     thr_ms |
       wave
   ) %>%
