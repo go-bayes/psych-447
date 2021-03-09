@@ -174,18 +174,42 @@ ggplot(data = mpg) +
 ```
 
 
-#### Question  9
+### Question  9  Graph the relationship betweeen `religiousity` (x-axis) and `rightwing`` (y-axis) in the ISSP dataset
 
 ```{r}
 # read the issp dataset for questionaire see: ISSP_2018_Religion_Questionnaire_final_version1-2.pdf
 # 
 # subset of data from the issp dataset
-issp <- readr::read_csv(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/issp.csv"))
+issp <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/issp.csv"))
 head(issp)
-issp <- ß
+```
+
+Need to get data into shape
+```{r}
+issp <- issp %>%
+  mutate(thr_ath = factor(thr_ath),
+         thr_bd = factor(thr_bd),
+        thr_ch = factor(thr_ch),
+        thr_hd = factor(thr_hd),
+        thr_jw = factor(thr_jw),
+        thr_ms = factor(thr_ms),
+        neg_ath = factor(neg_ath),
+         neg_bd = factor(neg_bd),
+         neg_ch = factor(neg_ch),
+        neg_hd  = factor(neg_hd),
+         neg_jw = factor(neg_jw),
+         neg_ms = factor(neg_ms),
+        )
 ```
 
 
+#### Solution 
 
+
+```{r}
+library(ggplot2)
+ggplot(data = issp, aes(y = rightwing, x = religiosity, colour = wave)) + 
+  stat_smooth(method = lm, fullrange = TRUE, alpha = 0.1) +  geom_point(alpha = .01)
+```
 
 
