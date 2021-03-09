@@ -562,7 +562,7 @@ isdat <- df24 %>%
   dplyr::mutate(
     a_c = scale(age, scale = F, center = T),
     a_10c = scale(age, scale = F, center = T) / 10,
-    ru = factor(rural),
+    rural = factor(rural),
     male = factor(male),
     edu  = as.numeric(highestqual),
     # relaccept.S = scale(religaccept,center=TRUE,scale=T),
@@ -786,35 +786,54 @@ tbdat$religious <-
 tbdat$rural <- factor(tbdat$rural ,
                       levels = c(0, 1),
                       labels = c("Not Rural", "Rural"))
-#
-# table1::label(short.0$age) <-"Age"
-# table1::label(short.0$rightwing) <-"Rightwing"
-# table1::label(short.0$religiosityAll) <-"Religiosity"
-# table1::label(short.0$highestqual) <-"Highest Educational Qualification"
-# table1::label(short.0$NZeuro) <-"NZ European"
-# # table1::label(short.0$Negative.Muslims) <- "Negative to Muslims"
-# # table1::label(short.0$Negative.Hindus) <- "Negative to Hindus"
-# # table1::label(short.0$Negative.Buddhists) <- "Negative to Buddhists"
-# # table1::label(short.0$Negative.Christians) <- "Negative to Christians"
-# # table1::label(short.0$Negative.Jews) <- "Negative Jews"
-# # table1::label(short.0$Negative.Atheists) <- "Negative to Atheists"
-# # table1::label(short.0$Threatened.Muslims) <- "Threatened by Muslims"
-# # table1::label(short.0$Threatened.Hindus) <- "Threatened by Hindus"
-# table1::label(short.0$Threatened.Buddhists) <- "Threatened by Buddhists"
-# table1::label(short.0$Threatened.Christians) <- "Threatened by Christians"
-# table1::label(short.0$Threatened.Jews) <- "Threatened by Jews"
-# table1::label(short.0$Threatened.Atheists) <- "Threatened by Atheists"
 
+str(tbdat)
+table1::label(tbdat$age) <-"Age"
+table1::label(tbdat$rightwing) <-"Rightwing"
+table1::label(tbdat$religiousity) <-"Religiosity"
+table1::label(tbdat$eduyears) <-"Highest Educational Qualification"
+table1::label(tbdat$nzeuro) <-"NZ European"
+table1::label(tbdat$neg_ms) <- "Negative to Muslims"
+table1::label(tbdat$neg_hd) <- "Negative to Hindus"
+table1::label(tbdat$neg_bd) <- "Negative to Buddhists"
+table1::label(tbdat$neg_ch) <- "Negative to Christians"
+table1::label(tbdat$neg_jw) <- "Negative Jews"
+table1::label(tbdat$neg_ath) <- "Negative to Atheists"
+table1::label(tbdat$thr_ms) <- "Threatened by Muslims"
+table1::label(tbdat$thr_hd) <- "Threatened by Hindus"
+table1::label(tbdat$thr_bd) <- "Threatened by Buddhists"
+table1::label(tbdat$thr_ch) <- "Threatened by Christians"
+table1::label(tbdat$thr_jw) <- "Threatened by Jews"
+table1::label(tbdat$thr_ath) <- "Threatened by Atheists"
+
+
+saveRDS(tbdat, here::here("data", "issp"))
 
 
 ## demographics tables
-
+tbdat
 tb <- tbdat %>%
   filter(measuredbothyears == 1)
 table1::table1(
-  ~ age + male + highestqual +  nzeuro + religious++rightwing + rural + Negative.Atheists + Negative.Buddhists + Negative.Christians +
-    Negative.Hindus + Negative.Jews + Negative.Muslims +
-    Threatened.Atheists + Threatened.Buddhists + Threatened.Christians +  Threatened.Hindus + Threatened.Jews + Threatened.Muslims |
+  ~ age +
+    male +
+    eduyears +
+    nzeuro +
+    religious +
+    rightwing +
+    rural +
+    neg_ath +
+    neg_bd +
+    neg_ch +
+    neg_hd +
+    neg_jw +
+    neg_ms +
+    thr_ath +
+    thr_bd +
+    thr_ch +
+    thr_hd +
+    thr_jw +
+    thr_ms |
     wave,
   data = tb,
   overall = F
@@ -826,7 +845,7 @@ library(sjPlot)
 library(gridExtra)
 library(gridarrange)
 
-plot_frq(tbdat$Negative.Hindus, show.na = F)
+sjPlot::plot_frq(tbdat$neg_hd, show.na = F)
 
 # grouped data frame, all panels in one plot
 test <- tb %>%

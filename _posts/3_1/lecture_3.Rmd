@@ -31,14 +31,16 @@ knitr::include_graphics("op.jpg")
 
 ## Introduction
 
-In this lecture we'll first introduce you to the ggplot2 package, and vocabulary, for creating graphs in R. We'll be following the approach described in the book "R for data science" which can be found [here](https://r4ds.had.co.nz/data-visualisation.html).
+In this lecture we'll first introduce you to the `ggplot2` package, and vocabulary, for creating graphs in R. We'll mostly follow the approach described in the book "R for data science," which can be found [here](https://r4ds.had.co.nz/data-visualisation.html).
 
-We'll then turn to data-wrangling
+We'll then turn to data-wrangling using the `dplyr` package. 
+
+Both `ggplot2` and `dplyr` can be found in `library(tidyverse)`
 
 
-## Creating a granph 
+## Creating a graph 
 
-Step 1, load the ggplot2 package by loading the tidyverse package
+Step 1, load tidyverse:
 
 ```{r loaddat}
 library("tidyverse")
@@ -52,28 +54,27 @@ head(mpg)
 ```
 
 
-Step 3. Inspect the relationship between highway fuel efficiency and a cars engine size (which is given by the variable `displ`).
+Step 3. Inspect the"Negative relationship between highway fuel efficiency and a cars engine size (which is given by the variable `displ`).
 
 ```{r firstgraph}
 # Create graph
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
-  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset")
+  labs(title = "Negative relationship between engine displacement and fuel efficiency.")
 ```
 
-A basic problem with this graph is that we don't know what it is representing. To avoid this problem, it is useful to get into the habit of adding titles to your graphs, and also of using informative axis labels. We do this by adding layers
+A basic problem with this graph is that we don't know what it is representing. To avoid this problem, it is useful to get into the habit of adding titles to your graphs, and also of using informative axis labels. We do this by adding additional layers.
 
 ```{r graphlabels}
 # Create graph and add title
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
-  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  labs(title = "Negative relationship between engine displacement and fuel efficiency.") + 
   xlab("Engine displacement in (units)") + 
-  ylab("Highway miles per liter") + 
-  expand_limits(x = 0, y = 0)
+  ylab("Highway miles per liter")
 ```
 
-Let's walk through the logic of the ggplot2 "grammar of graphis" 
+Let's walk through the logic of the ggplot2 "grammar":
 
 First we call the data
 
@@ -96,7 +97,7 @@ Then we add the title
 # Create graph and add title
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
-  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset")
+  labs(title =  "Negative relationship between engine displacement and fuel efficiency.")
 ```
 
 Then we add the labels
@@ -105,12 +106,24 @@ Then we add the labels
 # Create graph and add title
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
-  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset")   + 
+  labs(title ="Negative relationship between engine displacement and fuel efficiency.")   + 
   xlab("Engine displacement in (units)") + 
   ylab("Highway miles per liter") 
 ```
 
-The generic method is as follows: 
+We can change the axis starting positions:
+
+```{r, addlayer4}
+# Create graph and add title
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  labs(title ="Negative relationship between engine displacement and fuel efficiency.")   + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") + expand_limits(x = 0, y = 0)
+```
+
+
+The generic method for adding layers is as follows: 
 
 ```{r, eval = FALSE}
 ggplot(data = <DATA>) + 
@@ -140,7 +153,6 @@ ggplot(data = mpg) +
 Here's a size command
 
 ```{r, addfactor3}
-head(mpg)
 # Which cases interest you in this graph?
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, size = cty)) 
@@ -150,7 +162,6 @@ ggplot(data = mpg) +
 Here's the fill command
 
 ```{r, addfactor4}
-head(mpg)
 # Which cases interest you in this graph?
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, fill = cty)) 
@@ -159,7 +170,6 @@ ggplot(data = mpg) +
 Here's the alpha command
 
 ```{r, addfactor5}
-head(mpg)
 # Which cases interest you in this graph?
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, alpha  = .1)) 
@@ -169,7 +179,6 @@ ggplot(data = mpg) +
 Here's the alpha command combined with the fill command
 
 ```{r, addfactor6}
-head(mpg)
 # Which cases interest you in this graph?
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, alpha = cty, size = cty)) 
@@ -180,41 +189,40 @@ ggplot(data = mpg) +
 
 We can create multiple graphs using `facets`
 
-```{r facetwrap}
+```{r facetwrap,  layout="l-body-outset", fig.width=12, fig.height=12}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = class)) + 
    facet_wrap(~ class, nrow = 2)
 ```
 
 
-We use facet_grid for graphing the relationship between two variables. 
+We use facet_grid for graphing the Negative relationship between two variables. 
 
 Note the difference betwen these two graphs:
 
-Here the focus is on the relationship between class and the x variable, displacement
+Here the focus is on the negative relationship between class and the x variable, displacement
 
-```{r}
-
+```{r facetgr2, layout="l-body-outset", fig.width=12, fig.height=12}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
-  facet_grid(class ~ .)  + theme(legend.position = "bottom") 
+  facet_grid(class ~ .)  + theme(legend.position = "none") 
 ```
 
 Here the focus is on the relationship betwen class and the y variable, highway milage. 
-```{r}
+```{r layout="l-body-outset", fig.width=12, fig.height=12}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
-  facet_grid(. ~ class) + theme(legend.position = "bottom") 
+  facet_grid(. ~ class) + theme(legend.position = "none") 
 ```
 
 
-We can focus on relationship between class and the x and y variables simultaneously. Here we add the 'year` indicator and we do not see much of an improvement in highway milage for the different classes, adjusting for displacement:
+We can focus on Negative relationship between class and the x and y variables simultaneously. Here we add the 'year` indicator and we do not see much of an improvement in highway milage for the different classes, adjusting for displacement:
 
-```{r fig.height=12}
+```{r figfacet0, layout="l-body-outset", fig.width=12, fig.height=12}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
   facet_grid(class ~ year) + theme(legend.position = "bottom") +
-  labs(title = "Relationship bewtween engine displacement and fuel efficiency by clas in the mpg automobile dataset") + 
+  labs(title ="Negative relationship between engine displacement and fuel efficiency by class.") + 
   xlab("Engine displacement in (units)") + 
   ylab("Highway miles per liter") 
 ```
@@ -228,8 +236,8 @@ We can create a graph of relationships:
 # set better theme
 theme_set(theme_classic())
 ggplot(data = mpg) +
-  geom_smooth(mapping = aes(x = displ, y = hwy)) + theme(legend.position = "bottom") +
-  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") +
+  geom_smooth(mapping = aes(x = displ, y = hwy)) + 
+  labs(title ="Negative relationship between engine displacement and fuel efficiency.") +
   xlab("Engine displacement in (units)") +
   ylab("Highway miles per liter") 
 ```
@@ -243,7 +251,7 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) + 
   geom_smooth(mapping = aes(x = displ, y = hwy)) +
   theme(legend.position = "bottom") +
-  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") +
+  labs(title ="Negative relationship between engine displacement and fuel efficiency.") +
   xlab("Engine displacement in (units)") +
   ylab("Highway miles per liter") 
 ```
