@@ -177,6 +177,7 @@ ggplot(data = mpg) +
 #### Question  9
 
 ```{r}
+issp <- readr::read_csv(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/testdata1.csv"))
 
 ```
 
