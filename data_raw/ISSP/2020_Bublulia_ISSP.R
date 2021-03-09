@@ -808,7 +808,32 @@ table1::label(tbdat$thr_ath) <- "Threatened by Atheists"
 
 
 library(readr)
-write_csv2(tbdat, here::here("data", "issp.csv"))
+tbdat$neg_ath
+issp <- tbdat %>%
+  select(age,
+           male,
+           eduyears,
+           nzeuro,
+         religiousity,
+           rightwing,
+           rural,
+           neg_ath,
+           neg_bd,
+           neg_ch,
+           neg_hd,
+           neg_jw,
+           neg_ms,
+           thr_ath,
+           thr_bd,
+           thr_ch,
+           thr_hd,
+           thr_jw,
+           thr_ms |
+           wave) %>%
+  mutate(religiosity = religiousity)%>%
+  dplyr::select(-religiousity)
+
+write_csv2(issp, here::here("data", "issp.csv"))
 
 ## demographics tables
 tbdat
