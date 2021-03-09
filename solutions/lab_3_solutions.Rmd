@@ -180,8 +180,9 @@ ggplot(data = mpg) +
 # read the issp dataset for questionaire see: ISSP_2018_Religion_Questionnaire_final_version1-2.pdf
 # 
 # subset of data from the issp dataset
-issp <- readr::read_csv(url(""))
+issp <- readr::read_csv(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/issp.csv"))
 head(issp)
+issp <- ß
 ```
 
 

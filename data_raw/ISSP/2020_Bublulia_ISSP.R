@@ -807,9 +807,8 @@ table1::label(tbdat$thr_jw) <- "Threatened by Jews"
 table1::label(tbdat$thr_ath) <- "Threatened by Atheists"
 
 
-saveRDS(tbdat, here::here("data", "issp"))
 library(readr)
-write.csv(tbdat, here::here("data", "issp.csv"))
+write_csv2(tbdat, here::here("data", "issp.csv"))
 
 ## demographics tables
 tbdat
