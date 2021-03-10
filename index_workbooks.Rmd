@@ -5,4 +5,5 @@ listing:
   workbooks:
     - W_1
     - W_2
+    - W_3
 ---

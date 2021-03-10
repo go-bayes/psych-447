@@ -1,5 +1,5 @@
 ---
-title: "Week 2 Workbook"
+title: "Workbook 3"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -7,181 +7,225 @@ author:
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl 
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
 output:
   distill::distill_article:
     self_contained: false
     toc: true
 ---
 
-
-### Create Repos (if you have not already)
-
-  1. Create a repository for 447-journals (if you don't have one already)
-  2. Create a repository for your 447-workbooks. 
-  3. You should initialise a Readme statement and a .gitignore document (make sure to click the R .gitignore) 
-
-
-### Create R projects
-
-  1. Create R-projects in each of these repositories.
-  2. In your workbooks folder, using the `+ New Folder` command, create a folder called `data` (or similar) This is where you'll store your data.
-  4. Create a file called `figs` (where you'll stor your figures)
-  5 Create a folder called `workbooks`, or similar this is where you'll store your weekly workbooks. 
-  
-### Workbook 2
-
-  1. Open an R markdown document, and filling in your name
-  2. The first code chunk is for your preferences. 
-
-
-```{r setup, include=TRUE, eval = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-  3. Find the keyboard shortcuts menu. 
-  4. Memorise the keyboard shortcut for insert code chunk which is: ⌥⌘I
-  5. Use the mac to insert a code chunk. 
-  6. Memorise the shortcut for evaluate which is ⌘-return^  use for all tasks in this workbook. 
-  7. Use R to do 10 mathematical calculations 
-  
+### Libraries we will need
 ```{r}
-4+5
+library("tidyverse")
+library("patchwork")
+library("readr")
+library("sjPlot")
 ```
 
 ```{r}
-3^3
+# set theme
+theme_set(theme_classic())
 ```
 
-Show your work 
+
+### Question 1: Why is this graph not printing any output? 
+
+```{r}
+library("tidyverse")
+ggplot(data = mtcars) + 
+  aes(mpg, wt, colour=factor(cyl))
+```
 
 
 
-  8. Using R, find the square root of 324
-  9. In the `iris` dataset, find the flower with the longest Sepal.Length. (hint, use the `max` function.)  Show the column details for this flower only. 
-  10. In the `iris` dataset, find the flower with the shortest Sepal.Length. (hint, use the `min` function.)
-  11. Calculate the difference bewteen the flower with the longest and shortest Sepal.Length
-  12. Make a 7 column  x  100 row dataframe using `c`, `:`, `dataframe`
-  13. Rename the columns of the dataframe using the names of snow white dwarfs, or any names.
-  14. Using the dataset `woman`, write a linear model for `height ~ weight`
-  15. Create a table and coefficient plot for this model
-  16. Using `ggeffects`, create a prediction plot for this model.
+### Question 2. Using the mpg dataset, graph the relationship between city milage and highway mileage by year manufacture
 
-<aside>
-Next week we'll be creating plots like this
+
+
+### Question 3. Edit this graph so that the x axis and the y axis both start at 0
+
+
+```{r}
+# Create graph and add title
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter")
+```
+
+
+
+
+### Question 4: what is one benefit and one limitation for this graph above (in which the x and y values start at 0?)
+
+
+
+
+### Quetion 5.  Which of these two graphs do you prefer and why? 
+
+```{r}
+g1 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, colour =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+
+```
+
+
+
+```{r}
+g2 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+```
+  
+  
+  
+```{r layout="l-body-outset", fig.width=12, fig.height=12}
+library("patchwork")
+
+g1 / g2 + plot_annotation(title = "Which plot do you prefer and why?", tag_levels = 'a')
+```
+
+
+
+### Quetion 6. add a facet to this graph for the "class" variable
+
+```{r}
+g2 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+```
+
+
+### Question 7.  which graph is more informative and why?
+
+
+```{r  dualfig, layout="l-body-outset", fig.width=12, fig.height=12, echo = FALSE}
+g3 <- ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+
+g4 <- ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  facet_wrap( ~ class, nrow = 2)
+
+g3 / g4 + plot_annotation("Which graph is more informative and why?", tag_levels = 'a')
+```
+
+
+
+
+
+### Question 8.  remove the legend from the facet graph above (g4)
+
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  facet_wrap( ~ class, nrow = 2)
+```
+
+
+
+### Question  9  Convert the y variable to "numeric" and graph the relationship betweeen `religiousity` (x-axis) and `thr_mus`` (y-axis) in the ISSP dataset. Create new axis labels
+
+Download the ISSP questionaire used in this study [here]: 
+(https://github.com/go-bayes/psych-447/blob/main/data_raw/ISSP/ISSP_2018_Religion_Questionnaire_final_version1-2.pdf)
+
+Note^[Data were collected with Barry Milne and Martin Van dataset; the data are only authorised for the purposes of teaching.]
+
+
+```{r}
+# read the issp dataset for questionaire see: ISSP_2018_Religion_Questionnaire_final_version1-2.pdf
+# 
+# subset of data from the issp dataset
+issp <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/issp.csv"))
+```
+
+
+```{r eval=FALSE}
+# note that we need to check our data
+head(issp)
+
+# when we do we find that classes of the variables need to be adjusted
+str(issp)
+```
+
+Let's get the data into shape using dplyr. Run this code below
+
+```{r}
+ip <- issp %>%
+  mutate(
+    id = factor(id),
+    thr_ath = as.factor(thr_ath),
+    thr_bd = as.factor(thr_bd),
+    thr_ch = as.factor(thr_ch),
+    thr_hd = as.factor(thr_hd),
+    thr_jw = as.factor(thr_jw),
+    thr_ms = as.factor(thr_ms),
+    neg_ath = as.factor(neg_ath),
+    neg_bd = as.factor(neg_bd),
+    neg_ch = as.factor(neg_ch),
+    neg_hd  = as.factor(neg_hd),
+    neg_jw = as.factor(neg_jw),
+    neg_ms = as.factor(neg_ms),
+    wave  = as.factor(wave),
+    nzeuro = as.factor(nzeuro),
+    eduyears = as.numeric(eduyears),
+    male = as.factor(male),
+    age = as.numeric(age),
+    rightwing = as.numeric(rightwing),
+    rural = as.factor(rural),
+    religiosity = as.numeric(religiosity)
+  )
+```
+
+
+
+
+
+### Question 10.  Note that I have  the following graph should start from 1 and run to 4 but currently runs from 0-4.  Fix the graph 
+
 ```{r}
 library(ggplot2)
-ggplot2::ggplot(data = women) + 
-  geom_point(mapping = aes(x = height, y = weight)) + geom_smooth(method = lm, aes(x = height, y = weight)) + theme_classic() 
+ggplot(data = ip, aes(y = as.numeric(thr_ms), x = religiosity, colour = wave))  +  geom_jitter(alpha = .1) + 
+  geom_smooth(method = lm, fullrange = FALSE, alpha = 0.1) +
+   scale_y_continuous(limits = c(0,4))
 ```
-</aside>
 
 
-  17.  Explain what is being calculated here
+
+
+
+### Extra Question 11. Find one way of improving the the following code and explain your answer
+
 
 ```{r}
-sum(women$weight > 140) / length(women$weight)
-```
-   
-  18. Calculate the proportion of women who are over the mean weight of women
-
-```{r eval = FALSE, echo = FALSE}
-mw <- mean(women$weight)
-sum(women$weight > mw) / length(women$weight)
-```
-  
-```{r eval = FALSE, echo = FALSE}
-mh <- mean(women$height)
-sum(women$height > mh) / length(women$height)
-```
-
-
-  19. What are the advantages and disadvantages of creating more breaks in the Petal.Length indicator?  Clarify your answer in a paragraph. 
-
-```{r}
-hist(iris$Petal.Length)
-```
-
-```{r}
-hist(iris$Petal.Length, breaks = 100)
-```
-
-  20. Spot the error in this code
-  
-```{r eval = FALSE, echo = TRUE}
-# here is one method. 
-mh <- mean(women$height)
-sum(women$weight > mh) / length(women$height)
-```
-
-  21. Reorder the columns of the `woman` dataset so that weight comes before height. Then rename the columns "w" and "h". 
-
-```{r, eval = FALSE, echo = FALSE}
-# here is one method
-# Bind columns as data frame
-dfa <- cbind.data.frame(women$weight, women$height)
-# change names
-names(dfa)[] <- c("w", "h")
+library(sjPlot)
+plot_xtab(
+    ip$thr_ms,
+    ip$wave,
+    show.total = F,
+    show.n = F,
+    geom.colors = c("lightgreen", "darkred")
+  ) +
+  xlab("Threatened by Muslims") +  ylab("Frequency") +
+  #scale_y_continuous(limits=c(0,7)) + #theme(plot.title = element_text(size=09))
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
 
 ```
 
-  22.  Read data into R using the following method:
-  
 
-```{r echo = FALSE, eval = FALSE}
-
-# g-bayes making data (internal)
-library(tidyverse)
-n <- 100
-yourtibble <-tibble(
-  id = 1:n, 
-  weight = rnorm(n, 80,20), 
-  height = rnorm(n, (weight+10)*1.8, 10)
-)
-plot( height ~ weight, yourtibble)
-testdata1<-data.frame(yourtibble)
-write_csv(testdata1,here::here("data", "testdata1.csv"))
-```
-
-
-```{r eval = FALSE, echo = TRUE}
-# read data from file
-library("readr")
-testdata<- readr::read_csv(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/testdata1.csv"))
-str(testdata)
-```
-
-   Save data into your data folder using the following method
-   
-```{r eval=FALSE, echo = TRUE}
-library("here")
-# save data using here
-saveRDS(testdata, here::here("data", "td.RDS"))
-```
-   
-   Read data back into R
-   
-```{r eval = FALSE}
-td <- readRDS(here::here("data", "td.RDS"))
-str(td)
-```
-
-  23. Using the `td` dataset, write a linear model for `height ~ weight` as above
-
-```{r echo = FALSE, eval = FALSE}
-m1<-lm(height ~ weight, data = td)
-summary(m1)
-plot(height ~ weight, data = td)
-```
-
-  24. Create a coefficient plot
-  25. Create a prediction plot
-  
-Extra credit, **how would you interpret the intercept in this model?***
-
-
-
-  
-  
 
 
 
