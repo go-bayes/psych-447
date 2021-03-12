@@ -68,7 +68,7 @@ round(outcome, digits = 2) # illustrate the useful `round` function.
 
 ### boxplots
 ```{r}
-head(nz$co)
+
 boxplot(nz$Age, notch = TRUE)
 boxplot(Age ~ Male, data = nz, notch = TRUE, col = c("cadetblue1","orange"))
 ```
