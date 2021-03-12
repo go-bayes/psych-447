@@ -1,0 +1,23 @@
+---
+title: "Week 3 Lab"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl 
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+---
+
+
+
+##

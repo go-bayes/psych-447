@@ -24,7 +24,15 @@ knitr::include_graphics("op.png")
 ```
 
 ```{r echo = FALSE}
-issp <- readr::read_csv2(url(""))
+library(readr)
+library(dplyr)
+nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/ts.csv"))
+str(nz)
+nz <-nz %>%
+  dplyr::mutate_if(is.character, factor)
+
+# check data
+str(nz)
 ```
 
 
@@ -33,16 +41,53 @@ issp <- readr::read_csv2(url(""))
 
 Advice on how to name your files (by Danielle Navarro) [here](https://slides.djnavarro.net/project-structure/#1)
 
+## Something useful
 
-## 
+The hash symbol `#` is for commenting
+
+```{r}
+r_comments <- 200 # here I am creating the variable for the number of time Jack says R is great
+
+jill_roll <- 199 # here I'm creating a variable for the number of times Jill rolls here eyes
+
+outcome <- log(r_comments) * sqrt(jill_roll) * pi # here I am illustrating some functions in r using the variables I just created
+
+outcome # print outcome
+
+round(outcome, digits = 2) # illustrate the useful `round` function.
+```
+
+
+## Data Carpentry  
 
 
 
-## Data Carpentry 
-
+### ifelse
 
 ## Data Summaries
 
+### boxplots
+```{r}
+head(nz$co)
+boxplot(nz$Age, notch = TRUE)
+boxplot(Age ~ Male, data = nz, notch = TRUE, col = c("cadetblue1","orange"))
+```
+
+### What is the variation in my indicators? 
+
+### Which values are most common (and most rare?)
 
 
+### shortcuts
+
+```{r}
+library("report")
+library("dplyr")
+head(nz)
+nz %>%
+  select(-starts_with("Sepal")) %>% 
+  group_by(Species) %>% 
+  report() %>% 
+  summary()
+```
 
