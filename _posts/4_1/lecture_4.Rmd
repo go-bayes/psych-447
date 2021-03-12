@@ -60,6 +60,31 @@ round(outcome, digits = 2) # illustrate the useful `round` function.
 
 ## Data Carpentry  
 
+### mutate cut
+
+```{r}
+nz<-nz %>%
+  dplyr::mutate(k6cats = cut(
+    KESSLER6sum,
+    breaks = c(-Inf, 5, 12.999, Inf),  # create Kessler 6 diagnostic categories
+    labels = c("Low Distress", "Moderate Distress", "Serious Distress")
+  ))
+
+# check numbers
+table(nz$k6cats)
+```
+
+## create a pretty table. 
+
+```{r designtable,  tab.cap="\\label{tab:designtable}"}
+nz %>%
+  select(k6cats) %>%
+  group_by(Pre_PostATTACK) %>%
+  summarise(n = n()) %>%
+  kbl(caption = "Participant numbers divided by condition: baseline, wave 10 pre/shootings, wave 10 post-shooting, and wave 11") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE)
+```
+
 
 
 ### ifelse
@@ -70,7 +95,9 @@ round(outcome, digits = 2) # illustrate the useful `round` function.
 ```{r}
 
 boxplot(nz$Age, notch = TRUE)
+
 boxplot(Age ~ Male, data = nz, notch = TRUE, col = c("cadetblue1","orange"))
+nz$KESSLER6sum
 ```
 
 ### What is the variation in my indicators? 
