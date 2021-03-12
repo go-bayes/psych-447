@@ -27,7 +27,7 @@ knitr::include_graphics("op.png")
 library(readr)
 library(dplyr)
 nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/ts.csv"))
-str(nz)
+str(nz$Wave)
 nz <-nz %>%
   dplyr::mutate_if(is.character, factor)
 
@@ -77,9 +77,10 @@ table(nz$k6cats)
 ## create a pretty table. 
 
 ```{r designtable,  tab.cap="\\label{tab:designtable}"}
+library(kableExtra)
 nz %>%
   select(k6cats) %>%
-  group_by(Pre_PostATTACK) %>%
+  group_by(wave) %>%
   summarise(n = n()) %>%
   kbl(caption = "Participant numbers divided by condition: baseline, wave 10 pre/shootings, wave 10 post-shooting, and wave 11") %>%
    kable_classic_2(c("striped", "hover"), full_width = TRUE)
