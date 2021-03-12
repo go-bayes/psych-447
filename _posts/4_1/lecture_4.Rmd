@@ -19,14 +19,30 @@ output:
     toc: true
 ---
 
-
-
-
-## Review
-
-
 ```{r spss-old, echo=F}
 knitr::include_graphics("op.png")
 ```
+
+```{r echo = FALSE}
+issp <- readr::read_csv2(url(""))
+```
+
+
+
+## Assigned reading: workflow Advice: read this
+
+Advice on how to name your files (by Danielle Navarro) [here](https://slides.djnavarro.net/project-structure/#1)
+
+
+## 
+
+
+
+## Data Carpentry 
+
+
+## Data Summaries
+
+
 
 

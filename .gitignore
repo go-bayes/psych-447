@@ -44,3 +44,7 @@ vignettes/*.pdf
 *models/
 _posts/**/*.html
 _posts/**/*_files/
+
+
+# Solutions
+*/solutions
