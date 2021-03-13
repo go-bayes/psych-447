@@ -24,9 +24,11 @@ knitr::include_graphics("op.png")
 ```
 
 ```{r echo = FALSE}
-library(readr)
-library(dplyr)
-nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/ts.csv"))
+library("tidyverse")
+# install if you don't have
+library("lubridate") # usful for dates
+
+nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
 str(nz$Wave)
 nz <-nz %>%
   dplyr::mutate_if(is.character, factor)
@@ -35,13 +37,13 @@ nz <-nz %>%
 str(nz)
 ```
 
+## Preamble
 
-
-## Assigned reading: workflow Advice: read this
+### Assigned reading: workflow Advice: read this
 
 Advice on how to name your files (by Danielle Navarro) [here](https://slides.djnavarro.net/project-structure/#1)
 
-## Something useful
+### Something useful
 
 The hash symbol `#` is for commenting
 
@@ -60,44 +62,244 @@ round(outcome, digits = 2) # illustrate the useful `round` function.
 
 ## Data Carpentry  
 
-### mutate cut
+### Different ways to select variables
+
+Task: 3 different ways to select the variables that start with `Believe`.
+
+#### Explicit selection
+```{r}
+names(nz)
+nz %>%
+  select("Believe.God", "Believe.Spirit")%>%
+  as_tibble()
+```
+
+#### `starts_with` 
 
 ```{r}
-nz<-nz %>%
+nz %>%
+  select(starts_with("Believe"))%>%
+  as_tibble()
+```
+
+#### `contains`
+
+```{r}
+nz %>%
+  select(contains("Believe"))%>%
+  as_tibble()
+```
+#### whoops, so we try something else
+
+This is a hack. 
+
+```{r}
+nz %>%
+  select(contains("Believe") &  -  Religion.Believe.Cats)%>%
+  as_tibble()
+```
+
+Lesson: think about your interests and purposes. 
+
+### Re-leveling a factor
+
+```{r}
+nz %>%
+  dplyr::select(BigDoms)%>%
+  table() 
+
+## suppose we want "Not_Rel" as the base category, and rearrange the other levels
+library(forcats)
+nz %>%
+  dplyr::select(BigDoms) %>%
+  dplyr::mutate(BigDoms =  
+                  forcats::fct_relevel(BigDoms, c("Not_Rel","Christian","Buddhist","Muslim","TheOthers")))%>%
+  table()
+```
+
+
+### Mutate by cutting
+
+```{r}
+nz <-nz %>%
   dplyr::mutate(k6cats = cut(
     KESSLER6sum,
-    breaks = c(-Inf, 5, 12.999, Inf),  # create Kessler 6 diagnostic categories
-    labels = c("Low Distress", "Moderate Distress", "Serious Distress")
+    breaks = c(-Inf, 5, 13, Inf),   # create Kessler 6 diagnostic categories
+    labels = c("Low Distress", "Moderate Distress", "Serious Distress"), 
+    right = TRUE
   ))
 
-# check numbers
-table(nz$k6cats)
 ```
 
-## create a pretty table. 
+### Preferable: use `ifelse` to do the same
+
+Personally I find the following method better, because it gives me explicit control of how I am making the categories.
+
+```{r}
+nz %>%
+  dplyr::mutate(k6cats1 =  as.factor(ifelse(
+    KESSLER6sum <= 5,
+    "Low Distress",
+    ifelse(KESSLER6sum <= 13,  "Moderate Distress", "Serious Distress")
+  ))) %>%
+  group_by(k6cats1) %>%
+  count()
+
+#check this is the same as the previous method
+nz %>%
+  group_by(k6cats)%>%
+  count()
+```
+
+### Using logical operators to create factors
+
+### Create a table. 
 
 ```{r designtable,  tab.cap="\\label{tab:designtable}"}
+
 library(kableExtra)
 nz %>%
-  select(k6cats) %>%
-  group_by(wave) %>%
-  summarise(n = n()) %>%
-  kbl(caption = "Participant numbers divided by condition: baseline, wave 10 pre/shootings, wave 10 post-shooting, and wave 11") %>%
-   kable_classic_2(c("striped", "hover"), full_width = TRUE)
+  select(k6cats, Wave) %>%
+  filter(!is.na(k6cats))%>%
+  group_by( Wave, k6cats) %>%
+  summarise(n = n())%>%
+  kbl(caption = "Distress by Year") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE)%>%
+  collapse_rows()
+```
+
+### Create and work with dates a date
+
+```{r}
+nz <- nz %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)  # first data of data collection in this study
+```
+
+We can analyze dates, for example, for how many minutes were data collected? 
+
+
+```{r}
+nz %>%
+  select(date)%>%
+  summary()
+
+int<-lubridate::interval(ymd("2018-01-02"), ymd("2020-10-06"))
+
+#time in years
+time_length(int, "year")
+
+#time in minutes
+time_length(int, "minutes")
 ```
 
 
 
-### ifelse
+
+### Create a graph showing the number of responses each day for the years of data collection? 
+
+```{r}
+library(lubridate)
+library(ggplot2)
+
+datrep <- nz %>%
+  count(day = floor_date(date, "day")) %>%
+  dplyr::mutate(Year = factor(ifelse(
+    day < "2010-01-01",
+    2009,
+    ifelse(
+      day < "2011-01-01",
+      2010,
+      ifelse(
+        day < "2012-01-01",
+        2011,
+        ifelse(
+          day < "2013-01-01",
+          2012,
+          ifelse(
+            day < "2014-01-01",
+            2013,
+            ifelse(
+              day < "2015-01-01",
+              2014,
+              ifelse(
+                day < "2016-01-01",
+                2015,
+                ifelse(
+                  day < "2017-01-01",
+                  2016,
+                  ifelse(
+                    day < "2018-01-01",
+                    2017,
+                    ifelse(day < "2019-01-01", 2018,
+                           ifelse(day < "2020-01-01", 2019, 2020))
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  ))) %>%
+  arrange(day)
+
+# create graph
+ggplot(datrep, aes(day, n)) +
+  geom_col(aes(fill = Year)) + scale_x_date(date_labels = "%b/%Y")  +
+  xlab("Days") + ylab("Count of Responses") + ggtitle("Our Dataset's Daily Counts")  + theme_classic()  +  scale_fill_viridis_d()
+
+```
+
+Arrange by date with the most responses
+
+```{r}
+datrep%>%
+  arrange(desc(n))
+```
+
+
+
+```{r}
+nz %>%
+  select(date,KESSLER6sum,Id) %>%
+  group_by(date)%>%
+  summarise(
+   av_distress =  mean(KESSLER6sum, na.rm = TRUE),
+   n = n_distinct(Id)
+  ) %>%
+  arrange(desc(n)) %>%
+  ggplot(datrep, aes(day, n)) +
+
+  geom_col(aes(fill = n)) + scale_x_date(date_labels = "%b/%Y")  +
+```
+
+
+
+### `Slice`
+
+Dplyr's slice function can be very handy. Say we only want the first six rows
+
+```{r}
+datrep%>%
+  arrange(desc(n)) %>%
+  slice(1:6)
+```
+
+Say we only want the 1st row, the 3rd row, and the 20th row
+
+```{r}
+datrep%>%
+  dplyr::arrange(desc(n)) %>%
+  dplyr::slice(c(1,3,20))
+```
+
 
 ## Data Summaries
 
 ### boxplots
 ```{r}
-
 boxplot(nz$Age, notch = TRUE)
-
-boxplot(Age ~ Male, data = nz, notch = TRUE, col = c("cadetblue1","orange"))
+boxplot(KESSLER6sum ~ Wave, data = nz, notch = TRUE, col = c("cadetblue1","orange"))
 nz$KESSLER6sum
 ```
 

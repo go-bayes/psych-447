@@ -18,6 +18,122 @@ output:
     toc: true
 ---
 
+## Setup
+
+### Libraries
+
+```{r}
+library(tidyverse)
+```
 
 
-##
+### Import  data
+```{r}
+# read data
+nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
+
+# make characters into factors, note the "mutate_if" command
+nz <-nz %>%
+  dplyr::mutate_if(is.character, factor)
+
+```
+
+## Q.  What is the difference?
+
+
+What's the difference between the maximum number of responses in 2018 and the maximum number of responses in 2019? (hint -- look for the `datrep` dataset that we created in lecture)?
+
+#### Solution
+```{r}
+
+datrep <- nz %>%
+  count(day = floor_date(date, "day"))
+
+datrep%>%
+  arrange(desc(n))
+```
+
+
+How many days between the first and second highest number of responses? 
+
+### Solution
+
+Here's one a approach:
+
+```{r}
+datrep %>%
+  arrange(desc(n)) 
+
+# take first spot
+n<-datrep %>%
+  arrange(desc(n)) %>%
+  slice(1)
+
+# take second spot
+n2<-datrep %>%
+  arrange(desc(n)) %>%
+  slice(2)
+
+# we can use R's default matrix algebra
+n-n2
+```
+
+
+## Q. Suppose you were born on Dec 25, 1995 at 5.02:22 am Calucalate your age in months on March 20,2021, at 1:22:04pm
+
+
+### Solution
+
+```{r}
+library(lubridate)
+alive <-lubridate::interval(ymd_hms("1995-12-25 05:02:22"), ymd_hms("2021-03-21 13:22:04"))
+
+time_length(alive, "months")
+```
+
+## Summarise the mean, median, quantile
+
+
+## Q1. Create an ordered factor from numeric data
+
+The `Religion.Church` variable contains responses to the question: "how many times each month do you attend church or religious service? 
+
+Create factor for people who attend church 0 x per month, 1-3 x per month, or over 4 times per month. Re-level the factor for an ordinal ranking lowest to highest.
+
+
+## Solution
+```{r}
+nz %>%
+  dplyr::mutate(church_attendance_cats = cut(
+    Religion.Church,
+    breaks = c(-Inf, 0, 3.99, Inf),
+    labels = c("zero", "less_4", "gr_4"),
+    right = TRUE,
+  )) %>% 
+  group_by(church_attendance_cats) %>%
+  count()
+```
+
+## Another solution
+
+```{r}
+nz %>%
+  dplyr::select(Religion.Church) %>%
+  dplyr::mutate(church_attendance_cats = as.factor(ifelse(
+    Religion.Church == 0,
+    "zero",
+    ifelse(Religion.Church < 4, "less_4", "gr_4")
+  ))) %>%
+  group_by(church_attendance_cats) %>%
+  count()
+```
+
+
+
+<!-- ## Q1. Find people who were over 13 in Kessler 6 distress in 2019 but not 2018, arrange by biggest difference in distress change among this group. Hint, use the `KESSLER6sum` variable -->
+
+<!-- ```{r} -->
+
+<!-- ``` -->
+
+
