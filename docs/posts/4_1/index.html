@@ -136,7 +136,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["lecture_4_files/anchor-4.2.2/anchor.min.js","lecture_4_files/bowser-1.9.3/bowser.min.js","lecture_4_files/distill-2.2.21/template.v2.js","lecture_4_files/jquery-1.11.3/jquery.min.js","lecture_4_files/popper-2.6.0/popper.min.js","lecture_4_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_4_files/tippy-6.2.7/tippy-light-border.css","lecture_4_files/tippy-6.2.7/tippy.css","lecture_4_files/tippy-6.2.7/tippy.umd.min.js","lecture_4_files/webcomponents-2.0.0/webcomponents.js","op.pdf","op.png"]}
+  {"type":"character","attributes":{},"value":["lecture_4_files/anchor-4.2.2/anchor.min.js","lecture_4_files/bowser-1.9.3/bowser.min.js","lecture_4_files/distill-2.2.21/template.v2.js","lecture_4_files/figure-html5/unnamed-chunk-12-1.png","lecture_4_files/figure-html5/unnamed-chunk-15-1.png","lecture_4_files/figure-html5/unnamed-chunk-16-1.png","lecture_4_files/figure-html5/unnamed-chunk-19-1.png","lecture_4_files/figure-html5/unnamed-chunk-19-2.png","lecture_4_files/header-attrs-2.7.1/header-attrs.js","lecture_4_files/jquery-1.11.3/jquery.min.js","lecture_4_files/popper-2.6.0/popper.min.js","lecture_4_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_4_files/tippy-6.2.7/tippy-light-border.css","lecture_4_files/tippy-6.2.7/tippy.css","lecture_4_files/tippy-6.2.7/tippy.umd.min.js","lecture_4_files/webcomponents-2.0.0/webcomponents.js","op.pdf","op.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -1802,6 +1802,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!--/radix_placeholder_distill-->
   <script src="../../site_libs/header-attrs-2.7.1/header-attrs.js"></script>
+  <script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1876,15 +1878,6687 @@ gtag('config', 'G-X058WW5WJZ');
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#review">Review</a></li>
+<li><a href="#preamble">Preamble</a>
+<ul>
+<li><a href="#assigned-reading-workflow-advice-read-this">Assigned reading: workflow Advice: read this</a></li>
+<li><a href="#something-useful">Something useful</a></li>
+</ul></li>
+<li><a href="#data-carpentry">Data Carpentry</a>
+<ul>
+<li><a href="#different-ways-to-select-variables">Different ways to select variables</a></li>
+<li><a href="#re-leveling-a-factor">Re-leveling a factor</a></li>
+<li><a href="#mutate-by-cutting">Mutate by cutting</a></li>
+<li><a href="#preferable-use-ifelse-to-do-the-same">Preferable: use <code>ifelse</code> to do the same</a></li>
+<li><a href="#using-logical-operators-to-create-factors">Using logical operators to create factors</a></li>
+<li><a href="#create-a-table.">Create a table.</a></li>
+<li><a href="#create-and-work-with-dates-a-date">Create and work with dates a date</a></li>
+<li><a href="#create-a-graph-showing-the-number-of-responses-each-day-for-the-years-of-data-collection">Create a graph showing the number of responses each day for the years of data collection?</a></li>
+<li><a href="#slice"><code>Slice</code></a></li>
+</ul></li>
+<li><a href="#data-summaries">Data Summaries</a>
+<ul>
+<li><a href="#boxplots">boxplots</a></li>
+<li><a href="#r-has-loads-of-canned-solutions">R has loads of canned solutions</a></li>
+<li><a href="#what-is-the-variation-in-my-indicators">What is the variation in my indicators?</a></li>
+<li><a href="#which-values-are-most-common-and-most-rare">Which values are most common (and most rare?)</a></li>
+<li><a href="#shortcuts">shortcuts</a></li>
+</ul></li>
 </ul>
 </nav>
 </div>
-<h2 id="review">Review</h2>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="op.png" width="5120" /></p>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>spec_tbl_df [4,126 × 64] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Id                         : num [1:4126] 1 1 2 2 3 3 4 4 5 5 ...
+ $ Wave                       : num [1:4126] 2019 2018 2019 2018 2019 ...
+ $ years                      : num [1:4126] 10.43 9.47 10.61 9.9 10.17 ...
+ $ Age                        : num [1:4126] 48 47 48.2 47 54.5 ...
+ $ Male                       : chr [1:4126] &quot;Male&quot; &quot;Male&quot; &quot;Male&quot; &quot;Male&quot; ...
+ $ Gender                     : num [1:4126] 1 1 1 1 1 1 0 0 0 0 ...
+ $ Edu                        : num [1:4126] 3 3 7 7 4 4 8 7 7 7 ...
+ $ Partner                    : num [1:4126] 1 1 1 1 0 0 1 NA 0 0 ...
+ $ BornNZ                     : num [1:4126] 1 1 1 1 1 1 1 1 1 1 ...
+ $ BigDoms                    : chr [1:4126] &quot;Not_Rel&quot; &quot;Not_Rel&quot; &quot;Not_Rel&quot; &quot;Not_Rel&quot; ...
+ $ TSCORE                     : num [1:4126] 3869 3520 3936 3677 3774 ...
+ $ GenCohort                  : chr [1:4126] &quot;GenX: born &gt;=1961 &amp; b.&lt; 1980&quot; &quot;GenX: born &gt;=1961 &amp; b.&lt; 1980&quot; &quot;GenX: born &gt;=1961 &amp; b.&lt; 1980&quot; &quot;GenX: born &gt;=1961 &amp; b.&lt; 1980&quot; ...
+ $ Religion.Church            : num [1:4126] 0 0 0 0 0 0 2 NA 0 0 ...
+ $ Religion.Believe.Cats      : num [1:4126] 4 4 1 1 1 1 1 NA 3 1 ...
+ $ Relid                      : num [1:4126] 0 0 0 0 0 0 7 7 2 2 ...
+ $ HLTH.Fatigue               : num [1:4126] 2 2 1 2 2 2 1 2 NA 1 ...
+ $ HLTH.SleepHours            : num [1:4126] 6 6 6 4 7 7 6 4 7 8 ...
+ $ HomeOwner                  : num [1:4126] NA 1 NA 0 NA 1 NA NA NA 0 ...
+ $ Pol.Orient                 : num [1:4126] 3 3 5 3 4 4 3 NA 4 4 ...
+ $ PATRIOT                    : num [1:4126] 4.5 5 6.5 7 4 4 5.5 4 6.5 6 ...
+ $ Env.SatNZEnvironment       : num [1:4126] 7 4 7 7 7 7 4 3 7 8 ...
+ $ Env.MotorwaySpend          : num [1:4126] 5 5 3 5 4 4 4 6 5 6 ...
+ $ Env.PubTransSubs           : num [1:4126] 5 6 5 5 4 4 7 6 4 6 ...
+ $ Env.ClimateChgConcern      : num [1:4126] 6 6 7 7 4 4 6 NA 4 2 ...
+ $ LIFEMEANING                : num [1:4126] 5 6.5 5 4.5 5.5 5.5 7 7 5 6 ...
+ $ Hours.Internet             : num [1:4126] 10 5 14 15 2 2 4 4 10 14 ...
+ $ Issue.GovtSurveillance     : num [1:4126] 3 1 3 3 4 4 1 2 4 3 ...
+ $ Issue.RegulateAI           : num [1:4126] NA 1 NA 4 NA 4 NA 3 NA 4 ...
+ $ Issue.IncomeRedistribution : num [1:4126] 3 2 4 4 2 4 7 6 4 3 ...
+ $ Hours.Exercise             : num [1:4126] 14 24 7 10 5 6 1 0 1 7 ...
+ $ Hours.Work                 : num [1:4126] 14 0 35 65 60 50 41 42 0 0 ...
+ $ Hours.News                 : num [1:4126] 4 4 5 4 1 2 0 0 8 7 ...
+ $ CONSCIENTIOUSNESS          : num [1:4126] 4.75 5.25 5.5 5.5 5 4.25 4.75 4.75 NA 5.25 ...
+ $ EXTRAVERSION               : num [1:4126] 3.25 2.75 4.75 4 3.75 4.5 5.75 4.25 NA 4 ...
+ $ AGREEABLENESS              : num [1:4126] 4.5 5 5 6 5.75 5.25 5 5.25 NA 5 ...
+ $ OPENNESS                   : num [1:4126] 6.5 7 4.25 4.25 6 6 5.75 6.25 NA 5 ...
+ $ Religious                  : chr [1:4126] &quot;Not_Religious&quot; &quot;Not_Religious&quot; &quot;Not_Religious&quot; &quot;Not_Religious&quot; ...
+ $ Spiritual.Identification   : num [1:4126] NA 1 NA 5 NA 4 NA NA NA 2 ...
+ $ Believe.God                : chr [1:4126] &quot;Not Believe God&quot; &quot;Not Believe God&quot; &quot;Believe God&quot; &quot;Believe God&quot; ...
+ $ Believe.Spirit             : chr [1:4126] &quot;Not Believe Spirit&quot; &quot;Not Believe Spirit&quot; &quot;Believe Spirit&quot; &quot;Believe Spirit&quot; ...
+ $ HoursCharity               : num [1:4126] 2 0 0 2 0 0 0 4 0 0 ...
+ $ CharityDonate              : num [1:4126] 180 80 300 100 4200 3500 400 350 50 100 ...
+ $ Your.Personal.Relationships: num [1:4126] 7 6 2 2 8 8 10 10 9 9 ...
+ $ Your.Future.Security       : num [1:4126] 8 10 8 6 8 7 8 7 9 9 ...
+ $ Standard.Living            : num [1:4126] 7 8 8 6 8 8 10 10 9 9 ...
+ $ NZ.Economic.Situation      : num [1:4126] 7 4 2 6 5 6 7 5 7 8 ...
+ $ NZ.Social.Conditions       : num [1:4126] 7 7 2 6 5 5 2 0 9 7 ...
+ $ NZ.Business.Conditions     : num [1:4126] 7 8 2 6 5 5 6 5 9 7 ...
+ $ Emp.JobSecure              : num [1:4126] 7 NA 6 6 5 4 6 NA NA NA ...
+ $ Issue.Food.GMO             : num [1:4126] 1 2 5 5 4 4 7 7 1 4 ...
+ $ Env.SacMade                : logi [1:4126] NA NA NA NA NA NA ...
+ $ KESSLER6sum                : num [1:4126] 5 3 7 7 3 3 0 4 NA 2 ...
+ $ SWB.Kessler01              : num [1:4126] 0 0 1 0 0 0 0 1 NA 0 ...
+ $ SWB.Kessler02              : num [1:4126] 0 0 0 0 0 0 0 0 NA 0 ...
+ $ SWB.Kessler03              : num [1:4126] 2 1 3 3 1 1 0 0 NA 1 ...
+ $ SWB.Kessler04              : num [1:4126] 1 1 1 2 1 1 0 2 NA 1 ...
+ $ SWB.Kessler05              : num [1:4126] 0 0 0 0 0 0 0 0 NA 0 ...
+ $ SWB.Kessler06              : num [1:4126] 2 1 2 2 1 1 0 1 NA 0 ...
+ $ FeelHopeless               : chr [1:4126] &quot;None Of The Time&quot; &quot;None Of The Time&quot; &quot;A Little Of The Time&quot; &quot;None Of The Time&quot; ...
+ $ FeelDepressed              : chr [1:4126] &quot;None Of The Time&quot; &quot;None Of The Time&quot; &quot;None Of The Time&quot; &quot;None Of The Time&quot; ...
+ $ FeelRestless               : chr [1:4126] &quot;Some Of The Time&quot; &quot;A Little Of The Time&quot; &quot;Most Of The Time&quot; &quot;Most Of The Time&quot; ...
+ $ EverythingIsEffort         : chr [1:4126] &quot;A Little Of The Time&quot; &quot;A Little Of The Time&quot; &quot;A Little Of The Time&quot; &quot;Some Of The Time&quot; ...
+ $ FeelWorthless              : chr [1:4126] &quot;None Of The Time&quot; &quot;None Of The Time&quot; &quot;None Of The Time&quot; &quot;None Of The Time&quot; ...
+ $ FeelNervous                : chr [1:4126] &quot;Some Of The Time&quot; &quot;A Little Of The Time&quot; &quot;Some Of The Time&quot; &quot;Some Of The Time&quot; ...
+ - attr(*, &quot;spec&quot;)=
+  .. cols(
+  ..   Id = col_double(),
+  ..   Wave = col_double(),
+  ..   years = col_double(),
+  ..   Age = col_double(),
+  ..   Male = col_character(),
+  ..   Gender = col_double(),
+  ..   Edu = col_double(),
+  ..   Partner = col_double(),
+  ..   BornNZ = col_double(),
+  ..   BigDoms = col_character(),
+  ..   TSCORE = col_double(),
+  ..   GenCohort = col_character(),
+  ..   Religion.Church = col_double(),
+  ..   Religion.Believe.Cats = col_double(),
+  ..   Relid = col_double(),
+  ..   HLTH.Fatigue = col_double(),
+  ..   HLTH.SleepHours = col_double(),
+  ..   HomeOwner = col_double(),
+  ..   Pol.Orient = col_double(),
+  ..   PATRIOT = col_double(),
+  ..   Env.SatNZEnvironment = col_double(),
+  ..   Env.MotorwaySpend = col_double(),
+  ..   Env.PubTransSubs = col_double(),
+  ..   Env.ClimateChgConcern = col_double(),
+  ..   LIFEMEANING = col_double(),
+  ..   Hours.Internet = col_double(),
+  ..   Issue.GovtSurveillance = col_double(),
+  ..   Issue.RegulateAI = col_double(),
+  ..   Issue.IncomeRedistribution = col_double(),
+  ..   Hours.Exercise = col_double(),
+  ..   Hours.Work = col_double(),
+  ..   Hours.News = col_double(),
+  ..   CONSCIENTIOUSNESS = col_double(),
+  ..   EXTRAVERSION = col_double(),
+  ..   AGREEABLENESS = col_double(),
+  ..   OPENNESS = col_double(),
+  ..   Religious = col_character(),
+  ..   Spiritual.Identification = col_double(),
+  ..   Believe.God = col_character(),
+  ..   Believe.Spirit = col_character(),
+  ..   HoursCharity = col_double(),
+  ..   CharityDonate = col_double(),
+  ..   Your.Personal.Relationships = col_double(),
+  ..   Your.Future.Security = col_double(),
+  ..   Standard.Living = col_double(),
+  ..   NZ.Economic.Situation = col_double(),
+  ..   NZ.Social.Conditions = col_double(),
+  ..   NZ.Business.Conditions = col_double(),
+  ..   Emp.JobSecure = col_double(),
+  ..   Issue.Food.GMO = col_double(),
+  ..   Env.SacMade = col_logical(),
+  ..   KESSLER6sum = col_double(),
+  ..   SWB.Kessler01 = col_double(),
+  ..   SWB.Kessler02 = col_double(),
+  ..   SWB.Kessler03 = col_double(),
+  ..   SWB.Kessler04 = col_double(),
+  ..   SWB.Kessler05 = col_double(),
+  ..   SWB.Kessler06 = col_double(),
+  ..   FeelHopeless = col_character(),
+  ..   FeelDepressed = col_character(),
+  ..   FeelRestless = col_character(),
+  ..   EverythingIsEffort = col_character(),
+  ..   FeelWorthless = col_character(),
+  ..   FeelNervous = col_character()
+  .. )</code></pre>
+</div>
+<h2 id="preamble">Preamble</h2>
+<h3 id="assigned-reading-workflow-advice-read-this">Assigned reading: workflow Advice: read this</h3>
+<p>Advice on how to name your files (by Danielle Navarro) <a href="https://slides.djnavarro.net/project-structure/#1">here</a></p>
+<h3 id="something-useful">Something useful</h3>
+<p>The hash symbol <code>#</code> is for commenting</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>r_comments</span> <span class='op'>&lt;-</span> <span class='fl'>200</span> <span class='co'># here I am creating the variable for the number of time Jack says R is great</span>
+
+<span class='va'>jill_roll</span> <span class='op'>&lt;-</span> <span class='fl'>199</span> <span class='co'># here I'm creating a variable for the number of times Jill rolls here eyes</span>
+
+<span class='va'>outcome</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>r_comments</span><span class='op'>)</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>jill_roll</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>pi</span> <span class='co'># here I am illustrating some functions in r using the variables I just created</span>
+
+<span class='va'>outcome</span> <span class='co'># print outcome</span>
+</code></pre>
+</div>
+<pre><code>[1] 234.8088</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>outcome</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='co'># illustrate the useful `round` function.</span>
+</code></pre>
+</div>
+<pre><code>[1] 234.81</code></pre>
+</div>
+<h2 id="data-carpentry">Data Carpentry</h2>
+<h3 id="different-ways-to-select-variables">Different ways to select variables</h3>
+<p>Task: 3 different ways to select the variables that start with <code>Believe</code>.</p>
+<h4 id="explicit-selection">Explicit selection</h4>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>nz</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;Id&quot;                          &quot;Wave&quot;                       
+ [3] &quot;years&quot;                       &quot;Age&quot;                        
+ [5] &quot;Male&quot;                        &quot;Gender&quot;                     
+ [7] &quot;Edu&quot;                         &quot;Partner&quot;                    
+ [9] &quot;BornNZ&quot;                      &quot;BigDoms&quot;                    
+[11] &quot;TSCORE&quot;                      &quot;GenCohort&quot;                  
+[13] &quot;Religion.Church&quot;             &quot;Religion.Believe.Cats&quot;      
+[15] &quot;Relid&quot;                       &quot;HLTH.Fatigue&quot;               
+[17] &quot;HLTH.SleepHours&quot;             &quot;HomeOwner&quot;                  
+[19] &quot;Pol.Orient&quot;                  &quot;PATRIOT&quot;                    
+[21] &quot;Env.SatNZEnvironment&quot;        &quot;Env.MotorwaySpend&quot;          
+[23] &quot;Env.PubTransSubs&quot;            &quot;Env.ClimateChgConcern&quot;      
+[25] &quot;LIFEMEANING&quot;                 &quot;Hours.Internet&quot;             
+[27] &quot;Issue.GovtSurveillance&quot;      &quot;Issue.RegulateAI&quot;           
+[29] &quot;Issue.IncomeRedistribution&quot;  &quot;Hours.Exercise&quot;             
+[31] &quot;Hours.Work&quot;                  &quot;Hours.News&quot;                 
+[33] &quot;CONSCIENTIOUSNESS&quot;           &quot;EXTRAVERSION&quot;               
+[35] &quot;AGREEABLENESS&quot;               &quot;OPENNESS&quot;                   
+[37] &quot;Religious&quot;                   &quot;Spiritual.Identification&quot;   
+[39] &quot;Believe.God&quot;                 &quot;Believe.Spirit&quot;             
+[41] &quot;HoursCharity&quot;                &quot;CharityDonate&quot;              
+[43] &quot;Your.Personal.Relationships&quot; &quot;Your.Future.Security&quot;       
+[45] &quot;Standard.Living&quot;             &quot;NZ.Economic.Situation&quot;      
+[47] &quot;NZ.Social.Conditions&quot;        &quot;NZ.Business.Conditions&quot;     
+[49] &quot;Emp.JobSecure&quot;               &quot;Issue.Food.GMO&quot;             
+[51] &quot;Env.SacMade&quot;                 &quot;KESSLER6sum&quot;                
+[53] &quot;SWB.Kessler01&quot;               &quot;SWB.Kessler02&quot;              
+[55] &quot;SWB.Kessler03&quot;               &quot;SWB.Kessler04&quot;              
+[57] &quot;SWB.Kessler05&quot;               &quot;SWB.Kessler06&quot;              
+[59] &quot;FeelHopeless&quot;                &quot;FeelDepressed&quot;              
+[61] &quot;FeelRestless&quot;                &quot;EverythingIsEffort&quot;         
+[63] &quot;FeelWorthless&quot;               &quot;FeelNervous&quot;                </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='st'>"Believe.God"</span>, <span class='st'>"Believe.Spirit"</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>as_tibble</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 4,126 x 2
+   Believe.God     Believe.Spirit    
+   &lt;fct&gt;           &lt;fct&gt;             
+ 1 Not Believe God Not Believe Spirit
+ 2 Not Believe God Not Believe Spirit
+ 3 Believe God     Believe Spirit    
+ 4 Believe God     Believe Spirit    
+ 5 Believe God     Believe Spirit    
+ 6 Believe God     Believe Spirit    
+ 7 Believe God     Believe Spirit    
+ 8 &lt;NA&gt;            &lt;NA&gt;              
+ 9 Not Believe God Believe Spirit    
+10 Believe God     Believe Spirit    
+# … with 4,116 more rows</code></pre>
+</div>
+<h4 id="starts_with"><code>starts_with</code></h4>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>as_tibble</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 4,126 x 2
+   Believe.God     Believe.Spirit    
+   &lt;fct&gt;           &lt;fct&gt;             
+ 1 Not Believe God Not Believe Spirit
+ 2 Not Believe God Not Believe Spirit
+ 3 Believe God     Believe Spirit    
+ 4 Believe God     Believe Spirit    
+ 5 Believe God     Believe Spirit    
+ 6 Believe God     Believe Spirit    
+ 7 Believe God     Believe Spirit    
+ 8 &lt;NA&gt;            &lt;NA&gt;              
+ 9 Not Believe God Believe Spirit    
+10 Believe God     Believe Spirit    
+# … with 4,116 more rows</code></pre>
+</div>
+<h4 id="contains"><code>contains</code></h4>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>as_tibble</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 4,126 x 3
+   Religion.Believe.Cats Believe.God     Believe.Spirit    
+                   &lt;dbl&gt; &lt;fct&gt;           &lt;fct&gt;             
+ 1                     4 Not Believe God Not Believe Spirit
+ 2                     4 Not Believe God Not Believe Spirit
+ 3                     1 Believe God     Believe Spirit    
+ 4                     1 Believe God     Believe Spirit    
+ 5                     1 Believe God     Believe Spirit    
+ 6                     1 Believe God     Believe Spirit    
+ 7                     1 Believe God     Believe Spirit    
+ 8                    NA &lt;NA&gt;            &lt;NA&gt;              
+ 9                     3 Not Believe God Believe Spirit    
+10                     1 Believe God     Believe Spirit    
+# … with 4,116 more rows</code></pre>
+</div>
+<h4 id="whoops-so-we-try-something-else">whoops, so we try something else</h4>
+<p>This is a hack.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span> <span class='op'>&amp;</span>  <span class='op'>-</span>  <span class='va'>Religion.Believe.Cats</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>as_tibble</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 4,126 x 2
+   Believe.God     Believe.Spirit    
+   &lt;fct&gt;           &lt;fct&gt;             
+ 1 Not Believe God Not Believe Spirit
+ 2 Not Believe God Not Believe Spirit
+ 3 Believe God     Believe Spirit    
+ 4 Believe God     Believe Spirit    
+ 5 Believe God     Believe Spirit    
+ 6 Believe God     Believe Spirit    
+ 7 Believe God     Believe Spirit    
+ 8 &lt;NA&gt;            &lt;NA&gt;              
+ 9 Not Believe God Believe Spirit    
+10 Believe God     Believe Spirit    
+# … with 4,116 more rows</code></pre>
+</div>
+<p>Lesson: think about your interests and purposes.</p>
+<h3 id="re-leveling-a-factor">Re-leveling a factor</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>BigDoms</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span> 
+</code></pre>
+</div>
+<pre><code>.
+ Buddhist Christian    Muslim   Not_Rel TheOthers 
+       36      1204         9      2655       128 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## suppose we want "Not_Rel" as the base category, and rearrange the other levels</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://forcats.tidyverse.org'>forcats</a></span><span class='op'>)</span>
+<span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>BigDoms</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>BigDoms <span class='op'>=</span>  
+                  <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>BigDoms</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Not_Rel"</span>,<span class='st'>"Christian"</span>,<span class='st'>"Buddhist"</span>,<span class='st'>"Muslim"</span>,<span class='st'>"TheOthers"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>.
+  Not_Rel Christian  Buddhist    Muslim TheOthers 
+     2655      1204        36         9       128 </code></pre>
+</div>
+<h3 id="mutate-by-cutting">Mutate by cutting</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>&lt;-</span><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>k6cats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span><span class='op'>(</span>
+    <span class='va'>KESSLER6sum</span>,
+    breaks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='cn'>Inf</span>, <span class='fl'>5</span>, <span class='fl'>13</span>, <span class='cn'>Inf</span><span class='op'>)</span>,   <span class='co'># create Kessler 6 diagnostic categories</span>
+    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Low Distress"</span>, <span class='st'>"Moderate Distress"</span>, <span class='st'>"Serious Distress"</span><span class='op'>)</span>, 
+    right <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="preferable-use-ifelse-to-do-the-same">Preferable: use <code>ifelse</code> to do the same</h3>
+<p>Personally I find the following method better, because it gives me explicit control of how I am making the categories.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>k6cats1 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+    <span class='va'>KESSLER6sum</span> <span class='op'>&lt;=</span> <span class='fl'>5</span>,
+    <span class='st'>"Low Distress"</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span> <span class='op'>&lt;=</span> <span class='fl'>13</span>,  <span class='st'>"Moderate Distress"</span>, <span class='st'>"Serious Distress"</span><span class='op'>)</span>
+  <span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>k6cats1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 4 x 2
+# Groups:   k6cats1 [4]
+  k6cats1               n
+  &lt;fct&gt;             &lt;int&gt;
+1 Low Distress       2510
+2 Moderate Distress  1400
+3 Serious Distress    177
+4 &lt;NA&gt;                 39</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#check this is the same as the previous method</span>
+<span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>k6cats</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 4 x 2
+# Groups:   k6cats [4]
+  k6cats                n
+  &lt;fct&gt;             &lt;int&gt;
+1 Low Distress       2510
+2 Moderate Distress  1400
+3 Serious Distress    177
+4 &lt;NA&gt;                 39</code></pre>
+</div>
+<h3 id="using-logical-operators-to-create-factors">Using logical operators to create factors</h3>
+<h3 id="create-a-table.">Create a table.</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://haozhu233.github.io/kableExtra/'>kableExtra</a></span><span class='op'>)</span>
+<span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>k6cats</span>, <span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>k6cats</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span> <span class='va'>Wave</span>, <span class='va'>k6cats</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>summarise</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kbl.html'>kbl</a></span><span class='op'>(</span>caption <span class='op'>=</span> <span class='st'>"Distress by Year"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_classic.html'>kable_classic_2</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"striped"</span>, <span class='st'>"hover"</span><span class='op'>)</span>, full_width <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/collapse_rows.html'>collapse_rows</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table class=" lightable-classic-2 lightable-striped lightable-hover" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:designtable">Table 1: </span>Distress by Year
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Wave
+</th>
+<th style="text-align:left;">
+k6cats
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;vertical-align: middle !important;" rowspan="3">
+2018
+</td>
+<td style="text-align:left;">
+Low Distress
+</td>
+<td style="text-align:right;">
+1272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moderate Distress
+</td>
+<td style="text-align:right;">
+675
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Serious Distress
+</td>
+<td style="text-align:right;">
+88
+</td>
+</tr>
+<tr>
+<td style="text-align:right;vertical-align: middle !important;" rowspan="3">
+2019
+</td>
+<td style="text-align:left;">
+Low Distress
+</td>
+<td style="text-align:right;">
+1238
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moderate Distress
+</td>
+<td style="text-align:right;">
+725
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Serious Distress
+</td>
+<td style="text-align:right;">
+89
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="create-and-work-with-dates-a-date">Create and work with dates a date</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>date <span class='op'>=</span> <span class='fu'>make_date</span><span class='op'>(</span>year <span class='op'>=</span> <span class='fl'>2009</span>, month <span class='op'>=</span> <span class='fl'>6</span>, day <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>TSCORE</span><span class='op'>)</span>  <span class='co'># first data of data collection in this study</span>
+</code></pre>
+</div>
+</div>
+<p>We can analyze dates, for example, for how many minutes were data collected?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>      date           
+ Min.   :2018-01-02  
+ 1st Qu.:2018-08-09  
+ Median :2019-10-03  
+ Mean   :2019-05-18  
+ 3rd Qu.:2019-12-07  
+ Max.   :2020-10-06  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>int</span><span class='op'>&lt;-</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></span><span class='op'>(</span><span class='fu'>ymd</span><span class='op'>(</span><span class='st'>"2018-01-02"</span><span class='op'>)</span>, <span class='fu'>ymd</span><span class='op'>(</span><span class='st'>"2020-10-06"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>#time in years</span>
+<span class='fu'>time_length</span><span class='op'>(</span><span class='va'>int</span>, <span class='st'>"year"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 2.759563</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#time in minutes</span>
+<span class='fu'>time_length</span><span class='op'>(</span><span class='va'>int</span>, <span class='st'>"minutes"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 1451520</code></pre>
+</div>
+<h3 id="create-a-graph-showing-the-number-of-responses-each-day-for-the-years-of-data-collection">Create a graph showing the number of responses each day for the years of data collection?</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+
+<span class='va'>datrep</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>count</span><span class='op'>(</span>day <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='st'>"day"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Year <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+    <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2010-01-01"</span>,
+    <span class='fl'>2009</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+      <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2011-01-01"</span>,
+      <span class='fl'>2010</span>,
+      <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+        <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2012-01-01"</span>,
+        <span class='fl'>2011</span>,
+        <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+          <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2013-01-01"</span>,
+          <span class='fl'>2012</span>,
+          <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+            <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2014-01-01"</span>,
+            <span class='fl'>2013</span>,
+            <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+              <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2015-01-01"</span>,
+              <span class='fl'>2014</span>,
+              <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+                <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2016-01-01"</span>,
+                <span class='fl'>2015</span>,
+                <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+                  <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2017-01-01"</span>,
+                  <span class='fl'>2016</span>,
+                  <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+                    <span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2018-01-01"</span>,
+                    <span class='fl'>2017</span>,
+                    <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2019-01-01"</span>, <span class='fl'>2018</span>,
+                           <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>day</span> <span class='op'>&lt;</span> <span class='st'>"2020-01-01"</span>, <span class='fl'>2019</span>, <span class='fl'>2020</span><span class='op'>)</span><span class='op'>)</span>
+                  <span class='op'>)</span>
+                <span class='op'>)</span>
+              <span class='op'>)</span>
+            <span class='op'>)</span>
+          <span class='op'>)</span>
+        <span class='op'>)</span>
+      <span class='op'>)</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>arrange</span><span class='op'>(</span><span class='va'>day</span><span class='op'>)</span>
+
+<span class='co'># create graph</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>datrep</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>day</span>, <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>Year</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_date.html'>scale_x_date</a></span><span class='op'>(</span>date_labels <span class='op'>=</span> <span class='st'>"%b/%Y"</span><span class='op'>)</span>  <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"Days"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span><span class='op'>(</span><span class='st'>"Count of Responses"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span><span class='op'>(</span><span class='st'>"Our Dataset's Daily Counts"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_classic</a></span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>+</span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_d</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="lecture_4_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
+</div>
+<p>Arrange by date with the most responses</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datrep</span><span class='op'>%&gt;%</span>
+  <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 607 x 3
+   day            n Year 
+   &lt;date&gt;     &lt;int&gt; &lt;fct&gt;
+ 1 2018-06-21   112 2018 
+ 2 2018-06-22    93 2018 
+ 3 2018-06-24    80 2018 
+ 4 2018-06-20    67 2018 
+ 5 2018-06-23    59 2018 
+ 6 2018-06-26    58 2018 
+ 7 2019-12-03    54 2019 
+ 8 2018-06-25    52 2018 
+ 9 2019-10-04    47 2019 
+10 2019-12-02    46 2019 
+# … with 597 more rows</code></pre>
+</div>
+<p>There are no inherently stressful days. To see this, we can take average stress levels by day, and then see where the high average stress days fall.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tn</span><span class='op'>&lt;-</span><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>date</span>,<span class='va'>KESSLER6sum</span>,<span class='va'>Id</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>summarise</span><span class='op'>(</span>
+   av_distress <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+   n <span class='op'>=</span> <span class='fu'>n_distinct</span><span class='op'>(</span><span class='va'>Id</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>av_distress</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>tn</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 607 x 3
+   date       av_distress     n
+   &lt;date&gt;           &lt;dbl&gt; &lt;int&gt;
+ 1 2018-12-16        21       1
+ 2 2020-07-06        16       1
+ 3 2018-11-13        15.5     2
+ 4 2019-01-05        15       1
+ 5 2020-06-01        15       1
+ 6 2020-07-01        15       1
+ 7 2020-02-10        14       1
+ 8 2020-06-23        14       1
+ 9 2019-12-26        13       1
+10 2019-09-06        12.5     2
+# … with 597 more rows</code></pre>
+</div>
+We can all graph the densities
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tn</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>av_distress</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_date.html'>scale_x_date</a></span><span class='op'>(</span>date_labels <span class='op'>=</span> <span class='st'>"%b/%Y"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_classic</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_c</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="lecture_4_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<p>Converting dates to days of the week.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Id</span>, <span class='va'>date</span>, <span class='va'>KESSLER6sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>weekdays <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/day.html'>wday</a></span><span class='op'>(</span><span class='va'>date</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>weekdays</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>summarise</span><span class='op'>(</span>
+    mn_k6 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+    sd_k6 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+    n_k6w <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>
+    se_k6 <span class='op'>=</span> <span class='va'>sd_k6</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>n_k6w</span><span class='op'>)</span>,
+    lw_ci <span class='op'>=</span> <span class='va'>mn_k6</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_k6w</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_k6</span>,
+    up_ci <span class='op'>=</span> <span class='va'>mn_k6</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_k6w</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_k6</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>weekdays</span>, y <span class='op'>=</span> <span class='va'>mn_k6</span>, colour <span class='op'>=</span> <span class='va'>mn_k6</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_linerange.html'>geom_errorbar</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>lw_ci</span>, ymax <span class='op'>=</span> <span class='va'>up_ci</span><span class='op'>)</span>, width <span class='op'>=</span> <span class='fl'>.1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>  <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_classic</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_d</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="lecture_4_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<h3 id="slice"><code>Slice</code></h3>
+<p>Dplyr’s slice function can be handy. Say we only want the first six rows</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datrep</span><span class='op'>%&gt;%</span>
+  <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>slice</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 6 x 3
+  day            n Year 
+  &lt;date&gt;     &lt;int&gt; &lt;fct&gt;
+1 2018-06-21   112 2018 
+2 2018-06-22    93 2018 
+3 2018-06-24    80 2018 
+4 2018-06-20    67 2018 
+5 2018-06-23    59 2018 
+6 2018-06-26    58 2018 </code></pre>
+</div>
+<p>Say we only want the 1st row, the 3rd row, and the 20th row</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datrep</span><span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 3 x 3
+  day            n Year 
+  &lt;date&gt;     &lt;int&gt; &lt;fct&gt;
+1 2018-06-21   112 2018 
+2 2018-06-24    80 2018 
+3 2020-03-18    38 2020 </code></pre>
+</div>
+<h2 id="data-summaries">Data Summaries</h2>
+<h3 id="boxplots">boxplots</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>nz</span><span class='op'>$</span><span class='va'>Age</span>, notch <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="lecture_4_files/figure-html5/unnamed-chunk-19-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span> <span class='op'>~</span> <span class='va'>Wave</span>, data <span class='op'>=</span> <span class='va'>nz</span>, notch <span class='op'>=</span> <span class='cn'>TRUE</span>, col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"cadetblue1"</span>,<span class='st'>"orange"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="lecture_4_files/figure-html5/unnamed-chunk-19-2.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span><span class='op'>$</span><span class='va'>KESSLER6sum</span>
+</code></pre>
+</div>
+<pre><code>   [1]  5.0  3.0  7.0  7.0  3.0  3.0  0.0  4.0   NA  2.0  2.0  2.0
+  [13]  2.0  2.0  5.0  2.0  2.0  0.0 10.0  9.0  0.0  0.0 17.0 14.0
+  [25]  0.0  2.0  7.0 10.0 10.0  5.0  0.0  0.0  4.0  1.0  1.0  2.0
+  [37] 13.0  2.0  1.0  0.0  0.0  2.0  8.0  4.0 10.0  4.0  0.0  5.0
+  [49]  7.0  5.0  8.0 13.0  4.0  4.0  7.0  6.0  1.0  0.0  4.0  2.0
+  [61]  4.0  5.0  6.0  6.0  5.0  3.0  0.0  0.0  0.0  0.0  1.0  3.0
+  [73]  0.0  1.0  1.0  0.0  2.0  3.0 12.0  5.0  5.0  7.0  3.0  5.0
+  [85] 10.0  7.2  3.0  3.0  2.0  2.0  0.0  0.0  1.0  1.0  6.0  4.0
+  [97] 10.0  4.0  9.0  7.0  6.0  5.0  0.0  0.0  8.0  2.0 12.0 11.0
+ [109] 10.0  4.0 12.0  9.0  5.0 12.0  4.0  9.0  6.0  1.0  9.0  5.0
+ [121]  1.0  2.0  4.0  4.0  4.0  3.0  7.0  6.0  1.0  3.0 16.0 17.0
+ [133]  6.0  8.0  0.0  2.0  3.6  1.0  6.0  8.0  4.0  5.0  1.0  0.0
+ [145]  7.0  9.0  1.0  1.0  1.0  0.0  5.0  5.0  3.0  2.0  2.0  1.0
+ [157] 12.0  8.0  1.0  4.0 10.0 12.0  1.0  0.0  9.0  8.0  8.0  4.0
+ [169]  1.0  5.0 11.0  6.0  2.0  3.0  3.0  3.0  1.0  2.0 12.0 12.0
+ [181]  9.6  8.0  4.0  2.0  0.0  1.0  2.0  5.0  0.0  0.0  1.0  0.0
+ [193]  4.0  2.0  9.0  3.0  7.0  2.0  7.2  3.0  3.0  3.0  5.0  6.0
+ [205]  2.0  3.0  0.0  0.0 12.0  8.0  0.0  2.0  4.0  6.0  8.0  6.0
+ [217]  3.0  1.0  4.0  8.0  3.0  2.0  4.0  5.0  8.0  3.0  6.0  9.0
+ [229]  3.0  2.0  3.0  4.0  3.0  2.0  4.0  4.0  4.0  2.0  2.0  1.0
+ [241]  9.0  8.0  3.0  1.0  5.0  6.0  3.0  1.0  1.0  1.0  3.0  3.0
+ [253]  1.0  1.0  9.0  6.0  4.0  2.0  2.0  4.0  2.0  8.0  2.0  1.0
+ [265]  2.0  2.0  5.0  3.0  1.0  3.0  0.0  3.0  1.2  6.0  2.0  1.0
+ [277]  4.0  7.0  6.0  4.0  1.0  0.0 10.0  6.0  0.0  1.0  1.0  1.0
+ [289] 14.0 16.0 11.0  9.0  4.0  9.0  3.0  3.0  3.0  3.0  6.0  4.0
+ [301]  6.0  8.0  3.0  1.0  2.0  4.0  9.0  9.0  5.0  5.0  8.0  9.0
+ [313]  5.0  6.0  6.0  3.0  8.0 11.0  6.0  4.0  5.0  5.0  9.0  1.0
+ [325] 10.0  9.0 11.0 10.0  0.0 20.0 13.0 12.0  2.0  0.0  0.0  1.0
+ [337]  4.0  2.0  8.0  6.0  6.0 10.0  7.0 11.0  4.0  4.0  5.0  5.0
+ [349]  1.0  0.0  3.0  6.0  8.0 12.0  3.0  6.0  5.0  4.0  8.0  4.0
+ [361]  0.0  5.0  9.0  7.0  4.0 14.0  5.0  0.0 10.0  3.0  4.0  5.0
+ [373]  3.0  2.0  6.0  2.0  4.0  4.0  7.0  7.0  9.0  8.0  6.0  6.0
+ [385]  2.0  4.0  3.0  7.0 13.0 13.0  0.0  0.0  6.0  6.0  3.0  6.0
+ [397]  3.0  1.0  4.0  3.0  3.0  3.0  4.0  7.0  4.0  2.0  3.0  4.0
+ [409] 11.0 13.0  5.0  6.0 14.0 12.0  5.0  4.0  2.0  2.0  9.0  5.0
+ [421]  0.0  3.0  4.0  6.0  0.0  0.0  4.0  5.0  0.0  5.0 13.0 14.0
+ [433]  5.0  2.0  2.0  2.0 19.0 21.0  1.0  1.0  7.0  8.0  4.0  4.0
+ [445]  0.0  3.0  4.0  2.0  0.0  6.0  1.0  3.0  7.0 13.0  0.0  0.0
+ [457] 11.0 12.0  9.0  6.0  6.0  2.0 10.0 11.0  2.0  2.0  5.0  4.0
+ [469]  5.0  4.0  4.0 15.0  1.0  2.0  1.0  1.0  6.0  5.0  5.0  0.0
+ [481]  6.0  7.0  2.0  3.0  3.0  4.0 11.0 11.0  2.0  0.0  1.0  0.0
+ [493]  6.0  3.0  2.0  2.0  0.0  0.0  6.0  4.0  4.0  3.0  0.0  0.0
+ [505]  5.0  5.0  3.0  0.0  5.0  1.0 18.0 18.0  2.0  2.0  5.0  8.0
+ [517]  3.0  5.0 11.0  9.0  4.0  6.0  9.0  8.0  2.0  3.0  2.0  1.0
+ [529]  5.0  3.0  2.0  3.0  3.0  4.0  5.0  4.0  2.0  0.0  5.0  4.0
+ [541]  2.0  1.0  1.0  0.0  4.0  2.0 10.0  6.0  6.0  4.0  3.0  3.0
+ [553]  2.0  6.0  4.0  6.0  3.0  4.0 15.0 13.0  3.0  1.0  2.0  3.0
+ [565]  2.0  7.0  4.0  4.0  0.0  0.0  2.0  8.0  1.0  2.0  0.0  0.0
+ [577]  5.0  5.0 11.0  8.0  1.0  7.0  2.0  4.0  2.0  1.2  7.0  5.0
+ [589]  4.0  4.0  3.0  4.0 11.0 10.0  1.0  2.0  7.0  5.0  6.0  6.0
+ [601]  3.0  5.0  7.2   NA  4.0  4.0  3.0  3.0  0.0  2.0  1.0  3.0
+ [613]  4.0  4.0  4.0  3.0  5.0  4.0  1.0  1.0  9.0  9.0  7.0  7.0
+ [625]  5.0  4.0  4.0  3.0  6.0  2.0  6.0  3.0  8.0  8.0  3.0  4.0
+ [637]  7.0  4.0 15.0 14.0 16.0  2.0  3.0  1.0  1.0  1.0  6.0  7.0
+ [649]  2.0  4.0  7.0  8.0  1.0  1.0  2.0  0.0  2.0  3.0  3.0  5.0
+ [661]  5.0  6.0  8.0  8.0 12.0  5.0  6.0  6.0  9.0  5.0  9.0  8.0
+ [673] 11.0  5.0  9.0  7.0  9.0 11.0  7.0  7.0  6.0  4.0  4.0  3.0
+ [685]  6.0  3.0  5.0  7.0  6.0  6.0  2.0  3.0  7.0  5.0  6.0  5.0
+ [697] 13.0 12.0 16.0  7.0  5.0  5.0  1.0  2.0  7.0  9.0  4.0  4.0
+ [709]  3.0  3.0  4.0  4.8 14.0 12.0  8.0  6.0  3.0  3.0  5.0  3.0
+ [721]  6.0  7.0  2.0  1.0   NA  4.0  0.0  1.0  1.0  1.0  3.0  6.0
+ [733]  8.0 11.0 14.0 12.0  0.0  1.0  6.0  4.0  2.0  1.0  1.0  1.0
+ [745]  5.0  2.0  0.0  0.0  1.0  4.0  3.0  0.0 15.0 13.0  4.0  5.0
+ [757]  7.0  2.0 10.0  7.0  4.0  2.0  3.0  3.0  3.0  5.0  3.0  1.0
+ [769]  2.0  2.0  4.0  3.0  5.0  6.0  1.0  0.0  8.0  7.0  5.0  9.0
+ [781]  4.0  8.0  5.0  2.0  2.0  2.0  6.0  7.0  1.0  1.0  2.0  2.0
+ [793]  2.0  2.0  3.0  3.0  3.0  9.0  3.0  5.0  7.0  4.0  5.0  8.0
+ [805]  4.0  6.0  6.0  3.0  7.0  5.0  2.0  3.0  4.0  4.0  8.0 10.0
+ [817]  3.0  4.0  2.0  4.0  4.0  2.0  0.0  0.0  3.0  5.0  5.0  6.0
+ [829] 12.0  5.0  4.0  3.0  2.0  2.0  4.8  3.0  0.0  0.0  1.2  2.0
+ [841]  7.0   NA  0.0  0.0 15.0 15.0  4.0  3.0  8.0  1.0  5.0  5.0
+ [853]  1.0   NA  3.0  4.0  5.0  3.0  4.0  3.0  4.0 11.0 13.0 14.0
+ [865] 12.0  7.0  6.0  5.0 13.0 10.0  0.0  2.0  6.0  4.0  5.0  7.0
+ [877]  0.0  0.0  4.0  7.0  4.0  3.0 14.0 14.0  4.0  1.0 16.0 12.0
+ [889]  9.0 14.0  6.0  7.0  4.0  5.0  2.0  3.0  5.0  3.0  0.0  1.0
+ [901]  4.0  3.0  8.0  3.0  5.0  8.0  4.0  2.0 11.0 10.0  9.0 13.0
+ [913]  9.0  7.0  5.0  5.0  6.0  7.0  8.0  7.0 14.0  5.0  0.0  0.0
+ [925]  6.0  9.0  3.0  5.0  0.0  0.0  3.0  2.0  3.0  5.0  4.0  7.0
+ [937]  4.0  6.0  1.0  1.0  3.0  9.0  3.0  2.0  5.0  4.0  4.0  2.0
+ [949]  9.0  6.0  9.0 14.0  8.0  7.0 10.0  6.0  1.0  3.0  0.0  5.0
+ [961] 11.0  2.0  2.0  1.0  5.0 10.0  0.0  1.0  1.0  3.0  2.0  0.0
+ [973]  8.0  8.0  3.0 10.0  6.0  9.0 10.0  5.0  9.0  6.0  1.0  1.0
+ [985]  4.0  5.0 24.0 23.0 10.0  9.0  8.0  5.0  4.0  5.0  9.0  3.0
+ [997] 13.0 13.0  5.0  2.0  4.0  1.0 13.0 12.0 13.0 13.0  7.0  5.0
+[1009]  5.0  6.0  0.0  2.0  6.0  7.0  0.0  1.0  4.0  2.0  1.0  2.0
+[1021]  2.0  5.0  3.0  3.0  7.0  8.0  5.0  2.0  3.0  4.0  3.0  3.0
+[1033]  2.0  0.0  0.0  0.0  9.0  5.0  6.0  5.0 10.0 14.0  4.0  1.0
+[1045]  5.0  4.0  8.0  6.0  9.0 11.0  6.0 10.0 11.0 15.0  6.0  8.0
+[1057]  3.0  3.0 11.0  8.0  7.0  9.0  4.0  2.0  3.0  2.0 11.0  5.0
+[1069]  4.0  6.0  6.0  3.0  8.0  6.0  2.0  2.0  4.0  6.0  6.0  6.0
+[1081]  4.0  3.0  1.0  2.0  2.0  1.0  0.0  0.0 18.0 13.0  8.0  5.0
+[1093] 13.0 10.0  0.0  0.0  9.0 11.0  8.0 11.0  7.0  6.0  0.0  1.0
+[1105]  2.0  0.0  3.0  2.0  4.0  3.0 10.0 12.0  8.0 10.0 18.0 11.0
+[1117]  3.0  2.0 12.0 13.0  1.0  2.0  2.0  3.0  0.0  3.0  5.0  8.0
+[1129]  5.0  6.0  5.0  7.0  0.0  0.0  6.0  4.0  2.0  4.0  4.0  4.0
+[1141]  2.0  1.0  2.0  0.0 11.0  9.0  4.0  7.0 12.0 15.0  5.0  6.0
+[1153]  4.0  5.0  7.0  8.0 10.0 14.0  4.0  3.6 13.0 12.0  4.0  4.0
+[1165]  6.0  6.0  9.0  8.0  3.0  3.0  0.0  0.0  2.0  3.0  0.0  3.0
+[1177]  5.0  3.0  1.0  0.0  4.0  2.0  0.0  0.0  3.0  6.0  1.0  3.0
+[1189]  8.0  4.0  4.0  1.0 14.0 23.0  9.0  7.0  1.0  2.0  6.0  5.0
+[1201] 16.0  2.0 17.0 14.0   NA  0.0  0.0  2.0  5.0  5.0  4.0  4.0
+[1213]  6.0  8.0  3.0  4.0 12.0  9.0 14.0 10.0  4.8  3.0  8.0  9.0
+[1225]  0.0  2.0  2.0  4.0  9.0  8.0  4.0  1.0  3.0  3.0  8.0  7.0
+[1237] 10.0 16.0   NA  0.0 10.0  6.0  7.0  5.0  2.0  5.0  3.0  6.0
+[1249]  5.0  5.0  5.0  9.0  5.0  2.0  0.0  1.0  4.0  1.0  3.0  5.0
+[1261]  7.0  1.0  5.0  1.0 10.0  6.0  8.0  4.0 13.0 11.0  4.0  7.0
+[1273] 13.0 11.0  4.0  3.0 12.0  5.0  6.0  9.6 13.0 17.0  6.0  8.0
+[1285]  2.0  1.0  1.0  2.0  0.0  1.0 16.0 17.0  6.0 15.0  7.0  4.0
+[1297]  3.0  6.0  5.0  5.0  5.0  5.0  3.0  3.0  6.0  6.0  4.0  4.0
+[1309]  4.0  5.0  2.0  4.0  0.0  0.0  6.0  2.0  2.0  2.0 12.0 12.0
+[1321]  0.0  0.0  6.0  4.0 12.0  0.0  4.0  3.0  8.0 12.0  5.0  4.0
+[1333]  2.0  3.0  4.0  3.0 10.8 10.0  4.0  8.0  5.0  3.0  5.0  9.0
+[1345]  6.0  9.0  4.0  4.0  8.0  8.0  0.0  0.0  2.0  2.0  7.0  3.0
+[1357]  7.0  1.0  1.0  5.0  2.0  4.0 10.0  6.0 15.0  9.0  6.0  4.0
+[1369]  9.0  4.0  3.0  3.0  3.0  6.0 11.0  8.0 13.0 10.0  7.0  6.0
+[1381]  3.0  2.0  2.0  5.0  1.0  1.0  2.0  1.0  0.0  0.0  1.0  0.0
+[1393] 12.0  9.0  3.0  3.0  4.0  4.0  5.0  7.0  1.0  1.0  5.0  4.0
+[1405]  9.0  5.0  1.0  3.0  6.0  6.0  2.0  3.0  2.0  3.0  3.0  0.0
+[1417]  5.0  3.0  3.0  2.0  4.0  2.0  0.0  0.0  6.0  2.0  5.0  0.0
+[1429]  9.0 12.0  7.0  9.0  7.0 12.0 10.8 12.0 13.0 12.0  5.0  1.0
+[1441]  7.0  4.0  2.0 14.0 10.0 10.0  8.0  6.0  5.0  8.0  3.0  2.0
+[1453]  2.0  1.0 10.0 12.0  1.0  5.0  8.0  7.0  2.0  1.0  5.0  6.0
+[1465]  4.0  6.0  1.0  3.0  2.0  6.0  1.0  5.0 13.0 14.0  9.0  7.0
+[1477]  2.0  4.0  6.0  4.0  0.0  3.0  3.0  2.0  6.0 10.0  5.0  3.0
+[1489]  1.0  3.0  4.0  6.0  9.0 11.0  5.0  2.0  7.0  6.0  1.0  0.0
+[1501] 10.0  5.0  5.0  3.0 10.0 17.0 12.0 10.0  1.0  3.0  4.0  3.0
+[1513]  8.0  5.0  2.0  3.0  4.0  2.0  4.0  5.0  2.0  1.0  1.0  2.0
+[1525]  5.0  5.0  1.0  3.0  6.0  3.0  5.0  0.0  8.0 12.0  1.0  2.0
+[1537]  0.0  0.0  3.0  2.0  4.0  1.0 20.4 13.0  8.0  6.0  3.0  5.0
+[1549]  3.0  4.0  7.0  7.0  6.0 11.0  2.0  1.0  0.0  0.0  0.0  1.0
+[1561]  5.0  2.0  4.0  0.0  6.0  8.0  1.0  2.0  1.0  1.0  5.0 10.0
+[1573]  4.0  8.0  2.0  1.0  6.0  5.0  1.0  0.0  3.0  8.0  3.0  5.0
+[1585] 14.0 10.0  9.0 11.0  3.0  7.0  1.0  2.0  4.0  4.0  3.0  3.0
+[1597]  2.0  6.0  1.0  0.0  3.0  3.0 11.0  8.0  1.0  4.0  3.0  3.0
+[1609]  5.0  7.0 12.0  8.0 13.0 18.0  0.0  2.0  2.0  1.0  1.0  1.0
+[1621]  8.0  8.0  2.0  3.0  3.0  2.0  2.0  5.0  2.0  2.0  3.0  5.0
+[1633]  2.0  2.0  2.0  2.0  8.0 10.0  6.0  5.0  7.0  1.0  0.0  0.0
+[1645]  3.0  7.0  7.0  6.0  4.0  5.0  0.0  0.0  7.2  9.0  3.0  2.0
+[1657]  2.0  0.0  3.0  5.0  3.0  5.0  7.0  7.0  2.0  0.0  2.0  9.0
+[1669] 11.0  2.4 10.0  6.0  1.0  3.0  9.0  8.0  3.0  4.0  5.0  3.0
+[1681]  6.0  6.0  2.0  2.0  4.0  5.0  5.0  9.0  2.0  4.0  5.0  3.0
+[1693]  1.0  1.0  1.0  1.0  5.0 11.0  1.0  1.0  5.0  2.0  6.0  4.0
+[1705]  5.0  4.0  8.0  6.0  4.0  5.0  7.0  6.0  1.0  3.0 16.0 18.0
+[1717] 10.0  7.0  1.0  0.0  3.0  2.0  5.0  1.0  6.0  5.0 11.0  6.0
+[1729]  1.0  2.0  6.0  7.0 19.0  9.0  3.0  3.0  7.0  8.0  7.0  3.0
+[1741]  4.0  3.0  6.0 11.0  3.0  3.0  5.0  5.0  3.0  2.0  2.0  4.0
+[1753]  1.0  2.0  3.0  6.0  6.0  6.0  2.0  8.0  1.0  0.0  0.0  4.0
+[1765]  3.0  5.0 11.0  3.0  4.0  5.0  7.0  7.0 11.0 10.0 10.0  4.0
+[1777]  3.0  4.0 15.0  8.0  1.0  1.0  4.0  4.0 12.0 14.0  2.0  2.0
+[1789]  3.0  2.0  6.0  1.0  5.0  1.0  6.0  4.0  4.0  3.0  9.0 12.0
+[1801]  9.0  5.0  7.0  6.0  0.0  1.0  4.0  4.0  4.0  5.0  6.0  1.0
+[1813]  1.0  1.0  0.0  1.0  3.0  4.0  5.0  6.0  6.0  6.0  1.0  0.0
+[1825]  3.0  7.0  0.0  1.0  3.0  6.0  0.0  1.0  8.0  2.0  7.0  3.0
+[1837] 16.0 23.0  8.0  8.0  4.0  2.0  1.0  0.0  2.0  3.0  1.0  3.0
+[1849]  3.0  3.0  7.0  6.0 20.0 19.0  9.0 11.0  7.0  6.0  3.0  3.0
+[1861]  0.0  6.0 13.0 13.0 14.0 11.0  6.0  4.0 12.0  7.0  5.0  6.0
+[1873]  7.0 11.0  5.0  4.0  3.0  2.0  3.0  5.0  1.0  3.0  5.0  4.0
+[1885]  3.0  2.0  0.0  0.0  6.0  8.0 11.0  5.0  3.0  4.0  2.0  7.0
+[1897]  7.0  7.0  3.0  3.0  8.0  7.0  0.0  0.0  8.0  8.0  8.0 11.0
+[1909]  3.0  3.0  2.0  1.0  4.0  3.0 13.0 10.0  5.0  3.0  2.0  3.0
+[1921]  2.0  3.0  4.0  3.0  0.0  0.0 15.0 13.0  7.0  5.0 11.0  5.0
+[1933]  5.0  5.0  0.0  1.0  0.0  5.0  1.0  3.0  2.0  1.0  3.0  5.0
+[1945] 13.0  9.0  8.0  5.0  9.0  6.0  6.0  7.0  5.0  3.0  2.0  3.0
+[1957]  0.0  1.0  5.0  2.0  6.0  2.0  4.0  4.0  4.0  2.0  2.0  3.0
+[1969]  1.0  3.0  8.4  9.0  2.0   NA  5.0  2.0  4.0  1.0  3.0  6.0
+[1981]  0.0  0.0  7.0  6.0  3.0  5.0  4.0  3.0  5.0  6.0 12.0  9.0
+[1993]  8.0  9.0 13.0 11.0  7.0  9.0  4.0  8.0  8.0  7.0  5.0  6.0
+[2005]  0.0  0.0  6.0 14.0  1.0  0.0  3.6   NA  2.0  1.0  2.0  2.0
+[2017]  4.0  2.0 10.0 12.0  4.0  1.0  2.0  3.0  1.0  1.0  7.0  7.0
+[2029]  5.0  5.0  3.0  5.0 13.0 11.0  9.0 14.0  3.0  5.0  4.0  7.0
+[2041]  2.0  6.0  2.0  3.0  4.0  3.0  3.0  5.0  7.0 10.0 10.0  7.0
+[2053]  4.0  4.0 13.0 16.0  3.0  0.0  9.0  9.0  4.0  5.0  4.0  7.0
+[2065]  8.0 11.0  2.0  2.0  0.0  1.0  5.0  5.0 10.0 24.0  5.0  4.0
+[2077]  7.0  6.0  0.0  0.0 10.0  9.0  3.0  1.0  3.0  4.0  4.0  6.0
+[2089]  0.0  0.0  6.0  7.0  3.0  3.0  5.0  5.0  3.0  2.0  8.0 15.0
+[2101]  7.0  7.0  6.0 10.0 11.0 14.0  3.0  3.0  1.0  3.0  9.0  6.0
+[2113]  5.0  2.0  7.0  6.0  2.0  3.0  4.0  3.0  2.0  7.0  5.0  3.0
+[2125]  2.0  4.0  5.0  2.0  5.0  2.0  6.0 11.0  6.0  6.0  1.0  0.0
+[2137]  5.0  3.0  2.0 10.0  1.0  2.0  0.0  1.0  3.0  5.0  5.0  9.0
+[2149]  1.0  4.0  0.0  4.0  0.0  0.0 16.0 13.0 10.0 10.0  3.0  6.0
+[2161] 11.0 15.0  5.0  3.0 12.0 12.0 14.0  9.0  0.0  2.0  5.0  5.0
+[2173]  3.0  5.0  4.0  1.0  3.0  3.0  3.0  2.0  0.0  7.0  0.0  7.0
+[2185]  0.0  1.0  0.0  7.0  2.0  2.0  6.0  3.0  5.0  4.0  6.0  8.0
+[2197]  8.0  4.0 13.0 14.0  5.0  2.0  3.0  5.0  6.0  6.0  1.0  7.0
+[2209]  2.0  0.0  2.0  0.0  3.0  3.0  3.0  5.0  2.0  2.0  8.0  2.0
+[2221] 10.0  4.0 10.0  9.0  4.0  5.0 17.0  9.0  1.0  1.0  2.0  5.0
+[2233]  3.0  4.0  8.0  8.0  2.0  3.0  2.0  3.0  6.0  4.0  1.0  0.0
+[2245] 10.0  9.0  0.0  1.0 24.0 11.0 10.0  3.0  7.0 12.0  5.0  3.0
+[2257]  3.0  4.0  5.0  6.0  3.0  2.0  4.0  4.0  9.0  4.0  7.0  4.0
+[2269]  9.0  6.0  5.0  6.0  4.0  5.0  3.0  2.0  6.0  4.0  6.0  4.0
+[2281]  9.0  6.0  2.0  1.0  4.0  4.0  2.0  4.0  1.0  3.0  2.0  3.0
+[2293] 10.0  8.0 12.0 12.0  5.0  5.0  2.0  2.0 11.0  9.0  7.0  7.0
+[2305]   NA  3.0  4.0  3.0 10.0  8.0  3.0  3.0 11.0  2.0 10.0 11.0
+[2317] 10.0  5.0  2.0  3.0  6.0  9.0  3.0  5.0  8.0  6.0  4.0  3.0
+[2329]  2.0  6.0  6.0  5.0  7.0  2.0  5.0  5.0  3.0  0.0  2.0  2.0
+[2341] 16.0 17.0  3.0  3.0  6.0 10.0  0.0  1.0  4.0  0.0  0.0  1.0
+[2353]  1.0  1.0 12.0 11.0  3.0  3.0  3.0  4.0  2.0  0.0 14.0 16.0
+[2365]  9.0  7.0  0.0  0.0  3.0  1.0  5.0  6.0  4.8  6.0  3.0  4.0
+[2377]  3.0  2.0  7.0  5.0  5.0  4.0  5.0  8.0  1.0  0.0  9.0 14.0
+[2389]  4.0  5.0 10.8  9.0  5.0  1.0  0.0  4.0  3.0   NA  4.0  4.0
+[2401]  1.0  2.0  8.0 10.0  3.0  3.0  4.0  6.0  6.0  7.0  2.0  0.0
+[2413]  1.0  1.0  3.0  4.0  8.0  6.0 11.0 17.0  2.0  2.0  2.0 12.0
+[2425]  6.0  2.0  6.0  7.0 13.0  8.0  7.0  7.0 10.0  9.6  1.0  3.0
+[2437] 13.0 16.0  2.0  5.0  3.0  6.0  6.0  5.0  5.0  5.0  1.0  1.0
+[2449]  5.0  4.0  6.0  6.0  4.0  5.0  3.0  3.0  7.0  7.0  7.0  9.0
+[2461]  5.0  7.0  1.0  0.0  3.0  6.0  4.0  6.0  1.0  0.0 13.0 14.0
+[2473]  2.0  1.0  4.0  6.0  0.0  0.0  1.0  2.0  4.0  7.0  5.0  2.0
+[2485]  1.0  2.0 13.0 13.0  4.0  3.0  3.0  0.0  8.0  9.0  5.0  6.0
+[2497]  4.0  5.0  4.0 10.0  7.0  4.0 12.0 11.0  3.0  6.0  5.0  2.0
+[2509]  7.0  3.0  7.0  8.0  9.0  6.0 11.0  6.0  3.0  1.0  6.0 14.0
+[2521]  4.0  7.0 14.0 13.0  3.0   NA  5.0  3.0  5.0  6.0  8.0  5.0
+[2533]  5.0  7.0  6.0  2.0  4.0  5.0  6.0 10.0  5.0  5.0  6.0  0.0
+[2545]  4.0  7.0  2.0  2.0  6.0  2.0  2.0  1.0  4.0  7.0  4.0  4.0
+[2557]  7.0  5.0  4.0  3.0  9.0 10.0  8.0  9.0  4.0  2.0  3.0  5.0
+[2569]  4.0  2.0  3.0  3.0  1.0  0.0  3.0  4.0  7.2  8.0  3.0  2.0
+[2581]  7.0  7.0  8.0 12.0  4.0  0.0  7.0  4.0  8.0  8.0  9.0  4.0
+[2593]  6.0  5.0  3.0  5.0  8.0  4.0  7.0  4.0 11.0  3.0 14.0  7.0
+[2605]  1.0  5.0  4.0  7.0  2.0  3.0  5.0  1.0  2.0  5.0  6.0  5.0
+[2617]  6.0  7.0  6.0  4.0  7.0  5.0  9.0 11.0  3.0  1.0 12.0  5.0
+[2629]  3.0  3.0  5.0  1.0  9.0 14.0  3.0  7.0  8.0 10.0  1.0  3.0
+[2641]  5.0  2.0  3.0  0.0  3.0 22.0  5.0  3.0  1.0   NA  6.0  3.0
+[2653]  1.0  2.0  9.0  7.0  3.0  1.0  2.0  4.0  6.0  0.0  9.0  6.0
+[2665]  5.0  5.0  5.0  6.0  4.0  4.0  1.0  2.0 12.0  9.0  5.0   NA
+[2677]  2.0  5.0  8.0 10.0  4.0  4.0  8.0  9.0  5.0 12.0 13.0  4.0
+[2689]  4.0  4.0  8.0  8.0  2.0  6.0  4.0   NA  4.0  6.0  4.0  4.0
+[2701]  3.0  4.0  5.0  6.0  5.0  9.0  5.0  6.0 10.0  6.0  8.0 15.0
+[2713]  8.0 11.0  8.0  6.0  4.0  0.0  5.0   NA  9.0   NA 10.0  8.0
+[2725]  2.0  2.0  2.0  0.0  0.0  1.0  3.0  2.0  6.0  6.0 16.0  8.0
+[2737]  0.0  3.0  5.0  5.0  4.0  7.0  5.0  3.0  6.0  9.0 11.0   NA
+[2749]  6.0 13.0  5.0 11.0  2.0  4.0  3.0  2.0  3.0   NA 11.0 11.0
+[2761] 10.0 14.0  5.0  4.0  4.0  5.0  4.0  2.0  0.0  5.0 13.0  7.0
+[2773]  8.0 10.0  3.0  6.0  5.0  2.0  3.0  4.0  4.0  6.0  2.0  2.0
+[2785]  4.0  3.0  7.0  6.0  1.0  4.0  6.0 10.0 10.0  7.0  3.0  5.0
+[2797]  2.0  1.0 11.0 12.0 14.0  9.0  5.0  2.0  6.0  1.0  2.0  0.0
+[2809]  5.0  6.0  5.0  3.0  3.0  3.0  4.0  2.0  2.0  2.0  2.0  2.0
+[2821]  4.0  1.0  9.0 11.0  1.0  0.0 13.2 19.0  7.0  5.0  9.0 11.0
+[2833]  6.0  7.0  9.0  9.0  6.0  5.0  5.0  5.0  1.0  5.0  6.0  9.0
+[2845]  6.0  1.0  0.0  3.0  5.0  3.0  2.0  2.0  3.0  5.0 13.0 15.0
+[2857]  6.0  7.0  8.0   NA 14.0 16.0  6.0  8.0  7.0  3.0 10.0  3.0
+[2869]  2.0  2.0  2.0  2.0 15.0  8.0  0.0  2.0  8.0  5.0  2.0  1.0
+[2881]  7.0   NA  2.0  2.0  1.0  3.0 10.0  8.4  1.0  2.0  3.0  3.0
+[2893]  6.0  8.0  8.0  8.0  4.0  4.0 12.0  6.0  7.0  4.0  0.0  0.0
+[2905]  3.0  5.0  4.0  1.0  9.0  4.0  4.0  1.0  3.0  2.0  1.0  2.0
+[2917]  6.0  0.0  0.0  3.0  1.0 10.0 11.0  6.0  7.0  0.0  5.0  5.0
+[2929]  2.0  3.0  1.0  7.0  9.0  8.0  2.0  2.0  5.0  5.0  8.0  9.0
+[2941]  1.0  0.0  1.0  2.0  0.0 11.0  4.0  3.0  5.0  2.0 14.0  7.0
+[2953]  3.0  5.0  4.0  2.0  5.0  4.0  1.0   NA  4.0 10.8  3.0  3.0
+[2965]  2.0  3.0 18.0 14.0  5.0  5.0 10.0 11.0  4.0  5.0  4.0  3.0
+[2977] 11.0  6.0  7.0  5.0 10.0 11.0 10.0  7.0  2.0  0.0  2.0  1.0
+[2989]  2.0  2.0  6.0  3.0   NA  9.0  5.0  0.0  1.0  2.0 11.0   NA
+[3001]  6.0  5.0  9.0  6.0  7.0  5.0  4.0  1.0  3.0  3.0 10.0  6.0
+[3013] 17.0  3.0  7.0  6.0 15.0 12.0  6.0  7.0  4.0  3.0  7.0  4.0
+[3025]  6.0  5.0  0.0  1.0  7.0  9.6 17.0 17.0  5.0  5.0 10.0 11.0
+[3037]  8.0  5.0  9.0  7.0 12.0 10.0 10.0 14.0  4.0  5.0  4.0  0.0
+[3049]  8.0 15.0 13.0  9.0  0.0  2.0  1.0  3.0  7.0  3.0  3.0  3.0
+[3061] 11.0  1.0  7.0  6.0  6.0  3.0  4.0  5.0  0.0  1.0 13.0  7.0
+[3073] 10.0  3.0  4.0  1.0  2.0  4.0  3.0   NA  8.0  0.0  6.0 11.0
+[3085]  3.0  2.0  8.0  9.0  2.0  2.0  7.0  5.0 19.0 17.0  6.0  1.0
+[3097]  0.0  0.0 14.0  8.0  3.0  2.0  1.0  4.0  5.0  4.0  8.0  3.0
+[3109] 12.0  5.0  2.0  2.0  0.0  1.0  4.0  7.0  5.0  6.0  7.0  6.0
+[3121]  6.0  9.0   NA  1.2  4.0  5.0  6.0  2.0  6.0  3.0  8.0 10.0
+[3133]  6.0  6.0  8.0 20.0 12.0 13.0  5.0  7.0  3.0  3.0  8.0  0.0
+[3145] 10.0  4.0  8.0  2.0  5.0  6.0  6.0  9.0  5.0  2.0 13.0 15.0
+[3157]  8.0  3.0  4.0  6.0  7.0  8.0 10.0  6.0  5.0 10.0  8.0  8.0
+[3169]  1.0  0.0 15.0 13.0  5.0  5.0  2.0  2.0  5.0  4.0 15.0  6.0
+[3181]  0.0  3.0  2.0  7.0  4.0  1.0  7.0  7.5  4.0  1.0  1.0  1.0
+[3193]  8.0  7.0  2.0  4.8 12.0 12.0  5.0  5.0  5.0  5.0  6.0  6.0
+[3205]  7.0  9.0  3.0  4.0  2.0  4.0  7.0 19.0  6.0  5.0  5.0  5.0
+[3217] 12.0 11.0  2.0  5.0 14.0  4.0  8.0  6.0  4.0  3.0  6.0  4.0
+[3229]  0.0  1.0  3.0  5.0  7.0   NA  2.0  0.0  4.0  1.0  6.0  6.0
+[3241]  3.0  3.6 10.0   NA  1.0  0.0  3.0  7.0  2.0  3.0  4.0  3.0
+[3253]  8.0  8.0  4.0  8.0 11.0   NA  2.0  2.0 16.0 11.0 15.0 14.0
+[3265] 14.0  5.0  6.0  1.0  7.0  4.0  5.0  0.0  7.0  4.0 10.0  9.0
+[3277]  6.0  4.0  5.0  3.0  6.0  6.0  5.0  8.0 11.0 10.0  0.0  2.0
+[3289]  3.0  3.0  7.0  5.0  1.0  4.0  4.0  6.0  2.0  1.0  6.0  3.0
+[3301]  4.0  5.0  0.0  2.4  4.0  4.0  8.0  4.0  9.0  6.0  0.0  0.0
+[3313]  6.0  4.0 13.0 11.0  0.0  1.0  5.0  4.0  3.0  1.0 10.0 11.0
+[3325]  4.0  3.0  4.0  3.0  4.0  3.0  8.0  8.0 11.0 12.0  8.0 11.0
+[3337]  3.0  6.0  0.0  0.0 13.0 13.0 10.0  0.0  3.0  7.0  9.0 17.0
+[3349]  1.0  3.0  8.0  6.0  4.0  5.0  4.0 11.0 12.0 13.0  4.0  2.0
+[3361]  3.0  5.0  0.0  0.0 10.0 14.0  2.0  4.0  2.0  2.0  5.0  3.0
+[3373]  0.0  0.0  6.0  8.0 16.0  8.0 15.0 12.0  3.0  2.0  1.0  0.0
+[3385]  5.0  3.0  3.0  2.0  5.0  2.0  4.0  0.0 12.0  9.0  8.0  4.0
+[3397]   NA  1.0 16.0  6.0  2.0  2.0  3.0  3.0  5.0  5.0  2.0  3.0
+[3409]  2.0  0.0 10.0  7.0  0.0  0.0  7.0  9.0  4.0  0.0  9.0  4.0
+[3421]  6.0  6.0  2.0  2.0  4.0  5.0  0.0  1.0  9.0  8.0  9.0  8.0
+[3433] 11.0 11.0  1.0  1.0  4.0  8.0  4.0  0.0  8.0  2.0  9.0  8.0
+[3445]  5.0  1.0  7.0  4.0  2.0  2.4  5.0  7.0  5.0  4.0  4.0  3.0
+[3457]  5.0 10.0  5.0  4.0 17.0 11.0  5.0  6.0  4.0 11.0 10.0 10.0
+[3469]  6.0  6.0  0.0  0.0  6.0  7.0  4.0   NA  2.0  0.0 10.0 12.0
+[3481]  2.0  3.0  3.0  1.0  6.0  6.0  4.0  5.0  6.0  3.0  6.0  0.0
+[3493]  3.0  3.0  2.0  3.0  3.0  1.0  0.0  2.0  0.0  0.0  7.0  7.0
+[3505]  4.0  2.0  6.0  9.0  4.0  5.0  4.0  3.0  3.0  3.0  9.0  2.0
+[3517]  5.0  5.0 11.0 16.0 17.0 17.0  7.0 11.0 14.0 14.0  6.0  5.0
+[3529]  0.0  1.0  7.0  1.0  6.0  7.0  2.0  1.0  4.0  7.0  2.0  3.0
+[3541]  3.0  1.0 15.0  7.0 13.0 11.0  5.0  0.0  5.0  4.0  3.0  3.0
+[3553]  7.0 13.0  3.0  1.0  9.0  5.0 14.0 11.0  4.0  7.0  1.0  1.0
+[3565]  3.0  3.0  7.0  8.0 21.0 17.0  1.0  1.0  3.0  4.0  4.0  3.0
+[3577]  1.0   NA  6.0  4.0  3.0  8.0  0.0  1.0  4.0  4.0  8.0  7.0
+[3589] 14.0 15.0 10.0  9.0  2.0   NA 13.0 12.0  0.0  1.0 10.0  9.0
+[3601]  4.0  5.0  5.0  5.0  1.0  1.0  0.0  0.0  4.0  4.0  1.0  0.0
+[3613]  4.0  2.0  8.0  1.0  3.0  8.0  0.0  0.0  2.0  4.0  8.0  7.0
+[3625]  3.0  1.0 13.0 11.0 12.0 14.0  0.0  2.0  5.0  4.0  0.0  6.0
+[3637]  7.0  7.0  5.0  5.0 22.0 24.0  4.0  5.0 13.0 12.0 12.0 16.0
+[3649]  2.0  7.0 15.0  6.0  6.0  4.0  6.0  3.0  2.0  2.0  6.0  5.0
+[3661]  3.0  5.0  3.0  1.0  2.0  2.0  0.0  6.0  5.0  6.0  2.0  3.0
+[3673]  8.0  8.0  7.0  6.0  1.0  0.0  2.0  6.0  8.0 11.0  2.0  3.0
+[3685]  4.0  4.0  9.0  5.0 11.0 14.0  7.0  8.0  1.0  1.0 16.0 15.0
+[3697]  6.0  3.0  4.0  4.0  2.0  4.0  4.0  1.0  5.0  1.0  1.0  1.0
+[3709]  3.0  3.0  6.0  5.0  5.0  2.0  8.0  7.0 13.0 13.0  7.0  2.4
+[3721]  2.0  1.0  3.0  4.0  5.0  4.0  7.0  5.0  4.0  0.0  2.0  0.0
+[3733]  1.0  2.0  3.0  2.0 13.0  9.0  4.0  3.0  5.0  4.0  3.0  2.0
+[3745] 11.0 12.0 16.0  7.0 12.0  4.0  3.0  4.0  3.0  4.0  5.0  6.0
+[3757]  4.0  3.0  1.0  3.0  4.0  5.0  5.0 10.0  1.0  2.0  2.0  3.0
+[3769] 12.0 12.0  0.0  0.0  8.0  4.0  5.0 13.0  2.0   NA  7.0  8.0
+[3781]  6.0  7.0  4.0  4.0 14.0 24.0  7.0  5.0  8.0 10.0  2.0  3.0
+[3793]  6.0  8.0  7.0  5.0  4.0  3.0  8.0  4.0  5.0  9.0  4.0  4.0
+[3805]  0.0  0.0  4.0  6.0  7.0 13.0  5.0  4.0  1.0  3.0 12.0 13.0
+[3817]  5.0  5.0  1.0  1.0  7.0  8.0  4.0  4.0 18.0 18.0  3.0  3.0
+[3829] 11.0 17.0  1.0  0.0  7.0  5.0  3.0  1.0 11.0  5.0  2.0  1.0
+[3841]  1.0  4.0  5.0  5.0  7.0  6.0  5.0  9.0  8.0  6.0 16.0 18.0
+[3853] 12.0 15.0  3.0  4.0  7.0  9.0 12.0  7.0  6.0 13.0 10.0  8.0
+[3865]  3.0  2.0  1.0  2.0  7.0 11.0  3.0 18.0  2.0  2.0  1.0  1.0
+[3877] 14.0 11.0  5.0  5.0  5.0  5.0 12.0  6.0 12.0  0.0 10.0 10.0
+[3889] 17.0 19.0  3.0  3.0  5.0  4.0  3.0  2.0   NA  5.0  1.0  5.0
+[3901]  4.0  8.0  8.0  7.0  1.0  2.0  4.0  3.0  1.0  3.0  1.0  0.0
+[3913] 16.0  9.0  4.0  5.0  3.0  6.0  7.0  6.0  7.0  8.0  2.0  1.0
+[3925]  7.0  7.0  7.0  9.0  4.0  3.0 11.0  9.0  4.0  1.0  6.0 10.0
+[3937]  5.0 15.0 13.0 12.0 18.0 13.0  0.0  5.0 10.0 10.0  7.0  9.0
+[3949] 13.0  5.0  3.0  4.0 15.0 10.0  4.0  4.0 14.0  1.0  5.0  0.0
+[3961]  7.0  6.0  7.0  4.0  7.0  5.0  7.0  4.0  7.0  7.0  4.0  8.0
+[3973]  6.0  8.0 12.0 15.0  2.0  1.0  4.0 10.0  0.0  0.0 14.0  5.0
+[3985]  5.0  4.0  4.0  5.0  3.0  9.0 10.0 13.0  1.0  1.0  3.0  2.0
+[3997]  5.0  2.0  3.0   NA 11.0  7.0  0.0  0.0  8.0  8.0  0.0  0.0
+[4009]  5.0  8.0  5.0  2.0  5.0  7.0 10.0  9.0  3.0  0.0  3.0  2.0
+[4021]  5.0  4.0  5.0  2.0  6.0  5.0  1.0  2.0  1.0  1.0  3.0  2.4
+[4033]  6.0  7.2  7.0  5.0   NA  4.8  8.0   NA  7.0  5.0 17.0 11.0
+[4045] 13.0 13.0  3.0  5.0  5.0  4.0  9.0  5.0  3.0  6.0 17.0  9.0
+[4057]  0.0  1.0  1.0  0.0  4.0  5.0  0.0  0.0  7.0  4.0 10.0  9.0
+[4069]  4.0  8.0  6.0  2.0   NA  8.0  5.0  8.0  3.0  3.0  6.0 14.0
+[4081]  7.0  7.0 11.0 10.0  5.0  5.0 11.0  6.0  8.0  6.0  2.0  4.0
+[4093]  0.0  3.0  1.0  1.0  2.0  0.0  8.0  6.0  8.0  8.0 11.0 11.0
+[4105]  5.0  6.0  4.0  7.0  8.0  6.0  3.0  1.0 10.0 10.0  6.0  4.0
+[4117]  6.0  3.0  7.0  5.0 18.0  8.0  4.0  4.0 17.0 15.0</code></pre>
+</div>
+<h3 id="r-has-loads-of-canned-solutions">R has loads of canned solutions</h3>
+<h4 id="skimr"><code>skimr</code></h4>
+<p>The skimmer package can be helpful in detecting problems. A drawback note that it is interpreting all factors as numbers).</p>
+<p>For example, “spiritual identification” was not measured in 2019/2020.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://docs.ropensci.org/skimr/'>"skimr"</a></span><span class='op'>)</span>
+
+<span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table style="width: auto;" class="table table-condensed">
+<caption>
+<span id="tab:unnamed-chunk-20">Table 2: </span>Data summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+Piped data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+4126
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:left;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+logical
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+Wave
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+Wave
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+min
+</th>
+<th style="text-align:left;">
+max
+</th>
+<th style="text-align:left;">
+median
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2018-01-02
+</td>
+<td style="text-align:left;">
+2019-10-25
+</td>
+<td style="text-align:left;">
+2018-08-09
+</td>
+<td style="text-align:right;">
+312
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2019-09-09
+</td>
+<td style="text-align:left;">
+2020-10-06
+</td>
+<td style="text-align:left;">
+2019-12-07
+</td>
+<td style="text-align:right;">
+298
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+Wave
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+ordered
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+<th style="text-align:left;">
+top_counts
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Not: 1305, Mal: 755
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Not: 1305, Mal: 752
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BigDoms
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Not: 1301, Chr: 624, The: 75, Bud: 17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BigDoms
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Not: 1354, Chr: 580, The: 53, Bud: 19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GenCohort
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Gen: 915, Gen: 676, Gen: 368, Gen: 53
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GenCohort
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Gen: 915, Gen: 676, Gen: 368, Gen: 53
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Religious
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Not: 1301, Rel: 720
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Religious
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Not: 1354, Rel: 657
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Believe.God
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Not: 1075, Bel: 893
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Believe.God
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Not: 1169, Bel: 843
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Believe.Spirit
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Bel: 1330, Not: 638
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Believe.Spirit
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Bel: 1291, Not: 721
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelHopeless
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Non: 1012, A L: 627, Som: 325, Mos: 58
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelHopeless
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Non: 961, A L: 660, Som: 348, Mos: 67
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelDepressed
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Non: 1481, A L: 345, Som: 156, Mos: 35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelDepressed
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Non: 1399, A L: 403, Som: 195, Mos: 47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelRestless
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+A L: 751, Som: 585, Non: 520, Mos: 143
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelRestless
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+A L: 794, Som: 577, Non: 501, Mos: 158
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EverythingIsEffort
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+A L: 827, Non: 523, Som: 490, Mos: 159
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EverythingIsEffort
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+A L: 798, Som: 572, Non: 470, Mos: 179
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelWorthless
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Non: 1469, A L: 348, Som: 147, Mos: 48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelWorthless
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Non: 1434, A L: 359, Som: 193, Mos: 51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelNervous
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+37
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+A L: 804, Non: 537, Som: 509, Mos: 148
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FeelNervous
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+A L: 824, Non: 540, Som: 539, Mos: 122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+k6cats
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Low: 1272, Mod: 675, Ser: 88
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+k6cats
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Low: 1238, Mod: 725, Ser: 89
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: logical</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+Wave
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:left;">
+count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Env.SacMade
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+2063
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:left;">
+:
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.SacMade
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+2063
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:left;">
+:
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+Wave
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Id
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1032.00
+</td>
+<td style="text-align:right;">
+595.68
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+516.50
+</td>
+<td style="text-align:right;">
+1032.00
+</td>
+<td style="text-align:right;">
+1547.50
+</td>
+<td style="text-align:right;">
+2063.00
+</td>
+<td style="text-align:left;">
+▇▇▇▇▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Id
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1032.00
+</td>
+<td style="text-align:right;">
+595.68
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+516.50
+</td>
+<td style="text-align:right;">
+1032.00
+</td>
+<td style="text-align:right;">
+1547.50
+</td>
+<td style="text-align:right;">
+2063.00
+</td>
+<td style="text-align:left;">
+▇▇▇▇▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+years
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+9.09
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+<td style="text-align:right;">
+8.34
+</td>
+<td style="text-align:right;">
+8.82
+</td>
+<td style="text-align:right;">
+8.94
+</td>
+<td style="text-align:right;">
+9.28
+</td>
+<td style="text-align:right;">
+10.15
+</td>
+<td style="text-align:left;">
+▁▇▃▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+years
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+10.34
+</td>
+<td style="text-align:right;">
+0.24
+</td>
+<td style="text-align:right;">
+10.03
+</td>
+<td style="text-align:right;">
+10.14
+</td>
+<td style="text-align:right;">
+10.27
+</td>
+<td style="text-align:right;">
+10.47
+</td>
+<td style="text-align:right;">
+11.10
+</td>
+<td style="text-align:left;">
+▇▇▃▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+50.20
+</td>
+<td style="text-align:right;">
+13.40
+</td>
+<td style="text-align:right;">
+18.00
+</td>
+<td style="text-align:right;">
+41.00
+</td>
+<td style="text-align:right;">
+52.00
+</td>
+<td style="text-align:right;">
+60.00
+</td>
+<td style="text-align:right;">
+91.00
+</td>
+<td style="text-align:left;">
+▂▅▇▃▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+51.95
+</td>
+<td style="text-align:right;">
+13.37
+</td>
+<td style="text-align:right;">
+19.47
+</td>
+<td style="text-align:right;">
+43.09
+</td>
+<td style="text-align:right;">
+54.16
+</td>
+<td style="text-align:right;">
+62.16
+</td>
+<td style="text-align:right;">
+92.87
+</td>
+<td style="text-align:left;">
+▂▅▇▃▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gender
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+0.37
+</td>
+<td style="text-align:right;">
+0.48
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▅
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gender
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+0.37
+</td>
+<td style="text-align:right;">
+0.48
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▅
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Edu
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+5.54
+</td>
+<td style="text-align:right;">
+2.73
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▃▃▂▇▃
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Edu
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+5.71
+</td>
+<td style="text-align:right;">
+2.66
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▃▃▂▇▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Partner
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+0.76
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▂▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Partner
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+0.77
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▂▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BornNZ
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+0.79
+</td>
+<td style="text-align:right;">
+0.41
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▂▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BornNZ
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+0.79
+</td>
+<td style="text-align:right;">
+0.41
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▂▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TSCORE
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3381.65
+</td>
+<td style="text-align:right;">
+120.68
+</td>
+<td style="text-align:right;">
+3108.00
+</td>
+<td style="text-align:right;">
+3283.00
+</td>
+<td style="text-align:right;">
+3327.00
+</td>
+<td style="text-align:right;">
+3450.00
+</td>
+<td style="text-align:right;">
+3769.00
+</td>
+<td style="text-align:left;">
+▁▇▃▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TSCORE
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3838.32
+</td>
+<td style="text-align:right;">
+88.37
+</td>
+<td style="text-align:right;">
+3723.00
+</td>
+<td style="text-align:right;">
+3764.00
+</td>
+<td style="text-align:right;">
+3812.00
+</td>
+<td style="text-align:right;">
+3884.00
+</td>
+<td style="text-align:right;">
+4116.00
+</td>
+<td style="text-align:left;">
+▇▇▃▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Religion.Church
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+0.77
+</td>
+<td style="text-align:right;">
+3.01
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+60.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Religion.Church
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+0.74
+</td>
+<td style="text-align:right;">
+2.93
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+60.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Religion.Believe.Cats
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+2.42
+</td>
+<td style="text-align:right;">
+1.29
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▇▁▁▅▆
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Religion.Believe.Cats
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+2.52
+</td>
+<td style="text-align:right;">
+1.26
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▇▁▁▆▆
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Relid
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+1.69
+</td>
+<td style="text-align:right;">
+2.58
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Relid
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+112
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+1.56
+</td>
+<td style="text-align:right;">
+2.57
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HLTH.Fatigue
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+1.58
+</td>
+<td style="text-align:right;">
+1.05
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▃▇▇▃▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HLTH.Fatigue
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+1.64
+</td>
+<td style="text-align:right;">
+1.04
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▃▇▇▃▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HLTH.SleepHours
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+6.92
+</td>
+<td style="text-align:right;">
+1.07
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+11.00
+</td>
+<td style="text-align:left;">
+▁▆▇▅▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HLTH.SleepHours
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+6.88
+</td>
+<td style="text-align:right;">
+1.09
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+12.00
+</td>
+<td style="text-align:left;">
+▁▃▇▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HomeOwner
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+0.77
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▂▁▁▁▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HomeOwner
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+2063
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pol.Orient
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+119
+</td>
+<td style="text-align:right;">
+0.94
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:right;">
+1.40
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▇▅▇▃▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pol.Orient
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+3.58
+</td>
+<td style="text-align:right;">
+1.37
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▇▆▇▅▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PATRIOT
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.86
+</td>
+<td style="text-align:right;">
+1.05
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.50
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+6.50
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▁▃▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PATRIOT
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.96
+</td>
+<td style="text-align:right;">
+1.01
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.50
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▁▂▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.SatNZEnvironment
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.33
+</td>
+<td style="text-align:right;">
+2.48
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▅▇▇▇▃
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.SatNZEnvironment
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.23
+</td>
+<td style="text-align:right;">
+2.46
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▅▆▇▇▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.MotorwaySpend
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.69
+</td>
+<td style="text-align:right;">
+1.64
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▂▂▅▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.MotorwaySpend
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.79
+</td>
+<td style="text-align:right;">
+1.69
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▂▂▅▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.PubTransSubs
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.66
+</td>
+<td style="text-align:right;">
+1.29
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▂▃▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.PubTransSubs
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.55
+</td>
+<td style="text-align:right;">
+1.32
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▂▃▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.ClimateChgConcern
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:right;">
+0.94
+</td>
+<td style="text-align:right;">
+5.35
+</td>
+<td style="text-align:right;">
+1.68
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▂▂▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Env.ClimateChgConcern
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+5.25
+</td>
+<td style="text-align:right;">
+1.75
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▂▁▂▃▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LIFEMEANING
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.50
+</td>
+<td style="text-align:right;">
+1.17
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+5.50
+</td>
+<td style="text-align:right;">
+6.50
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▃▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LIFEMEANING
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.48
+</td>
+<td style="text-align:right;">
+1.17
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+5.50
+</td>
+<td style="text-align:right;">
+6.50
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▃▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hours.Internet
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+13.54
+</td>
+<td style="text-align:right;">
+15.57
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:right;">
+20.00
+</td>
+<td style="text-align:right;">
+140.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hours.Internet
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+14.24
+</td>
+<td style="text-align:right;">
+15.36
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:right;">
+20.00
+</td>
+<td style="text-align:right;">
+168.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Issue.GovtSurveillance
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.35
+</td>
+<td style="text-align:right;">
+1.81
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▅▃▅▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Issue.GovtSurveillance
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.64
+</td>
+<td style="text-align:right;">
+1.75
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▃▂▅▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Issue.RegulateAI
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.37
+</td>
+<td style="text-align:right;">
+1.64
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▃▃▇▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Issue.RegulateAI
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+2063
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Issue.IncomeRedistribution
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.25
+</td>
+<td style="text-align:right;">
+1.90
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▆▃▅▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Issue.IncomeRedistribution
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.28
+</td>
+<td style="text-align:right;">
+1.95
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▆▃▃▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hours.Exercise
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+5.63
+</td>
+<td style="text-align:right;">
+7.45
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+80.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hours.Exercise
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+5.77
+</td>
+<td style="text-align:right;">
+8.59
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+168.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hours.Work
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+27.78
+</td>
+<td style="text-align:right;">
+20.31
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+35.00
+</td>
+<td style="text-align:right;">
+42.00
+</td>
+<td style="text-align:right;">
+100.00
+</td>
+<td style="text-align:left;">
+▇▇▅▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hours.Work
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+26.66
+</td>
+<td style="text-align:right;">
+20.21
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+32.00
+</td>
+<td style="text-align:right;">
+40.00
+</td>
+<td style="text-align:right;">
+108.00
+</td>
+<td style="text-align:left;">
+▇▇▃▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hours.News
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+4.30
+</td>
+<td style="text-align:right;">
+4.97
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+70.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hours.News
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+4.25
+</td>
+<td style="text-align:right;">
+4.65
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+90.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CONSCIENTIOUSNESS
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.15
+</td>
+<td style="text-align:right;">
+1.05
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.50
+</td>
+<td style="text-align:right;">
+5.25
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▅▇▅
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CONSCIENTIOUSNESS
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.12
+</td>
+<td style="text-align:right;">
+1.03
+</td>
+<td style="text-align:right;">
+1.75
+</td>
+<td style="text-align:right;">
+4.50
+</td>
+<td style="text-align:right;">
+5.25
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▂▆▇▆
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EXTRAVERSION
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+3.90
+</td>
+<td style="text-align:right;">
+1.19
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+4.75
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▆▇▅▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EXTRAVERSION
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+3.85
+</td>
+<td style="text-align:right;">
+1.21
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+3.75
+</td>
+<td style="text-align:right;">
+4.75
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▂▆▇▅▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AGREEABLENESS
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.38
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.75
+</td>
+<td style="text-align:right;">
+5.50
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▃▇▆
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AGREEABLENESS
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.36
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.75
+</td>
+<td style="text-align:right;">
+5.50
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▃▇▆
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OPENNESS
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.98
+</td>
+<td style="text-align:right;">
+1.14
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.25
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▂▆▇▆
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OPENNESS
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.99
+</td>
+<td style="text-align:right;">
+1.11
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.25
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+5.75
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▂▆▇▅
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spiritual.Identification
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+116
+</td>
+<td style="text-align:right;">
+0.94
+</td>
+<td style="text-align:right;">
+3.88
+</td>
+<td style="text-align:right;">
+2.13
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▇▂▃▃▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spiritual.Identification
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+2063
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HoursCharity
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+<td style="text-align:right;">
+1.61
+</td>
+<td style="text-align:right;">
+4.83
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+100.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HoursCharity
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+1.58
+</td>
+<td style="text-align:right;">
+4.87
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+90.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CharityDonate
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+111
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+1423.08
+</td>
+<td style="text-align:right;">
+14107.80
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+30.00
+</td>
+<td style="text-align:right;">
+165.00
+</td>
+<td style="text-align:right;">
+500.00
+</td>
+<td style="text-align:right;">
+500000.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CharityDonate
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+1312.83
+</td>
+<td style="text-align:right;">
+15426.74
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:right;">
+150.00
+</td>
+<td style="text-align:right;">
+500.00
+</td>
+<td style="text-align:right;">
+650000.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Your.Personal.Relationships
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+7.76
+</td>
+<td style="text-align:right;">
+2.22
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+9.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▁▁▂▆▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Your.Personal.Relationships
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+7.71
+</td>
+<td style="text-align:right;">
+2.28
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+9.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▁▁▂▅▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Your.Future.Security
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+6.30
+</td>
+<td style="text-align:right;">
+2.32
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▂▃▆▇▃
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Your.Future.Security
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+6.27
+</td>
+<td style="text-align:right;">
+2.35
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▂▃▆▇▃
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Standard.Living
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+7.65
+</td>
+<td style="text-align:right;">
+1.98
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+9.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▁▁▂▇▆
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Standard.Living
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+7.77
+</td>
+<td style="text-align:right;">
+1.93
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+9.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▁▁▂▇▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NZ.Economic.Situation
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.48
+</td>
+<td style="text-align:right;">
+2.17
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▂▅▇▇▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NZ.Economic.Situation
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.35
+</td>
+<td style="text-align:right;">
+2.16
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▂▅▇▆▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NZ.Social.Conditions
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.63
+</td>
+<td style="text-align:right;">
+2.19
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▅▇▇▅▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NZ.Social.Conditions
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.65
+</td>
+<td style="text-align:right;">
+2.19
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▅▇▇▅▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NZ.Business.Conditions
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.83
+</td>
+<td style="text-align:right;">
+1.88
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▁▂▇▆▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NZ.Business.Conditions
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.61
+</td>
+<td style="text-align:right;">
+1.93
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+10.00
+</td>
+<td style="text-align:left;">
+▁▂▇▅▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Emp.JobSecure
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+<td style="text-align:right;">
+5.48
+</td>
+<td style="text-align:right;">
+1.56
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▁▂▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Emp.JobSecure
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+515
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+<td style="text-align:right;">
+5.41
+</td>
+<td style="text-align:right;">
+1.57
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▁▁▂▂▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Issue.Food.GMO
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.95
+</td>
+<td style="text-align:right;">
+1.82
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▂▂▃▂▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Issue.Food.GMO
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+4.73
+</td>
+<td style="text-align:right;">
+1.85
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:left;">
+▃▂▅▃▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.14
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:left;">
+▇▆▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.35
+</td>
+<td style="text-align:right;">
+3.97
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:left;">
+▇▆▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler01
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+0.74
+</td>
+<td style="text-align:right;">
+0.87
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▇▅▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler01
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+0.78
+</td>
+<td style="text-align:right;">
+0.87
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▇▆▃▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler02
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▇▂▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler02
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+0.47
+</td>
+<td style="text-align:right;">
+0.79
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▇▂▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler03
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+1.22
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▆▇▆▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler03
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+1.22
+</td>
+<td style="text-align:right;">
+0.93
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▅▇▆▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler04
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+1.19
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▅▇▅▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler04
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+1.27
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▅▇▆▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler05
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▇▂▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler05
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+0.46
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▇▂▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler06
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+37
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+1.17
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▆▇▅▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SWB.Kessler06
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+1.16
+</td>
+<td style="text-align:right;">
+0.92
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:left;">
+▅▇▅▁▁
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We can use skimr to find outlier</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table style="width: auto;" class="table table-condensed">
+<caption>
+<span id="tab:unnamed-chunk-21">Table 3: </span>Data summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+Piped data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+4126
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+Wave
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+Wave
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.14
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+▇▆▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.35
+</td>
+<td style="text-align:right;">
+3.97
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+▇▆▂▁▁
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Try a workflow similar to what we used above</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span><span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>KESSLER6sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>weekdays <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/day.html'>wday</a></span><span class='op'>(</span><span class='va'>date</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>weekdays</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table style="width: auto;" class="table table-condensed">
+<caption>
+<span id="tab:unnamed-chunk-22">Table 4: </span>Data summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+Piped data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+4126
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+weekdays
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:left;">
+weekdays
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+min
+</th>
+<th style="text-align:left;">
+max
+</th>
+<th style="text-align:left;">
+median
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Sun
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2018-06-24
+</td>
+<td style="text-align:left;">
+2020-09-27
+</td>
+<td style="text-align:left;">
+2019-06-02
+</td>
+<td style="text-align:right;">
+84
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Mon
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2018-06-04
+</td>
+<td style="text-align:left;">
+2020-10-05
+</td>
+<td style="text-align:left;">
+2019-10-07
+</td>
+<td style="text-align:right;">
+101
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Tue
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2018-01-02
+</td>
+<td style="text-align:left;">
+2020-10-06
+</td>
+<td style="text-align:left;">
+2019-10-15
+</td>
+<td style="text-align:right;">
+89
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Wed
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2018-06-20
+</td>
+<td style="text-align:left;">
+2020-09-30
+</td>
+<td style="text-align:left;">
+2019-09-04
+</td>
+<td style="text-align:right;">
+85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Thu
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2018-06-21
+</td>
+<td style="text-align:left;">
+2020-09-03
+</td>
+<td style="text-align:left;">
+2019-01-24
+</td>
+<td style="text-align:right;">
+86
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Fri
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2018-06-22
+</td>
+<td style="text-align:left;">
+2020-09-11
+</td>
+<td style="text-align:left;">
+2019-06-24
+</td>
+<td style="text-align:right;">
+87
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Sat
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2018-06-23
+</td>
+<td style="text-align:left;">
+2020-10-03
+</td>
+<td style="text-align:left;">
+2019-07-27
+</td>
+<td style="text-align:right;">
+75
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:left;">
+weekdays
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:left;">
+Sun
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+4.97
+</td>
+<td style="text-align:right;">
+3.77
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+▇▅▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:left;">
+Mon
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.25
+</td>
+<td style="text-align:right;">
+3.99
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+▇▅▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:left;">
+Tue
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+5.30
+</td>
+<td style="text-align:right;">
+4.08
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+▇▆▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:left;">
+Wed
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.34
+</td>
+<td style="text-align:right;">
+4.04
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+▇▇▃▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:left;">
+Thu
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.30
+</td>
+<td style="text-align:right;">
+4.08
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+▇▆▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:left;">
+Fri
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.25
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:left;">
+▇▆▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KESSLER6sum
+</td>
+<td style="text-align:left;">
+Sat
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+5.24
+</td>
+<td style="text-align:right;">
+3.86
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+▇▆▂▁▁
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="what-is-the-variation-in-my-indicators">What is the variation in my indicators?</h3>
+<h3 id="which-values-are-most-common-and-most-rare">Which values are most common (and most rare?)</h3>
+<h3 id="shortcuts">shortcuts</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/easystats/report'>"report"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>nz</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 6 x 66
+     Id  Wave years   Age Male  Gender   Edu Partner BornNZ BigDoms
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;  
+1     1  2019 10.4   48.0 Male       1     3       1      1 Not_Rel
+2     1  2018  9.47  47   Male       1     3       1      1 Not_Rel
+3     2  2019 10.6   48.2 Male       1     7       1      1 Not_Rel
+4     2  2018  9.90  47   Male       1     7       1      1 Not_Rel
+5     3  2019 10.2   54.5 Male       1     4       0      1 Not_Rel
+6     3  2018  9.20  53   Male       1     4       0      1 Not_Rel
+# … with 56 more variables: TSCORE &lt;dbl&gt;, GenCohort &lt;fct&gt;,
+#   Religion.Church &lt;dbl&gt;, Religion.Believe.Cats &lt;dbl&gt;, Relid &lt;dbl&gt;,
+#   HLTH.Fatigue &lt;dbl&gt;, HLTH.SleepHours &lt;dbl&gt;, HomeOwner &lt;dbl&gt;,
+#   Pol.Orient &lt;dbl&gt;, PATRIOT &lt;dbl&gt;, Env.SatNZEnvironment &lt;dbl&gt;,
+#   Env.MotorwaySpend &lt;dbl&gt;, Env.PubTransSubs &lt;dbl&gt;,
+#   Env.ClimateChgConcern &lt;dbl&gt;, LIFEMEANING &lt;dbl&gt;,
+#   Hours.Internet &lt;dbl&gt;, Issue.GovtSurveillance &lt;dbl&gt;,
+#   Issue.RegulateAI &lt;dbl&gt;, Issue.IncomeRedistribution &lt;dbl&gt;,
+#   Hours.Exercise &lt;dbl&gt;, Hours.Work &lt;dbl&gt;, Hours.News &lt;dbl&gt;,
+#   CONSCIENTIOUSNESS &lt;dbl&gt;, EXTRAVERSION &lt;dbl&gt;, AGREEABLENESS &lt;dbl&gt;,
+#   OPENNESS &lt;dbl&gt;, Religious &lt;fct&gt;, Spiritual.Identification &lt;dbl&gt;,
+#   Believe.God &lt;fct&gt;, Believe.Spirit &lt;fct&gt;, HoursCharity &lt;dbl&gt;,
+#   CharityDonate &lt;dbl&gt;, Your.Personal.Relationships &lt;dbl&gt;,
+#   Your.Future.Security &lt;dbl&gt;, Standard.Living &lt;dbl&gt;,
+#   NZ.Economic.Situation &lt;dbl&gt;, NZ.Social.Conditions &lt;dbl&gt;,
+#   NZ.Business.Conditions &lt;dbl&gt;, Emp.JobSecure &lt;dbl&gt;,
+#   Issue.Food.GMO &lt;dbl&gt;, Env.SacMade &lt;lgl&gt;, KESSLER6sum &lt;dbl&gt;,
+#   SWB.Kessler01 &lt;dbl&gt;, SWB.Kessler02 &lt;dbl&gt;, SWB.Kessler03 &lt;dbl&gt;,
+#   SWB.Kessler04 &lt;dbl&gt;, SWB.Kessler05 &lt;dbl&gt;, SWB.Kessler06 &lt;dbl&gt;,
+#   FeelHopeless &lt;fct&gt;, FeelDepressed &lt;fct&gt;, FeelRestless &lt;fct&gt;,
+#   EverythingIsEffort &lt;fct&gt;, FeelWorthless &lt;fct&gt;, FeelNervous &lt;fct&gt;,
+#   k6cats &lt;fct&gt;, date &lt;date&gt;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"KESSLER6sum"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='st'>"Wave"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/report/man/report.html'>report</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>The data contains 4126 observations, grouped by &quot;Wave&quot;, of the following variables:
+- Wave (n = 4126):
+  - KESSLER6sum: Mean = 5.24, SD = 3.98, range = [0, 24], 39 missing</code></pre>
+</div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

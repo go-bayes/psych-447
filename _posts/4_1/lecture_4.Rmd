@@ -21,20 +21,43 @@ output:
 
 ```{r spss-old, echo=F}
 knitr::include_graphics("op.png")
+# let's set our theme too
+theme_set(theme_classic())
 ```
 
-```{r echo = FALSE}
+```{r}
+#libraries
+if (!require(skimr)) install.packages('skimr')
+if (!require(lubridate)) install.packages('lubridate')
+
+if (!requireNamespace("devtools")) {
+  install.packages("devtools")
+}
+if (!require(easystats)) devtools::install_github("easystats/easystats")
+if (!require(ggthemes)) install.packages('ggthemes')
+if (!require(pmdplyr)) install.packages("pmdplyr")
+
+# this should be part of easystats but in case not:
+if (!require(report)) install.packages('report')
+
+# load tidyverse
 library("tidyverse")
-# install if you don't have
-library("lubridate") # usful for dates
-
-nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
-str(nz)
-
-nz <-nz %>%
-  dplyr::mutate_if(is.character, factor)
+```
 
 
+```{r echo = FALSE}
+
+nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
+
+# take all characters and make them factors
+# also get rid of duplicate rows
+# Note the convention of renaming dataframe when creating a new one:
+# ` nz <-nz_0 %>%... `
+
+nz <-nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(-c(SWB.Kessler01,SWB.Kessler02,SWB.Kessler03,SWB.Kessler04,SWB.Kessler05,
+            SWB.Kessler06))
 ```
 
 ## Preamble
@@ -67,14 +90,20 @@ round(outcome, digits = 2) # illustrate the useful `round` function.
 Task: 3 different ways to select the variables that start with `Believe`.
 
 #### Explicit selection
+
+It is generally sensible to select the variables you need.
 ```{r}
-names(nz)
+# names(nz) # uncomment the first `#` and run this code to check names
 nz %>%
   select("Believe.God", "Believe.Spirit")%>%
   as_tibble()
 ```
 
+
 #### `starts_with` 
+
+Sometimes, you know that you want to select all instances of a column that start with a certain name. For this you can use `starts_with`
+
 
 ```{r}
 nz %>%
@@ -82,16 +111,26 @@ nz %>%
   as_tibble()
 ```
 
+
+By the same token, `ends_with`
+
+```{r}
+nz %>%
+  select(ends_with("conditions"))%>%
+  as_tibble()
+```
+
 #### `contains`
+
+To cast a broader net we can use `contains`:
 
 ```{r}
 nz %>%
   select(contains("Believe"))%>%
   as_tibble()
 ```
-#### whoops, so we try something else
 
-This is a hack. 
+The net was too broad. We don't want the `Religion.Believe.Cats`. In R, you can hack your way out of this as follows:
 
 ```{r}
 nz %>%
@@ -99,22 +138,30 @@ nz %>%
   as_tibble()
 ```
 
-Lesson: think about your interests and purposes. 
+However, a better approach would be to drop `contains` and revert to another method. 
+
 
 ### Re-leveling a factor
+
+Let's look at the `BigDoms` variable in this dataset, which corresponds to large religious denominations:
 
 ```{r}
 nz %>%
   dplyr::select(BigDoms)%>%
-  table() 
+  table()
+```
 
+Suppose we wanted to make "Not Rel" the base category. We could do so as follows:
+
+
+```{r}
 ## suppose we want "Not_Rel" as the base category, and rearrange the other levels
-library(forcats)
+library(forcats) # this is part of the tidyverse package. 
 nz %>%
   dplyr::select(BigDoms) %>%
   dplyr::mutate(BigDoms =  
                   forcats::fct_relevel(BigDoms, c("Not_Rel","Christian","Buddhist","Muslim","TheOthers")))%>%
-  table()
+  count(BigDoms) 
 ```
 
 
@@ -156,7 +203,6 @@ nz %>%
 ### Create a table. 
 
 ```{r designtable,  tab.cap="\\label{tab:designtable}"}
-
 library(kableExtra)
 nz %>%
   select(k6cats, Wave) %>%
@@ -273,6 +319,7 @@ tn
 ```
 
 We can all graph the densities
+
 ```{r}
 tn%>%
   ggplot(., aes(date, av_distress)) + 
@@ -323,14 +370,62 @@ datrep%>%
   dplyr::slice(c(1,3,20))
 ```
 
+### Lags and leads using timeseries data
+
+
+Create a difference variable for change in Kessler 6
+
+```{r}
+library("pmdplyr")
+df <-nz %>%
+   mutate(diff_k6 = KESSLER6sum - tlag(KESSLER6sum,
+    .i = Id, # id variable
+    .t = Wave # time series variable
+  ))%>%
+  select(Id,Wave,KESSLER6sum,diff_k6,Emp.JobSecure)%>%
+  arrange(desc(diff_k6)) 
+head(df)
+head(nz)
+```
+
+
+```{r}
+df %>%
+  filter(diff_k6 > 5) %>%
+  ggplot(data = ., aes(x = diff_k6, fill = factor(Emp.JobSecure )) )+
+   geom_histogram() + 
+  xlab("Difference in K6 eleveation (cases above 5)") + 
+  ylab("Counts of cases") + 
+  ggtitle("Exploration of relationship between employment insecurity and distress")+
+  scale_fill_discrete(name="Employment Security 1-7") + 
+  scale_fill_viridis_d() + theme_classic()
+```
+
+
 
 ## Data Summaries
+
+### Bar graphs
+
+```{r}
+ggplot(nz) + 
+  geom_bar(mapping = aes(x = BigDoms))
+```
+
+
+Note that we can reorder the graph to produce a nicer output
+
+
+```{r}
+ggplot(nz) + 
+  geom_bar(mapping = aes(x = fct_infreq(BigDoms))  )
+```
+
 
 ### boxplots
 ```{r}
 boxplot(nz$Age, notch = TRUE)
 boxplot(KESSLER6sum ~ Wave, data = nz, notch = TRUE, col = c("cadetblue1","orange"))
-nz$KESSLER6sum
 ```
 
 
@@ -344,11 +439,9 @@ For example, "spiritual identification" was not measured in 2019/2020.
 
 ```{r}
 library("skimr")
-
 nz %>%
   dplyr::group_by(Wave) %>%
   skim()
-
 ```
 
 We can use skimr to find outlier
@@ -377,15 +470,16 @@ nz%>%
 ### Which values are most common (and most rare?)
 
 
-### shortcuts
+### Packages that create summaries
+
+There are some great packages that automate workflow for you. The following package is called [report]() and it is brought to you from [easystats](https://github.com/easystats/easystats) 
+
+
 
 ```{r}
 library("report")
-library("dplyr")
-head(nz)
 nz %>%
-  select(-starts_with("Sepal")) %>% 
-  group_by(Species) %>% 
+  group_by(Wave)%>%
   report() %>% 
   summary()
 ```

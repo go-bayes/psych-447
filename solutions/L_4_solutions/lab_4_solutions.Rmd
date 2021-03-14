@@ -24,11 +24,14 @@ output:
 
 ```{r}
 library(tidyverse)
+library(lubridate)
+library(pmdplyr)
 ```
 
 
 ### Import  data
 ```{r}
+
 # read data
 nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
 
@@ -36,21 +39,46 @@ nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447
 nz <-nz %>%
   dplyr::mutate_if(is.character, factor)
 
+# make a date variable
+nz <- nz %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)  
 ```
 
 ## Q.  What is the difference?
 
-
-What's the difference between the maximum number of responses in 2018 and the maximum number of responses in 2019? (hint -- look for the `datrep` dataset that we created in lecture)?
+What are the maximum number of responses for a day in 2018 and the maximum number of responses for a day in 2019? 
 
 #### Solution
+
+This is how I'd do it:
+
 ```{r}
+nz %>%
+  group_by(date, Wave)%>%
+  count() %>%
+  group_by(Wave)%>%
+  dplyr::filter(n == max(n))
+```
 
-datrep <- nz %>%
-  count(day = floor_date(date, "day"))
 
-datrep%>%
+
+Here's a longer approach:
+
+```{r}
+# 2018 take the first
+nz %>%
+  group_by(date, Wave) %>%
+  count() %>%
+  filter(Wave == 2018) %>%
   arrange(desc(n))
+
+# 2019  take the first
+nz %>%
+  group_by(date, Wave) %>%
+  count() %>%
+  filter(Wave == 2019) %>%
+  arrange(desc(n))
+
 ```
 
 
@@ -58,24 +86,34 @@ How many days between the first and second highest number of responses?
 
 ### Solution
 
-Here's one a approach:
+Here are some approaches:
+
+```{r}  
+ts<-nz %>%
+  group_by(date)%>%
+  count() %>%
+  arrange(desc(n)) %>%
+  as_tibble() %>%
+  slice(c(1:2)) %>%
+  mutate(diff_days = date - lag(date),
+         diff_n = n - lag(n))
+```
+
 
 ```{r}
-datrep %>%
-  arrange(desc(n)) 
-
-# take first spot
-n<-datrep %>%
+nz %>%
+  select(Wave,Id,KESSLER6sum) %>%
+  group_by(Id)%>%
+  mutate(diff_k6 = lag(KESSLER6sum, order_by = "Id"))
+         
+         
+  group_by(date)%>%
+  count() %>%
   arrange(desc(n)) %>%
-  slice(1)
-
-# take second spot
-n2<-datrep %>%
-  arrange(desc(n)) %>%
-  slice(2)
-
-# we can use R's default matrix algebra
-n-n2
+  as_tibble() %>%
+  slice(c(1:2)) %>%
+  mutate(diff_days = date - lag(date),
+         diff_n = n - lag(n))
 ```
 
 
