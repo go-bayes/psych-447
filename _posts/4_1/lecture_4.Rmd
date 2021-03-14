@@ -29,7 +29,8 @@ library("tidyverse")
 library("lubridate") # usful for dates
 
 nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
-str(nz$Wave)
+str(nz)
+
 nz <-nz %>%
   dplyr::mutate_if(is.character, factor)
 
@@ -258,26 +259,56 @@ datrep%>%
 ```
 
 
+There are no inherently stressful days. To see this, we can take average stress levels by day, and then see where the high average stress days fall.   
 
 ```{r}
-nz %>%
+tn<-nz %>%
   select(date,KESSLER6sum,Id) %>%
   group_by(date)%>%
   summarise(
    av_distress =  mean(KESSLER6sum, na.rm = TRUE),
    n = n_distinct(Id)
   ) %>%
-  arrange(desc(n)) %>%
-  ggplot(datrep, aes(day, n)) +
+  arrange(desc(av_distress))
+tn
+```
 
-  geom_col(aes(fill = n)) + scale_x_date(date_labels = "%b/%Y")  +
+We can all graph the densities
+```{r}
+tn%>%
+  ggplot(., aes(date, av_distress)) + 
+  geom_col(aes(fill =(n))) + scale_x_date(date_labels = "%b/%Y")  + theme_classic() + scale_fill_viridis_c()
 ```
 
 
+Converting dates to days of the week.
+
+
+```{r}
+nz %>%
+  select(Id, date, KESSLER6sum) %>%
+  mutate(weekdays = wday(date, label = TRUE)) %>%
+  group_by(weekdays) %>%
+  summarise(
+    mn_k6 =  mean(KESSLER6sum, na.rm = TRUE),
+    sd_k6 =  sd(KESSLER6sum, na.rm = TRUE),
+    n_k6w = n()
+  ) %>%
+  mutate(
+    se_k6 = sd_k6 / sqrt(n_k6w),
+    lw_ci = mn_k6 - qt(1 - (0.05 / 2), n_k6w - 1) * se_k6,
+    up_ci = mn_k6 + qt(1 - (0.05 / 2), n_k6w - 1) * se_k6
+  ) %>%
+  ggplot(., aes(x = weekdays, y = mn_k6, colour = mn_k6)) +
+  geom_errorbar(aes(ymin = lw_ci, ymax = up_ci), width = .1) +
+  geom_point(size = 3)  +
+  scale_y_continuous(limits = c(0,7)) + 
+  theme_classic() + scale_fill_viridis_d()
+```
 
 ### `Slice`
 
-Dplyr's slice function can be very handy. Say we only want the first six rows
+Dplyr's slice function can be handy. Say we only want the first six rows
 
 ```{r}
 datrep%>%
@@ -303,7 +334,46 @@ boxplot(KESSLER6sum ~ Wave, data = nz, notch = TRUE, col = c("cadetblue1","orang
 nz$KESSLER6sum
 ```
 
+
+### R has loads of canned solutions
+
+#### `skimr`
+
+The skimmer package can be helpful in detecting problems. A drawback note that it is interpreting all factors as numbers).
+
+For example, "spiritual identification" was not measured in 2019/2020.
+
+```{r}
+library("skimr")
+
+nz %>%
+  dplyr::group_by(Wave) %>%
+  skim()
+
+```
+
+We can use skimr to find outlier
+
+```{r}
+nz %>%
+  dplyr::group_by(Wave) %>%
+  skim(KESSLER6sum)
+```
+
+
+Try a workflow similar to what we used above
+
+```{r}
+nz%>%
+  select(date, KESSLER6sum) %>%
+  mutate(weekdays = wday(date, label = TRUE)) %>%
+  group_by(weekdays) %>%
+  skim()
+```
+
+
 ### What is the variation in my indicators? 
+
 
 ### Which values are most common (and most rare?)
 

@@ -128,6 +128,56 @@ nz %>%
   count()
 ```
 
+## Q Using methods described in lecture, create a table and graph for average hours of sleep by month in the `nz` dataset
+
+Do the table first, then the graph. What the the table clarify about the graph? 
+
+#### Solutions
+
+Table
+
+```{r}
+library(kableExtra)
+nz %>%
+  select(Id, date, HLTH.SleepHours) %>%
+  mutate(month = month(date, label = TRUE))%>%
+  group_by(month) %>%
+  summarise(
+    average_sleep =  mean(HLTH.SleepHours, na.rm = TRUE),
+    sd_sleep  =  sd(HLTH.SleepHours, na.rm = TRUE),
+    n  = n()  ) %>%
+  kbl(caption = "Distress by Year") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE)
+```
+
+
+Graph
+```{r, eval = FALSE, echo = FALSE}
+nz %>%
+  select(Id, date, HLTH.SleepHours) %>%
+  mutate(month = month(date, label = TRUE))%>%
+  group_by(month) %>%
+  summarise(
+    mn_sh =  mean(HLTH.SleepHours, na.rm = TRUE),
+    sd_sh  =  sd(HLTH.SleepHours, na.rm = TRUE),
+    n_sh  = n()  ) %>%
+  mutate(
+    se_sh  = sd_sh  / sqrt(n_sh ),
+    lw_ci = mn_sh  - qt(1 - (0.05 / 2), n_sh  - 1) * se_sh ,
+    up_ci = mn_sh  + qt(1 - (0.05 / 2), n_sh  - 1) * se_sh 
+  ) %>%
+  ggplot(., aes(x = month, y = mn_sh , colour = mn_sh )) +
+  geom_errorbar(aes(ymin = lw_ci, ymax = up_ci), width = .1) +
+  geom_point(size = 3)  +
+  scale_y_continuous(limits = c(0,8)) + 
+  theme_classic() + scale_fill_viridis_d()
+```
+
+
+The table reveals that the two months in which 
+
+
+
 
 
 <!-- ## Q1. Find people who were over 13 in Kessler 6 distress in 2019 but not 2018, arrange by biggest difference in distress change among this group. Hint, use the `KESSLER6sum` variable -->
