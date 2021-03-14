@@ -34,8 +34,7 @@ str(nz)
 nz <-nz %>%
   dplyr::mutate_if(is.character, factor)
 
-# check data
-str(nz)
+
 ```
 
 ## Preamble
