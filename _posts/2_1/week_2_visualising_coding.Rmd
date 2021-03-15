@@ -35,6 +35,9 @@ In R-studio, (for starters) you can can use the `file` tab to import and save yo
 
 Similarly, in R-studio, (for starters) you can can use install packages by clicking the `Install` tab in the package pane (generally lower right pane) to install packagees.
 
+
+
+
 ## How to use R as calculator
 
 We can use R as a calculator. You can run any mathematical operation you would normally use by entering it into the console:
@@ -715,6 +718,30 @@ pp2
 library(patchwork)
 pp1 / pp2 + plot_annotation(title = "two plots", tag_levels = "i")
 ```
+
+### Appendix:  `#` symbol is for commenting code
+
+In case you haven't figured it out yet, the hash symbol `#` is for commenting:
+
+```{r}
+r_comments <- 200 # here I am creating the variable for the number of time Jack says R is great
+
+jill_roll <- 199 # here I'm creating a variable for the number of times Jill rolls here eyes
+
+outcome <- log(r_comments) * sqrt(jill_roll) * pi # here I am illustrating some functions in r using the variables I just created
+
+outcome # print outcome
+```
+
+### Rounding
+
+It is often useful to round numbers:
+
+```{r}
+round(outcome, digits = 2) # illustrate the useful `round` function.
+```
+```
+
 
 
 ## to be continued

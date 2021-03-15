@@ -1,0 +1,225 @@
+---
+title             : "The title"
+shorttitle        : "Title"
+
+author: 
+  - name          : "First Author"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Writing - Original Draft Preparation
+      - Writing - Review & Editing
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1,2"
+    role:
+      - Writing - Review & Editing
+
+affiliation:
+  - id            : "1"
+    institution   : "Wilhelm-Wundt-University"
+  - id            : "2"
+    institution   : "Konstanz Business School"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library("tidyverse")
+library("psych")
+library("knitr")
+
+
+glrstab <- function(x) {
+    
+    r <- psych::corr.test(x)$r	#taking just the correlation matrix; no N, or p
+    p <- psych::corr.test(x)$p	#taking the p*s
+    
+    #define notions for significance levels
+    mystars <- ifelse(p < .001, "***"
+                      , ifelse(p < .01, "**"
+                               , ifelse(p < .05, "*"
+                                        , ifelse(p < .10, "+", " "))))
+    
+    #round r, define new matrix Rnew with the correlations from rnd and paste mystars
+    rnd  <- papaja::printnum(r, gt1 = FALSE, digits = 2)  #round, drop leading 0 - Thanks CRSH!								                     
+    Rnew <- matrix(paste(rnd, mystars, sep=""), ncol=ncol(rnd)) 
+    
+    #remove 1.0 correlations from diagonal  and set the strings
+    diag(Rnew) <- ''		
+    Rnew[upper.tri(Rnew)] <- ''								                	
+    
+    rownames(Rnew) <- paste(1:ncol(rnd), colnames(rnd), sep=" ")         #define number and name
+    colnames(Rnew) <- paste(1:ncol(rnd), "", sep="") 			       #define number
+    
+    #fun-part: we trim the top half 
+    Rnew[upper.tri(Rnew)] <- ''			
+    Rnew
+    described <- as.data.frame(psych::describe(x)) %>%
+      dplyr::select(., mean, sd)
+    Rnew <- cbind(round(described,2), Rnew)		     #describe x, M sD - put them in the matrix
+    colnames(Rnew)[1:2] <- c("M","SD")					      		
+    Rnew <- Rnew[,1:(ncol(Rnew)-1)]							        	
+    
+    return(Rnew)
+    
+}
+
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+df <- read_csv("ftn_class.csv")
+```
+
+
+```{r correlation, results = "asis"}
+corr_df <- glrstab(df[c("BKQKA", "Disgust", "Harm", "Fair", "Loyal", "Author", "Pure")])
+papaja::apa_table(corr_df, caption = "Correlation between outcome variables")
+```
+
+(ref:knowledge-plot-caption) Knowledge distribution in the sample.
+
+```{r knowledge-plot, fig.cap = "(ref:knowledge-plot-caption)", out.width = "\\textwidth"}
+
+df %>%
+  ggplot() +
+  aes(x =  BKQKA) +
+  geom_histogram(binwidth = 2) +
+  labs(x = "Knowledge", y = "Frequency") +
+  theme_apa() 
+
+```
+
+(ref:disgust-plot-caption) Disgust distribution in the sample.
+
+```{r disgust-plot, fig.cap = "(ref:disgust-plot-caption)", out.width = "\\textwidth"}
+
+df %>%
+  ggplot() +
+  aes(x =  Disgust) +
+  geom_histogram(binwidth = 2) +
+  labs(x = "Disgust", y = "Frequency") +
+  theme_apa() 
+
+```
+
+
+
+(ref:two-plot-caption)  Distribution of key variables in the sample.
+
+```{r two-plot, fig.cap = "(ref:two-plot-caption)", out.width = "\\textwidth"}
+
+df %>%
+  ggplot() +
+  aes(x =  BKQKA) +
+  geom_histogram(binwidth = 2) +
+  labs(x = "Knowledge", y = "Frequency") +
+  theme_apa() 
+
+df %>%
+  ggplot() +
+  aes(x =  Disgust) +
+  geom_histogram(binwidth = 2) +
+  labs(x = "Disgust", y = "Frequency") +
+  theme_apa() 
+
+```
+
+
+(ref:combined1-plot-caption)  Distribution of key variables in the sample.
+
+```{r combined1-plot, fig.cap = "(ref:combined1-plot-caption)", fig.show="hold", out.width="50%"}
+
+par(mar = c(4, 4, .1, .1))
+
+df %>%
+  ggplot() +
+  aes(x =  BKQKA) +
+  geom_histogram(binwidth = 2) +
+  labs(x = "Knowledge", y = "Frequency") +
+  theme_apa() 
+
+df %>%
+  ggplot() +
+  aes(x =  Disgust) +
+  geom_histogram(binwidth = 2) +
+  labs(x = "Disgust", y = "Frequency") +
+  theme_apa() 
+
+```
+
+# Methods
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+
+## Participants
+
+## Material
+
+## Procedure
+
+We can easily refer to figures such as Figure \@ref(fig:combined1-plot) or tables such as Table \@ref(tab:correlation)
+
+You can easily insert citations either using citr using the addins menu 
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses.
+
+
+# Results
+
+# Discussion
+
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup

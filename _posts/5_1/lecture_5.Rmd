@@ -8,7 +8,7 @@ author:
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
-date: 2021-MAR-9
+date: 2021-MAR-23
 output:
   distill::distill_article:
   self_contained: false
@@ -17,13 +17,73 @@ toc: true
 
 
 
+## What do you want to know?
+
+### Not all questions make sense
+
+### How you ask a question can be misleading? 
+
+### Measurement
+
+
 ## Samples and parameters: observation and inference
 
 ```{r figopen, echo=F}
 knitr::include_graphics("op.png")
 ```
 
+### y, x, and z
 
 ## Linear relationships with one co-variate
 
+
 ## Non-linear relationships with one co-variate
+
+### Model summaries
+
+```{r}
+hist(nz$Issue.Food.GMO)
+
+
+
+
+model <- lm(Sepal.Length ~ Species, data=iris)
+report_text(model)
+report_table(model)
+```
+
+Try a report on our data.  Later, I'll explain why this report is misleading. I'll also show you a better method than the paired t-test.  However, to prove a concept, try:
+
+```{r}
+library(tidyverse)
+tnz<-nz%>%
+  select(Id, Wave, KESSLER6sum)%>%
+  filter(!is.na(KESSLER6sum))%>%
+  pivot_wider(values_from = KESSLER6sum, names_from = Wave) %>%
+  rename(k2018 = `2018`,
+          k2019 = `2019`)
+
+#this won't run
+ihateTtests<-t.test(tnz$k2019 , tnz$k2018,  paired = TRUE)
+report::report(ihateTtests)
+```
+
+
+The future is now. I'm going to give you a glimpse of a better method. Below is a multi-level model.  Here, we assess whether people changed in their Kessler6 distress scores between the 2018 and 2019 waves of the nz study. 
+
+```{r, warning=FALSE}
+library(lme4)
+library(report)
+fm1 <- lme4::glmer(KESSLER6sum ~ Wave + (1|Id), data = nz, family ="poisson")
+report(fm1)
+```
+
+
+```{r}
+library(report)
+library(brms)
+m1 <- brms::brm(KESSLER6sum ~ Wave + (1|Id), data = nz, file = here::here("models","l4.m1.rds"))
+summary(m1)
+parameters::model_parameters(m1)
+```
+

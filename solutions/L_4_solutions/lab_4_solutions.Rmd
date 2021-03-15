@@ -28,10 +28,14 @@ library(lubridate)
 library(pmdplyr)
 ```
 
+Run this code
+```{r eval=FALSE}
+easystats::install_easystats_latest()
+```
+
 
 ### Import  data
 ```{r}
-
 # read data
 nz <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
 
@@ -41,12 +45,94 @@ nz <-nz %>%
 
 # make a date variable
 nz <- nz %>%
-  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)  
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) %>%
+   dplyr::mutate_if(is.character, factor) %>%
+  select(-c(SWB.Kessler01,SWB.Kessler02,SWB.Kessler03,SWB.Kessler04,SWB.Kessler05,
+            SWB.Kessler06))%>%
+  dplyr::mutate(Wave = as.factor(Wave))
 ```
 
-## Q.  What is the difference?
+## Q1  Warm up excercises
 
-What are the maximum number of responses for a day in 2018 and the maximum number of responses for a day in 2019? 
+###Q1a. Make a new dataframe from the `nz` dataframe. Call it `df`
+
+#### Solution
+
+```{r}
+df <- nz
+```
+
+
+### Q1b. Make all the hours variables into integers 
+
+
+### Solution
+
+This would be the quick way:
+
+```{r}
+head(df)
+df <-df %>%
+  dplyr::mutate(across(starts_with("Hours"), as.integer))
+```
+
+But more likely they'll do it by hand, which is fine:
+
+```{r eval=FALSE}
+df<- df%>%
+  mutate(Hours.Exercise = as.integer(Hours.Exercise),
+         Hours.Internet = as.integer(Hours.Internet))
+```
+
+And so on... 
+
+### Q1c.  Scale, center, tranform
+
+Create a new indicator that standardises the `Pol.Orient` variable, create a new indicator that centers the `Pol.Orient` variable, create a new indicator that centres the `Age` variable in decade-long units. Do this in a single piped workflow. 
+
+**Print the head of the data frame so that we can see your work **
+
+#### Solution
+```{r eval=FALSE}
+df1<-df %>%
+  dplyr::select(Pol.Orient,
+         Age) %>%
+  dplyr::mutate(
+    conservative_s = scale(Pol.Orient),
+    conservative_c = scale(Pol.Orient, center = TRUE, scale = FALSE),
+    age_decade_c = scale(Age, center = TRUE, scale = FALSE) / 10
+  )
+head(df1)
+```
+
+
+###Q1d Select `Hour.Exercise` and filter only wave 2019
+
+#### Solution 
+
+Note that this won't.  We need to filter first because otherwise there would be no Wave column to select!
+
+```{r eval = FALSE}
+df$Wave
+df%>%
+  dplyr::select("Hours.Exercise")%>%
+  dplyr::filter(Wave == 2019)
+```
+
+
+Like so:
+
+```{r}
+df%>%
+  dplyr::filter(Wave == 2019) %>%
+  dplyr::select("Hours.Exercise")%>%
+  head()
+```
+
+
+## Q2.  Data summaries: What is the difference?
+
+What are the maximum number of responses for a single day in 2018 and the maximum number of responses for a single day in 2019? 
 
 #### Solution
 
@@ -61,7 +147,6 @@ nz %>%
 ```
 
 
-
 Here's a longer approach:
 
 ```{r}
@@ -70,23 +155,26 @@ nz %>%
   group_by(date, Wave) %>%
   count() %>%
   filter(Wave == 2018) %>%
-  arrange(desc(n))
+  arrange(desc(n)) %>%
+  head()
 
 # 2019  take the first
 nz %>%
   group_by(date, Wave) %>%
   count() %>%
   filter(Wave == 2019) %>%
-  arrange(desc(n))
-
+  arrange(desc(n))%>%
+  head()
 ```
 
 
-How many days between the first and second highest number of responses? 
+## Q3 How many days were there between the date with the highest number of responses and the day with the lowest number of responses? 
+
+Bonus: see if you can also calculate difference in number of responses on the highest and second highest number of responses? Again, make sure to show your work.
 
 ### Solution
 
-Here are some approaches:
+Here is an approach:
 
 ```{r}  
 ts<-nz %>%
@@ -97,27 +185,12 @@ ts<-nz %>%
   slice(c(1:2)) %>%
   mutate(diff_days = date - lag(date),
          diff_n = n - lag(n))
+ts
 ```
 
 
-```{r}
-nz %>%
-  select(Wave,Id,KESSLER6sum) %>%
-  group_by(Id)%>%
-  mutate(diff_k6 = lag(KESSLER6sum, order_by = "Id"))
-         
-         
-  group_by(date)%>%
-  count() %>%
-  arrange(desc(n)) %>%
-  as_tibble() %>%
-  slice(c(1:2)) %>%
-  mutate(diff_days = date - lag(date),
-         diff_n = n - lag(n))
-```
 
-
-## Q. Suppose you were born on Dec 25, 1995 at 5.02:22 am Calucalate your age in months on March 20,2021, at 1:22:04pm
+## Q4. Suppose you were born on Dec 25, 1995 at 5.02:22 am Calculate your age in months on March 20,2021, at 1:22:04pm. (Hint use the `lubridate` package. Look up the `interval` function).
 
 
 ### Solution
@@ -129,14 +202,18 @@ alive <-lubridate::interval(ymd_hms("1995-12-25 05:02:22"), ymd_hms("2021-03-21 
 time_length(alive, "months")
 ```
 
-## Summarise the mean, median, quantile
 
+## Q5 Create an ordered factor from numeric data
 
-## Q1. Create an ordered factor from numeric data
+The `Religion.Church` variable contains responses to the question: "How many times each month do you attend church or religious service?"
 
-The `Religion.Church` variable contains responses to the question: "how many times each month do you attend church or religious service? 
+Create factor with the following three levels:
 
-Create factor for people who attend church 0 x per month, 1-3 x per month, or over 4 times per month. Re-level the factor for an ordinal ranking lowest to highest.
+1. People who attend church 0 X per month, 
+2. People who attend church 1-3 X per month, 
+3. People who attend church 4 or more X per month. 
+
+Make sure to re-level the factor so that the ordinal ranking moves from lowest to highest.
 
 
 ## Solution
@@ -166,30 +243,35 @@ nz %>%
   count()
 ```
 
-## Q Using methods described in lecture, create a table and graph for average hours of sleep by month in the `nz` dataset
+## Q6 Using methods described in lecture 4, create a table for average hours of sleep by month in the `nz` dataset
 
-Do the table first, then the graph. What the the table clarify about the graph? 
 
-#### Solutions
 
-Table
+#### Solution
+
+
 
 ```{r}
 library(kableExtra)
-nz %>%
+tabnz<-nz %>%
   select(Id, date, HLTH.SleepHours) %>%
   mutate(month = month(date, label = TRUE))%>%
   group_by(month) %>%
   summarise(
     average_sleep =  mean(HLTH.SleepHours, na.rm = TRUE),
     sd_sleep  =  sd(HLTH.SleepHours, na.rm = TRUE),
-    n  = n()  ) %>%
-  kbl(caption = "Distress by Year") %>%
+    n  = n()  ) 
+tabnz%>%
+  kbl(caption = "Distress by month") %>%
    kable_classic_2(c("striped", "hover"), full_width = TRUE)
 ```
 
 
-Graph
+## Q7. Graph the average hours of sleep by month including 95% confidence intervals
+
+Briefly explain why some intervals are wider than others. (Hint use the table)
+
+### Solution
 ```{r, eval = FALSE, echo = FALSE}
 nz %>%
   select(Id, date, HLTH.SleepHours) %>%
@@ -212,16 +294,57 @@ nz %>%
 ```
 
 
-The table reveals that the two months in which 
+Some intervals are wider than others because the number of responses by month varies
 
 
+```{r, eval = FALSE, echo = FALSE}
+gnz <-nz %>%
+  select(Id, date, HLTH.SleepHours,Wave) %>%
+  mutate(month = month(date, label = TRUE))%>%
+  group_by(month, Wave) %>%
+  summarise(
+    mn_sh =  mean(HLTH.SleepHours, na.rm = TRUE),
+    sd_sh  =  sd(HLTH.SleepHours, na.rm = TRUE),
+    n_sh  = n()  ) %>%
+  mutate(
+    se_sh  = sd_sh  / sqrt(n_sh ),
+    lw_ci = mn_sh  - qt(1 - (0.05 / 2), n_sh  - 1) * se_sh ,
+    up_ci = mn_sh  + qt(1 - (0.05 / 2), n_sh  - 1) * se_sh 
+  )
+```
+
+Here we see high standard errors of the mean with low n's
+
+```{r, eval = FALSE, echo = FALSE}
+gnz%>%
+  select(month,Wave,mn_sh,se_sh,n_sh)
+```
+
+We can graph the year-wise differences, focusing on April:
+
+```{r, eval = FALSE, echo = FALSE}
+gnz%>%
+  ggplot(., aes(x = month, y = mn_sh , colour = factor(Wave) )) +
+  geom_errorbar(aes(ymin = lw_ci, ymax = up_ci), width = .1) +
+  geom_point(size = 3)  +
+ # scale_y_continuous(limits = c(0,8)) + 
+  theme_classic() + scale_colour_viridis_d()
+```
 
 
+### Create a blank `papaja` report with your name, affiliation, contributors and r packages used in your analysis
 
-<!-- ## Q1. Find people who were over 13 in Kessler 6 distress in 2019 but not 2018, arrange by biggest difference in distress change among this group. Hint, use the `KESSLER6sum` variable -->
 
-<!-- ```{r} -->
+###
 
-<!-- ``` -->
+```{r dualfig, fig.cap="\\label{fig:dualfig}"}
+library(patchwork)
+library(ggplot2)
+p1 <- qplot(mtcars$cyl, geom = "histogram") + labs(title = "this plot") + xlab("mt cycle")
+p2 <- qplot(mtcars$disp, geom = "histogram")+ labs(title = "that plot")
+
+p1/p2 + plot_annotation(title = "my title", tag_levels = 'a') + xlab("mt cycle") +  plot_layout(guides = 'collect')
+
+```
 
 

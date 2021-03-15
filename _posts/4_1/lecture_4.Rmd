@@ -19,13 +19,12 @@ output:
     toc: true
 ---
 
-```{r spss-old, echo=F}
+```{r spss-old, echo=F, warning =FALSE}
 knitr::include_graphics("op.png")
 # let's set our theme too
-theme_set(theme_classic())
 ```
 
-```{r}
+```{r, echo = FALSE, warning=FALSE}
 #libraries
 if (!require(skimr)) install.packages('skimr')
 if (!require(lubridate)) install.packages('lubridate')
@@ -36,14 +35,23 @@ if (!requireNamespace("devtools")) {
 if (!require(easystats)) devtools::install_github("easystats/easystats")
 if (!require(ggthemes)) install.packages('ggthemes')
 if (!require(pmdplyr)) install.packages("pmdplyr")
-
+if (!require(kableExtra)) install.packages("kableExtra")
 # this should be part of easystats but in case not:
 if (!require(report)) install.packages('report')
-
+if (!require(brms)) install.packages('brms')
+if (!require(lme4)) install.packages('lme4')
+if (!require(table1)) install.packages('table1')
 # load tidyverse
 library("tidyverse")
+
+# themeset
+theme_set(theme_classic())
 ```
 
+```{r, echo = FALSE, eval = FALSE}
+# uncomment below and run this code
+# easystats::install_easystats_latest()
+```
 
 ```{r echo = FALSE}
 
@@ -57,115 +65,116 @@ nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-4
 nz <-nz_0 %>%
   dplyr::mutate_if(is.character, factor) %>%
   select(-c(SWB.Kessler01,SWB.Kessler02,SWB.Kessler03,SWB.Kessler04,SWB.Kessler05,
-            SWB.Kessler06))
+            SWB.Kessler06))%>%
+  dplyr::mutate(Wave = as.factor(Wave))
+# not used
+# nz <- haven::zap_formats(nz)
+# nz <- haven::zap_label(nz)
+# nz <- haven::zap_widths(nz)
+# nz <- haven::zap_labels(nz)
 ```
 
 ## Preamble
 
-### Assigned reading: workflow Advice: read this
+One of the advantages of R is that allows us to create highly effective workflows. Today, we'll reinforce and extend the workflow skills that you've started to develop in previous weeks. Below we'll be working with the 'nz' dataset, which is a reduced, truncated, and jittered version of the New Zealand Attitudes and Values Study. This dataset is for teaching only, if you'd like to learn more about the study to which it belongs, go [here](https://www.psych.auckland.ac.nz/en/about/new-zealand-attitudes-and-values-study.html) or [here](https://go-bayes.github.io/reports/posts/nzavs/). 
 
-Advice on how to name your files (by Danielle Navarro) [here](https://slides.djnavarro.net/project-structure/#1)
+## Data carpentry continued
 
-### Something useful
+### Different methods for selecting columns
 
-The hash symbol `#` is for commenting
+Suppose we want to select all variables that start with `Believe`. We can do this in a number of ways.
 
-```{r}
-r_comments <- 200 # here I am creating the variable for the number of time Jack says R is great
+First there is explicit selection:
 
-jill_roll <- 199 # here I'm creating a variable for the number of times Jill rolls here eyes
-
-outcome <- log(r_comments) * sqrt(jill_roll) * pi # here I am illustrating some functions in r using the variables I just created
-
-outcome # print outcome
-
-round(outcome, digits = 2) # illustrate the useful `round` function.
-```
-
-
-## Data Carpentry  
-
-### Different ways to select variables
-
-Task: 3 different ways to select the variables that start with `Believe`.
-
-#### Explicit selection
-
-It is generally sensible to select the variables you need.
-```{r}
-# names(nz) # uncomment the first `#` and run this code to check names
+```{r explicitselection}
+# explicit selection 
 nz %>%
   select("Believe.God", "Believe.Spirit")%>%
-  as_tibble()
+    glimpse()
 ```
 
+We can select all instances of a column that start with a certain name. For this you by using `starts_with`
 
-#### `starts_with` 
-
-Sometimes, you know that you want to select all instances of a column that start with a certain name. For this you can use `starts_with`
-
-
-```{r}
+```{r startswith}
 nz %>%
   select(starts_with("Believe"))%>%
-  as_tibble()
+    glimpse()
 ```
 
+By the same token, we can select all instances of a variable that ends with a certain string by using `ends_with`
 
-By the same token, `ends_with`
-
-```{r}
+```{r endswith}
 nz %>%
   select(ends_with("conditions"))%>%
-  as_tibble()
+    glimpse()
 ```
 
-#### `contains`
+We can cast a broader net and select all instances of a variable within a string by using `contains`
 
-To cast a broader net we can use `contains`:
-
-```{r}
+```{r contains}
 nz %>%
   select(contains("Believe"))%>%
-  as_tibble()
+    glimpse()
 ```
 
-The net was too broad. We don't want the `Religion.Believe.Cats`. In R, you can hack your way out of this as follows:
+As we can see, the net that we cast with `contains` was too broad. We don't want the `Religion.Believe.Cats`.
 
-```{r}
+In R, you we programme your way out of this corner as follows:
+
+```{r containshack}
 nz %>%
   select(contains("Believe") &  -  Religion.Believe.Cats)%>%
-  as_tibble()
+   glimpse()
 ```
 
-However, a better approach would be to drop `contains` and revert to another method. 
-
+That's inelegant; better to drop `contains` and revert to another methods.
 
 ### Re-leveling a factor
 
-Let's look at the `BigDoms` variable in this dataset, which corresponds to large religious denominations:
+Death, taxes, and factors are consequence of living. Let's look at the `BigDoms` variable in the nz, which is a factor identifying large religious denominations
 
-```{r}
+```{r selectbdoms}
 nz %>%
   dplyr::select(BigDoms)%>%
   table()
 ```
 
-Suppose we wanted to make "Not Rel" the base category. We could do so as follows:
+Suppose we wanted to make "Not Rel" our base category for this factor. We could do so as follows:
 
-
-```{r}
+```{r fctrelevelbigcoms}
 ## suppose we want "Not_Rel" as the base category, and rearrange the other levels
 library(forcats) # this is part of the tidyverse package. 
-nz %>%
-  dplyr::select(BigDoms) %>%
+nz1<-nz %>%
+  dplyr::select(BigDoms, KESSLER6sum) %>%
   dplyr::mutate(BigDoms =  
-                  forcats::fct_relevel(BigDoms, c("Not_Rel","Christian","Buddhist","Muslim","TheOthers")))%>%
-  count(BigDoms) 
+                  forcats::fct_relevel(BigDoms, c("Not_Rel","Christian","Buddhist","Muslim","TheOthers")))
+
+#inspect data
+nz1%>%
+  group_by(BigDoms)%>%
+  count()
 ```
 
+The reordering makes for a more sensible model because the base category is now `Not_Rel` or not-religious. Hence comparisons are to this category.
 
-### Mutate by cutting
+```{r bdommodeltable}
+m0<- glm( KESSLER6sum ~ BigDoms, data = nz1 )
+parameters::model_parameters(m0)  %>%
+  print_html(caption = "Model of Distress by Denomination with the base category is `No Religion'")
+```
+
+We can see the results better using a coefficient graph, which visualises the information presented in the table. 
+
+```{r bdommodelgraph}
+plot(parameters::model_parameters(m0) ) + labs(title = "Comparison of Religious groups to secular people", 
+subtitle = "Christians are a little more chilled out, \n Other denoms are less chilled out")
+```
+
+The base category is the comparison class. Should we infer causation? This is getting ahead of ourselves...but the for now let's just leave it at "probably not."
+
+### Creating categories
+
+It is almost never a good idea to make continuous data into categorical data. However, occassionally you will need to stoop, for example to please a reviewer with a supplemental analysis. Here we break the `KESSLER6` distress scores into categories that are used to diagnose moderate and severe psychological distress.
 
 ```{r}
 nz <-nz %>%
@@ -175,12 +184,12 @@ nz <-nz %>%
     labels = c("Low Distress", "Moderate Distress", "Serious Distress"), 
     right = TRUE
   ))
-
+table(nz$k6cats)
 ```
 
-### Preferable: use `ifelse` to do the same
+### Using `ifelse` to create factors
 
-Personally I find the following method better, because it gives me explicit control of how I am making the categories.
+I find it is useful to keep explicit control over how I am making the categories. For example, in the previous example, I didn't remember whether `cut` includes a value to the left or to the right. I had to look this up. However, I can use `ifelse` to create the categories, and this is clear:
 
 ```{r}
 nz %>%
@@ -194,24 +203,96 @@ nz %>%
 
 #check this is the same as the previous method
 nz %>%
-  group_by(k6cats)%>%
+  group_by(k6cats) %>%
   count()
 ```
 
-### Using logical operators to create factors
+We can see that the method returns the same values as the `cut` method.
 
-### Create a table. 
+### Scaling and centering indicators, and logs
 
-```{r designtable,  tab.cap="\\label{tab:designtable}"}
-library(kableExtra)
-nz %>%
-  select(k6cats, Wave) %>%
-  filter(!is.na(k6cats))%>%
-  group_by( Wave, k6cats) %>%
-  summarise(n = n())%>%
-  kbl(caption = "Distress by Year") %>%
-   kable_classic_2(c("striped", "hover"), full_width = TRUE)%>%
-  collapse_rows()
+Throughout this course we'll be standardising and centering indicators. It is time that you get used to the protocol for doing this.
+
+Suppose we want to standardise the `Relid` indicator. This will transform the `Relid` indicator into standard deviation units. In later seminars, we'll explain why this transformation is useful. For now, this is how you do it:
+
+```{r}
+nz1 <- nz %>%
+  select(Relid)%>%
+  mutate(religousid_s = scale(Relid, scale = TRUE, center  = TRUE))
+head(nz1)
+```
+
+What happened? The variable name for our standardised variable looks weird: `religious_s[ ,1]`
+
+This isn't a worry. We use the variable as we would any other and all is fine. [^1]
+
+[^1]: Notice, the intercept here is zero. This because we centered the new indicator at zero, and we wrote a model that is estimating the population average for this outcome (an intercept-only model). Don't worry if you don't know what an intercept is, we'll get to regression in a few weeks.
+
+```{r}
+sjPlot::tab_model(lm(religousid_s ~ 1 , data = nz1))
+```
+
+#### Important advice: Transform your data as the last step in your piping workflow.
+
+This is because if you filter cases, you'll end up with a variable that isn't in standard deviations units
+
+```{r}
+nza <- nz %>%
+  select(Relid, BigDoms)%>%
+  mutate(religousid_s = scale(Relid, scale = TRUE, center  = TRUE)) 
+nzb <- nz %>%
+  select(Relid, BigDoms)%>%
+  mutate(religousid_s = scale(Relid, scale = TRUE, center  = TRUE)) %>%
+  filter(BigDoms !="Not_Rel")
+
+# compare
+summary(nza$religousid_s)
+
+# with
+summary(nzb$religousid_s)
+```
+
+When we filter last, the mean value in the dataset is `r round(mean(nzb$religousid_s,na.rm=TRUE),2)` -- everything has changed, and the intercept now means something different.
+
+```{r}
+nz1 <- nz1 %>%
+  select(Relid)%>%
+  mutate(religousid_s = scale(Relid, scale = TRUE, center  = TRUE))
+head(nz1)
+```
+
+or simply:
+
+```{r eval = FALSE}
+nz1 <- nz1 %>%
+  select(Relid) %>%
+  mutate(religousid_s = scale(Relid))
+
+head(nz1)
+```
+
+To center a variable we set `scale = FALSE, center = TRUE`
+
+```{r}
+nz1 <- nz %>%
+  mutate(religousid_c = scale(Relid, scale = FALSE, center  = TRUE))
+
+# inspect new indicator
+nz1%>%
+  select(Relid,religousid_c)%>%
+    glimpse()
+```
+
+For extreme values we typically will take a log transformation. We can create a new indicator by combining `mutate` and `log` as follows:
+
+```{r}
+nz1 <- nz %>%
+  mutate(charitydonate_log = log(CharityDonate + 1))
+
+# inspect new indicator
+nz1 %>%
+  select(CharityDonate,charitydonate_log)%>%
+    glimpse()
 ```
 
 ### Create and work with dates a date
@@ -221,8 +302,7 @@ nz <- nz %>%
   dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)  # first data of data collection in this study
 ```
 
-We can analyze dates, for example, for how many minutes were data collected? 
-
+We can analyze dates, for example, for how many minutes were data collected?
 
 ```{r}
 nz %>%
@@ -238,10 +318,9 @@ time_length(int, "year")
 time_length(int, "minutes")
 ```
 
+### Create a timeline
 
-
-
-### Create a graph showing the number of responses each day for the years of data collection? 
+Here we're going to graph the number of responses each day for the years of data collection.
 
 ```{r}
 library(lubridate)
@@ -289,22 +368,27 @@ datrep <- nz %>%
   ))) %>%
   arrange(day)
 
-# create graph
+# create the graph
 ggplot(datrep, aes(day, n)) +
-  geom_col(aes(fill = Year)) + scale_x_date(date_labels = "%b/%Y")  +
-  xlab("Days") + ylab("Count of Responses") + ggtitle("Our Dataset's Daily Counts")  + theme_classic()  +  scale_fill_viridis_d()
+  geom_col(aes(fill = Year)) + 
+  scale_x_date(date_labels = "%b/%Y")  +
+  xlab("Days") + ylab("Count of Responses") + 
+  ggtitle("Our Dataset's Daily Counts")  + 
+  theme_classic()  +  
+  scale_fill_viridis_d()
 
 ```
 
-Arrange by date with the most responses
+Note that we can use the `datrep` dataframe that we created to explore aspects of data collection. For example we can arrange the dataset by day in descending order of participants sampled:
 
 ```{r}
 datrep%>%
   arrange(desc(n))
 ```
 
+We can ask: were there any inherently stressful days?
 
-There are no inherently stressful days. To see this, we can take average stress levels by day, and then see where the high average stress days fall.   
+To see this, we can take average stress levels by day, and then see where the high average stress days fall.
 
 ```{r}
 tn<-nz %>%
@@ -318,7 +402,7 @@ tn<-nz %>%
 tn
 ```
 
-We can all graph the densities
+Graphing the densities reveals the following
 
 ```{r}
 tn%>%
@@ -326,9 +410,9 @@ tn%>%
   geom_col(aes(fill =(n))) + scale_x_date(date_labels = "%b/%Y")  + theme_classic() + scale_fill_viridis_c()
 ```
 
+Clearly the "stressful days" are an artifact of days with low numbers of participant respondents.
 
-Converting dates to days of the week.
-
+Let's see whether there are any stressful days of the week. We do this by creating a weekday variable using the `wday` function in the `lubridate` package. Let's graph our results using a pipe `%>%` workflow:
 
 ```{r}
 nz %>%
@@ -352,6 +436,47 @@ nz %>%
   theme_classic() + scale_fill_viridis_d()
 ```
 
+The bars of the graph overlap; despite the variability over the two years of data collection, we don't find differences in distress by days.
+
+"Ok Boomer", you ask, "what if we were to calculate distress by generational cohorts?"
+
+My reply, I'm not a boomer, so let's check it out:
+
+```{r layout="l-body-outset", fig.width=12, fig.height=12}
+nz %>%
+  select(GenCohort, KESSLER6sum) %>%
+  group_by(GenCohort) %>%
+  summarise(
+    mn_k6 =  mean(KESSLER6sum, na.rm = TRUE),
+    sd_k6 =  sd(KESSLER6sum, na.rm = TRUE),
+    n_k6w = n()
+  ) %>%
+  mutate(
+    se_k6 = sd_k6 / sqrt(n_k6w),
+    lw_ci = mn_k6 - qt(1 - (0.05 / 2), n_k6w - 1) * se_k6,
+    up_ci = mn_k6 + qt(1 - (0.05 / 2), n_k6w - 1) * se_k6
+  ) %>%
+  ggplot(., aes(x = GenCohort, y = mn_k6, colour = GenCohort)) +
+  geom_errorbar(aes(ymin = lw_ci, ymax = up_ci), width = .1) +
+  geom_point(size = 3)  +
+  scale_y_continuous(limits = c(0, 7)) +
+  theme_classic() +
+  geom_hline(yintercept = 5,
+             colour = "red",
+             linetype = "dashed") +
+  scale_y_continuous(limits = c(0, 10)) +
+  theme(
+    legend.text = element_text(size = 6),
+    legend.title = element_text(size = 8),
+    axis.text.x = element_blank()
+  ) +
+  xlab("Birth Generation Cohort") +
+  ylab("Kessler 6 Distress") +
+  labs(title = "Average Distress by Birth Cohort",
+       subtitle = "Red line indicates clinically moderate distress threshold") +
+  scale_colour_viridis_d() 
+```
+
 ### `Slice`
 
 Dplyr's slice function can be handy. Say we only want the first six rows
@@ -372,66 +497,87 @@ datrep%>%
 
 ### Lags and leads using timeseries data
 
-
 Create a difference variable for change in Kessler 6
 
 ```{r}
 library("pmdplyr")
 df <-nz %>%
-   mutate(diff_k6 = KESSLER6sum - tlag(KESSLER6sum,
+  dplyr::filter(!is.na(KESSLER6sum))%>%
+  mutate(wave = as.numeric(Wave))%>%
+   mutate(lag_k6 = tlag(KESSLER6sum,
     .i = Id, # id variable
-    .t = Wave # time series variable
+    .t = wave # time series variable, needs to be numeric
   ))%>%
-  select(Id,Wave,KESSLER6sum,diff_k6,Emp.JobSecure)%>%
+  mutate(diff_k6 = lag_k6 - KESSLER6sum) %>%
+  select(Id,Wave,KESSLER6sum,diff_k6,Emp.JobSecure,Employed)%>%
   arrange(desc(diff_k6)) 
-head(df)
-head(nz)
+
 ```
 
+We can very crudely explore whether employment security relates to distress change
 
 ```{r}
 df %>%
-  filter(diff_k6 > 5) %>%
-  ggplot(data = ., aes(x = diff_k6, fill = factor(Emp.JobSecure )) )+
+  filter(Wave == 2019) %>%
+  mutate(employed_employsecurity = as.factor(ifelse(Employed ==1, Emp.JobSecure,0)))%>%
+  ggplot(data = ., aes(x = diff_k6, fill = employed_employsecurity) )+
    geom_histogram() + 
   xlab("Difference in K6 eleveation (cases above 5)") + 
   ylab("Counts of cases") + 
-  ggtitle("Exploration of relationship between employment insecurity and distress")+
+  labs(subtitle ="No clear relationship between unemployment insecurity and distress change")+
   scale_fill_discrete(name="Employment Security 1-7") + 
+  scale_fill_viridis_d() + theme_classic() + 
+  theme(legend.position = "bottom")
+```
+
+And remarkably we don't see much evidence in the cross-sectional analysis.
+
+```{r}
+dfnew <- df %>%
+  filter(Wave == 2019) %>%
+  mutate(employed_employsecurity = as.numeric(ifelse(Employed == 1, Emp.JobSecure, 0)))%>%
+filter(!is.na(employed_employsecurity))
+
+head(dfnew)
+# Graph
+ggplot(dfnew, aes(y = diff_k6, employed_employsecurity)) +
+  geom_jitter(alpha = .2) +
+  geom_smooth(method = lm) +
+  xlab("employed_employsecurity") +
+  ylab("Kessler 6 distress jumps over 5") +
+  ggtitle("Jumps in distress change not related to employement insecurity") +
   scale_fill_viridis_d() + theme_classic()
 ```
 
-
-
-## Data Summaries
-
-### Bar graphs
+However this is misleading. We can formally model the relationship between employment security and Kessler6 distress
 
 ```{r}
-ggplot(nz) + 
-  geom_bar(mapping = aes(x = BigDoms))
+dfnew2 <- df %>%
+  mutate(employed_employsecurity = as.numeric(ifelse(Employed == 1, Emp.JobSecure, 0))) %>%
+  filter(!is.na(employed_employsecurity)) %>%
+  dplyr::mutate(employsecurity_s = scale(employed_employsecurity))
+
+m00a<-lmer(KESSLER6sum ~  employsecurity_s + (1|Id), data = dfnew2)
+plot(ggeffects::ggpredict(m00a, terms=c("employsecurity_s")),
+     add.data = TRUE, jitter = 0.2, dot.alpha =.05) + geom_hline(yintercept = 5,
+             colour = "red",
+             linetype = "dashed") + 
+  labs(title = "There is a relationship between employment security and Kessler6 distress")
 ```
 
+We'll return to the question of the relationship between employment security and distress down the track. For now, I want to alert you to an important lesson:
 
-Note that we can reorder the graph to produce a nicer output
+#### Pro tip: do not read too much into your descriptive analysis
 
+This is especially true when creating new variables. Just because you can make a variable doesn't mean you should use it, or interpret it!
 
-```{r}
-ggplot(nz) + 
-  geom_bar(mapping = aes(x = fct_infreq(BigDoms))  )
-```
+Put differently, our workflow will require much more than descriptive statistics
 
+## Data summary
 
-### boxplots
-```{r}
-boxplot(nz$Age, notch = TRUE)
-boxplot(KESSLER6sum ~ Wave, data = nz, notch = TRUE, col = c("cadetblue1","orange"))
-```
+### Summarise all your data
 
-
-### R has loads of canned solutions
-
-#### `skimr`
+#### The `skimr` package
 
 The skimmer package can be helpful in detecting problems. A drawback note that it is interpreting all factors as numbers).
 
@@ -440,47 +586,231 @@ For example, "spiritual identification" was not measured in 2019/2020.
 ```{r}
 library("skimr")
 nz %>%
+  select(-date) %>% #not useful
   dplyr::group_by(Wave) %>%
   skim()
 ```
 
-We can use skimr to find outlier
+#### Summarise parts of your data
+
+We can use skimr to on individual columns
 
 ```{r}
 nz %>%
   dplyr::group_by(Wave) %>%
-  skim(KESSLER6sum)
+  select(KESSLER6sum,HLTH.SleepHours)  %>%
+  skim() 
 ```
 
+### Create a table using pipe functions
 
-Try a workflow similar to what we used above
+```{r designtable,  tab.cap="\\label{tab:designtable}"}
+library(kableExtra)
+nz %>%
+  select(k6cats, Wave) %>%
+  filter(!is.na(k6cats))%>%
+  group_by( Wave, k6cats) %>%
+  summarise(n = n())%>%
+  kbl(caption = "Distress by Year") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE)%>%
+  collapse_rows()
+```
+
+Note that we can use the `pivot_wider` function to spread the dataframe to enable a table that is easier to interpret
 
 ```{r}
-nz%>%
-  select(date, KESSLER6sum) %>%
-  mutate(weekdays = wday(date, label = TRUE)) %>%
-  group_by(weekdays) %>%
-  skim()
+nz %>%
+  select(k6cats, Wave) %>%
+  filter(!is.na(k6cats))%>%
+  group_by( Wave, k6cats) %>%
+  summarise(n = n())%>%
+ pivot_wider(names_from = Wave, values_from = n) %>%
+   kbl(caption = "Distress counts by year") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE)
 ```
 
+### Canned tables
 
-### What is the variation in my indicators? 
+In earlier seminars we encountered the `table1` package, which is easy for html tables:
 
+```{r}
+library(table1)
 
-### Which values are most common (and most rare?)
+table1::table1(~Age  +
+                 GenCohort +
+                 Male + 
+                 Edu +
+                 Pol.Orient + 
+                 Relid + 
+                 BigDoms   | Wave, data = nz,
+               overall = FALSE)
+```
 
+Unfortunately, the `table1` package only prints html tables.
 
-### Packages that create summaries
+### Bar graphs
 
-There are some great packages that automate workflow for you. The following package is called [report]() and it is brought to you from [easystats](https://github.com/easystats/easystats) 
+For categorical data, in place of tables we can use bar graphs
 
+Here's the table:
 
+```{r}
+table(nz$BigDoms)
+```
+
+Here's the bar graph:
+
+```{r}
+ggplot(nz) + 
+  geom_bar(mapping = aes(x = BigDoms))
+```
+
+Note that we can reorder the graph to produce a nicer output, using `fct_infreq`
+
+```{r}
+ggplot(nz) + 
+  geom_bar(mapping = aes(x = fct_infreq(BigDoms))  )
+```
+
+### Boxplots
+
+A box plot provides visual information for the following statistics:
+
+-   Minimum -- (0p) min outlier
+-   Maximum -- (100p) max outlier
+-   Median -- (50th p)
+-   First Quartile (Q1 or 25p)
+-   Third Quartile (Q3 or 75p)
+-   Interquartile range (IQR), whcih is the distance between Q1 and Q3\
+-   Optional: the notch displays a confidence interval around the median. This is +/- 1.58 X IQR/sqrt(n). We use notches to compare differences between groups; overlap implies uncertainty about whether the medians differ.
+
+There's a simple explanation [here](https://towardsdatascience.com/understanding-boxplots-5e2df7bcbd51)
+
+We can use base R to investigate differences in distress among big denominations:
+
+```{r}
+# using base R
+boxplot(KESSLER6sum ~ BigDoms, data = nz, notch = TRUE, col = c("cadetblue1","orange","red","darkblue","brown"))
+```
+
+Here's a ggplot boxplot:
+
+```{r warning = FALSE}
+ggplot(data = nz, aes(x = KESSLER6sum, y = BigDoms, fill = BigDoms)) + 
+  geom_boxplot(notch=TRUE) + scale_fill_viridis_d() + 
+  ggtitle("If the notches don't overlap, there's likely a difference") + 
+  geom_jitter(alpha = .05)
+```
+
+Here's a ggplot2 boxplot with points overlaid, and jittered. This allows us to se the differences in sample sizes
+
+```{r}
+ggplot(data = nz, aes(x = KESSLER6sum, y = BigDoms, fill = BigDoms)) + 
+  geom_boxplot(notch=TRUE) + scale_fill_viridis_d() + 
+  ggtitle("If the notches don't overlap, there's likely a difference") + 
+  geom_jitter(alpha = .07)
+```
+
+We could look at differences by wave:
+
+```{r}
+ggplot(data = nz, aes(x = KESSLER6sum, y = BigDoms, fill = BigDoms)) + 
+  geom_boxplot(notch=TRUE) + scale_fill_viridis_d() + 
+   geom_jitter(alpha = .07) + 
+  facet_grid(Wave ~ .) +
+  ggtitle("If the notches don't overlap, there's likely a difference") 
+ 
+```
+
+### The `report` package
+
+The reports package from the `easystats` group is powerful tool for saving tame. Before extolling its virtues, I'd like to point out two major limitations.
+
+First, the package is in development. Currently, it has lots of bugs.
+
+Second, the package uses terminology that won't work for all contexts and purposes. For example, it uses the term "significant" to describe p values that are below the traditional p = .05 threshold.
+
+If you learn nothing else from this course, you should learn never to use "significant" to describe a p value. You may, if you like, use "statistically signficant" however it would be better altogether if you simply dropped p-values from data analysis. We'll show you how. With those provisos in mind, consider some useful functionality from the `report` package.
+
+```{r}
+# create a demographic dataframe
+nz_demagraphics <- nz %>%
+  select(Age, GenCohort, Male, Edu, Pol.Orient, Relid, BigDoms, Wave)
+
+# now a nice way to save you time when reporting
+paste(
+  report::report_participants(
+    nz_demagraphics, 
+    group = "Wave", 
+    age = "Age",
+    sex = "Male",
+    education = "Edu",
+    spell_n = TRUE),
+  "were recruited in the study by through enticement by lollipops. Those who did not volunteer were coerced."
+  )
+```
+
+The table function of `report` isn't great yet. However it has some nice features. For example you should always report your session information, and doing so in tabluar form clarifies the elements
+
+```{r}
+r <- report_table(sessionInfo())
+r
+```
+
+Here is another method, which you can
+
+```{r}
+cite_packages()
+```
+
+Heres's a demographic table
+
+```{r}
+report_table(nz_demagraphics)
+```
+
+Here's a longer summary
 
 ```{r}
 library("report")
 nz %>%
   group_by(Wave)%>%
+  select(-c(Id,date)) %>% # doesn't work with report
   report() %>% 
   summary()
 ```
 
+More about the report package: [here](https://easystats.github.io/report/index.html)
+
+This package is brought to you by [easystats](https://github.com/easystats/easystats)
+
+## Order of Method
+
+The following is a guide to describing your method
+
++--------------+-------------------------------------------------------------------------------------+
+| **Heading**  | Include                                                                             |
++--------------+-------------------------------------------------------------------------------------+
+| Participants | -   Participant or subject characteristics                                          |
+|              |                                                                                     |
+|              | ```{=html}                                                                          |
+|              | <!-- -->                                                                            |
+|              | ```                                                                                 |
+|              | -   Sampling procedures                                                             |
+|              |                                                                                     |
+|              | -   Sample size and power                                                           |
++--------------+-------------------------------------------------------------------------------------+
+| Materials    | -   Primary and secondary measures                                                  |
+|              |                                                                                     |
+|              | -   Quality of measurements                                                         |
++--------------+-------------------------------------------------------------------------------------+
+| Procedure    | -   [Data collection methods](https://www.scribbr.com/methodology/data-collection/) |
+|              |                                                                                     |
+|              | -   Research design (e.g., experimental, correlational, or descriptive)             |
+|              |                                                                                     |
+|              | -   Data processing and diagnostics (e.g., outlier removal)                         |
+|              |                                                                                     |
+|              | -   Data analysis strategy (e.g., comparison or regression tests)                   |
++--------------+-------------------------------------------------------------------------------------+
+
+APA style advice [here](https://opentextbc.ca/researchmethods/chapter/american-psychological-association-apa-style/)
