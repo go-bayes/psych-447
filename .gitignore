@@ -50,3 +50,4 @@ _posts/**/*_files/
 */solutions/**/*.Rmd
 */solutions/**/*.html
 */solutions/*
+/solutions/*

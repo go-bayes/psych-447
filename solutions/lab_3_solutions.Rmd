@@ -1,0 +1,395 @@
+---
+title: "Week 3 Lab"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+  - name: Johannes Karl 
+    url: https://johannes-karl.com
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0001-5166-0728
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+---
+
+### Libraries we will need
+```{r}
+library("tidyverse")
+library("patchwork")
+library("readr")
+library("sjPlot")
+library("MASS")
+```
+
+
+
+### Johannes helpful models for doing things with ggplot2
+
+```{r}
+library('MASS')
+
+## Simulate data
+data_lin = mvrnorm(n= 2000, mu = c(0, 0),
+               Sigma = matrix(c(1, .45, .45, 1),
+                              nrow=2),
+               empirical = T) %>%
+           data.frame(.) %>%
+           mutate(group = factor(rep(c(1,2), 1000)))
+
+
+## Make a scatterplot
+data_lin %>%
+  ggplot() +
+  aes(x = X1, y = X2) +
+  geom_point()
+
+## Make a scatter by group (facet, color, size)
+
+data_lin %>%
+  ggplot() +
+  aes(x = X1, y = X2, color = group) +
+  geom_point()
+
+## Make a linegraph (facet, color, size)
+## Bonus make it full range
+
+
+data_lin %>%
+  ggplot() +
+  aes(x = X1, y = X2, color = group) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+## Make it APA
+
+data_lin %>%
+  ggplot() +
+  aes(x = X1, y = X2, color = group) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_classic()
+
+
+## Change the axis labels to anything of your choice 
+
+data_lin %>%
+  ggplot() +
+  aes(x = X1, y = X2, color = group) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "Axis 1", y = "Axis 2") +
+  theme_classic() 
+
+## Make a bargraph by group for variable X2 
+
+data_lin %>%
+  ggplot() +
+  aes(x = group, y = X2, fill = group) +
+  geom_bar(stat = "summary", fun.y = "mean")
+
+## Bonus Make a bargraph with Errorbars  
+
+data_plot <- Rmisc::summarySE(data_lin, "X2", "group")
+
+data_plot %>%
+  ggplot() +
+  aes(x = group, y = X2, fill = group) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = X2 - ci, ymax = X2 + ci))
+
+```
+
+
+
+
+### Question Question: Why is this graph not printing any output? 
+
+```{r}
+library("tidyverse")
+ggplot(data = mtcars) + 
+  aes(mpg, wt, colour=factor(cyl))
+```
+
+
+### Answer, there are no layers.
+
+
+### Question 2. Using the mpg dataset, graph the relationship between city milage and highway mileage by year manufacture
+
+
+### Answer
+```{r}
+ggplot(mpg,aes(x = hwy, y = cty, color=year)) + geom_point()+geom_smooth(method = loess)
+```
+
+
+### Question 3. Edit this graph so that the x axis and the y axis both start at 0
+
+
+```{r}
+# Create graph and add title
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter")
+```
+
+
+###  Answer
+
+```{r}
+  ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") + 
+  expand_limits(x = 0, y = 0)
+```
+
+
+### Question 4: what is one benefits and one limitation of this graph (in which the x and y values start at 0?)
+
+
+### Answer
+
+Example benefits:
+
+  1. We clearly see that engine displacement starts at just below
+  2. We clearly understand that no highway mileage below 10 mpg doesn't exist.
+  
+Example weakness
+
+  1. Even if the thresholds are not evident, we can already see the thresholds without starting at graphs at zero (i.e. there is no information)
+  2. Zero engine displacement and zero highway miles per gallon are not physically meaningful concepts, so starting the graphs at these thresholds adds no new information. 
+  
+
+### Quetion 5.  Which of these two graphs do you prefer and why? 
+
+```{r}
+g1 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, colour =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+
+```
+
+
+
+```{r}
+g2 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+```
+  
+```{r layout="l-body-outset", fig.width=12, fig.height=12}
+library("patchwork")
+
+g1 / g2 + plot_annotation(title = "Which plot do you prefer and why?", tag_levels = 'a')
+```
+
+### Answer
+
+Arguably, patterns are easier to detect using the colour aesthetic but there are no hard and fast rules
+
+
+
+### Quetion 6.  add a facets to this graph for the "class" variable
+
+```{r}
+g2 <-ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape =  class )) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+```
+
+
+### Answer
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class) + 
+  labs(title = "Relationship bewtween engine displacement and fuel efficiency in the mpg automobile dataset") + 
+  xlab("Engine displacement in (units)") + 
+  ylab("Highway miles per liter") 
+```
+
+
+### Question 7.  which graph is more informative and why?
+
+
+```{r  dualfig, layout="l-body-outset", fig.width=12, fig.height=12, echo = FALSE}
+g3 <- ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+
+g4 <- ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  facet_wrap( ~ class, nrow = 2)
+
+g3 / g4 + plot_annotation("Which graph is more informative and why?", tag_levels = 'a')
+```
+
+
+### Answer
+
+Arguably the facets make the role of class more evident by making the class indicator more salient. Where possible,i t is a good idea to declutter your graph.   
+
+
+### Question 8.  remove the legend from the facet graph above (g4)
+
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  facet_wrap( ~ class, nrow = 2)
+```
+
+### Answer
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  facet_wrap( ~ class, nrow = 2) +
+  theme(legend.position = "none") 
+```
+
+
+### Question  9  Convert the y variable to "numeric" and graph the relationship betweeen `religiousity` (x-axis) and `thr_mus`` (y-axis) in the ISSP dataset. Create new axis labels
+
+Download the ISSP questionaire used in this study [here]: 
+(https://github.com/go-bayes/psych-447/blob/main/data_raw/ISSP/ISSP_2018_Religion_Questionnaire_final_version1-2.pdf)
+
+Note^[Data were collected with Barry Milne and Martin Van dataset; the data are only authorised for the purposes of teaching.]
+
+
+```{r}
+# read the issp dataset for questionaire see: ISSP_2018_Religion_Questionnaire_final_version1-2.pdf
+# 
+# subset of data from the issp dataset
+issp <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/issp.csv"))
+```
+
+
+```{r eval=FALSE}
+# note that we need to check our data
+head(issp)
+
+# when we do we find that classes of the variables need to be adjusted
+str(issp)
+```
+
+Let's get the data into shape using dplyr. Run this code below
+
+```{r}
+ip <- issp %>%
+  mutate(
+    id = factor(id),
+    thr_ath = as.factor(thr_ath),
+    thr_bd = as.factor(thr_bd),
+    thr_ch = as.factor(thr_ch),
+    thr_hd = as.factor(thr_hd),
+    thr_jw = as.factor(thr_jw),
+    thr_ms = as.factor(thr_ms),
+    neg_ath = as.factor(neg_ath),
+    neg_bd = as.factor(neg_bd),
+    neg_ch = as.factor(neg_ch),
+    neg_hd  = as.factor(neg_hd),
+    neg_jw = as.factor(neg_jw),
+    neg_ms = as.factor(neg_ms),
+    wave  = as.factor(wave),
+    nzeuro = as.factor(nzeuro),
+    eduyears = as.numeric(eduyears),
+    male = as.factor(male),
+    age = as.numeric(age),
+    rightwing = as.numeric(rightwing),
+    rural = as.factor(rural),
+    religiosity = as.numeric(religiosity)
+  )
+```
+
+
+#### Solution 
+
+
+```{r}
+library(ggplot2)
+ggplot(data = ip, aes(y = as.numeric(thr_ms), x = religiosity, colour = wave)) + 
+  geom_smooth(method = lm, fullrange = FALSE, alpha = 0.1) + 
+  labs(title = "Religiosity predict Muslim acceptance post-Christchurch shootings") + 
+  xlab("Level of Religiosity (scale 1-7) ") + ylab ("acceptance of Muslims (1-4)")
+```
+
+
+### Question 10.  Note that I have  the following graph should start from 1 and run to 4 but currently runs from 0-4.  Fix the graph 
+
+```{r}
+library(ggplot2)
+ggplot(data = ip, aes(y = as.numeric(thr_ms), x = religiosity, colour = wave))  +  geom_jitter(alpha = .1) + 
+  geom_smooth(method = lm, fullrange = FALSE, alpha = 0.1) +
+   scale_y_continuous(limits = c(0,4))
+```
+
+
+
+### Soution 
+
+```{r}
+library(ggplot2)
+ggplot(data = ip, aes(y = as.numeric(thr_ms), x = religiosity, colour = wave))  +  geom_jitter(alpha = .1) + 
+  geom_smooth(method = lm, fullrange = FALSE, alpha = 0.1) +
+   scale_y_continuous(limits = c(1,4))
+
+```
+
+
+### Extra question 11. Find one way of improving the the following code and explain your answer
+
+
+```{r}
+library(sjPlot)
+plot_xtab(
+    ip$thr_ms,
+    ip$wave,
+    show.total = F,
+    show.n = F,
+    geom.colors = c("lightgreen", "darkred")
+  ) +
+  xlab("Threatened by Muslims") +  ylab("Frequency") +
+  #scale_y_continuous(limits=c(0,7)) + #theme(plot.title = element_text(size=09))
+  theme(axis.text.x = element_text(angle = 20, hjust = 1))
+
+```
+
+
+
+### Solution.  E.g. add a title
+
+```{r}
+library(sjPlot)
+plot_xtab(
+    ip$thr_ms,
+    ip$wave,
+    show.total = F,
+    show.n = F,
+    geom.colors = c("lightgreen", "darkred")
+  ) +
+  xlab("Threatened by Muslims") +  ylab("Frequency") +
+  #scale_y_continuous(limits=c(0,7)) + #theme(plot.title = element_text(size=09))
+  theme(axis.text.x = element_text(angle = 20, hjust = 1)) + 
+  labs(title = "Comparison of sample responses to Muslim threat in 2018 an 2019")
+
+```
+
+
+
+
