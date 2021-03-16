@@ -45,6 +45,7 @@ vignettes/*.pdf
 _posts/**/*.html
 _posts/**/*_files/
 
+*.DS_Store
 
 # Solutions
 */solutions/**/*.Rmd
