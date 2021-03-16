@@ -27,8 +27,9 @@ knitr::include_graphics("op.png")
 ```
 
 
+### Get data 
 
-```{r, echo = FALSE, warning=FALSE, message=FALSE}
+```{r, echo = TRUE, warning=FALSE, message=FALSE}
 #libraries
 if (!require(skimr)) install.packages('skimr')
 if (!require(lubridate)) install.packages('lubridate')
@@ -48,19 +49,20 @@ if (!require(table1)) install.packages('table1')
 if (!require(modelsummary)) install.packages("modelsummary")
 if (!require(naniar)) install.packages("naniar")
 if (!require(ggraph)) install.packages("ggraph")
+if (!require(gtsummary)) install.packages("gtsummary")
 
 
 # load tidyverse
 library("tidyverse")
 
-# themeset
+# theme set
 theme_set(theme_classic())
 
 # uncomment below and run this code
 # easystats::install_easystats_latest()
 ```
 
-```{r echo = FALSE, message = FALSE, warning=FALSE,cache=TRUE}
+```{r echo = TRUE, message = FALSE, warning=FALSE,cache=TRUE}
 
 nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
 
@@ -69,10 +71,7 @@ nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-4
 # Note the convention of renaming dataframe when creating a new one:
 # ` nz <-nz_0 %>%... `
 
-
-
 f<-c("None Of The Time","A Little Of The Time","Some Of The Time",  "Most Of The Time", "All Of The Time")
-
 
 nz <-nz_0 %>%
   dplyr::mutate_if(is.character, factor) %>%
@@ -582,7 +581,7 @@ Put differently, our workflow will require much more than descriptive statistics
 
 ### Summarise all your data
 
-#### The `skimr` package
+### The `skimr` package
 
 The skimmer package can be helpful in detecting problems. A drawback note that it is interpreting all factors as numbers).
 
@@ -604,7 +603,9 @@ nz %>%
   select(KESSLER6sum,HLTH.SleepHours)  %>%
   skim() 
 ```
-#### `Table1` & other canned tables
+
+
+### `Table1` & other canned table packages
 
 In earlier seminars, we encountered the `table1` package, which makes really great html tables:
 
@@ -663,7 +664,7 @@ modelsummary::datasummary_balance( ~ Wave, data=nnz, dinm=FALSE)
 
 ### Create a table using pipe functions
 
-Above we saw how to create a cluncky table using `table(x)`. However, R has lots of functionality to enable better. 
+Above we saw how to create a clunky table using `table(x)`. However, R has lots of functionality to enable better. 
 
 
 ```{r designtable,  tab.cap="\\label{tab:designtable}"}
@@ -813,8 +814,7 @@ bzsec<-nz%>%
 library(correlation)
 p1<-bzsec %>%
   correlation(partial = FALSE, multilevel = TRUE ) %>%
-  plot()+ 
-  theme_blackboard()
+  plot()
 ```
 
 Print summary
@@ -938,31 +938,16 @@ This package is brought to you by [easystats](https://github.com/easystats/easys
 
 When reporting your study, it is extremely important to include information about your measure. For example:
 
-We measure psychological distress using the Kessler-6 scale [@Kessler2002-ex], which exhibits strong diagnostic concordance for moderate and severe psychological distress in large, cross-cultural samples [@Kessler2010-xi, @Prochaska2012-dy]. Participants rated during the past 30 days, how often did... (a) “\dots you feel hopeless”; (b) “\dots you feel so depressed that nothing could cheer you up”; (c) “\dots you feel restless or fidgety”; (d)“\dots you feel that everything was an effort”; (e) “\dots you feel worthless”; (f) “\dots you feel nervous?” Ordinal response alternatives for the Kessler-6 are: “None of the time”; “A little of the time”; “Some of the time”; “Most of the time”;  “All of the time.” 
+We measure psychological distress using the Kessler-6 scale [@Kessler2002-ex], which exhibits strong diagnostic concordance for moderate and severe psychological distress in large, cross-cultural samples [@Kessler2010-xi, @Prochaska2012-dy]. Participants rated during the past 30 days, how often did... (a) “$\dots$ you feel hopeless”; (b) “$\dots$ you feel so depressed that nothing could cheer you up”; (c) $\dots$ you feel restless or fidgety”; (d)“$\dots$ you feel that everything was an effort”; (e) “$\dots$ you feel worthless”; (f) “$\dots$ you feel nervous?” Ordinal response alternatives for the Kessler-6 are: “None of the time”; “A little of the time”; “Some of the time”; “Most of the time”;  “All of the time.” 
 
-We report sample descriptive statistics for indicators of personal Kessler-6 distress in Table \@ref(fig:desckK6).
+We report sample descriptive statistics for indicators of personal Kessler-6 distress below in [Table](#k6tab)1.
 
 
-```{r fig.cap="(ref:desckK6)"}
-library(table1)
-table1::table1(
-  ~ KESSLER6sum +
-    FeelHopeless +
-    FeelDepressed +
-    FeelRestless +
-    EverythingIsEffort +
-    FeelWorthless +
-    FeelNervous | Wave,
-  data = nz,
-  overall = FALSE
-)
-```
 
-In addition to the packages already mentioned, the `gtsummary` package for nice functionality when creating tables. Here's an example:
-
-```{r}
+**Table 1**<a id="k6tab"></a>
+```{r k6tab}
 library(gtsummary)
-nz %>%
+tb1 <-nz %>%
   dplyr::select(
     KESSLER6sum,
     FeelHopeless,
@@ -981,15 +966,17 @@ nz %>%
     ),
     digits = all_continuous() ~ 2,
     missing_text = "(Missing)"
-  )
+  )%>%
+  bold_labels() 
+tb1
 ```
 
+Note that you can use the `gtsummary` package to create in-line referencing. For example: Average Kessler-6 distress in 2018 was `r gtsummary::inline_text(tb1, variable = KESSLER6sum, column ="2018")` and in 2019 was `r gtsummary::inline_text(tb1, variable = KESSLER6sum, column ="2019")`.
 
 
-Also, check out Johannes's mini-lecture on `papaja.` 
 
 
-### Order of Method
+### Order of your Method section
 
 The following is a brief guide to describing your method. We'll be returning to report writing in future weeks. For now, I just want to put this on the table for you. The advice is just a guide.
 
@@ -1044,6 +1031,6 @@ The Facebook advertisement read as follows: “Participate in the New Zealand At
 
 [Papaja R markdown template](https://www.dropbox.com/s/bvdo6z55kgfr0ri/technology.Rmd?dl=0)
 
-## Appendix 3
+## Appendix 3 Style advice about research methods
 
 APA style advice [here](https://opentextbc.ca/researchmethods/chapter/american-psychological-association-apa-style/)

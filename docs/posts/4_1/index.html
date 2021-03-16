@@ -1881,6 +1881,7 @@ gtag('config', 'G-X058WW5WJZ');
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#get-data">Get data</a></li>
 <li><a href="#preamble">Preamble</a></li>
 <li><a href="#data-carpentry-continued">Data carpentry continued</a>
 <ul>
@@ -1899,6 +1900,8 @@ gtag('config', 'G-X058WW5WJZ');
 <li><a href="#data-summary">Data summary</a>
 <ul>
 <li><a href="#summarise-all-your-data">Summarise all your data</a></li>
+<li><a href="#the-skimr-package">The <code>skimr</code> package</a></li>
+<li><a href="#table1-other-canned-table-packages"><code>Table1</code> &amp; other canned table packages</a></li>
 <li><a href="#create-a-table-using-pipe-functions">Create a table using pipe functions</a></li>
 <li><a href="#bar-graphs">Bar graphs</a></li>
 <li><a href="#missing-data-graphs">Missing data graphs</a></li>
@@ -1906,19 +1909,31 @@ gtag('config', 'G-X058WW5WJZ');
 <li><a href="#correlation-graphs">Correlation graphs</a></li>
 <li><a href="#the-report-package">The <code>report</code> package</a></li>
 <li><a href="#measures">Measures</a></li>
-<li><a href="#order-of-method">Order of Method</a></li>
+<li><a href="#order-of-your-method-section">Order of your Method section</a></li>
 </ul></li>
 <li><a href="#appendix-1a-sampling-procedure-nzavs-time-10-2018-conducted-from-18.06.2018-28.09.2019">Appendix 1A Sampling Procedure – NZAVS Time 10 (2018; conducted from 18.06.2018-28.09.2019)</a></li>
 <li><a href="#appendix-1b-sampling-procedure-nzavs-time-11-2019-conducted-from-29.09.2019-17.10.2020">Appendix 1B Sampling Procedure – NZAVS Time 11 (2019; conducted from 29.09.2019-17.10.2020)</a></li>
 <li><a href="#appendix-2-johanness-mini-lecture-on-the-papaja-package">Appendix 2 Johannes’s mini-lecture on the <code>papaja</code> package</a></li>
-<li><a href="#appendix-3">Appendix 3</a></li>
+<li><a href="#appendix-3-style-advice-about-research-methods">Appendix 3 Style advice about research methods</a></li>
 </ul>
 </nav>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="op.png" width="5120" /></p>
 </div>
+<h3 id="get-data">Get data</h3>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#libraries</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'skimr'</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'lubridate'</span><span class='op'>)</span>
+
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"devtools"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"devtools"</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/easystats/easystats'>easystats</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"easystats/easystats"</span><span class='op'>)</span>
+</code></pre>
+</div>
 <pre><code># Attaching packages (red = needs update)
 ✔ insight     0.13.1.1   ✔ bayestestR  0.8.3.1 
 ✔ performance 0.7.0.1    ✔ parameters  0.12.0.1
@@ -1927,9 +1942,61 @@ gtag('config', 'G-X058WW5WJZ');
 ✔ report      0.2.0      
 Warnings or errors in CRAN checks for package(s) &#39;bayestestR&#39;, &#39;parameters&#39;, &#39;effectsize&#39;, &#39;correlation&#39;.
 Restart the R-Session and update packages in red with &#39;easystats::easystats_update()&#39;.</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jrnold/ggthemes'>ggthemes</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'ggthemes'</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://nickch-k.github.io/pmdplyr'>pmdplyr</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"pmdplyr"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://haozhu233.github.io/kableExtra/'>kableExtra</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"kableExtra"</span><span class='op'>)</span>
+<span class='co'># this should be part of easystats but in case not:</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/report/'>report</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'report'</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'brms'</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lme4/lme4/'>lme4</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'lme4'</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/benjaminrich/table1'>table1</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'table1'</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://vincentarelbundock.github.io/modelsummary/'>modelsummary</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"modelsummary"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/njtierney/naniar'>naniar</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"naniar"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://ggraph.data-imaginist.com'>ggraph</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"ggraph"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ddsjoberg/gtsummary'>gtsummary</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"gtsummary"</span><span class='op'>)</span>
+
+
+<span class='co'># load tidyverse</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>
+
+<span class='co'># theme set</span>
+<span class='fu'>theme_set</span><span class='op'>(</span><span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># uncomment below and run this code</span>
+<span class='co'># easystats::install_easystats_latest()</span>
+</code></pre>
+</div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz_0</span> <span class='op'>&lt;-</span> <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span><span class='op'>(</span><span class='st'>"https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"</span><span class='op'>)</span><span class='op'>)</span>
 
+<span class='co'># take all characters and make them factors</span>
+<span class='co'># also get rid of duplicate rows</span>
+<span class='co'># Note the convention of renaming dataframe when creating a new one:</span>
+<span class='co'># ` nz &lt;-nz_0 %&gt;%... `</span>
+
+<span class='va'>f</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"None Of The Time"</span>,<span class='st'>"A Little Of The Time"</span>,<span class='st'>"Some Of The Time"</span>,  <span class='st'>"Most Of The Time"</span>, <span class='st'>"All Of The Time"</span><span class='op'>)</span>
+
+<span class='va'>nz</span> <span class='op'>&lt;-</span><span class='va'>nz_0</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span><span class='op'>(</span><span class='va'>is.character</span>, <span class='va'>factor</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>SWB.Kessler01</span>,<span class='va'>SWB.Kessler02</span>,<span class='va'>SWB.Kessler03</span>,<span class='va'>SWB.Kessler04</span>,<span class='va'>SWB.Kessler05</span>, <span class='va'>SWB.Kessler06</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>FeelHopeless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelHopeless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>FeelDepressed <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelDepressed</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>FeelRestless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelRestless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>EverythingIsEffort <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>EverythingIsEffort</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>FeelWorthless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelWorthless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>FeelNervous <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelNervous</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># not used</span>
+<span class='co'># nz &lt;- haven::zap_formats(nz)</span>
+<span class='co'># nz &lt;- haven::zap_label(nz)</span>
+<span class='co'># nz &lt;- haven::zap_widths(nz)</span>
+<span class='co'># nz &lt;- haven::zap_labels(nz)</span>
+</code></pre>
+</div>
 </div>
 <h2 id="preamble">Preamble</h2>
 <p>One of the advantages of R is that allows us to create highly effective workflows. Today, we’ll reinforce and extend the workflow skills that you’ve started to develop in previous weeks. Below we’ll be working with the <code>nz</code> dataset, which is a reduced, truncated, and jittered version of waves 10 and 11 of the New Zealand Attitudes and Values Study. This dataset is for teaching only, if you’d like to learn more about the study to which it belongs, go <a href="https://www.psych.auckland.ac.nz/en/about/new-zealand-attitudes-and-values-study.html">here</a> or <a href="https://go-bayes.github.io/reports/posts/nzavs/">here</a>.</p>
@@ -1941,7 +2008,7 @@ Restart the R-Session and update packages in red with &#39;easystats::easystats_
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># explicit selection </span>
 <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='st'>"Believe.God"</span>, <span class='st'>"Believe.Spirit"</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='st'>"Believe.God"</span>, <span class='st'>"Believe.Spirit"</span><span class='op'>)</span><span class='op'>%&gt;%</span>
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -1954,7 +2021,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -1967,7 +2034,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='fu'>ends_with</span><span class='op'>(</span><span class='st'>"conditions"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='st'>"conditions"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -1980,7 +2047,7 @@ $ NZ.Business.Conditions &lt;dbl&gt; 8, 6, 4, 7, 5, 3, 4, 6, 6, 6, 5, 6, 5…</c
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -1995,7 +2062,7 @@ $ Believe.Spirit        &lt;fct&gt; Not Believe Spirit, Not Believe Spirit…</c
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span> <span class='op'>&amp;</span>  <span class='op'>-</span>  <span class='va'>Religion.Believe.Cats</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"Believe"</span><span class='op'>)</span> <span class='op'>&amp;</span>  <span class='op'>-</span>  <span class='va'>Religion.Believe.Cats</span><span class='op'>)</span><span class='op'>%&gt;%</span>
    <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2058,7 +2125,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#tuukrdhrbj .gt_table {
+#hngmbjbciu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2083,7 +2150,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-left-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_heading {
+#hngmbjbciu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2095,7 +2162,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-right-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_title {
+#hngmbjbciu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2105,7 +2172,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-bottom-width: 0;
 }
 
-#tuukrdhrbj .gt_subtitle {
+#hngmbjbciu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2115,13 +2182,13 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-top-width: 0;
 }
 
-#tuukrdhrbj .gt_bottom_border {
+#hngmbjbciu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_col_headings {
+#hngmbjbciu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2136,7 +2203,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-right-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_col_heading {
+#hngmbjbciu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2156,7 +2223,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   overflow-x: hidden;
 }
 
-#tuukrdhrbj .gt_column_spanner_outer {
+#hngmbjbciu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2168,15 +2235,15 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   padding-right: 4px;
 }
 
-#tuukrdhrbj .gt_column_spanner_outer:first-child {
+#hngmbjbciu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tuukrdhrbj .gt_column_spanner_outer:last-child {
+#hngmbjbciu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tuukrdhrbj .gt_column_spanner {
+#hngmbjbciu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2188,7 +2255,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   width: 100%;
 }
 
-#tuukrdhrbj .gt_group_heading {
+#hngmbjbciu .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2210,7 +2277,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   vertical-align: middle;
 }
 
-#tuukrdhrbj .gt_empty_group_heading {
+#hngmbjbciu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2225,15 +2292,15 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   vertical-align: middle;
 }
 
-#tuukrdhrbj .gt_from_md > :first-child {
+#hngmbjbciu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tuukrdhrbj .gt_from_md > :last-child {
+#hngmbjbciu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tuukrdhrbj .gt_row {
+#hngmbjbciu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2252,7 +2319,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   overflow-x: hidden;
 }
 
-#tuukrdhrbj .gt_stub {
+#hngmbjbciu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2264,7 +2331,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   padding-left: 12px;
 }
 
-#tuukrdhrbj .gt_summary_row {
+#hngmbjbciu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2274,7 +2341,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   padding-right: 5px;
 }
 
-#tuukrdhrbj .gt_first_summary_row {
+#hngmbjbciu .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2284,7 +2351,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-top-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_grand_summary_row {
+#hngmbjbciu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2294,7 +2361,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   padding-right: 5px;
 }
 
-#tuukrdhrbj .gt_first_grand_summary_row {
+#hngmbjbciu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2304,11 +2371,11 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-top-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_striped {
+#hngmbjbciu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tuukrdhrbj .gt_table_body {
+#hngmbjbciu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2317,7 +2384,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-bottom-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_footnotes {
+#hngmbjbciu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2331,13 +2398,13 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-right-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_footnote {
+#hngmbjbciu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#tuukrdhrbj .gt_sourcenotes {
+#hngmbjbciu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2351,46 +2418,46 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-right-color: #D3D3D3;
 }
 
-#tuukrdhrbj .gt_sourcenote {
+#hngmbjbciu .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#tuukrdhrbj .gt_left {
+#hngmbjbciu .gt_left {
   text-align: left;
 }
 
-#tuukrdhrbj .gt_center {
+#hngmbjbciu .gt_center {
   text-align: center;
 }
 
-#tuukrdhrbj .gt_right {
+#hngmbjbciu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tuukrdhrbj .gt_font_normal {
+#hngmbjbciu .gt_font_normal {
   font-weight: normal;
 }
 
-#tuukrdhrbj .gt_font_bold {
+#hngmbjbciu .gt_font_bold {
   font-weight: bold;
 }
 
-#tuukrdhrbj .gt_font_italic {
+#hngmbjbciu .gt_font_italic {
   font-style: italic;
 }
 
-#tuukrdhrbj .gt_super {
+#hngmbjbciu .gt_super {
   font-size: 65%;
 }
 
-#tuukrdhrbj .gt_footnote_marks {
+#hngmbjbciu .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="tuukrdhrbj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="hngmbjbciu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="6" class="gt_heading gt_title gt_font_normal" style>Model of Distress by Denomination with the base category is `No Religion'</th>
@@ -2530,8 +2597,8 @@ subtitle <span class='op'>=</span> <span class='st'>"Christians are a little mor
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz1</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Relid</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Relid</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>nz1</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2613,11 +2680,11 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nza</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Relid</span>, <span class='va'>BigDoms</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Relid</span>, <span class='va'>BigDoms</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> 
 <span class='va'>nzb</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Relid</span>, <span class='va'>BigDoms</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Relid</span>, <span class='va'>BigDoms</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>BigDoms</span> <span class='op'>!=</span><span class='st'>"Not_Rel"</span><span class='op'>)</span>
 
 <span class='co'># compare</span>
@@ -2650,8 +2717,8 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz1</span> <span class='op'>&lt;-</span> <span class='va'>nz1</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Relid</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Relid</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>nz1</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2669,8 +2736,8 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz1</span> <span class='op'>&lt;-</span> <span class='va'>nz1</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Relid</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Relid</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>religousid_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>nz1</span><span class='op'>)</span>
 </code></pre>
@@ -2680,11 +2747,11 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz1</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>religousid_c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>FALSE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>religousid_c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>Relid</span>, scale <span class='op'>=</span> <span class='cn'>FALSE</span>, center  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># inspect new indicator</span>
 <span class='va'>nz1</span><span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Relid</span>,<span class='va'>religousid_c</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Relid</span>,<span class='va'>religousid_c</span><span class='op'>)</span><span class='op'>%&gt;%</span>
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2697,11 +2764,11 @@ $ religousid_c &lt;dbl[,1]&gt; &lt;matrix[23 x 1]&gt;</code></pre>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz1</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>charitydonate_log <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>CharityDonate</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>charitydonate_log <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>CharityDonate</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># inspect new indicator</span>
 <span class='va'>nz1</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>CharityDonate</span>,<span class='va'>charitydonate_log</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>CharityDonate</span>,<span class='va'>charitydonate_log</span><span class='op'>)</span><span class='op'>%&gt;%</span>
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2715,7 +2782,7 @@ $ charitydonate_log &lt;dbl&gt; 6.908755, 0.000000, 6.216606, 6.216606, 3.…</c
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>date <span class='op'>=</span> <span class='fu'>make_date</span><span class='op'>(</span>year <span class='op'>=</span> <span class='fl'>2009</span>, month <span class='op'>=</span> <span class='fl'>6</span>, day <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>TSCORE</span><span class='op'>)</span>  <span class='co'># first data of data collection in this study</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>date <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/make_datetime.html'>make_date</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='fl'>2009</span>, month <span class='op'>=</span> <span class='fl'>6</span>, day <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>TSCORE</span><span class='op'>)</span>  <span class='co'># first data of data collection in this study</span>
 </code></pre>
 </div>
 </div>
@@ -2723,7 +2790,7 @@ $ charitydonate_log &lt;dbl&gt; 6.908755, 0.000000, 6.216606, 6.216606, 3.…</c
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2735,16 +2802,16 @@ $ charitydonate_log &lt;dbl&gt; 6.908755, 0.000000, 6.216606, 6.216606, 3.…</c
  3rd Qu.:2019-12-05  
  Max.   :2020-10-10  </code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>int</span><span class='op'>&lt;-</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></span><span class='op'>(</span><span class='fu'>ymd</span><span class='op'>(</span><span class='st'>"2018-01-02"</span><span class='op'>)</span>, <span class='fu'>ymd</span><span class='op'>(</span><span class='st'>"2020-10-06"</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>int</span><span class='op'>&lt;-</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></span><span class='op'>(</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2018-01-02"</span><span class='op'>)</span>, <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-10-06"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>#time in years</span>
-<span class='fu'>time_length</span><span class='op'>(</span><span class='va'>int</span>, <span class='st'>"year"</span><span class='op'>)</span>
+<span class='fu'><a href='http://lubridate.tidyverse.org/reference/time_length.html'>time_length</a></span><span class='op'>(</span><span class='va'>int</span>, <span class='st'>"year"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 2.759563</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#time in minutes</span>
-<span class='fu'>time_length</span><span class='op'>(</span><span class='va'>int</span>, <span class='st'>"minutes"</span><span class='op'>)</span>
+<span class='fu'><a href='http://lubridate.tidyverse.org/reference/time_length.html'>time_length</a></span><span class='op'>(</span><span class='va'>int</span>, <span class='st'>"minutes"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 1451520</code></pre>
@@ -2808,7 +2875,7 @@ $ charitydonate_log &lt;dbl&gt; 6.908755, 0.000000, 6.216606, 6.216606, 3.…</c
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tn</span><span class='op'>&lt;-</span><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>date</span>,<span class='va'>KESSLER6sum</span>,<span class='va'>Id</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>date</span>,<span class='va'>KESSLER6sum</span>,<span class='va'>Id</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>%&gt;%</span>
   <span class='fu'>summarise</span><span class='op'>(</span>
    av_distress <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
@@ -2839,15 +2906,15 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Id</span>, <span class='va'>date</span>, <span class='va'>KESSLER6sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>weekdays <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/day.html'>wday</a></span><span class='op'>(</span><span class='va'>date</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Id</span>, <span class='va'>date</span>, <span class='va'>KESSLER6sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>weekdays <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/day.html'>wday</a></span><span class='op'>(</span><span class='va'>date</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>weekdays</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>summarise</span><span class='op'>(</span>
     mn_k6 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
     sd_k6 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
     n_k6w <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
     se_k6 <span class='op'>=</span> <span class='va'>sd_k6</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>n_k6w</span><span class='op'>)</span>,
     lw_ci <span class='op'>=</span> <span class='va'>mn_k6</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_k6w</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_k6</span>,
     up_ci <span class='op'>=</span> <span class='va'>mn_k6</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_k6w</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_k6</span>
@@ -2867,14 +2934,14 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>GenCohort</span>, <span class='va'>KESSLER6sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>GenCohort</span>, <span class='va'>KESSLER6sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>GenCohort</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>summarise</span><span class='op'>(</span>
     mn_k6 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
     sd_k6 <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
     n_k6w <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
     se_k6 <span class='op'>=</span> <span class='va'>sd_k6</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>n_k6w</span><span class='op'>)</span>,
     lw_ci <span class='op'>=</span> <span class='va'>mn_k6</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_k6w</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_k6</span>,
     up_ci <span class='op'>=</span> <span class='va'>mn_k6</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_k6w</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_k6</span>
@@ -2942,13 +3009,13 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://nickch-k.github.io/pmdplyr'>"pmdplyr"</a></span><span class='op'>)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span><span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-   <span class='fu'>mutate</span><span class='op'>(</span>lag_k6 <span class='op'>=</span> <span class='fu'><a href='https://nickch-k.github.io/pmdplyr/reference/tlag.html'>tlag</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>lag_k6 <span class='op'>=</span> <span class='fu'><a href='https://nickch-k.github.io/pmdplyr/reference/tlag.html'>tlag</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>,
     .i <span class='op'>=</span> <span class='va'>Id</span>, <span class='co'># id variable</span>
     .t <span class='op'>=</span> <span class='va'>wave</span> <span class='co'># time series variable, needs to be numeric</span>
   <span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>diff_k6 <span class='op'>=</span> <span class='va'>lag_k6</span> <span class='op'>-</span> <span class='va'>KESSLER6sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Id</span>,<span class='va'>Wave</span>,<span class='va'>KESSLER6sum</span>,<span class='va'>diff_k6</span>,<span class='va'>Emp.JobSecure</span>,<span class='va'>Employed</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>diff_k6 <span class='op'>=</span> <span class='va'>lag_k6</span> <span class='op'>-</span> <span class='va'>KESSLER6sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Id</span>,<span class='va'>Wave</span>,<span class='va'>KESSLER6sum</span>,<span class='va'>diff_k6</span>,<span class='va'>Emp.JobSecure</span>,<span class='va'>Employed</span><span class='op'>)</span><span class='op'>%&gt;%</span>
   <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>diff_k6</span><span class='op'>)</span><span class='op'>)</span> 
 </code></pre>
 </div>
@@ -2958,7 +3025,7 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Wave</span> <span class='op'>==</span> <span class='fl'>2019</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>employed_employsecurity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>Employed</span> <span class='op'>==</span><span class='fl'>1</span>, <span class='va'>Emp.JobSecure</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>employed_employsecurity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>Employed</span> <span class='op'>==</span><span class='fl'>1</span>, <span class='va'>Emp.JobSecure</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>.</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>diff_k6</span>, fill <span class='op'>=</span> <span class='va'>employed_employsecurity</span><span class='op'>)</span> <span class='op'>)</span><span class='op'>+</span>
    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"Difference in K6 eleveation (cases above 5)"</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2977,7 +3044,7 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># create data frame with new variable Zero is for the unemeployed. </span>
 <span class='va'>dfnew</span> <span class='op'>&lt;-</span> <span class='va'>df</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Wave</span> <span class='op'>==</span> <span class='fl'>2019</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>employed_employsecurity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>Employed</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='va'>Emp.JobSecure</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>employed_employsecurity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>Employed</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='va'>Emp.JobSecure</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>employed_employsecurity</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dfnew</span><span class='op'>)</span>
@@ -3011,7 +3078,7 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># create dataframe with the variables we need</span>
 <span class='va'>dfnew2</span> <span class='op'>&lt;-</span> <span class='va'>df</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>employed_employsecurity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>Employed</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='va'>Emp.JobSecure</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>employed_employsecurity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>Employed</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='va'>Emp.JobSecure</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>employed_employsecurity</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>employsecurity_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>employed_employsecurity</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -3034,14 +3101,14 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <p>Put differently, our workflow will require much more than descriptive statistics.</p>
 <h2 id="data-summary">Data summary</h2>
 <h3 id="summarise-all-your-data">Summarise all your data</h3>
-<h4 id="the-skimr-package">The <code>skimr</code> package</h4>
+<h3 id="the-skimr-package">The <code>skimr</code> package</h3>
 <p>The skimmer package can be helpful in detecting problems. A drawback note that it is interpreting all factors as numbers).</p>
 <p>For example. ( I won’t run the following code, you will do so for your homework).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://docs.ropensci.org/skimr/'>"skimr"</a></span><span class='op'>)</span>
 <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='co'>#not useful</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='co'>#not useful</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
@@ -3052,7 +3119,7 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>KESSLER6sum</span>,<span class='va'>HLTH.SleepHours</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>,<span class='va'>HLTH.SleepHours</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='op'>)</span> 
 </code></pre>
 </div>
@@ -3330,7 +3397,7 @@ HLTH.SleepHours
 </tbody>
 </table>
 </div>
-<h4 id="table1-other-canned-tables"><code>Table1</code> &amp; other canned tables</h4>
+<h3 id="table1-other-canned-table-packages"><code>Table1</code> &amp; other canned table packages</h3>
 <p>In earlier seminars, we encountered the <code>table1</code> package, which makes really great html tables:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
@@ -3919,12 +3986,12 @@ GenZ: born &gt;= 1996
 </table>
 </div>
 <h3 id="create-a-table-using-pipe-functions">Create a table using pipe functions</h3>
-<p>Above we saw how to create a cluncky table using <code>table(x)</code>. However, R has lots of functionality to enable better.</p>
+<p>Above we saw how to create a clunky table using <code>table(x)</code>. However, R has lots of functionality to enable better.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://haozhu233.github.io/kableExtra/'>kableExtra</a></span><span class='op'>)</span>
 <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>k6cats</span>, <span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>k6cats</span>, <span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>k6cats</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span> <span class='va'>Wave</span>, <span class='va'>k6cats</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>summarise</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
@@ -4013,7 +4080,7 @@ Serious Distress
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>k6cats</span>, <span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>k6cats</span>, <span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>k6cats</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span> <span class='va'>Wave</span>, <span class='va'>k6cats</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>summarise</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
@@ -4187,7 +4254,7 @@ Serious Distress
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>bzsec</span><span class='op'>&lt;-</span><span class='va'>nz</span><span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>
     <span class='va'>Your.Future.Security</span>,
     <span class='va'>Standard.Living</span>,
     <span class='va'>NZ.Economic.Situation</span>,
@@ -4197,7 +4264,7 @@ Serious Distress
     <span class='va'>Id</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mutate_all</span><span class='op'>(</span><span class='va'>.</span>, <span class='va'>as.numeric</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='co'>#make numeric </span>
-  <span class='fu'>mutate</span><span class='op'>(</span>Id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Id</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Id</span><span class='op'>)</span>,
          CharityDonate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>CharityDonate</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='co'># make Id a factor for the </span>
 
 <span class='co'># make a correlation plot using the "correlation" package from easystates</span>
@@ -4205,8 +4272,7 @@ Serious Distress
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/correlation/'>correlation</a></span><span class='op'>)</span>
 <span class='va'>p1</span><span class='op'>&lt;-</span><span class='va'>bzsec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span>partial <span class='op'>=</span> <span class='cn'>FALSE</span>, multilevel <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span> 
-  <span class='fu'>theme_blackboard</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -4231,12 +4297,12 @@ Emp.JobSecure          |          0.03 |               |                        
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/correlation/'>correlation</a></span><span class='op'>)</span>
 <span class='va'>p2</span><span class='op'>&lt;-</span><span class='va'>bzsec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>Id</span><span class='op'>)</span><span class='op'>%&gt;%</span> <span class='co'># get rid of grouping variable</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Id</span><span class='op'>)</span><span class='op'>%&gt;%</span> <span class='co'># get rid of grouping variable</span>
   <span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span>partial <span class='op'>=</span> <span class='cn'>FALSE</span>, multilevel <span class='op'>=</span> <span class='cn'>FALSE</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='co'>#print summary</span>
 <span class='va'>bzsec</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>Id</span><span class='op'>)</span><span class='op'>%&gt;%</span> <span class='co'># get rid of grouping variable</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Id</span><span class='op'>)</span><span class='op'>%&gt;%</span> <span class='co'># get rid of grouping variable</span>
   <span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span>partial <span class='op'>=</span> <span class='cn'>FALSE</span>, multilevel <span class='op'>=</span> <span class='cn'>FALSE</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
@@ -4273,7 +4339,7 @@ p-value adjustment method: Holm (1979)</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># create a demographic dataframe</span>
 <span class='va'>nz_demagraphics</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Age</span>, <span class='va'>GenCohort</span>, <span class='va'>Male</span>, <span class='va'>Edu</span>, <span class='va'>Pol.Orient</span>, <span class='va'>Relid</span>, <span class='va'>BigDoms</span>, <span class='va'>Wave</span><span class='op'>)</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Age</span>, <span class='va'>GenCohort</span>, <span class='va'>Male</span>, <span class='va'>Edu</span>, <span class='va'>Pol.Orient</span>, <span class='va'>Relid</span>, <span class='va'>BigDoms</span>, <span class='va'>Wave</span><span class='op'>)</span>
 
 <span class='co'># now a nice way to save you time when reporting</span>
 <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span>
@@ -4294,7 +4360,7 @@ p-value adjustment method: Holm (1979)</code></pre>
 <p>Try running the following code on your own:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>report_table</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://easystats.github.io/report/reference/report_table.html'>report_table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>r</span>
 </code></pre>
 </div>
@@ -4302,14 +4368,14 @@ p-value adjustment method: Holm (1979)</code></pre>
 <p>Here is another method, which you can try on your own</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>cite_packages</span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://easystats.github.io/report/reference/report.sessionInfo.html'>cite_packages</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <p>Here’s a demographic table (try on your own)</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>report_table</span><span class='op'>(</span><span class='va'>nz_demagraphics</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://easystats.github.io/report/reference/report_table.html'>report_table</a></span><span class='op'>(</span><span class='va'>nz_demagraphics</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -4319,7 +4385,7 @@ p-value adjustment method: Holm (1979)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://easystats.github.io/report/'>"report"</a></span><span class='op'>)</span>
 <span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>
     <span class='st'>"Wave"</span>, 
     <span class='st'>"Age"</span>,
     <span class='st'>"Male"</span>,
@@ -4373,272 +4439,13 @@ p-value adjustment method: Holm (1979)</code></pre>
 <p>This package is brought to you by <a href="https://github.com/easystats/easystats">easystats</a></p>
 <h3 id="measures">Measures</h3>
 <p>When reporting your study, it is extremely important to include information about your measure. For example:</p>
-<p>We measure psychological distress using the Kessler-6 scale <span class="citation" data-cites="Kessler2002-ex">(<a href="#ref-Kessler2002-ex" role="doc-biblioref">R. C. Kessler et al. 2002</a>)</span>, which exhibits strong diagnostic concordance for moderate and severe psychological distress in large, cross-cultural samples <span class="citation" data-cites="Kessler2010-xi"><a href="#ref-Prochaska2012-dy" role="doc-biblioref">Prochaska et al.</a> (<a href="#ref-Prochaska2012-dy" role="doc-biblioref">2012</a>)</span>. Participants rated during the past 30 days, how often did… (a) “you feel hopeless”; (b) “you feel so depressed that nothing could cheer you up”; (c) “you feel restless or fidgety”; (d)“you feel that everything was an effort”; (e) “you feel worthless”; (f) “you feel nervous?” Ordinal response alternatives for the Kessler-6 are: “None of the time”; “A little of the time”; “Some of the time”; “Most of the time”; “All of the time.”</p>
-<p>We report sample descriptive statistics for indicators of personal Kessler-6 distress in Table <a href="#fig:desckK6"><strong>??</strong></a>.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/benjaminrich/table1'>table1</a></span><span class='op'>)</span>
-<span class='fu'>table1</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/table1/man/table1.html'>table1</a></span><span class='op'>(</span>
-  <span class='op'>~</span> <span class='va'>KESSLER6sum</span> <span class='op'>+</span>
-    <span class='va'>FeelHopeless</span> <span class='op'>+</span>
-    <span class='va'>FeelDepressed</span> <span class='op'>+</span>
-    <span class='va'>FeelRestless</span> <span class='op'>+</span>
-    <span class='va'>EverythingIsEffort</span> <span class='op'>+</span>
-    <span class='va'>FeelWorthless</span> <span class='op'>+</span>
-    <span class='va'>FeelNervous</span> <span class='op'>|</span> <span class='va'>Wave</span>,
-  data <span class='op'>=</span> <span class='va'>nz</span>,
-  overall <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-</code></pre>
-</div>
-<div class="Rtable1"><table class="Rtable1">
-<thead>
-<tr>
-<th class='rowlabel firstrow lastrow'></th>
-<th class='firstrow lastrow'><span class='stratlabel'>2018<br><span class='stratn'>(N=2068)</span></span></th>
-<th class='firstrow lastrow'><span class='stratlabel'>2019<br><span class='stratn'>(N=2068)</span></span></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class='rowlabel firstrow'><span class='varlabel'>KESSLER6sum</span></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>Mean (SD)</td>
-<td>5.07 (3.93)</td>
-<td>5.20 (4.01)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Median [Min, Max]</td>
-<td>4.00 [0, 23.0]</td>
-<td>4.00 [0, 22.0]</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>15 (0.7%)</td>
-<td class='lastrow'>17 (0.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel firstrow'><span class='varlabel'>FeelHopeless</span></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>None Of The Time</td>
-<td>1046 (50.6%)</td>
-<td>977 (47.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>A Little Of The Time</td>
-<td>600 (29.0%)</td>
-<td>639 (30.9%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Some Of The Time</td>
-<td>338 (16.3%)</td>
-<td>349 (16.9%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Most Of The Time</td>
-<td>54 (2.6%)</td>
-<td>79 (3.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>All Of The Time</td>
-<td>4 (0.2%)</td>
-<td>4 (0.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>26 (1.3%)</td>
-<td class='lastrow'>20 (1.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel firstrow'><span class='varlabel'>FeelDepressed</span></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>None Of The Time</td>
-<td>1469 (71.0%)</td>
-<td>1434 (69.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>A Little Of The Time</td>
-<td>361 (17.5%)</td>
-<td>377 (18.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Some Of The Time</td>
-<td>170 (8.2%)</td>
-<td>193 (9.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Most Of The Time</td>
-<td>43 (2.1%)</td>
-<td>35 (1.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>All Of The Time</td>
-<td>5 (0.2%)</td>
-<td>5 (0.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>20 (1.0%)</td>
-<td class='lastrow'>24 (1.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel firstrow'><span class='varlabel'>FeelRestless</span></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>None Of The Time</td>
-<td>535 (25.9%)</td>
-<td>517 (25.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>A Little Of The Time</td>
-<td>763 (36.9%)</td>
-<td>757 (36.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Some Of The Time</td>
-<td>594 (28.7%)</td>
-<td>608 (29.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Most Of The Time</td>
-<td>138 (6.7%)</td>
-<td>146 (7.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>All Of The Time</td>
-<td>16 (0.8%)</td>
-<td>15 (0.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>22 (1.1%)</td>
-<td class='lastrow'>25 (1.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel firstrow'><span class='varlabel'>EverythingIsEffort</span></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>None Of The Time</td>
-<td>551 (26.6%)</td>
-<td>544 (26.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>A Little Of The Time</td>
-<td>795 (38.4%)</td>
-<td>804 (38.9%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Some Of The Time</td>
-<td>501 (24.2%)</td>
-<td>502 (24.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Most Of The Time</td>
-<td>158 (7.6%)</td>
-<td>156 (7.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>All Of The Time</td>
-<td>40 (1.9%)</td>
-<td>35 (1.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>23 (1.1%)</td>
-<td class='lastrow'>27 (1.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel firstrow'><span class='varlabel'>FeelWorthless</span></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>None Of The Time</td>
-<td>1433 (69.3%)</td>
-<td>1407 (68.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>A Little Of The Time</td>
-<td>356 (17.2%)</td>
-<td>375 (18.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Some Of The Time</td>
-<td>186 (9.0%)</td>
-<td>195 (9.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Most Of The Time</td>
-<td>67 (3.2%)</td>
-<td>60 (2.9%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>All Of The Time</td>
-<td>7 (0.3%)</td>
-<td>9 (0.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>19 (0.9%)</td>
-<td class='lastrow'>22 (1.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel firstrow'><span class='varlabel'>FeelNervous</span></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>None Of The Time</td>
-<td>620 (30.0%)</td>
-<td>568 (27.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>A Little Of The Time</td>
-<td>789 (38.2%)</td>
-<td>850 (41.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Some Of The Time</td>
-<td>482 (23.3%)</td>
-<td>468 (22.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Most Of The Time</td>
-<td>146 (7.1%)</td>
-<td>133 (6.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>All Of The Time</td>
-<td>13 (0.6%)</td>
-<td>24 (1.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>18 (0.9%)</td>
-<td class='lastrow'>25 (1.2%)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>In addition to the packages already mentioned, the <code>gtsummary</code> package for nice functionality when creating tables. Here’s an example:</p>
+<p>We measure psychological distress using the Kessler-6 scale <span class="citation" data-cites="Kessler2002-ex">(<a href="#ref-Kessler2002-ex" role="doc-biblioref">R. C. Kessler et al. 2002</a>)</span>, which exhibits strong diagnostic concordance for moderate and severe psychological distress in large, cross-cultural samples <span class="citation" data-cites="Kessler2010-xi"><a href="#ref-Prochaska2012-dy" role="doc-biblioref">Prochaska et al.</a> (<a href="#ref-Prochaska2012-dy" role="doc-biblioref">2012</a>)</span>. Participants rated during the past 30 days, how often did… (a) “<span class="math inline">\(\dots\)</span> you feel hopeless”; (b) “<span class="math inline">\(\dots\)</span> you feel so depressed that nothing could cheer you up”; (c) <span class="math inline">\(\dots\)</span> you feel restless or fidgety”; (d)“<span class="math inline">\(\dots\)</span> you feel that everything was an effort”; (e) “<span class="math inline">\(\dots\)</span> you feel worthless”; (f) “<span class="math inline">\(\dots\)</span> you feel nervous?” Ordinal response alternatives for the Kessler-6 are: “None of the time”; “A little of the time”; “Some of the time”; “Most of the time”; “All of the time.”</p>
+<p>We report sample descriptive statistics for indicators of personal Kessler-6 distress below in <a href="#k6tab">Table</a>1.</p>
+<strong>Table 1</strong><a id="k6tab"></a>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ddsjoberg/gtsummary'>gtsummary</a></span><span class='op'>)</span>
-<span class='va'>nz</span> <span class='op'>%&gt;%</span>
+<span class='va'>tb1</span> <span class='op'>&lt;-</span><span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>
     <span class='va'>KESSLER6sum</span>,
     <span class='va'>FeelHopeless</span>,
@@ -4657,14 +4464,16 @@ p-value adjustment method: Holm (1979)</code></pre>
     <span class='op'>)</span>,
     digits <span class='op'>=</span> <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/select_helpers.html'>all_continuous</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>2</span>,
     missing_text <span class='op'>=</span> <span class='st'>"(Missing)"</span>
-  <span class='op'>)</span>
+  <span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/bold_italicize_labels_levels.html'>bold_labels</a></span><span class='op'>(</span><span class='op'>)</span> 
+<span class='va'>tb1</span>
 </code></pre>
 </div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#yqyvvhdwoy .gt_table {
+#myqyvvhdwo .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4689,7 +4498,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_heading {
+#myqyvvhdwo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4701,7 +4510,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_title {
+#myqyvvhdwo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4711,7 +4520,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-bottom-width: 0;
 }
 
-#yqyvvhdwoy .gt_subtitle {
+#myqyvvhdwo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4721,13 +4530,13 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-top-width: 0;
 }
 
-#yqyvvhdwoy .gt_bottom_border {
+#myqyvvhdwo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_col_headings {
+#myqyvvhdwo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4742,7 +4551,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_col_heading {
+#myqyvvhdwo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4762,7 +4571,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   overflow-x: hidden;
 }
 
-#yqyvvhdwoy .gt_column_spanner_outer {
+#myqyvvhdwo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4774,15 +4583,15 @@ p-value adjustment method: Holm (1979)</code></pre>
   padding-right: 4px;
 }
 
-#yqyvvhdwoy .gt_column_spanner_outer:first-child {
+#myqyvvhdwo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yqyvvhdwoy .gt_column_spanner_outer:last-child {
+#myqyvvhdwo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yqyvvhdwoy .gt_column_spanner {
+#myqyvvhdwo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4794,7 +4603,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   width: 100%;
 }
 
-#yqyvvhdwoy .gt_group_heading {
+#myqyvvhdwo .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4816,7 +4625,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   vertical-align: middle;
 }
 
-#yqyvvhdwoy .gt_empty_group_heading {
+#myqyvvhdwo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4831,15 +4640,15 @@ p-value adjustment method: Holm (1979)</code></pre>
   vertical-align: middle;
 }
 
-#yqyvvhdwoy .gt_from_md > :first-child {
+#myqyvvhdwo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yqyvvhdwoy .gt_from_md > :last-child {
+#myqyvvhdwo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yqyvvhdwoy .gt_row {
+#myqyvvhdwo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4858,7 +4667,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   overflow-x: hidden;
 }
 
-#yqyvvhdwoy .gt_stub {
+#myqyvvhdwo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4870,7 +4679,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   padding-left: 12px;
 }
 
-#yqyvvhdwoy .gt_summary_row {
+#myqyvvhdwo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4880,7 +4689,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   padding-right: 5px;
 }
 
-#yqyvvhdwoy .gt_first_summary_row {
+#myqyvvhdwo .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4890,7 +4699,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_grand_summary_row {
+#myqyvvhdwo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4900,7 +4709,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   padding-right: 5px;
 }
 
-#yqyvvhdwoy .gt_first_grand_summary_row {
+#myqyvvhdwo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4910,11 +4719,11 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_striped {
+#myqyvvhdwo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yqyvvhdwoy .gt_table_body {
+#myqyvvhdwo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4923,7 +4732,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_footnotes {
+#myqyvvhdwo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4937,13 +4746,13 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_footnote {
+#myqyvvhdwo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#yqyvvhdwoy .gt_sourcenotes {
+#myqyvvhdwo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4957,46 +4766,46 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yqyvvhdwoy .gt_sourcenote {
+#myqyvvhdwo .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#yqyvvhdwoy .gt_left {
+#myqyvvhdwo .gt_left {
   text-align: left;
 }
 
-#yqyvvhdwoy .gt_center {
+#myqyvvhdwo .gt_center {
   text-align: center;
 }
 
-#yqyvvhdwoy .gt_right {
+#myqyvvhdwo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yqyvvhdwoy .gt_font_normal {
+#myqyvvhdwo .gt_font_normal {
   font-weight: normal;
 }
 
-#yqyvvhdwoy .gt_font_bold {
+#myqyvvhdwo .gt_font_bold {
   font-weight: bold;
 }
 
-#yqyvvhdwoy .gt_font_italic {
+#myqyvvhdwo .gt_font_italic {
   font-style: italic;
 }
 
-#yqyvvhdwoy .gt_super {
+#myqyvvhdwo .gt_super {
   font-size: 65%;
 }
 
-#yqyvvhdwoy .gt_footnote_marks {
+#myqyvvhdwo .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="yqyvvhdwoy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="myqyvvhdwo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -5007,7 +4816,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   </thead>
   <tbody class="gt_table_body">
     <tr>
-      <td class="gt_row gt_left">KESSLER6sum</td>
+      <td class="gt_row gt_left" style="font-weight: bold;">KESSLER6sum</td>
       <td class="gt_row gt_center">5.07 (3.93)</td>
       <td class="gt_row gt_center">5.20 (4.01)</td>
     </tr>
@@ -5017,7 +4826,7 @@ p-value adjustment method: Holm (1979)</code></pre>
       <td class="gt_row gt_center">17</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">FeelHopeless</td>
+      <td class="gt_row gt_left" style="font-weight: bold;">FeelHopeless</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
     </tr>
@@ -5052,7 +4861,7 @@ p-value adjustment method: Holm (1979)</code></pre>
       <td class="gt_row gt_center">20</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">FeelDepressed</td>
+      <td class="gt_row gt_left" style="font-weight: bold;">FeelDepressed</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
     </tr>
@@ -5087,7 +4896,7 @@ p-value adjustment method: Holm (1979)</code></pre>
       <td class="gt_row gt_center">24</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">FeelRestless</td>
+      <td class="gt_row gt_left" style="font-weight: bold;">FeelRestless</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
     </tr>
@@ -5122,7 +4931,7 @@ p-value adjustment method: Holm (1979)</code></pre>
       <td class="gt_row gt_center">25</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">EverythingIsEffort</td>
+      <td class="gt_row gt_left" style="font-weight: bold;">EverythingIsEffort</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
     </tr>
@@ -5157,7 +4966,7 @@ p-value adjustment method: Holm (1979)</code></pre>
       <td class="gt_row gt_center">27</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">FeelWorthless</td>
+      <td class="gt_row gt_left" style="font-weight: bold;">FeelWorthless</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
     </tr>
@@ -5192,7 +5001,7 @@ p-value adjustment method: Holm (1979)</code></pre>
       <td class="gt_row gt_center">22</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">FeelNervous</td>
+      <td class="gt_row gt_left" style="font-weight: bold;">FeelNervous</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
     </tr>
@@ -5244,8 +5053,8 @@ p-value adjustment method: Holm (1979)</code></pre>
   </tfoot>
 </table></div>
 </div>
-<p>Also, check out Johannes’s mini-lecture on <code>papaja.</code></p>
-<h3 id="order-of-method">Order of Method</h3>
+<p>Note that you can use the <code>gtsummary</code> package to create in-line referencing. For example: Average Kessler-6 distress in 2018 was 5.07 (3.93) and in 2019 was 5.20 (4.01).</p>
+<h3 id="order-of-your-method-section">Order of your Method section</h3>
 <p>The following is a brief guide to describing your method. We’ll be returning to report writing in future weeks. For now, I just want to put this on the table for you. The advice is just a guide.</p>
 <table>
 <colgroup>
@@ -5298,7 +5107,7 @@ p-value adjustment method: Holm (1979)</code></pre>
 <h2 id="appendix-2-johanness-mini-lecture-on-the-papaja-package">Appendix 2 Johannes’s mini-lecture on the <code>papaja</code> package</h2>
 <p><a href="https://www.dropbox.com/s/ap96nfnvs833zq1/yaml.pptx?dl=0">Lecture</a></p>
 <p><a href="https://www.dropbox.com/s/bvdo6z55kgfr0ri/technology.Rmd?dl=0">Papaja R markdown template</a></p>
-<h2 id="appendix-3">Appendix 3</h2>
+<h2 id="appendix-3-style-advice-about-research-methods">Appendix 3 Style advice about research methods</h2>
 <p>APA style advice <a href="https://opentextbc.ca/researchmethods/chapter/american-psychological-association-apa-style/">here</a></p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">

@@ -25,18 +25,18 @@ knitr::opts_chunk$set(echo = FALSE)
 ###  **Weekly journal entries** (about 100 - 200 words) 
 (10 X journals = **10%**)
 
-These are **due every Tuesday ** during term one week after the class in which the assignment was given.
+Journals are  **due every Tuesday one week after the relevant's weeks week lecture.**  So the final journal is due on 1 June 2021 (see the journal/workbook submission schedule below).
 
 Format: you will document your insights, questions, and frustrations in a weekly journal.  This record should include how you have sought help to address your questions, and how you have offered help. The purpose of the journals are to cultivate skills for interacting with the R community, and for documenting the research process. 
   
-### **Weekly workbook problem sets** 
+### **Weekly workbook / problem sets** 
 
 Weekly workbooks are [here](https://go-bayes.github.io/psych-447/index_workbooks.html)
 (10 x problem sets **= 50%**)
 
 We will have 12 workbooks, but you will only be marked on your best 10. You may therefore skip 2 x workbooks. You also may due 11 or 12 workbooks, but only the top 10 will count. 
 
-Problem sets are also **due every Tuesday** during term before the following week's class or in the case of the final week, on 1 June 2021 (see the workbook submission schedule below).
+Workbooks are  **due every Tuesday one week after the relevant's weeks week lecture.**  So the final workbook is due on 1 June 2021 (see the journal/workbook submission schedule below).
 
 ### Final report consisting of:
 
@@ -46,39 +46,23 @@ Problem sets are also **due every Tuesday** during term before the following wee
   
   **= 40%**
 
-## Due dates for journals:
-
-  - Week 1: Due FRIDAY 27th February
-  - Week 2: FRIDAY Due March 5th
-  - Week 3: FRIDAY Due March 12th
-  - Week 4: FRIDAY Due March 19th
-  - Week 5: FRIDAY Due March 26th
-  - Week 6: FRIDAY Due April 2nd
-  - Week 7: FRIDAY Due April 23rd
-  - Week 8: FRIDAY April 30th
-  - Week 9: FRIDAY May 7th
-  - Week 10: FRIDAY May 14th
-  - Week 11: FRIDAY May 21st
-  - Week 12: FRIDAY Due May 28th
-
-
-## Due dates for problem sets
+## Due dates for problem sets and journals
 
 
 One week after the relevant lecture, hence:
 
-  - Week 1 workbook due: MAR 2
-  - Week 2 workbook due: MAR 9
-  - Week 3 workbook due: MAR 16
-  - Week 4 workbook due: MAR 23
-  - Week 5 workbook due: MAR 30
-  - Week 6 workbook due: APRI 20
-  - Week 7 workbook due: APRIL 27
-  - Week 8 workbook due: MAY 4
-  - Week 9 workbook due: MAY 11
-  - Week 10 workbook due: MAY 18 
-  - Week 11 workbook due: MAY 25
-  - Week 12 workbook due: JUNE 1st
+  - Week 1 workbook/journal due: MAR 2
+  - Week 2 workbook/journal due: MAR 9
+  - Week 3 workbook/journal due: MAR 16
+  - Week 4 workbook/journal due: MAR 23
+  - Week 5 workbook/journal due: MAR 30
+  - Week 6 workbook/journal due: APRI 20
+  - Week 7 workbook/journal due: APRIL 27
+  - Week 8 workbook/journal due: MAY 4
+  - Week 9 workbook/journal due: MAY 11
+  - Week 10 workbook/journal due: MAY 18 
+  - Week 11 workbook/journal due: MAY 25
+  - Week 12 workbook/journal due: JUNE 1st
 
 ## Due date for final project
 
@@ -178,7 +162,7 @@ All assessments to be submitted on Blackboard
 
 ### Weekly journals
 
-- as .Rmd files *and* as .doc or .pdf files (.docx,  .rtf  and .txt = OK too)
+- Except for the first journal in which you are to submit an Rmd file, please submit your journals on Blackboard as text files in the relevant text box.
 
 ### Weekly workboks
 

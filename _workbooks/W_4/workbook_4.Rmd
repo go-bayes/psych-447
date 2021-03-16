@@ -24,18 +24,29 @@ output:
 ### Libraries
 
 ```{r}
-library(tidyverse)
-library(lubridate)
-library(pmdplyr)
-library(correlation)
-library(ggraph)
-library(patchwork)
+if (!require(skimr)) install.packages('skimr')
+if (!require(lubridate)) install.packages('lubridate')
 
+if (!requireNamespace("devtools")) {
+  install.packages("devtools")
+}
+if (!require(easystats)) devtools::install_github("easystats/easystats")
+if (!require(ggthemes)) install.packages('ggthemes')
+if (!require(pmdplyr)) install.packages("pmdplyr")
+if (!require(kableExtra)) install.packages("kableExtra")
+# this should be part of easystats but in case not:
+if (!require(report)) install.packages('report')
+if (!require(brms)) install.packages('brms')
+if (!require(lme4)) install.packages('lme4')
+if (!require(table1)) install.packages('table1')
+if (!require(modelsummary)) install.packages("modelsummary")
+if (!require(naniar)) install.packages("naniar")
+if (!require(ggraph)) install.packages("ggraph")
+if (!require(gtsummary)) install.packages("gtsummary")
 ```
-
-Run this code
 ```{r eval=FALSE}
-#easystats::install_easystats_latest()
+# You might need to run this
+# easystats::install_easystats_latest()
 ```
 
 
@@ -139,7 +150,14 @@ Briefly explain why some intervals are wider than others.
 
 Created a correlation graph for the items in the Kessler 6 scale
 
-These are `FeelHopeless,FeelDepressed,FeelRestless,EverythingIsEffort,FeelWorthless,FeelNervous`
+These are:
+
+-`FeelHopeless`,
+-`FeelDepressed`,
+-`FeelRestless`,
+-`EverythingIsEffort`,
+-`FeelWorthless`,
+-`FeelNervous`
 
 Hint you must transform the factors into integers.
 
@@ -155,7 +173,7 @@ Include your your name, affiliation, contributors and r packages used in your an
 ### Q10 `Patchwork`
 
 
-Use the `patchwork` library to create a figure with two plots on top of each other. 
+Use the `patchwork` library to create a figure with two plots on top of each other. Use the `tag_levels` function to index each of the two plots. You may create whatever plot you like. 
 
 
 

@@ -1,0 +1,341 @@
+---
+title: "Week 2 Workbook Answers"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    highlight: haddock
+    highlight_downlit: false
+---
+
+
+### Create Repos (if you have not already)
+
+  1. Create a repository for 447-journals (if you don't have one already)
+  2. Create a repository for your 447-workbooks. 
+  3. You should initialise a Readme statement and a .gitignore document (make sure to click the R .gitignore) 
+
+
+### Solution
+
+Students should confirm that they've done this
+
+
+### Create R projects
+
+  1. Create R-projects in each of these repositories.
+  2. In your workbooks folder, using the `+ New Folder` command, create a folder called `data` (or similar) This is where you'll store your data.
+  4. Create a file called `figs` (where you'll stor your figures)
+  5 Create a folder called `workbooks`, or similar this is where you'll store your weekly workbooks. 
+
+### Solution
+
+If students did not create a data folder, then the `here` package task won't work.
+  
+### Workbook 2
+
+ 
+### Q1 Open an R markdown document, and filling in your name
+
+### Q2. The first code chunk is for your preferences. 
+
+
+```{r setup, include=TRUE, eval = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Q3. Find the keyboard shortcuts menu. 
+
+### Q4. Memorise the keyboard shortcut for insert code chunk which is: ⌥⌘I
+
+### Q5. Use the mac to insert a code chunk. 
+
+### Q6. Memorise the shortcut for evaluate which is ⌘-return^  use for all tasks in this workbook. 
+
+### Q7. Use R to do 10 mathematical calculations 
+
+### Solution 
+
+Students should confirm that they've done this, e.g.:
+  
+```{r add1 }
+4 + 5
+```
+
+```{r add2 }
+3 ^ 3
+```
+
+Show your work 
+
+
+### Q8. Using R, find the square root of 324
+
+### Solution 
+
+Students should show their works*
+
+*JB: Students should confirm that they've done this*
+
+  9. In the `iris` dataset, find the flower with the longest Sepal.Length. (hint, use the `max` function.)  Show the column details for this flower only. 
+  
+  
+```{r maxiris}
+# answer:
+max(iris$Sepal.Length)
+```
+
+  
+  10. In the `iris` dataset, find the flower with the shortest Sepal.Length. (hint, use the `min` function.)
+  
+
+```{r miniris}
+# answer:
+min(iris$Sepal.Length)
+```
+
+
+  11. Calculate the difference bewteen the flower with the longest and shortest Sepal.Length
+  
+```{r diffirise}
+# answers
+max(iris$Sepal.Length) - min(iris$Sepal.Length)
+
+# or
+a <- max(iris$Sepal.Length)
+b <- min(iris$Sepal.Length)
+```
+
+  12. Make a 7 column  x  100 row dataframe using `c`, `:`, `dataframe`
+
+```{r sevendf}
+# some quick fixes
+df <- data.frame(
+  col1 = sample(1000, 100, replace = TRUE),
+  col2 = rnorm(n = 100, mean = 0, sd = 1),
+  col3 = 1:100,
+  col4 = rbinom(n = 100, size = 1, prob = .5),
+  col5 = rpois(n = 100, lambda = 10),
+  col6 = sample(c("a", "b", "c", "d"), 100, replace = TRUE),
+  col7 =  rep(1:10, 10)
+)
+```
+
+
+
+  13. Rename the columns of the dataframe using the names of snow white dwarfs, or any names.
+
+```{r renameseven}
+# using base R
+names(df)[] <-
+  c(
+    "sleepy",
+    "grumpy",
+    "happy",
+    "smelly",
+    "lovely",
+    "daggy",
+    "crazy"
+    )
+```
+
+  14. Using the dataset `woman`, write a linear model for `height ~ weight`
+  
+```{r lmwomen}
+# basic linear model
+
+m1 <-  lm ( height ~ weight, data = women)
+```
+
+  15. Create a table and coefficient plot for this model
+  
+```{r plotwomen}
+# coefficient plot
+sjPlot::plot_model(m1)
+
+# table
+sjPlot::tab_model(m1)
+```
+
+  16. Using `ggeffects`, create a prediction plot for this model.
+
+```{r predictwomen}
+plot(
+  ggeffects::ggpredict( m1 , effects = "height"),
+  add.data = TRUE
+)
+```
+
+
+<aside>
+Next week we'll be creating plots like this
+```{r smoothgraph}
+library(ggplot2)
+ggplot2::ggplot(data = women) +
+  geom_point(mapping = aes(x = height, y = weight)) +
+  geom_smooth(method = loess, aes(x = height, y = weight)) +
+  theme_classic() 
+```
+</aside>
+
+
+  17.  Explain what is being calculated here
+
+```{r proportionwomen}
+# this is a proportion (i.e. the number of instances / the total number of cases)
+sum(women$weight > 140) / length(women$weight)
+```
+   
+  18. Calculate the proportion of women who are over the mean weight of women
+
+```{r calproportionwomen}
+# This is onle approach
+# Find the mean woman weight
+mw <- mean( women$weight )
+
+# calculae the proportion of women who are over that weight 
+sum(women$weight > mw) / length(women$weight)
+```
+
+
+  19. What are the advantages and disadvantages of creating more breaks in the Petal.Length indicator?  Clarify your answer in a paragraph. 
+
+```{r chunkyhist}
+# advantates: major pattern of data evident; clearly two clusters (at least); no tempatation to over interpret patters in the graph
+
+# disadvantages, looks as if there is a cluster at zero; only two modes in the dataset are discernable
+hist( iris$Petal.Length )
+```
+
+```{r finhist}
+# advantages: we can find more than one mode;  distribution not clustered at zero
+# disadvantages: with such a small sample, it is tempting to read too much into all the modes. 
+
+hist( iris$Petal.Length, 
+      breaks = 100 )
+```
+
+  20. Spot the error in this code
+  
+```{r errorincode, eval = FALSE, echo = TRUE}
+# here is one method. 
+mh <- mean (women$height)
+sum(women$weight > mh) / length(women$height)
+
+
+# should be `sum(women$height > mh)
+```
+
+  21. Reorder the columns of the `woman` dataset so that weight comes before height. Then rename the columns "w" and "h". 
+
+```{r reordercols, eval = TRUE, echo = TRUE}
+# here is one method
+# Bind columns as data frame
+dfa <- cbind.data.frame(women$weight, women$height)
+# change names
+names(dfa)[] <- c("w", "h")
+
+```
+
+  22.  Read data into R using the following method:
+  
+
+```{r newdata, echo = FALSE, eval = FALSE}
+# g-bayes making data (internal)
+
+# Note that this won't work without a `data` folder
+library(tidyverse)
+n <- 100
+yourtibble <- tibble(
+  id = 1:n,
+  weight = rnorm(n, 80, 20),
+  height = rnorm(n, (weight + 10) * 1.8, 10)
+)
+plot(height ~ weight, yourtibble)
+testdata1 <- data.frame(yourtibble)
+write_csv(testdata1, here::here("data", "testdata1.csv"))
+```
+
+
+```{r readata, eval = TRUE, echo = TRUE}
+# read data from file
+library("readr")
+testdata<- readr::read_csv(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/testdata1.csv"))
+str(testdata)
+
+```
+
+   Save data into your data folder using the following method
+   
+```{r herepackage, eval=FALSE, echo = TRUE}
+library("here")
+# save data using here
+saveRDS(testdata, here::here("data", "td.RDS"))
+```
+   
+   Read data back into R
+   
+```{r readdata, eval = FALSE}
+td <- readRDS(here::here("data", "td.RDS"))
+```
+
+  23. Using the `td` dataset, write a linear model for `height ~ weight` as above
+
+```{r secondlm, echo = FALSE, eval = FALSE}
+m1<-lm(height ~ weight, data = td)
+summary(m1)
+plot(height ~ weight, data = td)
+```
+
+```{r secondreaddata}
+td <- readRDS(here::here("data", "td.RDS"))
+# note a clever student will change the object to something other than `m1` which we used above
+m2<-lm(height ~ weight, data = td)
+
+sjPlot::tab_model(m2)
+```
+
+  24. Create a coefficient plot
+  
+```{r plotsecond}
+sjPlot::plot_model(m2)
+```
+
+
+
+  25. Create a prediction plot
+  
+
+```{r predictsecond}
+plot(
+  ggeffects::ggpredict( m2 , effects = "height" ),
+  add.data = TRUE
+)
+```
+  
+Extra credit, **how would you interpret the intercept in this model?***
+
+
+```{r interceptinterpretation}
+# a zero intercept makes no sense because biologically speaking weight can't be zero
+library( ggplot2 )
+summary( m2 )
+```
+
+```
+
+
+
+  
+  
+
+
+
+
