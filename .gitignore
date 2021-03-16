@@ -48,6 +48,7 @@ _posts/**/*_files/
 *.DS_Store
 
 # Solutions
+!solutions/
 */solutions/**/*.Rmd
 */solutions/**/*.html
 solutions/*
