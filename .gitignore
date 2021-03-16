@@ -47,4 +47,6 @@ _posts/**/*_files/
 
 
 # Solutions
+*/solutions/**/*.Rmd
+*/solutions/**/*.html
 */solutions/*
