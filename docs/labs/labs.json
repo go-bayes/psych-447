@@ -1,5 +1,26 @@
 [
   {
+    "path": "labs/L_4/",
+    "title": "Lab 4",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-03-16",
+    "categories": [],
+    "contents": "\n\nContents\nThe lab\nLibraries\nImport data\nQ1. Warmup\nQ2a. Scale, center, transform\nQ2b Data wrangle\nQ3. Working with dates\nQ4 Caculating dates and creating summaries\nQ5. Working with date intervals\nQ6 Create an ordered factor from numeric data\nQ7 Make a summary table\nQ7. Make a summary graph\nQ8. Correlation graph\nQ9 Create a blank papaja report\nQ10 Patchwork\n\nThe lab\nThe lab today is your workbooks. We’ll be available during lab to help.\nLibraries\n\n\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(pmdplyr)\nlibrary(correlation)\nlibrary(ggraph)\nlibrary(patchwork)\n\n\n\nRun this code\n\n\n#easystats::install_easystats_latest()\n\n\n\nImport data\n\n\n# read data\nnz_0 <- readr::read_csv2(url(\"https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv\"))\n\n# to relevel kessler 6 variables\nf<-c(\"None Of The Time\",\"A Little Of The Time\",\"Some Of The Time\",  \"Most Of The Time\", \"All Of The Time\")\n\n# get data into shape\nnz <- nz_0 %>%\n  dplyr::mutate_if(is.character, factor) %>%\n  select(\n    -c(\n      SWB.Kessler01,\n      SWB.Kessler02,\n      SWB.Kessler03,\n      SWB.Kessler04,\n      SWB.Kessler05,\n      SWB.Kessler06\n    )\n  ) %>%\n  dplyr::mutate(Wave = as.factor(Wave)) %>%\n  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%\n  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%\n  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%\n  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%\n  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%\n  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%\n  dplyr::mutate(Wave = as.factor(Wave)) %>%\n  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) \n\n\n\nQ1. Warmup\nUsing the nz dataset, make all the hours variables into integers\nQ2a. Scale, center, transform\nCreate a new indicator that standardises the Pol.Orient variable, create a new indicator that centers the Pol.Orient variable, create a new indicator that centres the Age variable in decade-long units. Do this in a single piped workflow.\nPrint the head of the data frame so that we can see your work \nQ2b Data wrangle\nSelect Hour.Exercise and filter Wave 2019.\nQ3. Working with dates\nWhat are the maximum number of responses for a single day in 2018 and the maximum number of responses for a single day in 2019?\nQ4 Caculating dates and creating summaries\nHow many days are there between the date with the highest number of responses and the date with the second highest number of responses?\nBonus: Calculate difference between the number of responses on the highest response date and second highest response date.\nQ5. Working with date intervals\nSuppose you were born on Dec 25, 1995 at 5.02:22 am Calculate your age in months on March 20,2021, at 1:22:04pm. (Hint use the lubridate package. Look up the interval function).\nQ6 Create an ordered factor from numeric data\nThe Religion.Church variable contains responses to the question: “How many times each month do you attend church or religious service?”\nCreate factor with the following three levels:\nPeople who attend church 0 times per month,\nPeople who attend church 1-3 times per month,\nPeople who attend church 4 or more times per month.\nMake sure to re-level the factor so that the ordinal ranking moves from lowest to highest.\nQ7 Make a summary table\nUsing methods described in Lecture 4, create a table for average hours of sleep by month in the nz dataset\nQ7. Make a summary graph\nGraph the average hours of sleep by month including 95% confidence intervals\nBriefly explain why some intervals are wider than others.\nQ8. Correlation graph\nCreated a correlation graph for the items in the Kessler 6 scale\nThese are FeelHopeless,FeelDepressed,FeelRestless,EverythingIsEffort,FeelWorthless,FeelNervous\nHint you must transform the factors into integers.\nWhat do you find most interesting about this plot? Explain.\nQ9 Create a blank papaja report\nInclude your your name, affiliation, contributors and r packages used in your analysis\nQ10 Patchwork\nUse the patchwork library to create a figure with two plots on top of each other.\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-03-16T15:55:52+13:00",
+    "input_file": {}
+  },
+  {
     "path": "labs/L_3/",
     "title": "Week 3 Lab",
     "description": {},

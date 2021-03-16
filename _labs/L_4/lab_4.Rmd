@@ -1,5 +1,5 @@
 ---
-title: "Workbook 4"
+title: "Lab 4"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -19,7 +19,9 @@ output:
     highlight: tango
 ---
 
-## Setup
+### The lab
+
+The lab today is your workbooks. We'll be available during lab to help. 
 
 ### Libraries
 

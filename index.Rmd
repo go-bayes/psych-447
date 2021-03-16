@@ -19,10 +19,12 @@ listing:
     - L_1
     - L_2
     - L_3
+    - L_4
   workbooks:
     - W_1
     - W_2
     - W_3
+    - W_4
 ---
 
 ```{r setup, include=FALSE}

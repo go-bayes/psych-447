@@ -1,0 +1,22 @@
+---
+title: "Data description"
+author: "Joseph Bulbulia"
+date: "12/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## About
+
+This dataset is a random subset of the New Zealand Attitudes and Values Study (NZAVS) 2019/2020. 
+
+This data have been altered, and are for VUW psych-447 teaching purposes only.
+
+The questions for for the NZAVS questionaire can be found [here](https://www.dropbox.com/s/x9okly9zpnf6zp6/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+
+More information about the NZAVS can be found [here](https://www.psych.auckland.ac.nz/en/about/new-zealand-attitudes-and-values-study.html)
+
+
