@@ -51,5 +51,5 @@ _posts/**/*_files/
 */solutions/**/*.Rmd
 */solutions/**/*.html
 solutions/*
-*/solutions/L_4_solutions/*.Rmd
-*/solutions/L_4_solutions/*.html
+/solutions/*L_4_solutions/
+/solutions/*L_4_solutions/
