@@ -27,8 +27,6 @@ navbar:
       href: index.html
     - text: "Assessments"
       href: assessments.html
-    - text: "Labs"
-      href: index_labs.html
     - text: "Workbooks"
       href: index_workbooks.html
 output:

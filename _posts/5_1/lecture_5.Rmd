@@ -15,9 +15,51 @@ output:
 toc: true
 ---
 
+```{r figopen, echo=F}
+knitr::include_graphics("op.png")
+```
+```{r}
+# packages
+# ```{r install_rethinking}
+# function for installing dependencies
+ipak <- function(pkg){
+new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+if (length(new.pkg)) 
+    install.packages(new.pkg, dependencies = TRUE)
+sapply(pkg, require, character.only = TRUE)
+}
+
+# usage
+packages <- c("coda", "plyr", "mvtnorm", "scales", "dagitty")
+ipak(packages)
+
+# next install rethinking
+if (!require(rethinking)) {
+  devtools::install_github("rmcelreath/rethinking")
+}
+```
+
+## Science begins with a question.
+
+What do you want to know?
+
+## Theories, models, hypotheses, statistical models
+
+### Theory
+### Model
+### Hypothesis
+### Statistical model 
 
 
-## What do you want to know?
+```{r}
+# This is a comment
+y <- lm(Sepal.Length ~ Sepal.Width, data = iris)
+```
+
+
+## Statistics is the logic of uncertainty
+
+Mathematics is the logic of certainty.
 
 ### Not all questions make sense
 
@@ -28,31 +70,25 @@ toc: true
 
 ## Samples and parameters: observation and inference
 
-```{r figopen, echo=F}
-knitr::include_graphics("op.png")
-```
 
-### y, x, and z
+
+## y, x, and z
 
 ## Linear relationships with one co-variate
 
 
 ## Non-linear relationships with one co-variate
 
-### Model summaries
+## Model summaries
 
 ```{r}
 hist(nz$Issue.Food.GMO)
-
-
-
-
-model <- lm(Sepal.Length ~ Species, data=iris)
+model <- lm(Sepal.Length ~ Species, data = iris)
 report_text(model)
 report_table(model)
 ```
 
-Try a report on our data.  Later, I'll explain why this report is misleading. I'll also show you a better method than the paired t-test.  However, to prove a concept, try:
+Let's make a report of our data:
 
 ```{r}
 library(tidyverse)
@@ -68,8 +104,7 @@ ihateTtests<-t.test(tnz$k2019 , tnz$k2018,  paired = TRUE)
 report::report(ihateTtests)
 ```
 
-
-The future is now. I'm going to give you a glimpse of a better method. Below is a multi-level model.  Here, we assess whether people changed in their Kessler6 distress scores between the 2018 and 2019 waves of the nz study. 
+The future is now. I'm going to give you a glimpse of a better method. Below is a multi-level model. Here, we assess whether people changed in their Kessler6 distress scores between the 2018 and 2019 waves of the `nz` study. 
 
 ```{r, warning=FALSE}
 library(lme4)
