@@ -17,14 +17,18 @@ output:
   distill::distill_article:
     self_contained: false
     toc: true
+    highlight: tango
+bibliography: bib.bib
 ---
 
-```{r spss-old, echo=F, warning =FALSE}
+```{r spss-old, echo=F, warning=FALSE, message=FALSE}
 knitr::include_graphics("op.png")
 # let's set our theme too
 ```
 
-```{r, echo = FALSE, warning=FALSE}
+
+
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
 #libraries
 if (!require(skimr)) install.packages('skimr')
 if (!require(lubridate)) install.packages('lubridate')
@@ -41,19 +45,22 @@ if (!require(report)) install.packages('report')
 if (!require(brms)) install.packages('brms')
 if (!require(lme4)) install.packages('lme4')
 if (!require(table1)) install.packages('table1')
+if (!require(modelsummary)) install.packages("modelsummary")
+if (!require(naniar)) install.packages("naniar")
+if (!require(ggraph)) install.packages("ggraph")
+
+
 # load tidyverse
 library("tidyverse")
 
 # themeset
 theme_set(theme_classic())
-```
 
-```{r, echo = FALSE, eval = FALSE}
 # uncomment below and run this code
 # easystats::install_easystats_latest()
 ```
 
-```{r echo = FALSE}
+```{r echo = FALSE, message = FALSE, warning=FALSE,cache=TRUE}
 
 nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
 
@@ -62,11 +69,22 @@ nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-4
 # Note the convention of renaming dataframe when creating a new one:
 # ` nz <-nz_0 %>%... `
 
+
+
+f<-c("None Of The Time","A Little Of The Time","Some Of The Time",  "Most Of The Time", "All Of The Time")
+
+
 nz <-nz_0 %>%
   dplyr::mutate_if(is.character, factor) %>%
-  select(-c(SWB.Kessler01,SWB.Kessler02,SWB.Kessler03,SWB.Kessler04,SWB.Kessler05,
-            SWB.Kessler06))%>%
-  dplyr::mutate(Wave = as.factor(Wave))
+  select(-c(SWB.Kessler01,SWB.Kessler02,SWB.Kessler03,SWB.Kessler04,SWB.Kessler05, SWB.Kessler06))%>%
+  dplyr::mutate(Wave = as.factor(Wave))%>%
+  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless,f))%>%
+  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed,f))%>%
+  mutate(FeelRestless = forcats::fct_relevel(FeelRestless,f))%>%
+  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort,f))%>%
+  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless,f))%>%
+  mutate(FeelNervous = forcats::fct_relevel(FeelNervous,f))
+
 # not used
 # nz <- haven::zap_formats(nz)
 # nz <- haven::zap_label(nz)
@@ -76,7 +94,7 @@ nz <-nz_0 %>%
 
 ## Preamble
 
-One of the advantages of R is that allows us to create highly effective workflows. Today, we'll reinforce and extend the workflow skills that you've started to develop in previous weeks. Below we'll be working with the 'nz' dataset, which is a reduced, truncated, and jittered version of the New Zealand Attitudes and Values Study. This dataset is for teaching only, if you'd like to learn more about the study to which it belongs, go [here](https://www.psych.auckland.ac.nz/en/about/new-zealand-attitudes-and-values-study.html) or [here](https://go-bayes.github.io/reports/posts/nzavs/). 
+One of the advantages of R is that allows us to create highly effective workflows. Today, we'll reinforce and extend the workflow skills that you've started to develop in previous weeks. Below we'll be working with the `nz` dataset, which is a reduced, truncated, and jittered version of waves 10 and 11 of the New Zealand Attitudes and Values Study. This dataset is for teaching only, if you'd like to learn more about the study to which it belongs, go [here](https://www.psych.auckland.ac.nz/en/about/new-zealand-attitudes-and-values-study.html) or [here](https://go-bayes.github.io/reports/posts/nzavs/). 
 
 ## Data carpentry continued
 
@@ -117,9 +135,9 @@ nz %>%
     glimpse()
 ```
 
-As we can see, the net that we cast with `contains` was too broad. We don't want the `Religion.Believe.Cats`.
+As we can see, the net that we cast using `contains` was too broad. We don't want the `Religion.Believe.Cats`.
 
-In R, you we programme your way out of this corner as follows:
+In R, you can programme your way out of this corner as follows:
 
 ```{r containshack}
 nz %>%
@@ -127,7 +145,7 @@ nz %>%
    glimpse()
 ```
 
-That's inelegant; better to drop `contains` and revert to another methods.
+However, that's inelegant; better to drop `contains` altogether and revert to another method.
 
 ### Re-leveling a factor
 
@@ -136,8 +154,10 @@ Death, taxes, and factors are consequence of living. Let's look at the `BigDoms`
 ```{r selectbdoms}
 nz %>%
   dplyr::select(BigDoms)%>%
-  table()
+  table(useNA ="ifany")
 ```
+
+Note the use of `ifany` to print the NAs in this table. It's almost never sensible to ignore missing values!
 
 Suppose we wanted to make "Not Rel" our base category for this factor. We could do so as follows:
 
@@ -170,11 +190,11 @@ plot(parameters::model_parameters(m0) ) + labs(title = "Comparison of Religious 
 subtitle = "Christians are a little more chilled out, \n Other denoms are less chilled out")
 ```
 
-The base category is the comparison class. Should we infer causation? This is getting ahead of ourselves...but the for now let's just leave it at "probably not."
+The base category is the comparison class. Should we infer that "The Others" denomination causes greater distress? We'll return to this, and related questions, in the upcoming weeks. For now let's just leave it at "probably not."
 
-### Creating categories
+### Creating factors from numerical indicators
 
-It is almost never a good idea to make continuous data into categorical data. However, occassionally you will need to stoop, for example to please a reviewer with a supplemental analysis. Here we break the `KESSLER6` distress scores into categories that are used to diagnose moderate and severe psychological distress.
+It is almost never a good idea to transform continuous data into categorical data. However, occassionally, you will need to do so. For example, we might want to break the KESSLER6 distress indicator into its medically diagnostic components for "mild distress", "moderate distress", and "severe distress."  We may achieve this task using the `cut` function as follows:
 
 ```{r}
 nz <-nz %>%
@@ -184,12 +204,12 @@ nz <-nz %>%
     labels = c("Low Distress", "Moderate Distress", "Serious Distress"), 
     right = TRUE
   ))
-table(nz$k6cats)
+table(nz$k6cats, useNA = "ifany")
 ```
 
 ### Using `ifelse` to create factors
 
-I find it is useful to keep explicit control over how I am making the categories. For example, in the previous example, I didn't remember whether `cut` includes a value to the left or to the right. I had to look this up. However, I can use `ifelse` to create the categories, and this is clear:
+I prefer to maintain control over how I am making the categories. For example, in the previous example, I didn't remember whether `cut` includes a value to the left or to the right. I had to look this up. However, I can use `ifelse` function to explicitly create the relevant categories:
 
 ```{r}
 nz %>%
@@ -207,11 +227,11 @@ nz %>%
   count()
 ```
 
-We can see that the method returns the same values as the `cut` method.
+We can see that this method returns the same values as the `cut` method above.
 
-### Scaling and centering indicators, and logs
+### Transformations of indicators: scaling, centering, and logs
 
-Throughout this course we'll be standardising and centering indicators. It is time that you get used to the protocol for doing this.
+Throughout this course, we'll be standardising and centering indicators. Occasionally, we'll need to perform log transformations. You'll need to know how to do this.
 
 Suppose we want to standardise the `Relid` indicator. This will transform the `Relid` indicator into standard deviation units. In later seminars, we'll explain why this transformation is useful. For now, this is how you do it:
 
@@ -232,9 +252,11 @@ This isn't a worry. We use the variable as we would any other and all is fine. [
 sjPlot::tab_model(lm(religousid_s ~ 1 , data = nz1))
 ```
 
-#### Important advice: Transform your data as the last step in your piping workflow.
+### Pro tip 1: 
 
-This is because if you filter cases, you'll end up with a variable that isn't in standard deviations units
+Transform your data as the **last** step in your pipe workflow.
+
+This is because if you filter cases, you'll end up with a variable that isn't measured standard deviations units
 
 ```{r}
 nza <- nz %>%
@@ -252,7 +274,7 @@ summary(nza$religousid_s)
 summary(nzb$religousid_s)
 ```
 
-When we filter last, the mean value in the dataset is `r round(mean(nzb$religousid_s,na.rm=TRUE),2)` -- everything has changed, and the intercept now means something different.
+When we filter last, the mean value in the dataset is `r round(mean(nzb$religousid_s,na.rm=TRUE),2)` -- everything has changed!
 
 ```{r}
 nz1 <- nz1 %>%
@@ -283,7 +305,7 @@ nz1%>%
     glimpse()
 ```
 
-For extreme values we typically will take a log transformation. We can create a new indicator by combining `mutate` and `log` as follows:
+We use the log transformation for extreme values. We can create a new indicator by combining `mutate` and `log` as follows:
 
 ```{r}
 nz1 <- nz %>%
@@ -294,6 +316,8 @@ nz1 %>%
   select(CharityDonate,charitydonate_log)%>%
     glimpse()
 ```
+
+Note that we have to add $$+1$$ to the log transformation, as you will recall that the log of zero is undefined. You cannot obtain zero by raising it to the power of another number.
 
 ### Create and work with dates a date
 
@@ -317,6 +341,7 @@ time_length(int, "year")
 #time in minutes
 time_length(int, "minutes")
 ```
+Fun! So much so you have some homework that will work with dates.
 
 ### Create a timeline
 
@@ -326,55 +351,24 @@ Here we're going to graph the number of responses each day for the years of data
 library(lubridate)
 library(ggplot2)
 
+
 datrep <- nz %>%
-  count(day = floor_date(date, "day")) %>%
+  count(day = floor_date(date, "day"))%>%
   dplyr::mutate(Year = factor(ifelse(
-    day < "2010-01-01",
-    2009,
-    ifelse(
-      day < "2011-01-01",
-      2010,
-      ifelse(
-        day < "2012-01-01",
-        2011,
-        ifelse(
-          day < "2013-01-01",
-          2012,
-          ifelse(
-            day < "2014-01-01",
-            2013,
-            ifelse(
-              day < "2015-01-01",
-              2014,
-              ifelse(
-                day < "2016-01-01",
-                2015,
-                ifelse(
-                  day < "2017-01-01",
-                  2016,
-                  ifelse(
-                    day < "2018-01-01",
-                    2017,
-                    ifelse(day < "2019-01-01", 2018,
-                           ifelse(day < "2020-01-01", 2019, 2020))
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
+    day < "2018-01-01",
+    2017,
+    ifelse(day < "2019-01-01", 2018,
+           ifelse(day < "2020-01-01", 2019, 2020))
   ))) %>%
   arrange(day)
 
 # create the graph
 ggplot(datrep, aes(day, n)) +
-  geom_col(aes(fill = Year)) + 
+  geom_col(aes(fill = Year)) +
   scale_x_date(date_labels = "%b/%Y")  +
-  xlab("Days") + ylab("Count of Responses") + 
-  ggtitle("Our Dataset's Daily Counts")  + 
-  theme_classic()  +  
+  xlab("Days") + ylab("Count of Responses") +
+  ggtitle("Our Dataset's Daily Counts")  +
+  theme_classic()  +
   scale_fill_viridis_d()
 
 ```
@@ -386,7 +380,10 @@ datrep%>%
   arrange(desc(n))
 ```
 
-We can ask: were there any inherently stressful days?
+Take not of that code, you might need it for your workbook.
+
+
+What might we do with dates? Well we might ask, were there any inherently stressful days?
 
 To see this, we can take average stress levels by day, and then see where the high average stress days fall.
 
@@ -398,8 +395,9 @@ tn<-nz %>%
    av_distress =  mean(KESSLER6sum, na.rm = TRUE),
    n = n_distinct(Id)
   ) %>%
-  arrange(desc(av_distress))
-tn
+  arrange(desc(av_distress))%>%
+  glimpse()
+
 ```
 
 Graphing the densities reveals the following
@@ -436,13 +434,13 @@ nz %>%
   theme_classic() + scale_fill_viridis_d()
 ```
 
-The bars of the graph overlap; despite the variability over the two years of data collection, we don't find differences in distress by days.
+Despite the variability over the two years of data collection, the bars of the graph overlap: we don't find differences in distress by days.
 
 "Ok Boomer", you ask, "what if we were to calculate distress by generational cohorts?"
 
-My reply, I'm not a boomer, so let's check it out:
+My reply, I'm not a boomer, I'm a GenX-er. I'm keen to check it out:
 
-```{r layout="l-body-outset", fig.width=12, fig.height=12}
+```{r layout="l-body-outset", fig.width=10, fig.height=10}
 nz %>%
   select(GenCohort, KESSLER6sum) %>%
   group_by(GenCohort) %>%
@@ -477,14 +475,16 @@ nz %>%
   scale_colour_viridis_d() 
 ```
 
+Later, we'll ask why you're so stressed out. 
+
 ### `Slice`
 
-Dplyr's slice function can be handy. Say we only want the first six rows
+Dplyr's slice function can be handy. Say we only want the first four rows
 
 ```{r}
 datrep%>%
   arrange(desc(n)) %>%
-  slice(1:6)
+  slice(1:4)
 ```
 
 Say we only want the 1st row, the 3rd row, and the 20th row
@@ -514,7 +514,7 @@ df <-nz %>%
 
 ```
 
-We can very crudely explore whether employment security relates to distress change
+What to do with this new variable. Well, we might explore whether employment security relates to distress change:
 
 ```{r}
 df %>%
@@ -533,6 +533,7 @@ df %>%
 And remarkably we don't see much evidence in the cross-sectional analysis.
 
 ```{r}
+# create data frame with new variable Zero is for the unemeployed. 
 dfnew <- df %>%
   filter(Wave == 2019) %>%
   mutate(employed_employsecurity = as.numeric(ifelse(Employed == 1, Emp.JobSecure, 0)))%>%
@@ -549,29 +550,33 @@ ggplot(dfnew, aes(y = diff_k6, employed_employsecurity)) +
   scale_fill_viridis_d() + theme_classic()
 ```
 
-However this is misleading. We can formally model the relationship between employment security and Kessler6 distress
+However, perhaps our indicator is misleading us. We can formally model the relationship between employment security and Kessler6 distress across two years
 
 ```{r}
+# create dataframe with the variables we need
 dfnew2 <- df %>%
   mutate(employed_employsecurity = as.numeric(ifelse(Employed == 1, Emp.JobSecure, 0))) %>%
   filter(!is.na(employed_employsecurity)) %>%
   dplyr::mutate(employsecurity_s = scale(employed_employsecurity))
 
-m00a<-lmer(KESSLER6sum ~  employsecurity_s + (1|Id), data = dfnew2)
-plot(ggeffects::ggpredict(m00a, terms=c("employsecurity_s")),
+# multi-level model 
+
+m00a<-lme4::lmer(KESSLER6sum ~  employsecurity_s * Wave + (1|Id), data = dfnew2)
+plot(ggeffects::ggpredict(m00a, terms=c("employsecurity_s", "Wave")),
      add.data = TRUE, jitter = 0.2, dot.alpha =.05) + geom_hline(yintercept = 5,
              colour = "red",
              linetype = "dashed") + 
   labs(title = "There is a relationship between employment security and Kessler6 distress")
 ```
 
-We'll return to the question of the relationship between employment security and distress down the track. For now, I want to alert you to an important lesson:
+This suggests a stable negative relationship between employment security and (low) distress. So is there are causal relationship? Not necessarily. Again, we return to casual inference in the upcoming weeks. For now, we want to alert you to an important lesson:
 
-#### Pro tip: do not read too much into your descriptive analysis
+### Pro tip 2
+Do not read too much into your descriptive analysis!
 
 This is especially true when creating new variables. Just because you can make a variable doesn't mean you should use it, or interpret it!
 
-Put differently, our workflow will require much more than descriptive statistics
+Put differently, our workflow will require much more than descriptive statistics.
 
 ## Data summary
 
@@ -581,9 +586,9 @@ Put differently, our workflow will require much more than descriptive statistics
 
 The skimmer package can be helpful in detecting problems. A drawback note that it is interpreting all factors as numbers).
 
-For example, "spiritual identification" was not measured in 2019/2020.
+For example. ( I won't run the following code, you will do so for your homework).
 
-```{r}
+```{r eval = FALSE}
 library("skimr")
 nz %>%
   select(-date) %>% #not useful
@@ -591,9 +596,7 @@ nz %>%
   skim()
 ```
 
-#### Summarise parts of your data
-
-We can use skimr to on individual columns
+However, I want to point out that `skimr` works with individual columns, and it accepts a tidy workflow.
 
 ```{r}
 nz %>%
@@ -601,39 +604,11 @@ nz %>%
   select(KESSLER6sum,HLTH.SleepHours)  %>%
   skim() 
 ```
+#### `Table1` & other canned tables
 
-### Create a table using pipe functions
+In earlier seminars, we encountered the `table1` package, which makes really great html tables:
 
-```{r designtable,  tab.cap="\\label{tab:designtable}"}
-library(kableExtra)
-nz %>%
-  select(k6cats, Wave) %>%
-  filter(!is.na(k6cats))%>%
-  group_by( Wave, k6cats) %>%
-  summarise(n = n())%>%
-  kbl(caption = "Distress by Year") %>%
-   kable_classic_2(c("striped", "hover"), full_width = TRUE)%>%
-  collapse_rows()
-```
-
-Note that we can use the `pivot_wider` function to spread the dataframe to enable a table that is easier to interpret
-
-```{r}
-nz %>%
-  select(k6cats, Wave) %>%
-  filter(!is.na(k6cats))%>%
-  group_by( Wave, k6cats) %>%
-  summarise(n = n())%>%
- pivot_wider(names_from = Wave, values_from = n) %>%
-   kbl(caption = "Distress counts by year") %>%
-   kable_classic_2(c("striped", "hover"), full_width = TRUE)
-```
-
-### Canned tables
-
-In earlier seminars we encountered the `table1` package, which is easy for html tables:
-
-```{r}
+```{r layout="l-body-outset"}
 library(table1)
 
 table1::table1(~Age  +
@@ -647,6 +622,79 @@ table1::table1(~Age  +
 ```
 
 Unfortunately, the `table1` package only prints html tables.
+
+
+For publications, I might use the `modelsummary` package
+
+```{r}
+library("modelsummary")
+nnz<-nz %>%
+  dplyr::select(Age, 
+                Male,
+                BigDoms,
+                Edu,
+                GenCohort,
+                Relid,
+                Pol.Orient,
+                Wave)
+modelsummary::datasummary_balance( ~ Wave, data=nnz, dinm=FALSE, output = 'table.tex')
+```
+
+I'll put the $LaTeX$ output into my document because I generally prefer to write in $LaTeX$
+
+However if you want to print inline, you can simply use:
+
+
+```{r}
+library("modelsummary")
+nnz<-nz %>%
+  dplyr::select(Age, 
+                Male,
+                BigDoms,
+                Edu,
+                GenCohort,
+                Relid,
+                Pol.Orient,
+                Wave)
+modelsummary::datasummary_balance( ~ Wave, data=nnz, dinm=FALSE)
+```
+
+
+
+### Create a table using pipe functions
+
+Above we saw how to create a cluncky table using `table(x)`. However, R has lots of functionality to enable better. 
+
+
+```{r designtable,  tab.cap="\\label{tab:designtable}"}
+library(kableExtra)
+nz %>%
+  select(k6cats, Wave) %>%
+  filter(!is.na(k6cats))%>%
+  group_by( Wave, k6cats) %>%
+  summarise(n = n())%>%
+  kbl(caption = "Distress by Year") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE)%>%
+  collapse_rows()
+```
+
+Note that we can use the `pivot_wider` function to spread the dataframe to enable a table that is easier to interpret. 
+
+Credit where credit is due: I just learned about `pivot_wider` from Johannes and Thorven. I'm keen to get `pivot_longer` and `pivot_wider` into my vocabulary, and to do more things, like this:
+
+```{r}
+nz %>%
+  select(k6cats, Wave) %>%
+  filter(!is.na(k6cats))%>%
+  group_by( Wave, k6cats) %>%
+  summarise(n = n())%>%
+ pivot_wider(names_from = Wave, values_from = n) %>%
+   kbl(caption = "Distress counts by year") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE)
+```
+
+Nice!
+
 
 ### Bar graphs
 
@@ -665,12 +713,30 @@ ggplot(nz) +
   geom_bar(mapping = aes(x = BigDoms))
 ```
 
-Note that we can reorder the graph to produce a nicer output, using `fct_infreq`
+Note that we can re-order the factor levels to produce a nicer output, using `fct_infreq`
 
 ```{r}
 ggplot(nz) + 
   geom_bar(mapping = aes(x = fct_infreq(BigDoms))  )
 ```
+
+### Missing data graphs 
+
+What do you notice about the patterns of missingness in this graph? 
+
+```{r cache = TRUE}
+library("naniar")
+naniar::vis_miss(nz) #What do you notice? 
+```
+
+
+Here, we find all the problem cases:
+
+```{r}
+gg_miss_upset(nz)
+```
+
+What explains these feature of missingess? 
 
 ### Boxplots
 
@@ -722,6 +788,70 @@ ggplot(data = nz, aes(x = KESSLER6sum, y = BigDoms, fill = BigDoms)) +
  
 ```
 
+### Correlation graphs
+
+Johannes will describe a method for making a correlation plot. Here is another method.
+
+
+```{r}
+bzsec<-nz%>%
+  select(
+    Your.Future.Security,
+    Standard.Living,
+    NZ.Economic.Situation,
+    NZ.Business.Conditions,
+    Emp.JobSecure,
+    CharityDonate,
+    Id
+  ) %>%
+  mutate_all(., as.numeric) %>% #make numeric 
+  mutate(Id = as.factor(Id),
+         CharityDonate = log(CharityDonate + 1))# make Id a factor for the 
+
+# make a correlation plot using the "correlation" package from easystates
+
+library(correlation)
+p1<-bzsec %>%
+  correlation(partial = FALSE, multilevel = TRUE ) %>%
+  plot()+ 
+  theme_blackboard()
+```
+
+Print summary
+
+```{r}
+bzsec %>%
+  correlation(partial = FALSE, multilevel = TRUE ) %>%
+  summary()
+```
+
+
+Let's set multilevel to `FALSE`. 
+
+```{r}
+library(correlation)
+p2<-bzsec %>%
+  select(-Id)%>% # get rid of grouping variable
+  correlation(partial = FALSE, multilevel = FALSE ) %>%
+  plot()
+#print summary
+bzsec %>%
+  select(-Id)%>% # get rid of grouping variable
+  correlation(partial = FALSE, multilevel = FALSE ) %>%
+  summary()
+```
+
+```{r layout="l-body-outset", fig.width=10, fig.height=10}
+library(patchwork)
+# create a two panel plot
+p1 / p2 + 
+  plot_annotation(title = "Plot of multilevel (a) and single-level (b) correlation", tag_levels = 'a')
+```
+
+
+We can see an even greater correlations between the variables. This is because the model does not adjust for the repeated measures, which create dependencies in the data. 
+
+
 ### The `report` package
 
 The reports package from the `easystats` group is powerful tool for saving tame. Before extolling its virtues, I'd like to point out two major limitations.
@@ -732,7 +862,7 @@ Second, the package uses terminology that won't work for all contexts and purpos
 
 If you learn nothing else from this course, you should learn never to use "significant" to describe a p value. You may, if you like, use "statistically signficant" however it would be better altogether if you simply dropped p-values from data analysis. We'll show you how. With those provisos in mind, consider some useful functionality from the `report` package.
 
-```{r}
+```{r max.height='1000px', max.width ='1000px', layout="l-body-outset"}
 # create a demographic dataframe
 nz_demagraphics <- nz %>%
   select(Age, GenCohort, Male, Edu, Pol.Orient, Relid, BigDoms, Wave)
@@ -752,41 +882,116 @@ paste(
 
 The table function of `report` isn't great yet. However it has some nice features. For example you should always report your session information, and doing so in tabluar form clarifies the elements
 
-```{r}
+Try running the following code on your own:
+
+
+```{r eval=FALSE}
 r <- report_table(sessionInfo())
 r
 ```
 
-Here is another method, which you can
+Here is another method, which you can try on your own
 
-```{r}
+```{r eval= FALSE}
 cite_packages()
 ```
 
-Heres's a demographic table
+Here's a demographic table (try on your own)
 
-```{r}
+```{r eval=FALSE}
 report_table(nz_demagraphics)
 ```
 
-Here's a longer summary
+Here's a data summary
 
 ```{r}
 library("report")
 nz %>%
   group_by(Wave)%>%
-  select(-c(Id,date)) %>% # doesn't work with report
+  select(
+    "Wave", 
+    "Age",
+    "Male",
+    "Edu",
+    "Relid",
+    "Pol.Orient",
+    "KESSLER6sum",
+    "FeelHopeless",
+    "FeelDepressed",
+    "FeelRestless",
+    "EverythingIsEffort",
+    "FeelWorthless",
+    "FeelNervous"
+    )%>%
   report() %>% 
   summary()
 ```
+
+
+Notes: 
 
 More about the report package: [here](https://easystats.github.io/report/index.html)
 
 This package is brought to you by [easystats](https://github.com/easystats/easystats)
 
-## Order of Method
+### Measures
 
-The following is a guide to describing your method
+When reporting your study, it is extremely important to include information about your measure. For example:
+
+We measure psychological distress using the Kessler-6 scale [@Kessler2002-ex], which exhibits strong diagnostic concordance for moderate and severe psychological distress in large, cross-cultural samples [@Kessler2010-xi, @Prochaska2012-dy]. Participants rated during the past 30 days, how often did... (a) “\dots you feel hopeless”; (b) “\dots you feel so depressed that nothing could cheer you up”; (c) “\dots you feel restless or fidgety”; (d)“\dots you feel that everything was an effort”; (e) “\dots you feel worthless”; (f) “\dots you feel nervous?” Ordinal response alternatives for the Kessler-6 are: “None of the time”; “A little of the time”; “Some of the time”; “Most of the time”;  “All of the time.” 
+
+We report sample descriptive statistics for indicators of personal Kessler-6 distress in Table \@ref(fig:desckK6).
+
+
+```{r fig.cap="(ref:desckK6)"}
+library(table1)
+table1::table1(
+  ~ KESSLER6sum +
+    FeelHopeless +
+    FeelDepressed +
+    FeelRestless +
+    EverythingIsEffort +
+    FeelWorthless +
+    FeelNervous | Wave,
+  data = nz,
+  overall = FALSE
+)
+```
+
+In addition to the packages already mentioned, the `gtsummary` package for nice functionality when creating tables. Here's an example:
+
+```{r}
+library(gtsummary)
+nz %>%
+  dplyr::select(
+    KESSLER6sum,
+    FeelHopeless,
+    FeelDepressed,
+    FeelRestless,
+    EverythingIsEffort,
+    FeelWorthless,
+    FeelNervous,
+    Wave,
+  ) %>%
+  gtsummary::tbl_summary(
+    by = Wave,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} / {N} ({p}%)"
+    ),
+    digits = all_continuous() ~ 2,
+    missing_text = "(Missing)"
+  )
+```
+
+
+
+Also, check out Johannes's mini-lecture on `papaja.` 
+
+
+### Order of Method
+
+The following is a brief guide to describing your method. We'll be returning to report writing in future weeks. For now, I just want to put this on the table for you. The advice is just a guide.
 
 +--------------+-------------------------------------------------------------------------------------+
 | **Heading**  | Include                                                                             |
@@ -812,5 +1017,33 @@ The following is a guide to describing your method
 |              |                                                                                     |
 |              | -   Data analysis strategy (e.g., comparison or regression tests)                   |
 +--------------+-------------------------------------------------------------------------------------+
+
+
+Below are the sampling procedures from the New Zealand Attitudes and Values Study, from where the `nz` teaching dataset was drawn.
+
+
+## Appendix 1A Sampling Procedure -- NZAVS Time 10 (2018; conducted from 18.06.2018-28.09.2019)
+
+The Time 10 (2018) NZAVS contained responses from 47,951 participants (18,010 retained from one or more previous wave. The sample retained 2,964 participants from the Time 1 (2009) sample (a retention rate of 45.5%). The sample retained 14,049 participants from Time 9 (2017; a retention rate of 82.3% from the previous year). Participants who provided an email address were first emailed and invited to complete an online version if they preferred. Participants who did not complete the online version (or did not provide an email) were then posted a copy of the questionnaire, with a second postal follow-up two months later. We staggered the time of contact, so that participants who had completed the previous wave were contacted approximately one year after they last completed the questionnaire. We offered a prize draw for participation (five draws each for \$1000 grocery vouchers, \$5000 total prize pool). All participants were posted a Season’s Greetings card from the NZAVS research team and informed that they had been automatically entered into a bonus seasonal grocery voucher prize draw. Participants were also emailed an eight-page newsletter about the study. 
+
+To boost sample size and increase sample diversity for subsequent waves, a booster sample was conducted by selecting people from the New Zealand electoral roll. As with previous booster samples, sampling was conducted without replacement (i.e., people included in previous sample frames were identified and removed from the 2018 roll). The sample frame consisted of 325,000 people aged from 18-65 randomly selected from the 2018 New Zealand Electoral Roll, who were currently residing in New Zealand (one can be registered to vote in New Zealand but living overseas). The electoral roll contained ~3,250,000 registered voters. The New Zealand Electoral Roll contains participants’ date of birth (within a one-year window), and we limited our frame to people who 65 or younger, due to our aim of retaining participants longitudinally. We concurrently advertised the survey on Facebook via a $5000 paid promotion of a link to a YouTube video describing the NZAVS and the large booster sample we were conducting. The advertisement targeted men and women aged 18-65+ who lived in New Zealand and ran for 14 days. This paid promotion reached 147,296 people, with 4,721 link clicks (i.e., clicking to watch the video), according to Facebook. The goal of the paid promotion was twofold: (a) to increase name recognition of the NZAVS during the period in which questionnaires were being posted, and (b) to help improve retention by potentially reaching previous participants who happened to see the advertisement. A total of 29,293 participants who were contained in our sample frame completed the questionnaire (response rate = 9.2% when adjusting for the 98.2% accuracy of the 2018 electoral roll). A further 648 participants completed the questionnaire, but were unable to be matched to our sample frame (for example, due to a lack of contact information) or were unsolicited opt-ins. Informal analysis indicates that unsolicited opt-ins were often the partners of existing participants. 
+
+## Appendix 1B Sampling Procedure -- NZAVS Time 11 (2019; conducted from 29.09.2019-17.10.2020)
+
+The Time 11 wave was conducted during COVID-19 pandemic. Procedures thus differed in that there was an increased focus on online deliver using email reminders and extensive Facebook advertising, no Christmas card, and incomplete phoning of non-respondents.
+
+The Time 11 (2019) NZAVS contained responses from 42,684 participants (36,522 retained from one or more previous wave. The sample retained 2,506 participants from the Time 1 (2009) sample (a retention rate of 38.4%). The sample retained 34,782 participants from Time 10 (2018; a retention rate of 72.5% from the previous year). Participants who provided an email address were first emailed and invited to complete an online version if they preferred. Participants who did not complete the online version (or did not provide an email) were then posted a copy of the questionnaire, with a second postal follow-up two months later. We staggered the time of contact, so that participants who had completed the previous wave were contacted approximately one year after they last completed the questionnaire. A second reminder email was sent approximately four months following the first email attempt. We offered a prize draw for participation (five draws each for \$1000 grocery vouchers, \$5000 total prize pool). Participants were also emailed an eight-page newsletter about the study. As in past years, three attempts were made to phone non-respondents using each available cell and landline number. However, due to the university closure during COVID-19 lockdowns, phoning attempts were made for only 54% of the phoning pool (11,687 from a total of 21,636 non-respondents who provided at least one phone number). 
+
+Two additional forms of recruitment were also introduced during Time 11. The first was a large  information box in the questionnaire (taking a full page on the paper version), which asked people: ‘Do you have a partner who would also like to join the NZAVS?’ with additional details for how partners might join the study (see questionnaire for the full text). The second was a Facebook advertisement. The advertisement targeted men and women aged 18-65+ who lived in New Zealand and ran from and 4th April 2020 – 4th July 2020 (overlapping with New Zeeland’s first lockdown period and recovery), and again from 18th August 2020 – 4th September (during the second Auckland lockdown). Given the unprecedented nature of the COVID-19 lockdowns, we thought it important to maximise sampling during these periods. The goal of the Facebook advertisement was threefold: (a) to increase name recognition of the NZAVS and remind people to complete the paper/online version already posted/emailed to them, (b) to help improve retention by potentially reaching previous lost participants who happened to see the advertisement, and (c) to recruit new participants (and also the partners of existing participants) while people were at home with some possibly having more free time during lockdown. This last goal was indirect and not explicitly stated it in the advertisement. 
+
+The Facebook advertisement read as follows: “Participate in the New Zealand Attitudes and Values Study. Complete the 2020 Questionnaire online” with the body of text: "If you are part of the NZAVS, but have not heard from us in the last year, then please consider completing the 2020 questionnaire online. The study is more important than ever as we aim to understand the impact of COVID-19 on mental health, wellbeing and resilience in our communities. We wish you all the best at this time and hope you keep well and stay safe." This paid promotion reached 883,969 people, with 37,850 link clicks (i.e., clicking the link for the Qualtrics survey) according to Facebook. A total of 6106 people continued complete the questionnaire and provide full contact details, and were thus included in the dataset (4734 were new participants opting in to the study, and 1372 were previously ‘lost’ participants). 
+
+## Appendix 2  Johannes's mini-lecture on the `papaja` package
+
+[Lecture](https://www.dropbox.com/s/ap96nfnvs833zq1/yaml.pptx?dl=0)
+
+[Papaja R markdown template](https://www.dropbox.com/s/bvdo6z55kgfr0ri/technology.Rmd?dl=0)
+
+## Appendix 3
 
 APA style advice [here](https://opentextbc.ca/researchmethods/chapter/american-psychological-association-apa-style/)

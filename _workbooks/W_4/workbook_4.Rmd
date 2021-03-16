@@ -28,7 +28,7 @@ library(lubridate)
 library(pmdplyr)
 library(correlation)
 library(ggraph)
-
+librar
 ```
 
 Run this code
@@ -55,22 +55,18 @@ nz <- nz %>%
   dplyr::mutate(Wave = as.factor(Wave))
 ```
 
+## Q1  Warm up excercises
 
+###Q1a. Make a new dataframe from the `nz` dataframe. Call it `df`
 
-### Q1a. Warmup
-
-Make a new dataframe from the `nz` dataframe. Call it `df`
-
-### Solution
+#### Solution
 
 ```{r}
 df <- nz
 ```
 
 
-### Q1b. Change class in all instances of a class 
-
-Make all the hours variables into integers 
+### Q1b. Make all the hours variables into integers 
 
 
 ### Solution
@@ -93,13 +89,13 @@ df<- df%>%
 
 And so on... 
 
-### Q2a.  Scale, center, transform
+### Q2a.  Scale, center, tranform
 
 Create a new indicator that standardises the `Pol.Orient` variable, create a new indicator that centers the `Pol.Orient` variable, create a new indicator that centres the `Age` variable in decade-long units. Do this in a single piped workflow. 
 
 **Print the head of the data frame so that we can see your work **
 
-### Solution
+#### Solution
 ```{r eval=FALSE}
 df1<-df %>%
   dplyr::select(Pol.Orient,
@@ -113,11 +109,9 @@ head(df1)
 ```
 
 
-### Q2b Data wrangle
+### Q2b Select `Hour.Exercise` and filter only wave 2019
 
-Select `Hour.Exercise` and filter Wave 2019.
-
-### Solution 
+#### Solution 
 
 Note that this won't.  We need to filter first because otherwise there would be no Wave column to select!
 
@@ -139,10 +133,9 @@ df%>%
 ```
 
 
-### Q3. Working with dates
+## Q2.  Data summaries: What is the difference?
 
 What are the maximum number of responses for a single day in 2018 and the maximum number of responses for a single day in 2019? 
-
 
 #### Solution
 
@@ -178,12 +171,9 @@ nz %>%
 ```
 
 
-### Q4 Caculating dates and creating summaries
+## Q3 How many days were there between the date with the highest number of responses and the day with the lowest number of responses? 
 
-How many days are there between the date with the highest number of responses and the date with the second highest number of responses? 
-
-Bonus: Calculate difference between the number of responses on the highest response date and second highest response date.
-
+Bonus: see if you can also calculate difference in number of responses on the highest and second highest number of responses? Again, make sure to show your work.
 
 ### Solution
 
@@ -203,9 +193,7 @@ ts
 
 
 
-### Q5. Working with date intervals
-
-Suppose you were born on Dec 25, 1995 at 5.02:22 am Calculate your age in months on March 20,2021, at 1:22:04pm. (Hint use the `lubridate` package. Look up the `interval` function).
+## Q4. Suppose you were born on Dec 25, 1995 at 5.02:22 am Calculate your age in months on March 20,2021, at 1:22:04pm. (Hint use the `lubridate` package. Look up the `interval` function).
 
 
 ### Solution
@@ -218,21 +206,20 @@ time_length(alive, "months")
 ```
 
 
-### Q6 Create an ordered factor from numeric data
+## Q5 Create an ordered factor from numeric data
 
 The `Religion.Church` variable contains responses to the question: "How many times each month do you attend church or religious service?"
 
 Create factor with the following three levels:
 
-1. People who attend church 0 times per month, 
-2. People who attend church 1-3 times per month, 
-3. People who attend church 4 or more times per month. 
+1. People who attend church 0 X per month, 
+2. People who attend church 1-3 X per month, 
+3. People who attend church 4 or more X per month. 
 
 Make sure to re-level the factor so that the ordinal ranking moves from lowest to highest.
 
 
-###  Solution
-
+## Solution
 ```{r}
 nz %>%
   dplyr::mutate(church_attendance_cats = cut(
@@ -245,7 +232,7 @@ nz %>%
   count()
 ```
 
-### Another solution
+## Another solution
 
 ```{r}
 nz %>%
@@ -259,13 +246,12 @@ nz %>%
   count()
 ```
 
-### Q7 Make a summary table
-
-Using methods described in lecture 4, create a table for average hours of sleep by month in the `nz` dataset
+## Q6 Using methods described in lecture 4, create a table for average hours of sleep by month in the `nz` dataset
 
 
 
-### Solution
+#### Solution
+
 
 
 ```{r}
@@ -284,11 +270,9 @@ tabnz%>%
 ```
 
 
-### Q7. Make a summary graph
+## Q7. Graph the average hours of sleep by month including 95% confidence intervals
 
-Graph the average hours of sleep by month including 95% confidence intervals
-
-Briefly explain why some intervals are wider than others. 
+Briefly explain why some intervals are wider than others. (Hint use the table)
 
 ### Solution
 ```{r, eval = FALSE, echo = FALSE}
@@ -313,7 +297,8 @@ nz %>%
 ```
 
 
-Some intervals are wider than others because the number of responses by month varies, and a confidence interval divides by the number of cases.
+Some intervals are wider than others because the number of responses by month varies
+
 
 ```{r, eval = FALSE, echo = FALSE}
 gnz <-nz %>%
@@ -350,18 +335,14 @@ gnz%>%
 ```
 
 
-### Q8. Correlation graph
-
-Created a correlation graph for the items in the Kessler 6 scale
+### Q8. Created a Correlation graph items in the Kessler 6 scale
 
 These are `FeelHopeless,FeelDepressed,FeelRestless,EverythingIsEffort,FeelWorthless,FeelNervous`
 
-Hint you must transform the factors into integers.
-
-What do you find most interesting about this plot? Explain.
+What do you find most intersting about this plot? 
 
 
-### Solution
+##### Solution
 
 ```{r}
 k6<-nz%>%
@@ -387,12 +368,10 @@ k6 %>%
 ```
 
 
-### Q9 Create a blank `papaja` report 
-
-Include your your name, affiliation, contributors and r packages used in your analysis
+## Q9 Create a blank `papaja` report with your name, affiliation, contributors and r packages used in your analysis
 
 
-### Q10
+###
 
 ```{r dualfig, fig.cap="\\label{fig:dualfig}"}
 library(patchwork)
