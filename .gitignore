@@ -55,4 +55,5 @@ solutions/L_4_solutions/*.png
 /solutions/**/*.Rmd
 /solutions/**/*.html
 solutions/*
+solutions/*L_4_solutions/
 /solutions/L_4_solutions/*
