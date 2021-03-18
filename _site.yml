@@ -5,8 +5,8 @@ description: |
 output_dir: "docs"
 base_url: https://vuw-psych-447.netlify.app/
 repository_url: https://github.com/go-bayes/github.io-447-methods
-creative_commons: CC BY
-google_analytics: "G-X058WW5WJZ"
+creative_commons: CC BY-NC-SA
+google_analytics: "G-GQF269N0S4"
 twitter:
   site: "@go_bayes"
   creator: "@go_bayes"
