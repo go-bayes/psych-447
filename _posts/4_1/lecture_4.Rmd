@@ -435,6 +435,8 @@ Despite the variability over the two years of data collection, the bars of the g
 My reply, I'm not a boomer, I'm a GenX-er. I'm keen to check it out:
 
 ```{r layout="l-body-outset", fig.width=10, fig.height=10}
+nz$hour
+
 nz %>%
   select(GenCohort, KESSLER6sum) %>%
   group_by(GenCohort) %>%
