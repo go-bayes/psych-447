@@ -4,7 +4,7 @@ description: |
   VUW Psych 477: Methods in R
 output_dir: "docs"
 base_url: https://vuw-psych-447.netlify.app/
-repository_url: https://github.com/go-bayes/github.io-447-methods
+repository_url: https://go-bayes.github.io/psych-447/
 creative_commons: CC BY-NC-SA
 google_analytics: "G-GQF269N0S4"
 twitter:
