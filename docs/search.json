@@ -36,14 +36,14 @@
       "title": "Workbook index",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-03-16T20:27:58+13:00"
+      "last_modified": "2021-03-18T17:27:58+13:00"
     },
     {
       "path": "index.html",
       "title": "VUW Psych 447: Methods in R",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-03-18T16:56:56+13:00"
+      "last_modified": "2021-03-18T17:28:19+13:00"
     }
   ],
   "collections": ["posts/posts.json", "labs/labs.json", "workbooks/workbooks.json"]
