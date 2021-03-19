@@ -27,3 +27,36 @@ knitr::include_graphics("op2.png")
 
 # The difference between prediction and explanation? 
 
+
+## Examples of confounding
+
+
+```{r echo = FALSE, include = FALSE}
+N <-100
+age <- rnorm( N )# sim A
+data.frame(age,mar)
+mar <- rnorm( N , -age ) # sim A -> M
+div <- rnorm( N , age ) # sim A -> D
+df <- data.frame(age,mar,div)
+
+plot(age ~ mar)
+
+md<-lm(mar ~ age, data = df)
+summary(md)
+sjPlot::plot_model(md)
+
+
+## Confound 
+south<-rnorm(N)
+waffles <-rnorm(N, south)
+age <- rnorm(N, south)
+mar <- rnorm( N, -age ) # sim A -> M
+div <- rnorm( N,  age ) # sim A -> D
+df <- data.frame(age,mar,div,south,waffles)
+
+md<-lm(div ~ waffles + mar + south, data = df)
+summary(md)
+sjPlot::plot_model(md)
+
+```
+

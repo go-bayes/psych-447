@@ -13,11 +13,13 @@ output:
   distill::distill_article:
   self_contained: false
 toc: true
+bibliography: references.bib
 ---
 
 ```{r figopen, echo=F}
 knitr::include_graphics("op.png")
 ```
+
 ```{r}
 # packages
 # ```{r install_rethinking}
@@ -52,23 +54,21 @@ theme_set(theme_classic())
 
 In part 1 we will:
 
- - learn how to use R to generate random numbers
- - use random numbers to simulate data
- 
+-   learn how to use R to generate random numbers
+-   use random numbers to simulate data
 
-## Learning outcomes 
+## Learning outcomes
 
 By learning how to generate random numbers you will better understand how statistical models help us to guess how the world is (which is statistical inference)
-
 
 ## `rnorm`
 
 `rnorm` is a r's random number generator. Within this function:
 
-  - `n`specifies the number of observations
-  - `sd` specifies the value of the standard deviation
-  - `mean` specifies the value of the mean 
-  
+-   `n`specifies the number of observations
+-   `sd` specifies the value of the standard deviation
+-   `mean` specifies the value of the mean
+
 ```{r}
 set.seed(12345)
 # generate random numbers
@@ -76,7 +76,7 @@ ds <- rnorm(n = 1000, mean = 0, sd = 1)
 dplyr::glimpse(ds)
 ```
 
-We can create a histogram
+We can create a histogram:
 
 ```{r}
 p1 <- ggplot2::qplot(ds) + labs(title = "1st random number list")
@@ -104,7 +104,6 @@ Or more formally we can ask R to test the equivalence:
 identical(ds, ds_0)
 ```
 
-
 Because we want to have reproducible code, we will use the `set.seed()` function in R to ensure the same random numbers are generated each time.
 
 ```{r warning=TRUE}
@@ -117,12 +116,9 @@ t2 <-stats::rnorm(100)
 identical(t1, t2)
 ```
 
-
-##  `runif`
-
+## `runif`
 
 We use r uniform to generate continuous data within a point range
-
 
 ```{r}
 set.seed(123)
@@ -131,7 +127,7 @@ dplyr::glimpse(ds1)
 hist(ds1)
 ```
 
-Say we want to simulate a range of values between two endpoints. This is useful for simulating explanatory variables. 
+Say we want to simulate a range of values between two endpoints. This is useful for simulating explanatory variables.
 
 ```{r}
 set.seed(123)
@@ -139,6 +135,67 @@ exp <- runif(n =100, min = 130, max = 220)
 dplyr::glimpse(exp)
 hist(exp)
 ```
+
+## `rep`
+
+Frequently we'll need to generate random factors. For this, R's `rep` function, `letters` function, and `LETTERS` function make happy friends.
+
+Here's how these functions work
+
+Lower case letters:
+
+```{r}
+letters[1:3]
+```
+
+Upper case letters:
+
+```{r}
+LETTERS[4:10]
+```
+
+Creating sequences using `each`
+
+```{r}
+rep( letters[1:3], each = 3 )
+```
+
+
+Creating sequences using `times`
+
+
+```{r}
+rep( letters[1:3], times = 3 )
+```
+
+
+Createing a sequences  using `length.out`
+
+```{r}
+rep( letters[1:3], length.out = 5 )
+```
+
+Creating uneven sequences
+
+```{r}
+rep( letters[1:3], times = c(3, 1, 4) )
+```
+
+combining `each` + `times`
+
+```{r}
+rep(letters[1:3], each = 2, times = 3)
+```
+
+
+`length.out`
+
+```{r}
+rep(letters[1:3], each = 2, length.out = 17)
+```
+
+Note `length.out` take priority over `times` -- use `length.out` if you have a fixed vector length. 
+
 
 ## Fake Empire
 
@@ -155,9 +212,7 @@ m0 <- lm(weight_sim ~ height_sim)
 summary(m0)
 ```
 
-
-
-We can use vectors within random number generation 
+We can use vectors within random number generation
 
 ```{r}
 set.seed(123)
@@ -165,67 +220,21 @@ vdf<-rnorm(n = 20, mean = c(0, 500, 1000), sd = c(5,50,100))
 qplot(vdf, binwidth=4)
 ```
 
+# Use fake data to explore a small sample
 
-# Small samples 
+Can appear to reveal relationships that are not there.
 
-Can appear to reveal relationships that are not there. 
 ```{r}
 set.seed(123)
 x = rnorm(n = 10, mean = 0, sd = 1)
 y = rnorm(n = 10, mean = 0, sd = 1)
 
 df<-data.frame(x,y)
-
 ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
 ```
 
-
-
 ```{r}
-N <-100
-age <- rnorm( N )# sim A
-data.frame(age,mar)
-mar <- rnorm( N , -age ) # sim A -> M
-div <- rnorm( N , age ) # sim A -> D
-df <- data.frame(age,mar,div)
-
-plot(age ~ mar)
-
-md<-lm(mar ~ age, data = df)
-summary(md)
-sjPlot::plot_model(md)
-
-
-
-
-## Confound 
-south<-rnorm(N)
-waffles <-rnorm(N, south)
-age <- rnorm(N, south)
-mar <- rnorm( N, -age ) # sim A -> M
-div <- rnorm( N,  age ) # sim A -> D
-df <- data.frame(age,mar,div,south,waffles)
-
-md<-lm(div ~ waffles + mar + south, data = df)
-summary(md)
-sjPlot::plot_model(md)
-
-## Confound 2
-
-meaning<-rnorm(N)
-religion <-rnorm(N, meaning)
-age <- rnorm(N, -south)
-mar <- rnorm( N , -age ) # sim A -> M
-div <- rnorm( N,  south ) # sim A -> D
-df <- data.frame(age,mar,div,waffles)
-
-md<-lm(div ~ waffles + mar + age, data = df)
-summary(md)
-sjPlot::plot_model(md)
-
-
-
-### model
+### Simulate a relationship between two variables 
 N = 100
 weight <-runif(N, min = 40, max =100)
 xbar <- mean(weight)
@@ -234,54 +243,46 @@ a = rnorm(N, 170 , 20 )
 b = rlnorm(N, .2, .2 )
 
 
-mu <- a + b*( weight - xbar )
-mu
+mu <- a + b *( weight - xbar )
 sigma <- runif(N, 0 , 50 )
-sigma
 height <- rnorm(N, mu , sigma ) 
-height
 
+# simulated height/ weight data
 df<-data.frame(height,weight)
 
-md<-brm(height ~ weight, data = df)
+# model
+md_0 <-brm(height ~ weight, data = df, file = here::here("models", "5_md_0"))
 
-ce<-conditional_effects(
+# graph 
+ce <- conditional_effects(
   md,
   effects = "weight",
   prob = 0.95,
-  robust = TRUE,
   spaghetti = TRUE,
-  nsamples  = 100,
-  surface = FALSE,
-  categorical = FALSE,
-  ordinal = FALSE,
-  transform = NULL,
+  nsamples  = 100
 )
-plot(ce)
+plot(ce) + labs(x = "simulated weight",
+                y = "simulated height",
+                title = "simulated linear relationship")
+
+```
+
+## Use fake data to create a factor
+
+Here we simulate no relationship between a group and an outcome
+```{r}
+group <- rep(letters[1:3], length.out = 100)
+outcome <- rnorm(n = 100, mean = 0, sd = 1)
+df <-data.frame(outcome,group)
+dplyr::glimpse(df)
 
 
+#model
+ms<-lm(outcome ~ group, data = df)
 
-
-mu <- a + b*( weight - xbar )
-mu
-sigma <- runif(N, 0 , 50 )
-sigma
-height <- rnorm(N, mu , sigma ) 
-height
-
-weight_c = scale(weight,center=TRUE,scale =FALSE)
-weight_c
-mu <- a + b  *  weight_c 
-mu
-sigma <- runif(N, 0 , 50 )
-sigma
-height <- rnorm(N, mu , sigma ) 
-height
-
-
-df2=data.frame(weight_c,weight,height)
-
-ggplot(data = df, aes(y = height, x = weight)) + stat_smooth(method = "lm", formula = y ~ x + I(x^2), size = 1)
+# no difference
+sjPlot::plot_model(ms)
+```
 
 
 
@@ -301,7 +302,6 @@ Bayes rule says
 
 We plug in the numbers:
 
-```{r}
 Pr_Positive_COVID <- 0.99
 Pr_Positive_Healthy <- 0.01
 Pr_COVID <- 0.00001
@@ -328,12 +328,10 @@ Pr_COVID_Positive
  - mean = vector of means
 
 
-```{r}
 rnorm(n = 20, mean = 0, sd = 1)
 ```
 
 ## Linear relationships with one co-variate
-
 
 ## Non-linear relationships with one co-variate
 
@@ -362,7 +360,7 @@ ihateTtests<-t.test(tnz$k2019 , tnz$k2018,  paired = TRUE)
 report::report(ihateTtests)
 ```
 
-The future is now. I'm going to give you a glimpse of a better method. Below is a multi-level model. Here, we assess whether people changed in their Kessler6 distress scores between the 2018 and 2019 waves of the `nz` study. 
+The future is now. I'm going to give you a glimpse of a better method. Below is a multi-level model. Here, we assess whether people changed in their Kessler6 distress scores between the 2018 and 2019 waves of the `nz` study.
 
 ```{r, warning=FALSE}
 library(lme4)
@@ -371,7 +369,7 @@ fm1 <- lme4::lmer(KESSLER6sum ~ Wave + (1|Id), data = nz, family ="poisson")
 report(fm1)
 ```
 
-## Statistical inference and Scientific inference 
+## Statistical inference and Scientific inference
 
 ## Science begins with a question.
 
@@ -380,18 +378,17 @@ What do you want to know?
 ## Theories, models, hypotheses, statistical models
 
 ### Theory
+
 ### Model
+
 ### Hypothesis
-### Statistical model 
 
-
-
+### Statistical model
 
 ```{r}
 # This is a comment
 y <- lm(Sepal.Length ~ Sepal.Width, data = iris)
 ```
-
 
 ## Statistics is the logic of uncertainty
 
@@ -399,10 +396,19 @@ Mathematics is the logic of certainty.
 
 ### Not all questions make sense
 
-### How you ask a question can be misleading? 
+### How you ask a question can be misleading?
 
 ### Measurement
 
 ## Samples and parameters: observation and inference
 
+## Acknowledgments
 
+The approach to simulation presented here owes to:
+
+1.  Ariel Muldoon: <https://aosmith.rbind.io/>
+
+Ariel has a bunch of resources on her website, please check them out.
+
+2.  Richard Mcelreath's Statistical Rethinking [@mcelreath2020]
+3.  Regression and other stories [@gelman2020]
