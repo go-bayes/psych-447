@@ -11,9 +11,6 @@
 # Example code in package build process
 *-Ex.R
 
-# Output files from R CMD build
-/*.tar.gz
-
 # Output files from R CMD check
 /*.Rcheck/
 
@@ -36,25 +33,18 @@ vignettes/*.pdf
 *.knit.md
 *.txt
 
-.Rproj.user
-.Rhistory
 .RData
 .Ruserdata
 *_cache/
 *models/
 _posts/**/*.html
 _posts/**/*_files/
-
 *.DS_Store
 
 # Solutions
 #
-solutions/L_4_solutions/*.Rmd
-solutions/L_4_solutions/*.html
-solutions/L_4_solutions/*.png
 /solutions/**/*.Rmd
 /solutions/**/*.html
 solutions/*
-solutions/*L_4_solutions/
-*/solutions/*
-/solutions/L_4_solutions/*
+*/solutions/
+
