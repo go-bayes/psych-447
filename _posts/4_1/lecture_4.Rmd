@@ -18,7 +18,7 @@ bibliography: bib.bib
 
 ```{r spss-old, echo=F, warning=FALSE, message=FALSE}
 knitr::include_graphics("op.png")
-# let's set our theme too
+# let's set our theme 
 ```
 
 

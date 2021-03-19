@@ -37,42 +37,300 @@ ipak(packages)
 if (!require(rethinking)) {
   devtools::install_github("rmcelreath/rethinking")
 }
+
+# libraries
+library("tidyverse")
+library("patchwork")
+library("brms")
+
+# set theme
+# theme set
+theme_set(theme_classic())
 ```
 
-## Science begins with a question.
+## Overview
 
-What do you want to know?
+In part 1 we will:
 
-## Theories, models, hypotheses, statistical models
+ - learn how to use R to generate random numbers
+ - use random numbers to simulate data
+ 
 
-### Theory
-### Model
-### Hypothesis
-### Statistical model 
+## Learning outcomes 
+
+By learning how to generate random numbers you will better understand how statistical models help us to guess how the world is (which is statistical inference)
+
+
+## `rnorm`
+
+`rnorm` is a r's random number generator. Within this function:
+
+  - `n`specifies the number of observations
+  - `sd` specifies the value of the standard deviation
+  - `mean` specifies the value of the mean 
+  
+```{r}
+set.seed(12345)
+# generate random numbers
+ds <- rnorm(n = 1000, mean = 0, sd = 1)
+dplyr::glimpse(ds)
+```
+
+We can create a histogram
+
+```{r}
+p1 <- ggplot2::qplot(ds) + labs(title = "1st random number list")
+p1
+```
+
+We use shorthand for generating numbers:
+
+```{r}
+set.seed(54321)
+ds_0 <- rnorm(1000)
+dplyr::glimpse(ds_0)
+```
+
+Note that the first and the second graphs differ:
+
+```{r layout="l-body-outset", fig.width=10, fig.height=10}
+p2 <- ggplot2::qplot(ds_0) + labs(title = "2d random number list")
+p1 + p2 + plot_annotation("The two graphs differ", tag_levels = 'i')
+```
+
+Or more formally we can ask R to test the equivalence:
+
+```{r message=TRUE}
+identical(ds, ds_0)
+```
+
+
+Because we want to have reproducible code, we will use the `set.seed()` function in R to ensure the same random numbers are generated each time.
+
+```{r warning=TRUE}
+set.seed(123)
+t1 <-stats::rnorm(100)
+set.seed(123)
+t2 <-stats::rnorm(100)
+
+# test
+identical(t1, t2)
+```
+
+
+##  `runif`
+
+
+We use r uniform to generate continuous data within a point range
 
 
 ```{r}
-# This is a comment
-y <- lm(Sepal.Length ~ Sepal.Width, data = iris)
+set.seed(123)
+ds1 <- runif(n =100, min = 0, max = 50)
+dplyr::glimpse(ds1)
+hist(ds1)
+```
+
+Say we want to simulate a range of values between two endpoints. This is useful for simulating explanatory variables. 
+
+```{r}
+set.seed(123)
+exp <- runif(n =100, min = 130, max = 220)
+dplyr::glimpse(exp)
+hist(exp)
+```
+
+## Fake Empire
+
+We can build a model using fake data
+
+```{r}
+set.seed(123)
+height_sim = rnorm(n = 100, mean = 170, sd = 40)
+weight_sim = runif(n = 100, min = 40, max = 100)
+```
+
+```{r}
+m0 <- lm(weight_sim ~ height_sim)
+summary(m0)
 ```
 
 
-## Statistics is the logic of uncertainty
 
-Mathematics is the logic of certainty.
+We can use vectors within random number generation 
 
-### Not all questions make sense
-
-### How you ask a question can be misleading? 
-
-### Measurement
-
-
-## Samples and parameters: observation and inference
+```{r}
+set.seed(123)
+vdf<-rnorm(n = 20, mean = c(0, 500, 1000), sd = c(5,50,100))
+qplot(vdf, binwidth=4)
+```
 
 
+# Small samples 
 
-## y, x, and z
+Can appear to reveal relationships that are not there. 
+```{r}
+set.seed(123)
+x = rnorm(n = 10, mean = 0, sd = 1)
+y = rnorm(n = 10, mean = 0, sd = 1)
+
+df<-data.frame(x,y)
+
+ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
+```
+
+
+
+```{r}
+N <-100
+age <- rnorm( N )# sim A
+data.frame(age,mar)
+mar <- rnorm( N , -age ) # sim A -> M
+div <- rnorm( N , age ) # sim A -> D
+df <- data.frame(age,mar,div)
+
+plot(age ~ mar)
+
+md<-lm(mar ~ age, data = df)
+summary(md)
+sjPlot::plot_model(md)
+
+
+
+
+## Confound 
+south<-rnorm(N)
+waffles <-rnorm(N, south)
+age <- rnorm(N, south)
+mar <- rnorm( N, -age ) # sim A -> M
+div <- rnorm( N,  age ) # sim A -> D
+df <- data.frame(age,mar,div,south,waffles)
+
+md<-lm(div ~ waffles + mar + south, data = df)
+summary(md)
+sjPlot::plot_model(md)
+
+## Confound 2
+
+meaning<-rnorm(N)
+religion <-rnorm(N, meaning)
+age <- rnorm(N, -south)
+mar <- rnorm( N , -age ) # sim A -> M
+div <- rnorm( N,  south ) # sim A -> D
+df <- data.frame(age,mar,div,waffles)
+
+md<-lm(div ~ waffles + mar + age, data = df)
+summary(md)
+sjPlot::plot_model(md)
+
+
+
+### model
+N = 100
+weight <-runif(N, min = 40, max =100)
+xbar <- mean(weight)
+
+a = rnorm(N, 170 , 20 )
+b = rlnorm(N, .2, .2 )
+
+
+mu <- a + b*( weight - xbar )
+mu
+sigma <- runif(N, 0 , 50 )
+sigma
+height <- rnorm(N, mu , sigma ) 
+height
+
+df<-data.frame(height,weight)
+
+md<-brm(height ~ weight, data = df)
+
+ce<-conditional_effects(
+  md,
+  effects = "weight",
+  prob = 0.95,
+  robust = TRUE,
+  spaghetti = TRUE,
+  nsamples  = 100,
+  surface = FALSE,
+  categorical = FALSE,
+  ordinal = FALSE,
+  transform = NULL,
+)
+plot(ce)
+
+
+
+
+mu <- a + b*( weight - xbar )
+mu
+sigma <- runif(N, 0 , 50 )
+sigma
+height <- rnorm(N, mu , sigma ) 
+height
+
+weight_c = scale(weight,center=TRUE,scale =FALSE)
+weight_c
+mu <- a + b  *  weight_c 
+mu
+sigma <- runif(N, 0 , 50 )
+sigma
+height <- rnorm(N, mu , sigma ) 
+height
+
+
+df2=data.frame(weight_c,weight,height)
+
+ggplot(data = df, aes(y = height, x = weight)) + stat_smooth(method = "lm", formula = y ~ x + I(x^2), size = 1)
+
+
+
+## Probability
+
+Suppose there is a test that is 99% accurate at detecting COVID if you have it. 
+
+Very rarely it throws up a false positive,say one in a thousand. 
+
+You just tested positve.  What is the probability that you have COVID? 
+Our intuition is that we probably have COVID. However, let's assume COVID is rare. Currently in NZ, there are about 50 cases, so 1 in 100,000.  The background rate matters. 
+
+Bayes rule says
+
+\[ Pr(COVID|Positive) = \frac{Pr(Positive|COVID)\times Pr (COVID}{Pr(Positive)}
+\]
+
+We plug in the numbers:
+
+```{r}
+Pr_Positive_COVID <- 0.99
+Pr_Positive_Healthy <- 0.01
+Pr_COVID <- 0.00001
+
+# Calculate the background probability of testing positive
+Pr_Positive <- Pr_Positive_COVID * Pr_COVID +
+Pr_Positive_Healthy * ( 1 - Pr_COVID )
+
+## Point of chapter
+
+# Now calculated your probability of testing positive
+Pr_COVID_Positive <- Pr_Positive_COVID * Pr_COVID / Pr_Positive 
+Pr_COVID_Positive
+
+
+## Random number generation
+
+#### `rnorm`
+
+`rnorm(n, mean = 0, sd = 1)`
+
+ - n = number of observarations 
+ - sd = vector of standard deviations
+ - mean = vector of means
+
+
+```{r}
+rnorm(n = 20, mean = 0, sd = 1)
+```
 
 ## Linear relationships with one co-variate
 
@@ -109,16 +367,42 @@ The future is now. I'm going to give you a glimpse of a better method. Below is 
 ```{r, warning=FALSE}
 library(lme4)
 library(report)
-fm1 <- lme4::glmer(KESSLER6sum ~ Wave + (1|Id), data = nz, family ="poisson")
+fm1 <- lme4::lmer(KESSLER6sum ~ Wave + (1|Id), data = nz, family ="poisson")
 report(fm1)
 ```
 
+## Statistical inference and Scientific inference 
+
+## Science begins with a question.
+
+What do you want to know?
+
+## Theories, models, hypotheses, statistical models
+
+### Theory
+### Model
+### Hypothesis
+### Statistical model 
+
+
+
 
 ```{r}
-library(report)
-library(brms)
-m1 <- brms::brm(KESSLER6sum ~ Wave + (1|Id), data = nz, file = here::here("models","l4.m1.rds"))
-summary(m1)
-parameters::model_parameters(m1)
+# This is a comment
+y <- lm(Sepal.Length ~ Sepal.Width, data = iris)
 ```
+
+
+## Statistics is the logic of uncertainty
+
+Mathematics is the logic of certainty.
+
+### Not all questions make sense
+
+### How you ask a question can be misleading? 
+
+### Measurement
+
+## Samples and parameters: observation and inference
+
 
