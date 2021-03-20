@@ -19,7 +19,6 @@ bibliography: references.bib
 ```{r figopen, echo=F}
 knitr::include_graphics("op.png")
 ```
-
 ```{r}
 # packages
 # ```{r install_rethinking}
@@ -44,10 +43,47 @@ if (!require(rethinking)) {
 library("tidyverse")
 library("patchwork")
 library("brms")
-
+library("lubridate")
+library("splines")
 # set theme
 # theme set
 theme_set(theme_classic())
+```
+
+
+```{r echo = FALSE}
+# Import data
+# read data
+nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
+
+# to relevel kessler 6 variables
+f<-c("None Of The Time","A Little Of The Time","Some Of The Time",  "Most Of The Time", "All Of The Time")
+
+# get data into shape
+library("tidyverse")
+nz <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  dplyr::mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  dplyr::mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  dplyr::mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  dplyr::mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  dplyr::mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) %>%
+  dplyr::mutate(height_m = HLTH.Height * 100,
+         weight_kg =  HLTH.Weight) # better height vars
 ```
 
 ## Overview
@@ -235,7 +271,7 @@ y = rnorm(n = 10, mean = 0, sd = 1)
 df<-data.frame(x,y)
 ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
 ```
-
+e
 ```{r}
 ### Simulate a relationship between two variables 
 N = 100
@@ -245,7 +281,7 @@ xbar <- mean(weight)
 a = rnorm(N, 170 , 20 )
 b = rlnorm(N, .2, .2 )
 
-
+mean(nz$height_m, na.rm=TRUE)
 mu <- a + b *( weight - xbar )
 sigma <- runif(N, 0 , 50 )
 height <- rnorm(N, mu , sigma ) 
@@ -341,14 +377,11 @@ rnorm(n = 20, mean = 0, sd = 1)
 
 
 ```{r}
-nz1<-nz%>%
-  mutate(height_m = HLTH.Height * 10,
-         weight_kg =  HLTH.Weight)
-nz$Religious
-library(splines)
-m1<-lm(height_m ~ bs(weight_kg),data = nz1 )
-summary(m1)
-m1<-lm(height_m ~ weight_kg + I(weight_kg^2),data = nz1 )
+m0<-lm(height_m ~ weight_kg + I(weight_kg^2), data = nz )
+m1<-lm(height_m ~ bs(weight_kg),data = nz )
+m2<-lm(height_m ~ weight_kg + I(weight_kg^2),data = nz )
+m3 <- lm(height_m ~ weight_kg + poly(weight_kg, 2),data = nz )
+
 
 plot(ggeffects::ggpredict(m1, terms = c("weight_kg")), add.data = TRUE, dot.alpha = .1)
 summary(m1)
