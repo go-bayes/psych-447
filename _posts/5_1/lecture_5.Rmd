@@ -197,6 +197,9 @@ rep(letters[1:3], each = 2, length.out = 17)
 Note `length.out` take priority over `times` -- use `length.out` if you have a fixed vector length. 
 
 
+## `seq`
+
+
 ## Fake Empire
 
 We can build a model using fake data
@@ -334,6 +337,22 @@ rnorm(n = 20, mean = 0, sd = 1)
 ## Linear relationships with one co-variate
 
 ## Non-linear relationships with one co-variate
+
+
+
+```{r}
+nz1<-nz%>%
+  mutate(height_m = HLTH.Height * 10,
+         weight_kg =  HLTH.Weight)
+nz$Religious
+library(splines)
+m1<-lm(height_m ~ bs(weight_kg),data = nz1 )
+summary(m1)
+m1<-lm(height_m ~ weight_kg + I(weight_kg^2),data = nz1 )
+
+plot(ggeffects::ggpredict(m1, terms = c("weight_kg")), add.data = TRUE, dot.alpha = .1)
+summary(m1)
+```
 
 ## Model summaries
 
