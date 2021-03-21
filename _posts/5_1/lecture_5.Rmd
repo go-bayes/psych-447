@@ -86,18 +86,98 @@ nz <- nz_0 %>%
          weight_kg =  HLTH.Weight) # better height vars
 ```
 
-## Overview
 
-In part 1 we will:
+```{r echo = FALSE}
+
+```
+
+## Overview
+In Part 1 we will introduce regression. 
+
+In Part 2 we will:
 
 -   learn how to use R to generate random numbers
 -   use random numbers to simulate data
 
 ## Learning outcomes
 
-By learning how to generate random numbers you will better understand how statistical models help us to guess how the world is (which is statistical inference)
+By learning regression, you will better equipped to do psychological science and to evaluate psychological research.
 
-## `rnorm`
+By learning how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. 
+
+## Background
+
+### Know thine question
+
+### Theoretical model (or Theory)
+
+### Hypothesis: predictions of a model
+
+### Statistical model: tool
+
+## Regression 
+
+
+### What is regression? 
+
+Broadly speaking, a regression model is a statistical tool for guessing wisely about some feature of interest in the world. 
+
+### Why regression? 
+
+Regression is a sensible method for guessing
+
+### Lingo
+
+Let's start with nomenclature.  
+
+#### Parameter
+
+In regression, we call the feature of interest in the wold a "parameter." 
+
+We call guessing about this parameter "inference." Inference is possible because parameters are structured by distributions.  Today we will be talking about the normal distribution. 
+
+#### Population 
+
+In most cases, the parameter is some quality in a population.  Today we'll be interested guessing the heights of a population of New Zealanders.  
+
+#### Sample
+
+A sample is the sub-population you have measured.
+
+
+
+
+
+```{r}
+set.seed(123)
+ggplot2::qplot(rnorm(100, mean = 170, sd = 20),binwidth = 10)
+               
+```
+
+
+### Predictive inference (forcasting)
+
+
+### Assumptions of religion
+
+
+### Common confusions
+
+#### Causal inference is tricky
+
+People use the work "effect" but that is not what regression gives us (by default)
+
+#### "Normality assumption" 
+
+#### Statistical independence 
+
+#### Levels (wrong population)
+
+
+
+## Functions for simulation
+
+### `rnorm`
 
 `rnorm` is a r's random number generator. Within this function:
 
@@ -152,7 +232,7 @@ t2 <-stats::rnorm(100)
 identical(t1, t2)
 ```
 
-## `runif`
+### `runif`
 
 We use r uniform to generate continuous data within a point range
 
@@ -172,7 +252,7 @@ dplyr::glimpse(exp)
 hist(exp)
 ```
 
-## `rep`
+### `rep`
 
 Frequently we'll need to generate random factors. For this, R's `rep` function, `letters` function, and `LETTERS` function make happy friends.
 
@@ -233,10 +313,10 @@ rep(letters[1:3], each = 2, length.out = 17)
 Note `length.out` take priority over `times` -- use `length.out` if you have a fixed vector length. 
 
 
-## `seq`
+### `seq`
 
 
-## Fake Empire
+## Simulation
 
 We can build a model using fake data
 
