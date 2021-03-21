@@ -247,8 +247,10 @@ weight_sim = runif(n = 100, min = 40, max = 100)
 ```
 
 ```{r}
-m0 <- lm(weight_sim ~ height_sim)
+m0 <- lm(height_sim ~ weight_sim)
 summary(m0)
+plot(ggeffects::ggpredict(m0, terms = c("weight_sim")), add.data = TRUE, dot.alpha = .1)
+
 ```
 
 We can use vectors within random number generation
@@ -271,40 +273,123 @@ y = rnorm(n = 10, mean = 0, sd = 1)
 df<-data.frame(x,y)
 ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
 ```
-e
+
 ```{r}
 ### Simulate a relationship between two variables 
-N = 100
-weight <-runif(N, min = 40, max =100)
-xbar <- mean(weight)
+summary(lm(height_m ~ weight_kg, data = nz))
 
-a = rnorm(N, 170 , 20 )
-b = rlnorm(N, .2, .2 )
+weight <-runif(N, min = 50, max =100)
+b <- rlnorm(N,.78,.1)
+b
+sigma <- runif(N, 0 , 10 )
+height = weight * b
 
-mean(nz$height_m, na.rm=TRUE)
-mu <- a + b *( weight - xbar )
-sigma <- runif(N, 0 , 50 )
-height <- rnorm(N, mu , sigma ) 
-
+height
 # simulated height/ weight data
 df<-data.frame(height,weight)
 
-# model
-md_0 <-brm(height ~ weight, data = df, file = here::here("models", "5_md_0"))
+m0<-lm(height ~ weight, data = df)
+plot(ggeffects::ggpredict(m0, terms = c("weight")), add.data = TRUE, dot.alpha = .8) + labs(x = "simulated weight",
+                y = "simulated height",
+                title = "simulated linear relationship")
+```
 
-# graph 
-ce <- conditional_effects(
-  md,
-  effects = "weight",
-  prob = 0.95,
-  spaghetti = TRUE,
-  nsamples  = 100
-)
-plot(ce) + labs(x = "simulated weight",
+
+```{r}
+a <-160
+b <- c(2, 0.75)
+x <- rnorm(100)
+y <- rnorm(100, mean = b[1] * exp(b[2] * x))
+dat1 <- data.frame(x, y)
+plot(y ~ x , data = dat1)
+
+#Polynomial
+N<-1000
+options(scipens(999))
+nz$weight_kg_c = scale(nz$weight_kg, center = TRUE, scale = FALSE)
+summary(lm(height_m ~ weight_kg_c + I(weight_kg_c^2), data = nz))
+
+
+
+# simulate weights
+weight <-runif(N, min = 60, max =120)
+weight_c <-scale(weight, scale=FALSE)
+# simulate coefficients
+a = rnorm(N, mean = 170 , 10 )
+b1 = rnorm(N, mean = 2.5, .1)
+b1
+b2 = - rnorm(N, mean = .05, .001)
+
+height <- a + b1 * weight_c  +  b2 * weight_c^2
+height
+
+# simulated height/ weight data
+df1<-data.frame(height,weight_c, weight)
+
+plot(height ~ weight)
+
+m1 <-lm(height ~ weight_c, data = df1)
+summary(m1)
+plot(ggeffects::ggpredict(m1, terms = c("weight_c")), add.data = TRUE, dot.alpha = .2) + labs(x = "simulated weight",
+                y = "simulated height",
+                title = "simulated linear relationship") 
+
+m2 <-lm(height ~ weight_c + I(weight_c^2), data = df1)
+summary(m2)
+plot(ggeffects::ggpredict(m2, terms = c("weight_c")), add.data = TRUE, dot.alpha = .2) + labs(x = "simulated weight",
+                y = "simulated height",
+                title = "simulated linear relationship")
+
+m3 <-lm(height ~ bs(weight_c), data = df1)
+summary(m3)
+plot(ggeffects::ggpredict(m3, terms = c("weight_c")), add.data = TRUE, dot.alpha = .2) + labs(x = "simulated weight",
                 y = "simulated height",
                 title = "simulated linear relationship")
 
 ```
+
+Check linear model
+```{r}
+performance::check_model(m1)
+```
+
+Check quadradic model
+
+```{r}
+performance::check_model(m2)
+```
+
+Check splines model
+
+```{r}
+performance::check_model(m3)
+```
+
+
+## outliers
+
+```{r}
+b <- c(2, 0.75)
+set.seed(12)
+x <- rnorm(100)
+set.seed(12)
+y <- rnorm(100, mean = b[1] * exp(b[2] * x))
+dat1 <- data.frame(x, y)
+
+ot1 <-lm(y ~ x, data  = dat1)
+performance::check_model(ot1)
+
+plot(ggeffects::ggpredict(ot1, terms = "x"), add.data =TRUE, dot.alpha = .4)
+
+e
+
+ot2 <-lm(y ~ bs(x), data  = dat1)
+performance::check_model(ot2)
+
+plot(ggeffects::ggpredict(ot2, terms = "x"), add.data =TRUE, dot.alpha = .4)
+
+```
+
 
 ## Use fake data to create a factor
 
@@ -377,6 +462,7 @@ rnorm(n = 20, mean = 0, sd = 1)
 
 
 ```{r}
+nz1 <- nz %>%
 m0<-lm(height_m ~ weight_kg + I(weight_kg^2), data = nz )
 m1<-lm(height_m ~ bs(weight_kg),data = nz )
 m2<-lm(height_m ~ weight_kg + I(weight_kg^2),data = nz )
