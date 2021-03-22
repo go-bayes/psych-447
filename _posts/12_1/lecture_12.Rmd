@@ -21,6 +21,36 @@ knitr::include_graphics("op2.png")
 ```
 
 
+## Probability
+
+We have been working with probability throughout this course.
+
+
+Suppose there is a test that is 99% accurate at detecting COVID if you have it.
+
+Very rarely it throws up a false positive,say one in a thousand.
+
+You just tested positve. What is the probability that you have COVID? Our intuition is that we probably have COVID. However, let's assume COVID is rare. Currently in NZ, there are about 50 cases, so 1 in 100,000. The background rate matters.
+
+Bayes rule says
+
+$$ Pr(COVID|Positive) = \frac{Pr(Positive|COVID)\times Pr (COVID}{Pr(Positive)}
+$$
+
+We plug in the numbers:
+
+Pr_Positive_COVID \<- 0.99 Pr_Positive_Healthy \<- 0.01 Pr_COVID \<- 0.00001
+
+# Calculate the background probability of testing positive
+
+Pr_Positive \<- Pr_Positive_COVID \* Pr_COVID + Pr_Positive_Healthy \* ( 1 - Pr_COVID )
+
+
+
+# Now calculated your probability of testing positive
+
+Pr_COVID_Positive \<- Pr_Positive_COVID \* Pr_COVID / Pr_Positive Pr_COVID_Positive
+
 ## Uncertainty 
 
 

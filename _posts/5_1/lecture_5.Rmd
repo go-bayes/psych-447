@@ -11,7 +11,9 @@ author:
 date: 2021-MAR-23
 output:
   distill::distill_article:
-  self_contained: false
+   highlight: tango
+   highlight_downlit: false
+   code_folding: true
 toc: true
 bibliography: references.bib
 ---
@@ -19,7 +21,8 @@ bibliography: references.bib
 ```{r figopen, echo=F}
 knitr::include_graphics("op.png")
 ```
-```{r}
+
+```{r echo = FALSE}
 # packages
 # ```{r install_rethinking}
 # function for installing dependencies
@@ -45,13 +48,15 @@ library("patchwork")
 library("brms")
 library("lubridate")
 library("splines")
+if (!require(equatiomatic)) {
+  remotes::install_github("datalorax/equatiomatic")
+  }
 # set theme
 # theme set
 theme_set(theme_classic())
 ```
 
-
-```{r echo = FALSE}
+```{r echo = FALSE, cache = TRUE}
 # Import data
 # read data
 nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
@@ -86,13 +91,9 @@ nz <- nz_0 %>%
          weight_kg =  HLTH.Weight) # better height vars
 ```
 
-
-```{r echo = FALSE}
-
-```
-
 ## Overview
-In Part 1 we will introduce regression. 
+
+In Part 1 we will introduce regression.
 
 In Part 2 we will:
 
@@ -103,63 +104,378 @@ In Part 2 we will:
 
 By learning regression, you will better equipped to do psychological science and to evaluate psychological research.
 
-By learning how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. 
+By learning how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research.
 
 ## Background
 
+Some preliminaries.
+
 ### Know thine question
+
+Science begins with a question about the world. The first step in science is to clarify what you want to know.
+
+Because science is a social practice, you will also need to clarify why your question is interesting. Put simply, so what?
+
+Next time you read a published study, ask yourself whether the authors have clarified what they want to know, and so what.
 
 ### Theoretical model (or Theory)
 
+Sometimes scientists are interested in specific features of the world: how did virus x originate?
+
+More typically, typically scientists seek generalisations. How do infectious diseases evolve?
+
+For generalisations, we need a theory that takes us beyond individual cases.
+
 ### Hypothesis: predictions of a model
+
+We evaluate a model, in part, by testing its predictions.
 
 ### Statistical model: tool
 
-## Regression 
+A statistical model uses probability theory to generalise from features of a sample to features of a population. Put simply, statistics is organised guessing.
 
+## What is regression?
 
-### What is regression? 
+Broadly speaking, a regression model is a statistical tool for guessing wisely about some feature of interest in the world.
 
-Broadly speaking, a regression model is a statistical tool for guessing wisely about some feature of interest in the world. 
+## Why regression?
 
-### Why regression? 
+Regression is a sensible method for statistical guessing
 
-Regression is a sensible method for guessing
+Let's start with nomenclature.
 
-### Lingo
+### Parameter
 
-Let's start with nomenclature.  
+In regression, we call the feature of interest in the world a "parameter."
 
-#### Parameter
+We call guessing about this parameter "inference." Inference is possible because parameters are structured by distributions. Today we will be talking about the normal distribution.
 
-In regression, we call the feature of interest in the wold a "parameter." 
+### Population
 
-We call guessing about this parameter "inference." Inference is possible because parameters are structured by distributions.  Today we will be talking about the normal distribution. 
+In most cases, the parameter is some quality in a population. Today we'll be interested guessing the heights of a population of New Zealanders.
 
-#### Population 
-
-In most cases, the parameter is some quality in a population.  Today we'll be interested guessing the heights of a population of New Zealanders.  
-
-#### Sample
+### Sample
 
 A sample is the sub-population you have measured.
 
+```{r}
+set.seed(123)
+sm<-rnorm(100, mean = 170, sd = 20)
+ggplot2::qplot(sm, binwidth = 10)
+```
 
-
-
+Small sample
 
 ```{r}
 set.seed(123)
-ggplot2::qplot(rnorm(100, mean = 170, sd = 20),binwidth = 10)
-               
+subsm <-rnorm(10, mean = 170, sd = 20)
+
+ggplot2::qplot(
+  subsm, binwidth = 10
+  )
 ```
 
+Large sample
+
+```{r}
+set.seed(123)
+largesm <-rnorm(1e5, mean = 170, sd = 20)
+ggplot2::qplot(
+  largesm, binwidth = 1
+  )
+```
 
 ### Predictive inference (forcasting)
 
+What is the the expected average for the population from which the sample is drawn?
 
-### Assumptions of religion
+### Tables of regression coefficients
 
+N = 100
+
+```{r}
+sjPlot::tab_model(
+  lm(sm ~ 1)
+)
+```
+
+N = 10
+
+```{r}
+sjPlot::tab_model(
+  lm(subsm ~ 1)
+)
+```
+
+N = 10,000
+
+```{r}
+sjPlot::tab_model(
+  lm(largesm ~ 1)
+)
+```
+
+What do we notice about the relationship betwen sample size the estimated population average?
+
+```{r}
+sjPlot::tab_model(
+   lm(sm ~ 1),
+   lm(subsm ~ 1),
+   lm(largesm ~ 1)
+)
+```
+
+
+
+## Regression examples: daughters/mothers heights.
+
+This data set is from "The heredity of height", Karl Pearson and Alice Lee (1903)[@pearson1903]
+
+```{r}
+md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
+dplyr::glimpse(md_df)
+```
+
+Does mother height predict daughter height? It seems so. By what how close are is the relationship?
+
+Pearson and Lee collected 5,524 data points from mother's and daughters. Let's examine the data, first by plotting the relationship. 
+
+What what is happening here? 
+
+```{r}
+explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_height)) + 
+  geom_jitter(alpha = .2) + 
+  labs(title = "The relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + theme_classic()
+explore_md
+```
+
+In regression we examime the line of best fit:
+
+```{r}
+ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_height)) + 
+  geom_jitter(alpha = .9) + 
+  labs(title = "The relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + 
+  geom_smooth(method = lm, se = FALSE) + 
+  theme_classic()
+# to expand from zero use the code below:
+#  expand_limits(x = 0, y = 0) 
+```
+
+Is there a linear predictive relationship between these two parameters?
+
+```{r}
+m1 <- lm(daughter_height ~ mother_height, data = md_df)
+sjPlot::tab_model(m1)
+```
+
+We can plot the coefficient, which in a model with one predictor isn't too informative.
+
+```{r echo = FALSE}
+t_m1<-parameters::model_parameters(m1,  
+                                   ci = 0.95)
+plot(t_m1) +
+  labs(title = "The relationship between mothers height and daughter's height") + 
+  ylab("Daughter's height") 
+```
+
+## How do we interpret the regression model?
+
+Let's write the equation out in mathematics. How do we read this? [^1]
+
+[^1]: Later, we'll prefer a different way of writing regression equations in math. (Note: writing math isn't math - it's just encoding the model that we've written).
+
+```{r echo = FALSE}
+library("equatiomatic")
+extract_eq(m1,  use_coefs = FALSE)
+```
+
+The math says that the expected daughter's height in a population is predicted by the average height of the population when mother's height is set to zero units (note, this is impossible - we'll come back to this) plus .$$\beta ~\times $$ units of daughter's height (inches) for each additional unit of mother's height (inches) + some
+
+We can plug the output of the model directly into the equation as follows:
+
+```{r echo = FALSE}
+library("equatiomatic")
+extract_eq(m1,  use_coefs = TRUE)
+```
+
+```{r}
+library(ggeffects)
+toplot<-ggeffects::ggpredict(m1, terms = "mother_height")
+toplot
+```
+
+Under the hood
+
+```{r}
+head(md_df)
+```
+
+```{r}
+heightplot<-plot(toplot, add.data = TRUE, dot.alpha = .1, jitter = TRUE) +   theme_classic()
+heightplot + labs(title = "Predicted values of daughter's height from the Pearson/Fox 1903 dataset")
+
+```
+
+### Regression to predict?
+
+Joyte Amge is the world's shortest woman at 25 inches. Sandy Allen was the world's tallest woman at 91 inches. What is be the expected heights of their daughter, and of every intermediary woman in between?
+
+```{r}
+# use the `expand.grid` command to create a sequence of points for mother's height
+ndat<-expand.grid(mother_height = c(25:91)) 
+
+# use the `predict` function to create a new response 
+pr<- predict(m1, type = "response", interval = "confidence", newdata =ndat)
+
+# have a look at the object
+dplyr::glimpse(pr)
+
+# create a new dataframe for the new sequence of points for mother's height and the predicted data
+newdata<-data.frame(ndat,pr)
+head(newdata)
+```
+
+Graph the predicted results
+
+```{r  layout="l-body-outset", fig.width=10, fig.height=10}
+# graph the expected results
+predplot<-ggplot(data = newdata, 
+       aes(x= mother_height, y = fit))  + 
+  geom_point() +  geom_errorbar(aes(ymin = lwr, ymax = upr), width = .1) + 
+   expand_limits(x = c(20,91), y = c(0,81))  + theme_classic() + 
+  labs(title = "Predicted values for a broader population")
+
+# plot the two graphs together (making the x and y axis at the same scale )
+library("patchwork")
+# rescale heightplot
+
+# old plot with the new axis and y axis scales, and remove points
+
+heightplot2<-plot(toplot, add.data = FALSE) +   theme_classic()
+
+nhp <- heightplot2 +  expand_limits(x = c(20,91), y = c(0,81) ) +  labs(title = "Predicted values of daughter's height from the Pearson/Fox 1903 dataset")
+
+# double graph
+ nhp /predplot  + plot_annotation(title = "What do you notie about these relationships?", tag_levels = "a")
+```
+
+### Under the hood
+
+$$\begin{bmatrix}
+\textbf{y}\\
+\textit{daughter's height}\\
+51.5\\
+52.5 \\
+53.0 \\
+\vdots
+\end{bmatrix}
+=
+\begin{bmatrix}
+\textbf{intercept} \\
+1 \\
+1 \\
+1 \\
+1 \\
+\vdots \\
+\end{bmatrix}
+\begin{bmatrix}
+\textbf{x}\\
+\textit{mother's height}\\
+59.5\\
+57.5 \\
+60.0 \\
+\vdots
+\end{bmatrix}
+\begin{bmatrix}
+\textbf{b}\\
+29.8 \\
+0.54
+\end{bmatrix}
+$$
+
+
+### Non-linear relationships
+
+```{r}
+# Simulate nonlinear relationshp between x and y
+b <- c(2, 0.75)
+set.seed(12)
+x <- rnorm(100)
+set.seed(12)
+y <- rnorm(100, mean = b[1] * exp(b[2] * x))
+dat1 <- data.frame(x, y)
+
+ot1 <-lm(y ~ x, data  = dat1)
+# performance::check_model(ot1)
+
+# Plot linear effect
+plot(ggeffects::ggpredict(ot1, terms = "x"), add.data =TRUE, dot.alpha = .4)
+```
+
+Non-linear effect
+
+
+```{r}
+library(splines)
+ot2 <-lm(y ~ x + I(x^2), data  = dat1)
+#performance::check_model(ot2)
+plot(ggeffects::ggpredict(ot2, terms = "x"), add.data =TRUE, dot.alpha = .4)
+```
+
+Splines
+```{r}
+library(splines)
+ot3 <-lm(y ~ bs(x), data  = dat1)
+#performance::check_model(ot2)
+plot(ggeffects::ggpredict(ot3, terms = "x"), add.data =TRUE, dot.alpha = .4)
+```
+
+
+
+
+#### Model evaluation
+
+```{r}
+# simulate heights
+# simulate weights
+set.seed(123)
+
+weight_sim = runif(n = 100, min = 40, max = 100)
+
+a <- 60
+
+b <- rnorm(n=100, 1.4,.1)
+
+mu <- a + weight_sim * b + rnorm(100,0,10)
+
+height_sim = rnorm(100,mu,10)
+
+df <-data.frame(height_sim, weight_sim)
+
+```
+
+Explore data
+
+```{r}
+
+ggplot(data = df,
+
+       aes(y = height_sim, x = weight_sim)
+
+       ) +
+
+  geom_point() +
+
+  geom_smooth(method = lm)
+
+```
+
+
+### Assumptions of regression
 
 ### Common confusions
 
@@ -167,13 +483,11 @@ ggplot2::qplot(rnorm(100, mean = 170, sd = 20),binwidth = 10)
 
 People use the work "effect" but that is not what regression gives us (by default)
 
-#### "Normality assumption" 
+#### "Normality assumption"
 
-#### Statistical independence 
+#### Statistical independence
 
 #### Levels (wrong population)
-
-
 
 ## Functions for simulation
 
@@ -185,7 +499,7 @@ People use the work "effect" but that is not what regression gives us (by defaul
 -   `sd` specifies the value of the standard deviation
 -   `mean` specifies the value of the mean
 
-```{r}
+```{r code_folding=FALSE}
 set.seed(12345)
 # generate random numbers
 ds <- rnorm(n = 1000, mean = 0, sd = 1)
@@ -194,14 +508,14 @@ dplyr::glimpse(ds)
 
 We can create a histogram:
 
-```{r}
+```{r code_folding=FALSE}
 p1 <- ggplot2::qplot(ds) + labs(title = "1st random number list")
 p1
 ```
 
 We use shorthand for generating numbers:
 
-```{r}
+```{r code_folding=FALSE}
 set.seed(54321)
 ds_0 <- rnorm(1000)
 dplyr::glimpse(ds_0)
@@ -216,13 +530,13 @@ p1 + p2 + plot_annotation("The two graphs differ", tag_levels = 'i')
 
 Or more formally we can ask R to test the equivalence:
 
-```{r message=TRUE}
+```{r message=TRUE,  code_folding=FALSE}
 identical(ds, ds_0)
 ```
 
 Because we want to have reproducible code, we will use the `set.seed()` function in R to ensure the same random numbers are generated each time.
 
-```{r warning=TRUE}
+```{r warning=TRUE,  code_folding=FALSE}
 set.seed(123)
 t1 <-stats::rnorm(100)
 set.seed(123)
@@ -245,7 +559,7 @@ hist(ds1)
 
 Say we want to simulate a range of values between two endpoints. This is useful for simulating explanatory variables.
 
-```{r}
+```{r.  code_folding=FALSE}
 set.seed(123)
 exp <- runif(n =100, min = 130, max = 220)
 dplyr::glimpse(exp)
@@ -260,73 +574,123 @@ Here's how these functions work
 
 Lower case letters:
 
-```{r}
+```{r  code_folding=FALSE}
 letters[1:3]
 ```
 
 Upper case letters:
 
-```{r}
+```{r  code_folding=FALSE}
 LETTERS[4:10]
 ```
 
 Creating sequences using `each`
 
-```{r}
+```{r code_folding=FALSE }
 rep( letters[1:3], each = 3 )
 ```
 
-
 Creating sequences using `times`
 
-
-```{r}
+```{r  code_folding=FALSE}
 rep( letters[1:3], times = 3 )
 ```
 
+Createing a sequences using `length.out`
 
-Createing a sequences  using `length.out`
-
-```{r}
+```{r  code_folding=FALSE}
 rep( letters[1:3], length.out = 5 )
 ```
 
 Creating uneven sequences
 
-```{r}
+```{r code_folding=FALSE }
 rep( letters[1:3], times = c(3, 1, 4) )
 ```
 
 combining `each` + `times`
 
-```{r}
+```{r  code_folding=FALSE}
 rep(letters[1:3], each = 2, times = 3)
 ```
 
-
 `length.out`
 
-```{r}
+```{r  code_folding=FALSE}
 rep(letters[1:3], each = 2, length.out = 17)
 ```
 
-Note `length.out` take priority over `times` -- use `length.out` if you have a fixed vector length. 
-
+Note `length.out` take priority over `times` -- use `length.out` if you have a fixed vector length.
 
 ### `seq`
 
 
+
+
 ## Simulation
+
+## Simulate to assess result against noise
+
+Recall the relationship between mother's heights and daughters heights in the Pearson/Fox dataset: 
+
+```{r}
+# recall this model
+explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_height)) + 
+  geom_jitter(alpha = .2) + 
+  labs(title = "The relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + theme_classic()
+explore_md
+```
+
+What would a random relationship look like? 
+
+
+```{r layout="l-body-outset", fig.width=10, fig.height=10}
+av_dh <-mean(md_df$daughter_height, na.rm=TRUE)
+sd_dh <-sd(md_df$daughter_height, na.rm=TRUE)
+av_mh <-mean(md_df$mother_height, na.rm=TRUE)
+sd_mh <-sd(md_df$mother_height, na.rm=TRUE)
+
+# number of obs
+N<- nrow(md_df)
+
+# fake data
+sim_dh = rnorm(N, av_dh, sd_dh)
+sim_mh = rnorm(N, av_mh, sd_mh)
+sim_df_md <- data.frame(sim_dh,sim_mh)
+fake_md <-ggplot2::ggplot(data = sim_df_md, aes(y = sim_dh, x = sim_mh)) + 
+  geom_jitter(alpha = .2) + 
+  labs(title = "Fake data relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + theme_classic() + 
+  geom_smooth(method = lm)
+
+# real data
+explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_height)) + 
+  geom_jitter(alpha = .2) + 
+  labs(title = "The relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + theme_classic() + 
+  geom_smooth(method = lm)
+
+
+library(patchwork)
+fake_md + explore_md  + plot_annotation(tag_levels = "a")
+
+```
+
+
 
 We can build a model using fake data
 
-```{r}
+```{r  code_folding=FALSE}
 set.seed(123)
 height_sim = rnorm(n = 100, mean = 170, sd = 40)
 weight_sim = runif(n = 100, min = 40, max = 100)
 ```
 
-```{r}
+```{r  code_folding=FALSE}
 m0 <- lm(height_sim ~ weight_sim)
 summary(m0)
 plot(ggeffects::ggpredict(m0, terms = c("weight_sim")), add.data = TRUE, dot.alpha = .1)
@@ -335,7 +699,7 @@ plot(ggeffects::ggpredict(m0, terms = c("weight_sim")), add.data = TRUE, dot.alp
 
 We can use vectors within random number generation
 
-```{r}
+```{r  code_folding=FALSE}
 set.seed(123)
 vdf<-rnorm(n = 20, mean = c(0, 500, 1000), sd = c(5,50,100))
 qplot(vdf, binwidth=4)
@@ -345,8 +709,9 @@ qplot(vdf, binwidth=4)
 
 Can appear to reveal relationships that are not there.
 
-```{r}
+```{r  code_folding=FALSE}
 set.seed(123)
+# no relationship between x and y
 x = rnorm(n = 10, mean = 0, sd = 1)
 y = rnorm(n = 10, mean = 0, sd = 1)
 
@@ -354,10 +719,12 @@ df<-data.frame(x,y)
 ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
 ```
 
-```{r}
-### Simulate a relationship between two variables 
-summary(lm(height_m ~ weight_kg, data = nz))
+Simulate the relationship between two variables
 
+```{r  code_folding=FALSE}
+### Simulate a relationship between two variables 
+library(ggplot2)
+N = 1000
 weight <-runif(N, min = 50, max =100)
 b <- rlnorm(N,.78,.1)
 b
@@ -374,6 +741,7 @@ plot(ggeffects::ggpredict(m0, terms = c("weight")), add.data = TRUE, dot.alpha =
                 title = "simulated linear relationship")
 ```
 
+Simulate a non-linear model
 
 ```{r}
 a <-160
@@ -385,50 +753,57 @@ plot(y ~ x , data = dat1)
 
 #Polynomial
 N<-1000
-options(scipens(999))
-nz$weight_kg_c = scale(nz$weight_kg, center = TRUE, scale = FALSE)
-summary(lm(height_m ~ weight_kg_c + I(weight_kg_c^2), data = nz))
-
-
 
 # simulate weights
 weight <-runif(N, min = 60, max =120)
 weight_c <-scale(weight, scale=FALSE)
+
 # simulate coefficients
-a = rnorm(N, mean = 170 , 10 )
-b1 = rnorm(N, mean = 2.5, .1)
-b1
-b2 = - rnorm(N, mean = .05, .001)
+
+a = rnorm(N, mean = 180 , 10 )
+b1 = rnorm(N, mean = 2.2, .01)
+b2 = - rnorm(N, mean = .02, .001)
 
 height <- a + b1 * weight_c  +  b2 * weight_c^2
-height
 
 # simulated height/ weight data
+
 df1<-data.frame(height,weight_c, weight)
 
 plot(height ~ weight)
 
 m1 <-lm(height ~ weight_c, data = df1)
-summary(m1)
 plot(ggeffects::ggpredict(m1, terms = c("weight_c")), add.data = TRUE, dot.alpha = .2) + labs(x = "simulated weight",
                 y = "simulated height",
-                title = "simulated linear relationship") 
+                title = "simulated linear relationship")
 
+
+```
+
+Non-linear model
+```{r}
 m2 <-lm(height ~ weight_c + I(weight_c^2), data = df1)
-summary(m2)
+
 plot(ggeffects::ggpredict(m2, terms = c("weight_c")), add.data = TRUE, dot.alpha = .2) + labs(x = "simulated weight",
+
                 y = "simulated height",
+
                 title = "simulated linear relationship")
 
 m3 <-lm(height ~ bs(weight_c), data = df1)
+
 summary(m3)
-plot(ggeffects::ggpredict(m3, terms = c("weight_c")), add.data = TRUE, dot.alpha = .2) + labs(x = "simulated weight",
-                y = "simulated height",
-                title = "simulated linear relationship")
+
+plot(ggeffects::ggpredict(m3, terms = c("weight_c")),
+     add.data = TRUE,
+     dot.alpha = .2) + labs(x = "simulated weight",
+                            y = "simulated height",
+                            title = "simulated linear relationship")
 
 ```
 
 Check linear model
+
 ```{r}
 performance::check_model(m1)
 ```
@@ -446,179 +821,135 @@ performance::check_model(m3)
 ```
 
 
-## outliers
-
-```{r}
-b <- c(2, 0.75)
-set.seed(12)
-x <- rnorm(100)
-set.seed(12)
-y <- rnorm(100, mean = b[1] * exp(b[2] * x))
-dat1 <- data.frame(x, y)
-
-ot1 <-lm(y ~ x, data  = dat1)
-performance::check_model(ot1)
-
-plot(ggeffects::ggpredict(ot1, terms = "x"), add.data =TRUE, dot.alpha = .4)
-
-e
-
-ot2 <-lm(y ~ bs(x), data  = dat1)
-performance::check_model(ot2)
-
-plot(ggeffects::ggpredict(ot2, terms = "x"), add.data =TRUE, dot.alpha = .4)
-
-```
-
-
 ## Use fake data to create a factor
 
 Here we simulate no relationship between a group and an outcome
+
 ```{r}
-group <- rep(letters[1:3], length.out = 100)
-outcome <- rnorm(n = 100, mean = 0, sd = 1)
+N <- 200 # number of observations
+#group <- rep((0:1), length.out = 200) # 2 groups
+ group <- rep(c("m","n_m"), each = n/2) #equivalent:
+a <- rnorm(N, 150, 3) # intercept
+b1 <- rnorm(N, 20, 1) # coefficient of "b
+sigma = rexp(N,1)# error term
+outcome <- rnorm(N, mean = a + b1 * (group == "m"), sigma)
+
 df <-data.frame(outcome,group)
 dplyr::glimpse(df)
 
 
 #model
-ms<-lm(outcome ~ group, data = df)
-
+ms<-lm(outcome ~ -1 + group, data = df)
+ms
 # no difference
 sjPlot::plot_model(ms)
+
+
+### Is imbalance wrecking my inference? 
+
+Is imbalance in my study causing a problem? 
+
+N <- 120
+cells <-rep( letters[1:2], times = c(15, 105))
+
+a <- rnorm(N, 2, 1)
+b1 <- rnorm(N, .2, .1)
+sigma <- rexp(N,1)
+
+out <- rnorm(N, mean = a + b1 * (cells == "b"), sigma)
+dfc<-data.frame(out,cells)
+sim_cells<-lm(out ~ cells, data = dfc)
+
+summary(sim_cells)
+```
+
+This isn't too convincing: we need to replicate the model many times 
+
+```{r}
+# Make a function for the simulation
+set.seed(12)
+test_fun = function() {
+  N <- 120
+  cells <-rep( letters[1:2], times = c(110, 10))
+  a <- rnorm(N, 2, 1)
+  b1 <- rnorm(N, 1, .1)
+  sigma <- rexp(N, 1)
+  out <- rnorm(N, mean = a + b1 * (cells == "b"), sigma)
+  dfc <- data.frame(out, cells)
+  sim_cells <- lm(out ~ cells, data = dfc)
+  sim_cells
+}
+
+sim_lm = replicate(20, test_fun(), simplify = FALSE )
+length(sim_lm)
+
+
+We can use the `purrr` package to generate many replicates of a model
+
+```{r}
+library(dplyr)
+tab_sim<-purrr::map_dfr(sim_lm, broom::tidy)
+tab_sim %>%
+  dplyr::mutate_if(is.numeric, round, 5)
+```
+
+What percentage of simulations yeild "significant results?
+```{r}
+sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
 ```
 
 
+Does balance fix the issue? 
 
-## Probability
 
-Suppose there is a test that is 99% accurate at detecting COVID if you have it. 
+```{r}
 
-Very rarely it throws up a false positive,say one in a thousand. 
+```{r}
+# Make a function for the simulation
+set.seed(12)
+test_fun = function() {
+  N <- 120
+  cells <-rep( letters[1:2], times = c(60, 60))
+  a <- rnorm(N, 2, 1)
+  b1 <- rnorm(N, 1, .1)
+  sigma <- rexp(N, 1)
+  out <- rnorm(N, mean = a + b1 * (cells == "b"), sigma)
+  dfc <- data.frame(out, cells)
+  sim_cells <- lm(out ~ cells, data = dfc)
+  sim_cells
+}
 
-You just tested positve.  What is the probability that you have COVID? 
-Our intuition is that we probably have COVID. However, let's assume COVID is rare. Currently in NZ, there are about 50 cases, so 1 in 100,000.  The background rate matters. 
+sim_lm = replicate(20, test_fun(), simplify = FALSE )
+length(sim_lm)
 
-Bayes rule says
 
-\[ Pr(COVID|Positive) = \frac{Pr(Positive|COVID)\times Pr (COVID}{Pr(Positive)}
-\]
+We can use the `purrr` package to generate many replicates of a model
 
-We plug in the numbers:
+```{r}
+library(dplyr)
+tab_sim<-purrr::map_dfr(sim_lm, broom::tidy)
+tab_sim %>%
+  dplyr::mutate_if(is.numeric, round, 5)
+```
 
-Pr_Positive_COVID <- 0.99
-Pr_Positive_Healthy <- 0.01
-Pr_COVID <- 0.00001
+What percentage of simulations yeild "significant results?
+```{r}
+sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
+```
 
-# Calculate the background probability of testing positive
-Pr_Positive <- Pr_Positive_COVID * Pr_COVID +
-Pr_Positive_Healthy * ( 1 - Pr_COVID )
 
-## Point of chapter
-
-# Now calculated your probability of testing positive
-Pr_COVID_Positive <- Pr_Positive_COVID * Pr_COVID / Pr_Positive 
-Pr_COVID_Positive
 
 
 ## Random number generation
 
-#### `rnorm`
+#### `rnorm` function 
 
-`rnorm(n, mean = 0, sd = 1)`
-
- - n = number of observarations 
- - sd = vector of standard deviations
- - mean = vector of means
-
-
-rnorm(n = 20, mean = 0, sd = 1)
+```{r code_folding = FALSE}
+rnorm(n=20, mean = 0, sd = 1)
 ```
-
-## Linear relationships with one co-variate
-
-## Non-linear relationships with one co-variate
-
-
-
-```{r}
-nz1 <- nz %>%
-m0<-lm(height_m ~ weight_kg + I(weight_kg^2), data = nz )
-m1<-lm(height_m ~ bs(weight_kg),data = nz )
-m2<-lm(height_m ~ weight_kg + I(weight_kg^2),data = nz )
-m3 <- lm(height_m ~ weight_kg + poly(weight_kg, 2),data = nz )
-
-
-plot(ggeffects::ggpredict(m1, terms = c("weight_kg")), add.data = TRUE, dot.alpha = .1)
-summary(m1)
-```
-
-## Model summaries
-
-```{r}
-hist(nz$Issue.Food.GMO)
-model <- lm(Sepal.Length ~ Species, data = iris)
-report_text(model)
-report_table(model)
-```
-
-Let's make a report of our data:
-
-```{r}
-library(tidyverse)
-tnz<-nz%>%
-  select(Id, Wave, KESSLER6sum)%>%
-  filter(!is.na(KESSLER6sum))%>%
-  pivot_wider(values_from = KESSLER6sum, names_from = Wave) %>%
-  rename(k2018 = `2018`,
-          k2019 = `2019`)
-
-#this won't run
-ihateTtests<-t.test(tnz$k2019 , tnz$k2018,  paired = TRUE)
-report::report(ihateTtests)
-```
-
-The future is now. I'm going to give you a glimpse of a better method. Below is a multi-level model. Here, we assess whether people changed in their Kessler6 distress scores between the 2018 and 2019 waves of the `nz` study.
-
-```{r, warning=FALSE}
-library(lme4)
-library(report)
-fm1 <- lme4::lmer(KESSLER6sum ~ Wave + (1|Id), data = nz, family ="poisson")
-report(fm1)
-```
-
-## Statistical inference and Scientific inference
-
-## Science begins with a question.
-
-What do you want to know?
-
-## Theories, models, hypotheses, statistical models
-
-### Theory
-
-### Model
-
-### Hypothesis
-
-### Statistical model
-
-```{r}
-# This is a comment
-y <- lm(Sepal.Length ~ Sepal.Width, data = iris)
-```
-
-## Statistics is the logic of uncertainty
-
-Mathematics is the logic of certainty.
-
-### Not all questions make sense
-
-### How you ask a question can be misleading?
-
-### Measurement
-
-## Samples and parameters: observation and inference
+-   n = number of observations
+-   sd = vector of standard deviations
+-   mean = vector of means
 
 ## Acknowledgments
 
