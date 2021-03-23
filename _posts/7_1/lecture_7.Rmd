@@ -1,30 +1,86 @@
 ---
-title: "Modelling binary, count data, and ordinal data"
-description: |
+title: "An introduction to directed acylical graphs (DAGS) "
+description: 
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
-date: 2021-APRIL-20
+date: 2021-APRIL-20 
 output:
   distill::distill_article:
     self_contained: false
     toc: true
 ---
 
+```{r echo=F}
+knitr::include_graphics("op.png")
+```
+
+```{r echo = FALSE, include = FALSE}
+# packages
+# ```{r install_rethinking}
+# function for installing dependencies
+ipak <- function(pkg){
+new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+if (length(new.pkg)) 
+    install.packages(new.pkg, dependencies = TRUE)
+sapply(pkg, require, character.only = TRUE)
+}
+
+# usage
+packages <- c("coda", "plyr", "mvtnorm", "scales", "dagitty")
+ipak(packages)
+
+# next install rethinking
+if (!require(rethinking)) {
+  devtools::install_github("rmcelreath/rethinking")
+}
+```
 
 
-## Binary Data
 
-## Count data
 
-## Zero infalted data
-
-## Ordinal data
+# What is causal confounding? 
 
 
 ```{r figopen, echo=F}
-knitr::include_graphics("op.png")
+knitr::include_graphics("op2.png")
+```
+
+
+# The difference between prediction and explanation? 
+
+
+## Examples of confounding
+
+
+```{r echo = FALSE, include = FALSE}
+N <-100
+age <- rnorm( N )# sim A
+mar <- rnorm( N , -age ) # sim A -> M
+div <- rnorm( N , age ) # sim A -> D
+df <- data.frame(age,mar,div)
+
+plot(age ~ mar)
+
+md<-lm(mar ~ age, data = df)
+summary(md)
+sjPlot::plot_model(md)
+```
+
+
+```{r echo = FALSE, include = FALSE}
+## Confound 
+south<-rnorm(N)
+waffles <-rnorm(N, south)
+age <- rnorm(N, south)
+mar <- rnorm( N, -age ) # sim A -> M
+div <- rnorm( N,  age ) # sim A -> D
+df <- data.frame(age,mar,div,south,waffles)
+
+md<-lm(div ~ waffles + mar + south, data = df)
+summary(md)
+sjPlot::plot_model(md)
 ```

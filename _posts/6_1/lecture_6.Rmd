@@ -1,7 +1,6 @@
 ---
-title: "An introduction to directed acyclic graphs "
-description: | 
-  "Control is killing your model"
+title: "An introduction to simulation"
+description: 
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
@@ -16,68 +15,485 @@ output:
 ---
 
 ```{r}
-# packages
-# ```{r install_rethinking}
-# function for installing dependencies
-ipak <- function(pkg){
-new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-if (length(new.pkg)) 
-    install.packages(new.pkg, dependencies = TRUE)
-sapply(pkg, require, character.only = TRUE)
+# libraries
+library("tidyverse")
+library("patchwork")
+library("splines")
+if (!require(equatiomatic)) {
+  remotes::install_github("datalorax/equatiomatic")
+  }
+# set theme
+# theme set
+theme_set(theme_classic())
+```
+
+```{r echo = FALSE}
+md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
+# Center mother's height for later example
+md_df <- md_df %>%
+  dplyr::mutate(mother_height_c = as.numeric(scale(mother_height, center = TRUE, scale = FALSE)))
+dplyr::glimpse(md_df)
+
+```
+
+## Functions for simulation
+
+### `rnorm`
+
+`rnorm` is a R's random number generator. Within this function:
+
+-   `n`specifies the number of observations
+-   `sd` specifies the value of the standard deviation
+-   `mean` specifies the value of the mean
+
+```{r code_folding=FALSE}
+set.seed(12345)
+# generate random numbers
+ds <- rnorm(n = 1000, mean = 0, sd = 1)
+dplyr::glimpse(ds)
+```
+
+We can create a histogram:
+
+```{r code_folding=FALSE}
+p1 <- ggplot2::qplot(ds) + labs(title = "1st random number list")
+p1
+```
+
+We use shorthand for generating numbers:
+
+```{r code_folding=FALSE}
+set.seed(54321)
+ds_0 <- rnorm(1000)
+dplyr::glimpse(ds_0)
+```
+
+Note that the first and the second graphs differ:
+
+```{r layout="l-body-outset", fig.width=10, fig.height=10}
+p2 <- ggplot2::qplot(ds_0) + labs(title = "2d random number list")
+p1 + p2 + plot_annotation("The two graphs differ", tag_levels = 'i')
+```
+
+Or more formally we can ask R to test the equivalence:
+
+```{r message=TRUE,  code_folding=FALSE}
+identical(ds, ds_0)
+```
+
+Because we want to have reproducible code, we will use the `set.seed()` function in R to ensure the same random numbers are generated each time.
+
+```{r warning=TRUE,  code_folding=FALSE}
+set.seed(123)
+t1 <-stats::rnorm(100)
+set.seed(123)
+t2 <-stats::rnorm(100)
+
+# test
+identical(t1, t2)
+```
+
+### `runif`
+
+We use r uniform to generate continuous data within a point range
+
+```{r}
+set.seed(123)
+ds1 <- runif(n =100, min = 0, max = 50)
+dplyr::glimpse(ds1)
+hist(ds1)
+```
+
+Say we want to simulate a range of values between two endpoints. This is useful for simulating explanatory variables.
+
+`{r.  code_folding=FALSE} set.seed(123) exp <- runif(n =100, min = 130, max = 220) dplyr::glimpse(exp) hist(exp)`
+
+### `rep`
+
+Frequently we'll need to generate random factors. For this, R's `rep` function, `letters` function, and `LETTERS` function make happy friends.
+
+Here's how these functions work
+
+Lower case letters:
+
+```{r  code_folding=FALSE}
+letters[1:3]
+```
+
+Upper case letters:
+
+```{r  code_folding=FALSE}
+LETTERS[4:10]
+```
+
+Creating sequences using `each`
+
+```{r code_folding=FALSE }
+rep( letters[1:3], each = 3 )
+```
+
+Creating sequences using `times`
+
+```{r  code_folding=FALSE}
+
+rep( letters[1:3], times = 3 )
+
+```
+
+Create a sequences using `length.out`
+
+```{r  code_folding=FALSE}
+
+rep( letters[1:3], length.out = 5 )
+
+```
+
+Creating uneven sequences
+
+```{r code_folding=FALSE }
+
+rep( letters[1:3], times = c(3, 1, 4) )
+```
+
+combining `each` + `times`
+
+```{r  code_folding=FALSE}
+
+rep(letters[1:3], each = 2, times = 3)
+```
+
+`length.out`
+
+```{r  code_folding=FALSE}
+rep(letters[1:3], each = 2, length.out = 17)
+```
+
+Note `length.out` take priority over `times` -- use `length.out` if you have a fixed vector length.
+
+### `seq`
+
+Create a vector of numbers of a specific length
+
+```{r  code_folding=FALSE}
+seq(from = 1, to = 45, by = 1)
+```
+
+17 unit steps: 
+
+```{r  code_folding=FALSE}
+seq(from = 1, to = 45, by = 17)
+```
+
+17 steps:
+
+```{r  code_folding=FALSE}
+seq(from = 1, to = 45, length.out = 17)
+```
+
+
+### Flexible functions
+
+We can use vectors within random number generation
+
+```{r  code_folding=FALSE}
+set.seed(123)
+vdf<-rnorm(n = 20, mean = c(0, 500, 1000, 10000), sd = c(5,50,100,1000))
+
+# we created a vector 
+dplyr::glimpse(vdf)
+qplot(vdf, binwidth=4)
+```
+
+
+## Why Simulate?
+
+## Simulate to assess result against noise
+
+Recall the relationship between mother's heights and daughters heights in the Pearson/Fox dataset:
+
+```{r}
+# recall this model
+explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_height)) + 
+  geom_jitter(alpha = .2) + 
+  labs(title = "The relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + theme_classic()
+explore_md
+```
+
+What would a random relationship look like? Simulation can help us to address this question
+
+```{r layout="l-body-outset", fig.width=10, fig.height=10, code_folding = FALSE}
+av_dh <-mean(md_df$daughter_height, na.rm=TRUE)
+sd_dh <-sd(md_df$daughter_height, na.rm=TRUE)
+av_mh <-mean(md_df$mother_height, na.rm=TRUE)
+sd_mh <-sd(md_df$mother_height, na.rm=TRUE)
+
+# number of obs
+N<- nrow(md_df)
+
+# fake data
+sim_dh = rnorm(N, av_dh, sd_dh)
+sim_mh = rnorm(N, av_mh, sd_mh)
+sim_df_md <- data.frame(sim_dh,sim_mh)
+fake_md <-ggplot2::ggplot(data = sim_df_md, aes(y = sim_dh, x = sim_mh)) + 
+  geom_jitter(alpha = .2) + 
+  labs(title = "Fake data relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + theme_classic() + 
+  geom_smooth(method = lm)
+
+# real data
+explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_height)) + 
+  geom_jitter(alpha = .2) + 
+  labs(title = "The relationship between mothers height and daughter's height") +
+       ylab("Daughter's height") +
+       xlab("Mother's height") + theme_classic() + 
+  geom_smooth(method = lm)
+
+
+library(patchwork)
+fake_md + explore_md  + plot_annotation(tag_levels = "a")
+
+```
+
+
+### Use fake data to explore a small sample
+
+Can appear to reveal relationships that are not there.
+
+```{r  code_folding=FALSE}
+set.seed(123)
+# no relationship between x and y
+x = rnorm(n = 10, mean = 0, sd = 1)
+y = rnorm(n = 10, mean = 0, sd = 1)
+
+df<-data.frame(x,y)
+ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
+```
+
+### Simulate a relationship between two variables
+
+```{r  code_folding=FALSE}
+
+### Simulate a relationship between two variables 
+library(ggplot2)
+N = 1000
+weight <-runif(N, min = 50, max =100)
+b <- rlnorm(N,.78,.1)
+
+sigma <- runif(N, 0 , 10 )
+height = weight * b
+
+# simulated height/ weight data
+df<-data.frame(height,weight)
+
+m0<-lm(height ~ weight, data = df)
+plot(ggeffects::ggpredict(m0, terms = c("weight")), add.data = TRUE, dot.alpha = .8) + labs(x = "simulated weight",
+                y = "simulated height",
+                title = "simulated linear relationship")
+```
+
+Simulate a non-linear model
+
+```{r}
+a <-160
+b <- c(2, 0.75)
+x <- rnorm(100)
+y <- rnorm(100, mean = b[1] * exp(b[2] * x))
+dat1 <- data.frame(x, y)
+plot(y ~ x , data = dat1)
+
+#Polynomial
+N<-1000
+
+# simulate weights
+weight <-runif(N, min = 60, max =120)
+weight_c <-scale(weight, scale=FALSE)
+
+# simulate coefficients
+
+a = rnorm(N, mean = 180 , 10 )
+b1 = rnorm(N, mean = 2.2, .01)
+b2 = - rnorm(N, mean = .02, .001)
+
+height <- a + b1 * weight_c  +  b2 * weight_c^2
+
+# simulated height/ weight data
+
+df1<-data.frame(height,weight_c, weight)
+
+plot(height ~ weight)
+
+m1 <- lm(height ~ weight_c, data = df1)
+plot(ggeffects::ggpredict(m1, terms = c("weight_c")),
+     add.data = TRUE,
+     dot.alpha = .2)  + labs(title = "simulated linear relationship") +
+  xlab("simulated weight") +  ylab("simulated height")
+
+```
+
+Non-linear model
+
+```{r}
+m2 <-lm(height ~ weight_c + I(weight_c^2), data = df1)
+
+plot(ggeffects::ggpredict(m2, terms = c("weight_c")),
+     add.data = TRUE,
+     dot.alpha = .2) + labs( title = "simulated linear relationship") + 
+  xlab("simulated weight") +  ylab("simulated height")
+
+m3 <-lm(height ~ bs(weight_c), data = df1)
+
+summary(m3)
+
+plot(ggeffects::ggpredict(m3, terms = c("weight_c")),
+     add.data = TRUE,
+     dot.alpha = .2)  + labs( title = "simulated linear relationship") + 
+  xlab("simulated weight") +  ylab("simulated height")
+
+```
+
+Check linear model
+
+```{r}
+performance::check_model(m1)
+```
+
+Check quadratic model
+
+```{r}
+performance::check_model(m2)
+```
+
+Check splines model
+
+```{r}
+performance::compare_performance(m1, m2, m3)
+```
+
+### Use fake data to create a factor
+
+Here we simulate no relationship between a group and an outcome
+
+```{r}
+N <- 200 # number of observations
+#group <- rep((0:1), length.out = 200) # 2 groups
+group <- rep(c("m","n_m"), each = N/2) #equivalent:
+a <- rnorm(N, 150, 3) # intercept
+b1 <- rnorm(N, 20, 1) # coefficient of "b
+sigma = rexp(N,1)# error term
+outcome <- rnorm(N, mean = a + b1 * (group == "m"), sigma)
+
+df <-data.frame(outcome,group)
+dplyr::glimpse(df)
+
+
+#model removing the intercept to show the difference
+ms<-lm(outcome ~ -1 + group, data = df)
+ms
+# no difference
+sjPlot::plot_model(ms)
+
+```
+
+### Is imbalance in my study causing a problem?
+
+```{r}
+### Is imbalance wrecking my inference? 
+
+N <- 120
+cells <-rep( letters[1:2], times = c(15, 105))
+
+a <- rnorm(N, 2, 1)
+b1 <- rnorm(N, .2, .1)
+sigma <- rexp(N,1)
+
+out <- rnorm(N, mean = a + b1 * (cells == "b"), sigma)
+dfc<-data.frame(out,cells)
+sim_cells<-lm(out ~ cells, data = dfc)
+
+summary(sim_cells)
+```
+
+This isn't too convincing: we need to replicate the model many times
+
+```{r}
+# Make a function for the simulation
+set.seed(12)
+test_fun = function() {
+  N <- 120
+  cells <-rep( letters[1:2], times = c(110, 10))
+  a <- rnorm(N, 2, 1)
+  b1 <- rnorm(N, 1, .1)
+  sigma <- rexp(N, 1)
+  out <- rnorm(N, mean = a + b1 * (cells == "b"), sigma)
+  dfc <- data.frame(out, cells)
+  sim_cells <- lm(out ~ cells, data = dfc)
+  sim_cells
 }
 
-# usage
-packages <- c("coda", "plyr", "mvtnorm", "scales", "dagitty")
-ipak(packages)
+sim_lm = replicate(20, test_fun(), simplify = FALSE )
+length(sim_lm)
+```
 
-# next install rethinking
-if (!require(rethinking)) {
-  devtools::install_github("rmcelreath/rethinking")
+We can use the `purrr` package to generate many replicates of a model
+
+```{r}
+library(dplyr)
+tab_sim<-purrr::map_dfr(sim_lm, broom::tidy)
+tab_sim %>%
+  dplyr::mutate_if(is.numeric, round, 5)
+```
+
+What percentage of simulations yield "significant results?
+
+```{r}
+sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
+```
+
+Does balance fix the issue?
+
+```{r}
+# Make a function for the simulation
+set.seed(12)
+test_fun = function() {
+  N <- 120
+  cells <-rep( letters[1:2], times = c(60, 60))
+  a <- rnorm(N, 2, 1)
+  b1 <- rnorm(N, 1, .1)
+  sigma <- rexp(N, 1)
+  out <- rnorm(N, mean = a + b1 * (cells == "b"), sigma)
+  dfc <- data.frame(out, cells)
+  sim_cells <- lm(out ~ cells, data = dfc)
+  sim_cells
 }
 
-```
-
-
-# What is causal confounding? 
-
-
-```{r figopen, echo=F}
-knitr::include_graphics("op2.png")
-```
-
-
-# The difference between prediction and explanation? 
-
-
-## Examples of confounding
-
-
-```{r echo = FALSE, include = FALSE}
-N <-100
-age <- rnorm( N )# sim A
-data.frame(age,mar)
-mar <- rnorm( N , -age ) # sim A -> M
-div <- rnorm( N , age ) # sim A -> D
-df <- data.frame(age,mar,div)
-
-plot(age ~ mar)
-
-md<-lm(mar ~ age, data = df)
-summary(md)
-sjPlot::plot_model(md)
-
-
-## Confound 
-south<-rnorm(N)
-waffles <-rnorm(N, south)
-age <- rnorm(N, south)
-mar <- rnorm( N, -age ) # sim A -> M
-div <- rnorm( N,  age ) # sim A -> D
-df <- data.frame(age,mar,div,south,waffles)
-
-md<-lm(div ~ waffles + mar + south, data = df)
-summary(md)
-sjPlot::plot_model(md)
+sim_lm = replicate(20, test_fun(), simplify = FALSE )
+length(sim_lm)
 
 ```
+
+We can use the `purrr` package to generate many replicates of a model
+
+```{r}
+library(dplyr)
+tab_sim<-purrr::map_dfr(sim_lm, broom::tidy)
+tab_sim %>%
+  dplyr::mutate_if(is.numeric, round, 5)
+```
+
+What percentage of simulations yield "significant results?
+
+```{r}
+sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
+```
+
+## Acknowledgments
+
+The approach to simulation presented here owes to:
+
+1.  Ariel Muldoon: <https://aosmith.rbind.io/>
+
+
 

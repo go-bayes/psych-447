@@ -1,5 +1,5 @@
 ---
-title: "Introduction to multilevel models: group-level slopes"
+title: "Introduction to multilevel models"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -14,6 +14,11 @@ output:
     toc: true
 ---
 
+
+
+## Partial pooling
+
+## Random intercepts
 
 
 ## Covariance

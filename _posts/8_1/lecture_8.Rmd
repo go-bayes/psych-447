@@ -1,5 +1,5 @@
 ---
-title: "Introduction to multilevel models: group-level intercepts"
+title: "Modelling binary, count data, and ordinal data"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -7,7 +7,7 @@ author:
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
-date: 2021-APRIL-27
+date: 2021-APRIL-27 
 output:
   distill::distill_article:
     self_contained: false
@@ -16,10 +16,18 @@ output:
 
 
 
-## Partial pooling
-
-## Random intercepts
-
 ```{r figopen, echo=F}
-knitr::include_graphics("op2.png")
+knitr::include_graphics("op.png")
 ```
+
+
+
+
+## Binary Data
+
+## Count data
+
+## Zero infalted data
+
+## Ordinal data
+
