@@ -85,10 +85,9 @@ In Part 2 we will:
 
 By learning regression, you will better equipped to do psychological science and to evaluate psychological research.
 
-By *beginning* to learn how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. Note, that we will not expect you to simulate a dataset just yet. Instead, we will illustrate the use of tools for simulation, and ask that you try out very basic simulation functions. It will not be until after the April break that you will simulate any data for the purposes of assisting in statistical inference.  
+By *beginning* to learn how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. Note, that we will not expect you to simulate a dataset just yet. Instead, we will illustrate the use of tools for simulation, and ask that you try out very basic simulation functions. It will not be until after the April break that you will simulate any data for the purposes of assisting in statistical inference.
 
-
-## What is regression?
+## Part 1: What is regression?
 
 Broadly speaking, a regression model is method for inferring the expected average features of a population, and the variance of a population, conditional on other features of the a population as embodied in measurements obtained from a sample.
 
@@ -96,42 +95,48 @@ We'll see that regression encompasses more than this definition, however, the de
 
 To understand regression we need to understand the following jargon words: population, sample, measurement, and inference.
 
+#### What is a population?
 
-#### What is a population? 
+In science, a population is a hypothetical construct. It is the set of all potential members of a set of things. In psychological science that set is typically a collection of individuals. We want to understand "The population of all human beings?" or "The New Zealand adult population"; or "The population of undergraduates who may be recruited for IPRP in New Zealand."
 
-In science, a population is a hypothetical construct. It is the set of all potential members of a set of things. In psychological science that set is typically a collection of individuals. We want to understand "The population of all human beings?" or  "The New Zealand adult population"; or "The population of undergraduates who may be recruited for IPRP in New Zealand." 
+#### What is a sample?
 
-### Sample
+A sample is a randomly realised sub-population from the larger abstract population that a scientific community hopes to generalise about.
 
-A sample is a radomly realised sub-population from the larger abstract population that a scientific community hopes to generalise about. Think of selecting balls randomly from an urn.  If selected randomly, the balls may inform us about the contents of the urn. For example, if we select one white ball and one black ball, we may know that the balls in the urn are not all black. (Consider why randomness might be important.)
+Think of selecting balls randomly from an urn. If pulled at random, the balls may inform us about the contents of the urn. For example, if we select one white ball and one black ball, we may infer that the balls in the urn are not all white or all black.
 
-#### Measurement
+#### What is "measurement"? 
 
-A measure is tool or method for obtaining numerical descriptions of a sample. We often call measures "scales."  We can think of a bathroom weight scale as a tool and method for tracking body weight.
+A measure is tool or method for obtaining numerical descriptions of a sample. We often call measures "scales." We can think of a bathroom weight scale as a tool and method for tracking body weight.
 
-In the course, we have encountered numerical scales, ordinal scales, and factors. The topic of measurement in psychological is, to say the least, very broad. 
+A measurement is the numerical description we obtain from sensors such as statistical surveys, census data, twitter feeds, & etc.
 
-For now, it is important to keep in mind that similar to bathroom scales, measures can be prone to error. Also similar to bathroom scales, error prone scales may nevertheless be useful for specific interests and purposes.   
+In the course, we have encountered numerical scales, ordinal scales, and factors. The topic of measurement in psychological is, to say the least, very broad.
 
+For now, it is important to keep in mind that, similar to bathroom scales, measures can be prone to error.
 
-#### Parameter
+Also similar to bathroom scales, error prone scales may nevertheless be useful. We need to investigate the utility of error prone scales against the backdrop of specific interests and purposes.
 
-In regression, we call the feature of interest in the population a "parameter." In regression, we combine measurements on samples with probability theory to guess about the properties of a population we will never observe. 
+#### What is a parameter? 
 
-#### Statistical inference 
+In regression, we combine measurements on samples with probability theory to guess about the properties of a population we will never observe. We call these properties "parameters."
 
-Is is the guessing about parameters that constitutes the bulk of statistical inference. 
+#### What is statistical inference?
+
+The bulk of statistical inference consists of educated guessing about population parameters.
 
 #### Probability distributions and statistical guessing
 
-Inference is possible because the parameters of a population are structured by data generating processes that are approximated by probability distributions. 
+Inference is possible because the parameters of naturally occurring populations are structured by data generating processes that are approximated by **probability distributions.** A probability distribution is a mathematical function that describes the probability of a random event. Today we will be focusing on height. [^1]
 
-The relationship of probability distributions and data-generating processes is complex, intriguing, and both historically and philosophically rich $\dots$. Because our interests are applied, we will hardly touch up this richness. 
+[^1]: The relationship of probability distributions and data-generating processes is complex, intriguing, and both historically and philosophically rich $\dots$. Because our interests are applied, we will hardly touch up this richness in this course, alas.
 
-Today we will be talking about the "normal" or "Gaussian distribution." A very large number of data-generating processes in nature conform the the normal
-
+Today we will be talking about the "normal" or "Gaussian distribution." A very large number of data-generating processes in nature conform the normal distribution. 
 
 Let's consider some examples of randomly generated samples, which we will obtain using R's `rnorm` function.
+
+
+#### 100-person sample of heights
 
 ```{r}
 set.seed(123)
@@ -139,7 +144,7 @@ sm<-rnorm(100, mean = 170, sd = 20)
 ggplot2::qplot(sm, binwidth = 10)
 ```
 
-Small sample
+#### 10-person sample of heights
 
 ```{r}
 set.seed(123)
@@ -150,7 +155,7 @@ ggplot2::qplot(
   )
 ```
 
-Large sample
+#### 10000-person sample of heights
 
 ```{r}
 set.seed(123)
@@ -160,29 +165,35 @@ ggplot2::qplot(
   )
 ```
 
-### Predictive inference (forcasting)
+### How can I use regression to infer a population parameter?
 
-What is the the expected average for the population from which the sample is drawn?
+We can use R to investigate the *average* height of our imaginary population from which the preceding samples were randomly drawn. We do this in R by writing an "intercept-only" model as follows:
 
-### Tables of regression coefficients
+```{r eval=FALSE}
+model <- lm(outcome ~ 1, data = datset)
+summary(model)
+```
 
-N = 100
+Using the previous simulations:
 
-```{r}
+N = 10 random draws
+
+```{r code_folding = FALSE}
+#write the model and get a nice table for it
 sjPlot::tab_model(
   lm(sm ~ 1)
 )
 ```
 
-N = 10
+N = 100 random draws
 
-```{r}
+```{r  code_folding = FALSE}
 sjPlot::tab_model(
   lm(subsm ~ 1)
 )
 ```
 
-N = 10,000
+N = 10,000 random draws
 
 ```{r}
 sjPlot::tab_model(
@@ -190,7 +201,7 @@ sjPlot::tab_model(
 )
 ```
 
-What do we notice about the relationship betwen sample size the estimated population average?
+What do we notice about the relationship between sample size the estimated population average?
 
 ```{r}
 sjPlot::tab_model(
@@ -200,22 +211,24 @@ sjPlot::tab_model(
 )
 ```
 
-## Why regression?
-
-People use when they are interested in understanding and variance of
-
-## Regression examples: daughters/mothers heights.
-
-This data set is from "The heredity of height", Karl Pearson and Alice Lee (1903)[@pearson1903]
-
-```{r}
-md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
-dplyr::glimpse(md_df)
-```
+### Regression with a single co-variate
 
 Does mother height predict daughter height? It seems so. By what how close are is the relationship?
 
-Pearson and Lee collected 5,524 data points from mother's and daughters. Let's examine the data, first by plotting the relationship.
+Francis Galton is credited with inventing regression. Galton observed that the height of offspring tends to fall between parental height and the population average, what Galton termed: "regression to the mean." Galton sought a method for educated guessing about heights, and this led to fitting a line of regression by a method called "least squares" (For a history see: [here](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2011.00509.x)).
+
+This following dataset is from "The heredity of height", Karl Pearson and Alice Lee (1903)[@pearson1903]. I obtained the dataset from [@gelman2020]. Let's use this dataset to investigate the relationship between a mother's height and a daughter's height. 
+
+```{r}
+md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
+# Center mother's height for later example
+md_df <- md_df %>%
+  dplyr::mutate(mother_height_c = as.numeric(scale(mother_height, center = TRUE, scale = FALSE)))
+dplyr::glimpse(md_df)
+
+```
+
+Pearson and Lee collected 5,524 observations from mother/daughter height pairs. Let's examine the data, first by plotting the relationship.
 
 What what is happening here?
 
@@ -235,28 +248,35 @@ m1 <- lm(daughter_height ~ mother_height, data = md_df)
 sjPlot::tab_model(m1)
 ```
 
-We can plot the coefficient, which in a model with one predictor isn't too informative.
+We can plot the coefficient; in a model with one predictor isn't too informative. As we continue in the course, however, we'll see that plotting coefficients can be easier than deciphering the numbers in tables. Here are two methods for plotting.
 
-```{r echo = FALSE}
+```{r echo = FALSE, layout = "l-body-outset", fig.width=12,fig.height=10}
 t_m1<-parameters::model_parameters(m1,  
                                    ci = 0.95)
-plot(t_m1) +
+method1 <- plot(t_m1) +
   labs(title = "The relationship between mothers height and daughter's height") + 
   ylab("Daughter's height") 
+
+method2 <-sjPlot::plot_model(m1)
+
+library(patchwork)
+method1 / method2 + plot_annotation(title = "Comparision of two coefficeint plots",
+                                    subtitle = "a: parameters see; b: sjPlot", 
+                                    tag_levels = "a")
 ```
 
 ## How do we interpret the regression model?
 
-Let's write the equation out in mathematics. How do we read this? [^1]
+Let's write the equation out in mathematics. How do we read this? [^2]
 
-[^1]: Later, we'll prefer a different way of writing regression equations in math. (Note: writing math isn't math - it's just encoding the model that we've written).
+[^2]: Later, we'll prefer a different way of writing regression equations in math. (Note: writing math isn't math - it's just encoding the model that we've written).
 
 ```{r echo = FALSE}
 library("equatiomatic")
 extract_eq(m1,  use_coefs = FALSE)
 ```
 
-The math says that the expected daughter's height in a population is predicted by the average height of the population when mother's height is set to zero units (note, this is impossible - we'll come back to this) plus .$$\beta ~\times $$ units of daughter's height (inches) for each additional unit of mother's height (inches) + some
+The math says that the expected daughter's height in a population is predicted by the average height of the population when mother's height is set to zero units (note, this is impossible - we'll come back to this) plus $\beta ~\times$ units of daughter's height (inches) for each additional unit of mother's height (inches) 
 
 We can plug the output of the model directly into the equation as follows:
 
@@ -265,27 +285,23 @@ library("equatiomatic")
 extract_eq(m1,  use_coefs = TRUE)
 ```
 
-### Predicted daughter heights from mother heights
+### Graph the relationship between mother's and daughter's heights
 
-```{r}
+```{r code_folding = FALSE}
 library(ggeffects)
 toplot<-ggeffects::ggpredict(m1, terms = "mother_height")
-toplot
-```
 
-### Under the hood
-
-```{r}
 heightplot<-plot(toplot, add.data = TRUE, dot.alpha = .1, jitter = TRUE) +   theme_classic()
 heightplot + labs(title = "Predicted values of daughter's height from the Pearson/Fox 1903 dataset")
 
 ```
 
-### Regression to predict?
+### Regression to predict beyond the range of a dataset
 
 Joyte Amge is the world's shortest woman at 25 inches. Sandy Allen was the world's tallest woman at 91 inches. What is be the expected heights of their daughter, and of every intermediary woman in between?
 
-```{r}
+```{r code_folding = FALSE}
+
 # use the `expand.grid` command to create a sequence of points for mother's height
 ndat<-expand.grid(mother_height = c(25:91)) 
 
@@ -324,43 +340,24 @@ nhp <- heightplot2 +  expand_limits(x = c(20,91), y = c(0,81) ) +  labs(title = 
  nhp /predplot  + plot_annotation(title = "What do you notie about these relationships?", tag_levels = "a")
 ```
 
-### Under the hood
+A simple method for obtaining the predicted values form your fitted model is to obtain the ggeffects output without producing a graph.
 
-$$\begin{bmatrix}
-\textbf{y}\\
-\textit{daughter's height}\\
-51.5\\
-52.5 \\
-53.0 \\
-\vdots
-\end{bmatrix}
-=
-\begin{bmatrix}
-\textbf{intercept} \\
-1 \\
-1 \\
-1 \\
-1 \\
-\vdots \\
-\end{bmatrix}
-\begin{bmatrix}
-\textbf{x}\\
-\textit{mother's height}\\
-59.5\\
-57.5 \\
-60.0 \\
-\vdots
-\end{bmatrix}
-\begin{bmatrix}
-\textbf{b}\\
-29.8 \\
-0.54
-\end{bmatrix}$$
+
+```{r code_folding = FALSE}
+
+library(ggeffects)
+toplot<-ggeffects::ggpredict(m1, terms = "mother_height")
+toplot
+```
 
 ### Non-linear relationships
 
-```{r}
-# Simulate nonlinear relationshp between x and y
+Linear regression assumes linearity conditional on a model. Often your data will not be linear!
+
+Consider the following example:
+
+```{r code_folding = FALSE}
+# Simulate nonlinear relationship between x and y
 b <- c(2, 0.75)
 set.seed(12)
 x <- rnorm(100)
@@ -375,70 +372,123 @@ ot1 <-lm(y ~ x, data  = dat1)
 plot(ggeffects::ggpredict(ot1, terms = "x"), add.data =TRUE, dot.alpha = .4)
 ```
 
-Non-linear effect
+Non-linear relationship as modelled by a polynomial regression:
 
-```{r}
+```{r  code_folding = FALSE}
+
 library(splines)
 ot2 <-lm(y ~ x + I(x^2), data  = dat1)
-#performance::check_model(ot2)
 plot(ggeffects::ggpredict(ot2, terms = "x"), add.data =TRUE, dot.alpha = .4)
 ```
 
-Splines
+Here is another approach:
 
-```{r}
+```{r  code_folding = FALSE}
 library(splines)
+ot2.b <-lm(y ~ x + poly(x, 2), data  = dat1)
+plot(ggeffects::ggpredict(ot2.b, terms = "x"), add.data =TRUE, dot.alpha = .4)
+```
+
+
+
+Non-linear relationship as modeled by a general additive model (spline)
+
+```{r code_folding = FALSE}
+library(splines)
+
 ot3 <-lm(y ~ bs(x), data  = dat1)
+
 #performance::check_model(ot2)
 plot(ggeffects::ggpredict(ot3, terms = "x"), add.data =TRUE, dot.alpha = .4)
 ```
 
-#### Model evaluation
+### Centering
+
+Any linear transformation of a predictor is OK. Often we center (or center and scale) all indicators, which gives us an intercept that is meaninful (the expected population average when the other indicators are set their average). 
+
 
 ```{r}
-# simulate heights
-# simulate weights
-set.seed(123)
-
-weight_sim = runif(n = 100, min = 40, max = 100)
-
-a <- 60
-
-b <- rnorm(n=100, 1.4,.1)
-
-mu <- a + weight_sim * b + rnorm(100,0,10)
-
-height_sim = rnorm(100,mu,10)
-
-df <-data.frame(height_sim, weight_sim)
-
+library(ggeffects)
+# original model
+m1 <- lm(daughter_height ~ mother_height, data = md_df)
+mc <-lm(daughter_height ~ mother_height_c, data=md_df)
+sjPlot::tab_model(m1,mc)
 ```
 
-Explore data
+Graph model
 
 ```{r}
-
-ggplot(data = df,
-
-       aes(y = height_sim, x = weight_sim)
-
-       ) +
-
-  geom_point() +
-
-  geom_smooth(method = lm)
-
+plot(ggeffects::ggpredict(mc, terms = "mother_height_c"), add.data =TRUE, dot.alpha = .4)
 ```
+
+
+Note: when fitting a polynomial or any interaction, it is important to center your indicators. We'll come back to this point in later lectures. 
+
+### Model evaluation
+
+A simple way to assess your model fit is to compare a model with one covariate with a simple intercept-only model and to assess improvement in either the `AIC` statistic or the `BIC` statistic. The `BIC` is similar to the `AIC` but adds a penalty for extra predictors.  An absolute improvement in either statistic of n > 10 is considered to be a better model. 
+
+We can use the `performance` package to generate a table that compares fits.
+
+
+```{r code_foldign = FALSE, code_folding =FALSE}
+library(performance)
+# intercept only
+ionly <- lm(daughter_height ~ 1, data = md_df)
+
+# covariate added
+covadded <- lm(daughter_height ~ mother_height, data = md_df)
+
+# evaluate
+performance::compare_performance(ionly, covadded)
+```
+
+What was the model improvement? 
+
+```{r}
+# improved fit
+BIC(ionly)- BIC(covadded)
+```
+
+
+### Generate a report
+
+This is easy with the `report` package
+
+For example: 
+```{r code_folding = FALSE,}
+report::report_statistics(covadded)
+```
+
+Or if you want a longer report
+```{r code_folding = FALSE, eval=FALSE}
+report::report(covadded)
+```
+
+Though use `statistically significant` in place of `significant`. This will avoid misleading your audience into thinking your result is important, when what you intend to communicate is that it is reliable. 
+
+
+
 
 ### Assumptions of regression
 
 From Gelman and Hill [@gelman2006]
 
-1.  validity
-2.  addititivity/linearity
-3.  independence of errors
-4.  equal variance of errors \> unequal variance does not affect the most important aspect of a regression model, which is the form of the predictors XB (p.46)
-5.  normality of errors \> The regression assumption that is generally least important is that the errors are normally distributed. In fact, for the purpose of estimating the regression line (as compared to predicting individual data points), the assumption of normality is barely important at all. Thus, in contrast to many regression textbooks, we do not recommend diagnostics of the normality of re- gression residuals. p. 46 \> A good way to diagnose violations of some of the assumptions just considered (importantly, linearity) is to plot the residuals ri versus fitted values or simply individual predictors.
+1.  Validity
+
+2.  Linearity\*
+
+3.  Independence of errors
+
+4.  Equal variance of errors
+
+  > unequal variance does not affect the most important aspect of a regression model, which is the   form of the predictors XB (p.46)
+
+5.  Normality of errors (statistical independence)
+
+  > The regression assumption that is generally least important is that the errors are normally   distributed. In fact, for the purpose of estimating the regression line (as compared to predicting individual data points), the assumption of normality is barely important at all. Thus, in contrast to many regression textbooks, we do not recommend diagnostics of the normality of re-gression residuals. [@gelman2006] p. 46
+
+> A good way to diagnose violations of some of the assumptions just considered (importantly, linearity) is to plot the residuals  versus fitted values or simply individual predictors.[@gelman2006]
 
 ### Common confusions
 
@@ -448,15 +498,22 @@ People use the work "effect" but that is not what regression gives us (by defaul
 
 #### "Normality assumption"
 
+As Gelman and Hill note, the "normality" assumption is the least important. And the assumption pertains to the normality of residuals
+
 #### Statistical independence
+
+This will be the main reason we do multi-level modelling: to condition on dependencies in the data.
 
 #### Levels (wrong population)
 
-## Functions for simulation
+We sample from undergraduates, but infer about the human population. 
+
+
+## PART 2: Functions for simulation
 
 ### `rnorm`
 
-`rnorm` is a r's random number generator. Within this function:
+`rnorm` is a R's random number generator. Within this function:
 
 -   `n`specifies the number of observations
 -   `sd` specifies the value of the standard deviation
@@ -588,7 +645,40 @@ Note `length.out` take priority over `times` -- use `length.out` if you have a f
 
 ### `seq`
 
-## Simulation
+Create a vector of numbers of a specific length
+
+```{r  code_folding=FALSE}
+seq(from = 1, to = 45, by = 1)
+```
+
+17 unit steps: 
+
+```{r  code_folding=FALSE}
+seq(from = 1, to = 45, by = 17)
+```
+
+17 steps:
+
+```{r  code_folding=FALSE}
+seq(from = 1, to = 45, length.out = 17)
+```
+
+
+### Flexible functions
+
+We can use vectors within random number generation
+
+```{r  code_folding=FALSE}
+set.seed(123)
+vdf<-rnorm(n = 20, mean = c(0, 500, 1000, 10000), sd = c(5,50,100,1000))
+
+# we created a vector 
+dplyr::glimpse(vdf)
+qplot(vdf, binwidth=4)
+```
+
+
+## Why Simulate?
 
 ## Simulate to assess result against noise
 
@@ -604,9 +694,9 @@ explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_h
 explore_md
 ```
 
-What would a random relationship look like?
+What would a random relationship look like? Simulation can help us to address this question
 
-```{r layout="l-body-outset", fig.width=10, fig.height=10}
+```{r layout="l-body-outset", fig.width=10, fig.height=10, code_folding = FALSE}
 av_dh <-mean(md_df$daughter_height, na.rm=TRUE)
 sd_dh <-sd(md_df$daughter_height, na.rm=TRUE)
 av_mh <-mean(md_df$mother_height, na.rm=TRUE)
@@ -640,30 +730,8 @@ fake_md + explore_md  + plot_annotation(tag_levels = "a")
 
 ```
 
-We can build a model using fake data
 
-```{r  code_folding=FALSE}
-set.seed(123)
-height_sim = rnorm(n = 100, mean = 170, sd = 40)
-weight_sim = runif(n = 100, min = 40, max = 100)
-```
-
-```{r  code_folding=FALSE}
-m0 <- lm(height_sim ~ weight_sim)
-summary(m0)
-plot(ggeffects::ggpredict(m0, terms = c("weight_sim")), add.data = TRUE, dot.alpha = .1)
-
-```
-
-We can use vectors within random number generation
-
-```{r  code_folding=FALSE}
-set.seed(123)
-vdf<-rnorm(n = 20, mean = c(0, 500, 1000), sd = c(5,50,100))
-qplot(vdf, binwidth=4)
-```
-
-# Use fake data to explore a small sample
+### Use fake data to explore a small sample
 
 Can appear to reveal relationships that are not there.
 
@@ -677,7 +745,7 @@ df<-data.frame(x,y)
 ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
 ```
 
-Simulate the relationship between two variables
+### Simulate a relationship between two variables
 
 ```{r  code_folding=FALSE}
 ### Simulate a relationship between two variables 
@@ -736,8 +804,6 @@ plot(ggeffects::ggpredict(m1, terms = c("weight_c")),
      dot.alpha = .2)  + labs(title = "simulated linear relationship") +
   xlab("simulated weight") +  ylab("simulated height")
 
-
-
 ```
 
 Non-linear model
@@ -759,7 +825,6 @@ plot(ggeffects::ggpredict(m3, terms = c("weight_c")),
      dot.alpha = .2)  + labs( title = "simulated linear relationship") + 
   xlab("simulated weight") +  ylab("simulated height")
 
-
 ```
 
 Check linear model
@@ -768,7 +833,7 @@ Check linear model
 performance::check_model(m1)
 ```
 
-Check quadradic model
+Check quadratic model
 
 ```{r}
 performance::check_model(m2)
@@ -777,10 +842,10 @@ performance::check_model(m2)
 Check splines model
 
 ```{r}
-performance::check_model(m3)
+performance::compare_performance(m1, m2, m3)
 ```
 
-## Use fake data to create a factor
+### Use fake data to create a factor
 
 Here we simulate no relationship between a group and an outcome
 
@@ -805,7 +870,7 @@ sjPlot::plot_model(ms)
 
 ```
 
-Is imbalance in my study causing a problem?
+### Is imbalance in my study causing a problem?
 
 ```{r}
 ### Is imbalance wrecking my inference? 
@@ -854,7 +919,7 @@ tab_sim %>%
   dplyr::mutate_if(is.numeric, round, 5)
 ```
 
-What percentage of simulations yeild "significant results?
+What percentage of simulations yield "significant results?
 
 ```{r}
 sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
@@ -891,23 +956,11 @@ tab_sim %>%
   dplyr::mutate_if(is.numeric, round, 5)
 ```
 
-What percentage of simulations yeild "significant results?
+What percentage of simulations yield "significant results?
 
 ```{r}
 sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
 ```
-
-## Random number generation
-
-#### `rnorm` function
-
-```{r code_folding = FALSE}
-rnorm(n=20, mean = 0, sd = 1)
-```
-
--   n = number of observations
--   sd = vector of standard deviations
--   mean = vector of means
 
 ## Acknowledgments
 
@@ -920,8 +973,7 @@ Ariel has a bunch of resources on her website, please check them out.
 2.  Richard Mcelreath's Statistical Rethinking [@mcelreath2020]
 3.  Regression and other stories [@gelman2020]
 
-
-## Appendix 1:  Conceptual Background
+## Appendix 1: Conceptual Background
 
 Some preliminaries about science.
 
@@ -961,3 +1013,39 @@ If the predictions are not distinct, the observations will not enable a shift in
 
 Today we introduce a statistical method called regression. We will focus on how regression helps both to evaluate, and to make, informed predictions about the structures of the world.
 
+## Appendix 2: How your computer sees your data
+
+### Under the hood
+
+Under the hood, your computer sees your data as consisting of vectors and matrices. An algorithm searches to estimate (or in the case of Bayesian inference, to "solve") an optimization problem to obtain a location for the unobserved parameter; in the case we examined above, this parameter is the relationship between daughter heights and mother heights.
+
+$$\begin{bmatrix}
+\textbf{y}\\
+\textit{daughter's height}\\
+51.5\\
+52.5 \\
+53.0 \\
+\vdots
+\end{bmatrix}
+=
+\begin{bmatrix}
+\textbf{intercept} \\
+1 \\
+1 \\
+1 \\
+1 \\
+\vdots \\
+\end{bmatrix}
+\begin{bmatrix}
+\textbf{x}\\
+\textit{mother's height}\\
+59.5\\
+57.5 \\
+60.0 \\
+\vdots
+\end{bmatrix}
+\begin{bmatrix}
+\textbf{b}\\
+29.8 \\
+0.54
+\end{bmatrix}$$
