@@ -15,6 +15,15 @@ listing:
     - 10_1
     - 11_1
     - 12_1
+  workbooks:
+    - W_1
+    - W_2
+    - W_2_s
+    - W_3
+    - W_3_s
+    - W_4
+    - W_4_s
+    - W_5
 ---
 
 ```{r setup, include=FALSE}
