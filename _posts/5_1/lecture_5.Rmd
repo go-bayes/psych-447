@@ -1,5 +1,5 @@
 ---
-title: "Samples, paramaters, and elements of a linear model"
+title: "Elements of a linear model"
 description: |
   "What is a statistical model?" 
 author:
@@ -11,7 +11,6 @@ author:
 date: 2021-MAR-23
 output:
   distill::distill_article:
-   highlight: tango
    highlight_downlit: false
    code_folding: true
 toc: true
@@ -22,25 +21,7 @@ bibliography: references.bib
 knitr::include_graphics("op.png")
 ```
 
-```{r echo = FALSE}
-# packages
-# ```{r install_rethinking}
-# function for installing dependencies
-ipak <- function(pkg){
-new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-if (length(new.pkg)) 
-    install.packages(new.pkg, dependencies = TRUE)
-sapply(pkg, require, character.only = TRUE)
-}
-
-# usage
-packages <- c("coda", "plyr", "mvtnorm", "scales", "dagitty")
-ipak(packages)
-
-# next install rethinking
-if (!require(rethinking)) {
-  devtools::install_github("rmcelreath/rethinking")
-}
+```{r echo = FALSE, message = FALSE}
 
 # libraries
 library("tidyverse")
@@ -56,7 +37,7 @@ if (!require(equatiomatic)) {
 theme_set(theme_classic())
 ```
 
-```{r echo = FALSE, cache = TRUE}
+```{r echo = FALSE, cache = TRUE, message = FALSE}
 # Import data
 # read data
 nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
@@ -104,59 +85,53 @@ In Part 2 we will:
 
 By learning regression, you will better equipped to do psychological science and to evaluate psychological research.
 
-By learning how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research.
+By *beginning* to learn how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. Note, that we will not expect you to simulate a dataset just yet. Instead, we will illustrate the use of tools for simulation, and ask that you try out very basic simulation functions. It will not be until after the April break that you will simulate any data for the purposes of assisting in statistical inference.  
 
-## Background
-
-Some preliminaries.
-
-### Know thine question
-
-Science begins with a question about the world. The first step in science is to clarify what you want to know.
-
-Because science is a social practice, you will also need to clarify why your question is interesting. Put simply, so what?
-
-Next time you read a published study, ask yourself whether the authors have clarified what they want to know, and so what.
-
-### Theoretical model (or Theory)
-
-Sometimes scientists are interested in specific features of the world: how did virus x originate?
-
-More typically, typically scientists seek generalisations. How do infectious diseases evolve?
-
-For generalisations, we need a theory that takes us beyond individual cases.
-
-### Hypothesis: predictions of a model
-
-We evaluate a model, in part, by testing its predictions.
-
-### Statistical model: tool
-
-A statistical model uses probability theory to generalise from features of a sample to features of a population. Put simply, statistics is organised guessing.
 
 ## What is regression?
 
-Broadly speaking, a regression model is a statistical tool for guessing wisely about some feature of interest in the world.
+Broadly speaking, a regression model is method for inferring the expected average features of a population, and the variance of a population, conditional on other features of the a population as embodied in measurements obtained from a sample.
 
-## Why regression?
+We'll see that regression encompasses more than this definition, however, the definition makes a start.
 
-Regression is a sensible method for statistical guessing
+To understand regression we need to understand the following jargon words: population, sample, measurement, and inference.
 
-Let's start with nomenclature.
 
-### Parameter
+#### What is a population? 
 
-In regression, we call the feature of interest in the world a "parameter."
-
-We call guessing about this parameter "inference." Inference is possible because parameters are structured by distributions. Today we will be talking about the normal distribution.
-
-### Population
-
-In most cases, the parameter is some quality in a population. Today we'll be interested guessing the heights of a population of New Zealanders.
+In science, a population is a hypothetical construct. It is the set of all potential members of a set of things. In psychological science that set is typically a collection of individuals. We want to understand "The population of all human beings?" or  "The New Zealand adult population"; or "The population of undergraduates who may be recruited for IPRP in New Zealand." 
 
 ### Sample
 
-A sample is the sub-population you have measured.
+A sample is a radomly realised sub-population from the larger abstract population that a scientific community hopes to generalise about. Think of selecting balls randomly from an urn.  If selected randomly, the balls may inform us about the contents of the urn. For example, if we select one white ball and one black ball, we may know that the balls in the urn are not all black. (Consider why randomness might be important.)
+
+#### Measurement
+
+A measure is tool or method for obtaining numerical descriptions of a sample. We often call measures "scales."  We can think of a bathroom weight scale as a tool and method for tracking body weight.
+
+In the course, we have encountered numerical scales, ordinal scales, and factors. The topic of measurement in psychological is, to say the least, very broad. 
+
+For now, it is important to keep in mind that similar to bathroom scales, measures can be prone to error. Also similar to bathroom scales, error prone scales may nevertheless be useful for specific interests and purposes.   
+
+
+#### Parameter
+
+In regression, we call the feature of interest in the population a "parameter." In regression, we combine measurements on samples with probability theory to guess about the properties of a population we will never observe. 
+
+#### Statistical inference 
+
+Is is the guessing about parameters that constitutes the bulk of statistical inference. 
+
+#### Probability distributions and statistical guessing
+
+Inference is possible because the parameters of a population are structured by data generating processes that are approximated by probability distributions. 
+
+The relationship of probability distributions and data-generating processes is complex, intriguing, and both historically and philosophically rich $\dots$. Because our interests are applied, we will hardly touch up this richness. 
+
+Today we will be talking about the "normal" or "Gaussian distribution." A very large number of data-generating processes in nature conform the the normal
+
+
+Let's consider some examples of randomly generated samples, which we will obtain using R's `rnorm` function.
 
 ```{r}
 set.seed(123)
@@ -225,7 +200,9 @@ sjPlot::tab_model(
 )
 ```
 
+## Why regression?
 
+People use when they are interested in understanding and variance of
 
 ## Regression examples: daughters/mothers heights.
 
@@ -238,9 +215,9 @@ dplyr::glimpse(md_df)
 
 Does mother height predict daughter height? It seems so. By what how close are is the relationship?
 
-Pearson and Lee collected 5,524 data points from mother's and daughters. Let's examine the data, first by plotting the relationship. 
+Pearson and Lee collected 5,524 data points from mother's and daughters. Let's examine the data, first by plotting the relationship.
 
-What what is happening here? 
+What what is happening here?
 
 ```{r}
 explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_height)) + 
@@ -380,8 +357,6 @@ $$\begin{bmatrix}
 0.54
 \end{bmatrix}$$
 
-
-
 ### Non-linear relationships
 
 ```{r}
@@ -402,7 +377,6 @@ plot(ggeffects::ggpredict(ot1, terms = "x"), add.data =TRUE, dot.alpha = .4)
 
 Non-linear effect
 
-
 ```{r}
 library(splines)
 ot2 <-lm(y ~ x + I(x^2), data  = dat1)
@@ -411,15 +385,13 @@ plot(ggeffects::ggpredict(ot2, terms = "x"), add.data =TRUE, dot.alpha = .4)
 ```
 
 Splines
+
 ```{r}
 library(splines)
 ot3 <-lm(y ~ bs(x), data  = dat1)
 #performance::check_model(ot2)
 plot(ggeffects::ggpredict(ot3, terms = "x"), add.data =TRUE, dot.alpha = .4)
 ```
-
-
-
 
 #### Model evaluation
 
@@ -458,8 +430,15 @@ ggplot(data = df,
 
 ```
 
-
 ### Assumptions of regression
+
+From Gelman and Hill [@gelman2006]
+
+1.  validity
+2.  addititivity/linearity
+3.  independence of errors
+4.  equal variance of errors \> unequal variance does not affect the most important aspect of a regression model, which is the form of the predictors XB (p.46)
+5.  normality of errors \> The regression assumption that is generally least important is that the errors are normally distributed. In fact, for the purpose of estimating the regression line (as compared to predicting individual data points), the assumption of normality is barely important at all. Thus, in contrast to many regression textbooks, we do not recommend diagnostics of the normality of re- gression residuals. p. 46 \> A good way to diagnose violations of some of the assumptions just considered (importantly, linearity) is to plot the residuals ri versus fitted values or simply individual predictors.
 
 ### Common confusions
 
@@ -543,12 +522,7 @@ hist(ds1)
 
 Say we want to simulate a range of values between two endpoints. This is useful for simulating explanatory variables.
 
-```{r.  code_folding=FALSE}
-set.seed(123)
-exp <- runif(n =100, min = 130, max = 220)
-dplyr::glimpse(exp)
-hist(exp)
-```
+`{r.  code_folding=FALSE} set.seed(123) exp <- runif(n =100, min = 130, max = 220) dplyr::glimpse(exp) hist(exp)`
 
 ### `rep`
 
@@ -582,7 +556,7 @@ rep( letters[1:3], times = 3 )
 
 ```
 
-Create  a sequences using `length.out`
+Create a sequences using `length.out`
 
 ```{r  code_folding=FALSE}
 
@@ -614,14 +588,11 @@ Note `length.out` take priority over `times` -- use `length.out` if you have a f
 
 ### `seq`
 
-
-
-
 ## Simulation
 
 ## Simulate to assess result against noise
 
-Recall the relationship between mother's heights and daughters heights in the Pearson/Fox dataset: 
+Recall the relationship between mother's heights and daughters heights in the Pearson/Fox dataset:
 
 ```{r}
 # recall this model
@@ -633,8 +604,7 @@ explore_md <-ggplot2::ggplot(data = md_df, aes(y = daughter_height, x = mother_h
 explore_md
 ```
 
-What would a random relationship look like? 
-
+What would a random relationship look like?
 
 ```{r layout="l-body-outset", fig.width=10, fig.height=10}
 av_dh <-mean(md_df$daughter_height, na.rm=TRUE)
@@ -669,8 +639,6 @@ library(patchwork)
 fake_md + explore_md  + plot_annotation(tag_levels = "a")
 
 ```
-
-
 
 We can build a model using fake data
 
@@ -812,7 +780,6 @@ Check splines model
 performance::check_model(m3)
 ```
 
-
 ## Use fake data to create a factor
 
 Here we simulate no relationship between a group and an outcome
@@ -857,7 +824,7 @@ sim_cells<-lm(out ~ cells, data = dfc)
 summary(sim_cells)
 ```
 
-This isn't too convincing: we need to replicate the model many times 
+This isn't too convincing: we need to replicate the model many times
 
 ```{r}
 # Make a function for the simulation
@@ -878,7 +845,6 @@ sim_lm = replicate(20, test_fun(), simplify = FALSE )
 length(sim_lm)
 ```
 
-
 We can use the `purrr` package to generate many replicates of a model
 
 ```{r}
@@ -894,10 +860,7 @@ What percentage of simulations yeild "significant results?
 sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
 ```
 
-
-Does balance fix the issue? 
-
-
+Does balance fix the issue?
 
 ```{r}
 # Make a function for the simulation
@@ -921,7 +884,6 @@ length(sim_lm)
 
 We can use the `purrr` package to generate many replicates of a model
 
-
 ```{r}
 library(dplyr)
 tab_sim<-purrr::map_dfr(sim_lm, broom::tidy)
@@ -930,20 +892,19 @@ tab_sim %>%
 ```
 
 What percentage of simulations yeild "significant results?
+
 ```{r}
 sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
 ```
 
-
-
-
 ## Random number generation
 
-#### `rnorm` function 
+#### `rnorm` function
 
 ```{r code_folding = FALSE}
 rnorm(n=20, mean = 0, sd = 1)
 ```
+
 -   n = number of observations
 -   sd = vector of standard deviations
 -   mean = vector of means
@@ -958,3 +919,45 @@ Ariel has a bunch of resources on her website, please check them out.
 
 2.  Richard Mcelreath's Statistical Rethinking [@mcelreath2020]
 3.  Regression and other stories [@gelman2020]
+
+
+## Appendix 1:  Conceptual Background
+
+Some preliminaries about science.
+
+### Science begins with a question
+
+Science begins with a question about the world. The first step in science, then, is to clarify what you want to know.
+
+Because science is a social practice, you will also need to clarify why your question is interesting: so what?
+
+In short, know your question.
+
+### Scientific model (or theory)
+
+Sometimes scientists are interested in specific features of the world: how did virus x originate? Such a question might have a forensic interest: what constellation of events gave rise to a novel infectious disease?
+
+More typically, scientists seek generalisations. How do infectious diseases evolve? How do biological organisms evolve? Such questions have applied and fundamental interests. How can we better prevent infectious disease? How did life originate?
+
+A scientific model is a proposal for how nature is structured (and unstructured). For example, the theory of evolution by natural selection proposes that life emerges from variation, inheritance, and differential reproduction/survival.
+
+To evaluate a scientific model, scientists must make generalisations beyond individual cases. This is where statistics shines.
+
+### What is statistics?
+
+Mathematics is a logic of certainty.
+
+Statistics is a logic of uncertainty.
+
+A statistical model uses the logic of probability to make better guesses.
+
+### Applications of statistical models in science
+
+Scientific models seek to explain how nature is structured. Where scientific models conflict, we can combine statistical models with data-collection to evaluate the credibility of of one theoretical model over others. To do this, a scientific model must make distinct, non-trivial predictions about the world.
+
+If the predictions are not distinct, the observations will not enable a shift in credibility for one theory over another. Consider the theory that predicts any observation. Such a theory would be better classified as a conspiracy theory; it is compatible with any evidence whatsoever.
+
+<!-- Sometimes the processes of empirical testing is called "hypothesis testing." In the weeks ahead, we will distinguish the intellectually excellent concept of "hypothesis testing" from "Null Hypothesis Significance Testing (NHST)." Although there is is nothing inherently flawed with NHST, it's misunderstandings have been an abomination. -->
+
+Today we introduce a statistical method called regression. We will focus on how regression helps both to evaluate, and to make, informed predictions about the structures of the world.
+
