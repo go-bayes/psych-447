@@ -1,5 +1,5 @@
 ---
-title: "Week 4 Lab"
+title: "Week 4 solutions"
 description: |
 author:
   - name: Joseph Bulbulia

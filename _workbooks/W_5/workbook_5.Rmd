@@ -1,5 +1,5 @@
 ---
-title: "Week 5 Lab"
+title: "Week 5 workbook"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -22,24 +22,16 @@ output:
 ## Setup
 
 ### Libraries
-
 ```{r}
 library(tidyverse)
-library(lubridate)
-library(pmdplyr)
-library(correlation)
-library(ggraph)
 library(patchwork)
-
+library(lubridate)
+library(kableExtra)
+library(gtsummary)
 ```
 
-Run this code
-```{r eval=FALSE}
-#easystats::install_easystats_latest()
-```
+### Import `nz` data
 
-
-### Import  data
 ```{r}
 # read data
 nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
@@ -68,35 +60,89 @@ nz <- nz_0 %>%
   mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
   mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
-  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) 
+  dplyr::mutate(male_id = as.factor(Male)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)
 
 ```
-title: "Untitled"
-author: "Joseph Bulbulia"
-date: "23/03/2021"
-output: html_document
----
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+nz$ma
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### Import `Pearson and Lee` mother's and daughters data
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r}
+md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
+# Center mother's height for later example
+md_df <- md_df %>%
+  dplyr::mutate(mother_height_c = as.numeric(scale(mother_height, center = TRUE, scale = FALSE)))
+dplyr::glimpse(md_df)
 
-```{r cars}
-summary(cars)
+# In 1903, Pearson and Lee collected 5,524 observations from mother/daughter height pairs. See lecture 5 for details
 ```
 
-## Including Plots
+### Note
 
-You can also embed plots, for example:
+**For all exercises below, use only the 2019 wave of the `nz` dataset.**
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Q1. Create a descriptive table and a descriptive graph for the `HLTH.Weight` and `HLTH.Height` variables in the `nz` dataset
+
+Select `HLTH.Weight`, `HLTH.Height` from the nz dataset. 
+
+Filter only the 2019 wave.
+
+Create a descriptive table and graph these two variables
+
+Annotate your workflow (at each step, describe what you are doing and why).
+
+
+## Q2. Write up a sample summary of the `HLTH.Weight` and `HLTH.Height` variables in the `nz` dataset in APA style. 
+
+Using the analysis in Q1, describe Height and Weight in the `nz` dataset
+
+Write brief APA methods summary for these two variables. 
+
+Note: *if useful, use the 'male_id' variable to clarify interesting or puzzling features of the `HLTH.Weight` and `HLTH.Height` responses.
+
+[NZAVS data dictionary](https://www.dropbox.com/s/e7krce01taya8a1/Copy%20of%20NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+
+
+## Q3. Regression height ~ weight and report results
+
+Using the `nz` dataset, write a regression model for height as predicted by weight. 
+
+Create a table for your results. 
+
+Create a graphs/graphs to clarify the results of your regression model. 
+
+Briefly report your results. 
+
+
+## Q4. Regress height ~ male_id and report results
+
+
+Using the `nz` dataset, write a regression model for height as predicted by `male_id` 
+
+Create a table for your results. 
+
+Create a graphs/graphs to clarify the results of your regression model. 
+
+Briefly report your results. 
+
+
+## Q5. Regression to predict
+
+Using the regression coefficients from the Pearson and Lee 1903 dataset
+
+Predict the heights of daughters of women in the `nz` dataset. 
+
+
+## Q6. Bonus, not marked
+
+On average, how much taller or shorter are women in New Zealand as sampled in 2019 `nz` dataset compared with women in 1903 as sampled in the Pearson and Lee dataset. 
+
+Clarify your inference.
+
