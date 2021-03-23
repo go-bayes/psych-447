@@ -18,6 +18,7 @@ output:
 
 ## Partial pooling
 
+
 ## Random intercepts
 
 

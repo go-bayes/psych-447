@@ -133,7 +133,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["lecture_6_files/anchor-4.2.2/anchor.min.js","lecture_6_files/bowser-1.9.3/bowser.min.js","lecture_6_files/distill-2.2.21/template.v2.js","lecture_6_files/figure-html5/unnamed-chunk-20-1.png","lecture_6_files/figure-html5/unnamed-chunk-21-1.png","lecture_6_files/figure-html5/unnamed-chunk-22-1.png","lecture_6_files/figure-html5/unnamed-chunk-23-1.png","lecture_6_files/figure-html5/unnamed-chunk-24-1.png","lecture_6_files/figure-html5/unnamed-chunk-25-1.png","lecture_6_files/figure-html5/unnamed-chunk-26-1.png","lecture_6_files/figure-html5/unnamed-chunk-26-2.png","lecture_6_files/figure-html5/unnamed-chunk-26-3.png","lecture_6_files/figure-html5/unnamed-chunk-27-1.png","lecture_6_files/figure-html5/unnamed-chunk-27-2.png","lecture_6_files/figure-html5/unnamed-chunk-28-1.png","lecture_6_files/figure-html5/unnamed-chunk-29-1.png","lecture_6_files/figure-html5/unnamed-chunk-3-1.png","lecture_6_files/figure-html5/unnamed-chunk-31-1.png","lecture_6_files/figure-html5/unnamed-chunk-4-1.png","lecture_6_files/figure-html5/unnamed-chunk-5-1.png","lecture_6_files/figure-html5/unnamed-chunk-6-1.png","lecture_6_files/figure-html5/unnamed-chunk-8-1.png","lecture_6_files/figure-html5/unnamed-chunk-9-1.png","lecture_6_files/header-attrs-2.7.1/header-attrs.js","lecture_6_files/jquery-1.11.3/jquery.min.js","lecture_6_files/popper-2.6.0/popper.min.js","lecture_6_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_6_files/tippy-6.2.7/tippy-light-border.css","lecture_6_files/tippy-6.2.7/tippy.css","lecture_6_files/tippy-6.2.7/tippy.umd.min.js","lecture_6_files/webcomponents-2.0.0/webcomponents.js","op.png","op2.png"]}
+  {"type":"character","attributes":{},"value":["lecture_6_files/anchor-4.2.2/anchor.min.js","lecture_6_files/bowser-1.9.3/bowser.min.js","lecture_6_files/distill-2.2.21/template.v2.js","lecture_6_files/figure-html5/unnamed-chunk-20-1.png","lecture_6_files/figure-html5/unnamed-chunk-21-1.png","lecture_6_files/figure-html5/unnamed-chunk-22-1.png","lecture_6_files/figure-html5/unnamed-chunk-23-1.png","lecture_6_files/figure-html5/unnamed-chunk-24-1.png","lecture_6_files/figure-html5/unnamed-chunk-25-1.png","lecture_6_files/figure-html5/unnamed-chunk-26-1.png","lecture_6_files/figure-html5/unnamed-chunk-26-2.png","lecture_6_files/figure-html5/unnamed-chunk-26-3.png","lecture_6_files/figure-html5/unnamed-chunk-27-1.png","lecture_6_files/figure-html5/unnamed-chunk-27-2.png","lecture_6_files/figure-html5/unnamed-chunk-28-1.png","lecture_6_files/figure-html5/unnamed-chunk-29-1.png","lecture_6_files/figure-html5/unnamed-chunk-3-1.png","lecture_6_files/figure-html5/unnamed-chunk-31-1.png","lecture_6_files/figure-html5/unnamed-chunk-4-1.png","lecture_6_files/figure-html5/unnamed-chunk-5-1.png","lecture_6_files/figure-html5/unnamed-chunk-6-1.png","lecture_6_files/figure-html5/unnamed-chunk-8-1.png","lecture_6_files/figure-html5/unnamed-chunk-9-1.png","lecture_6_files/header-attrs-2.7.1/header-attrs.js","lecture_6_files/jquery-1.11.3/jquery.min.js","lecture_6_files/popper-2.6.0/popper.min.js","lecture_6_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_6_files/tippy-6.2.7/tippy-light-border.css","lecture_6_files/tippy-6.2.7/tippy.css","lecture_6_files/tippy-6.2.7/tippy.umd.min.js","lecture_6_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -1870,6 +1870,8 @@ gtag('config', 'G-GQF269N0S4');
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#learning-outcomes">Learning outcomes</a></li>
 <li><a href="#functions-for-simulation">Functions for simulation</a>
 <ul>
 <li><a href="#rnorm"><code>rnorm</code></a></li>
@@ -1912,6 +1914,15 @@ $ daughter_height &lt;dbl&gt; 52.5, 52.5, 53.5, 53.5, 55.5, 55.5, 55.5, 55…
 $ mother_height   &lt;dbl&gt; 59.5, 59.5, 59.5, 59.5, 59.5, 59.5, 59.5, 59…
 $ mother_height_c &lt;dbl&gt; -2.9987328, -2.9987328, -2.9987328, -2.99873…</code></pre>
 </div>
+<h2 id="overview">Overview</h2>
+<p>This week we will:</p>
+<ul>
+<li>Learn how to use R to generate random numbers</li>
+<li>Use random numbers to simulate data</li>
+<li>Relate simulation to regression.</li>
+</ul>
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<p>By learning how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. Note, that we will not expect you to simulate a dataset just yet. Instead, we will illustrate the use of tools for simulation, and ask that you try out very basic simulation functions. It will not be until after the April break that you will simulate any data for the purposes of assisting in statistical inference.</p>
 <h2 id="functions-for-simulation">Functions for simulation</h2>
 <h3 id="rnorm"><code>rnorm</code></h3>
 <p><code>rnorm</code> is a R’s random number generator. Within this function:</p>

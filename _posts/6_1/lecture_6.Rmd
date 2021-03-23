@@ -36,6 +36,18 @@ dplyr::glimpse(md_df)
 
 ```
 
+## Overview
+
+This week we will:
+
+-  Learn how to use R to generate random numbers
+-  Use random numbers to simulate data
+-  Relate simulation to regression.
+
+## Learning outcomes
+
+By learning how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. Note, that we will not expect you to simulate a dataset just yet. Instead, we will illustrate the use of tools for simulation, and ask that you try out very basic simulation functions. It will not be until after the April break that you will simulate any data for the purposes of assisting in statistical inference.
+
 ## Functions for simulation
 
 ### `rnorm`

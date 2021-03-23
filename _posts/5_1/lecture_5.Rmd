@@ -74,18 +74,11 @@ nz <- nz_0 %>%
 
 ## Overview
 
-In Part 1 we will introduce regression.
-
-Next week, we will:
-
--   learn how to use R to generate random numbers
--   use random numbers to simulate data
+This week we introduce regression.
 
 ## Learning outcomes
 
 By learning regression, you will better equipped to do psychological science and to evaluate psychological research.
-
-By *beginning* to learn how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. Note, that we will not expect you to simulate a dataset just yet. Instead, we will illustrate the use of tools for simulation, and ask that you try out very basic simulation functions. It will not be until after the April break that you will simulate any data for the purposes of assisting in statistical inference.
 
 ## What is regression?
 
