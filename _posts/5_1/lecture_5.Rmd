@@ -339,6 +339,7 @@ A simple method for obtaining the predicted values form your fitted model is to 
 ```{r code_folding = FALSE}
 
 library(ggeffects)
+
 toplot<-ggeffects::ggpredict(m1, terms = "mother_height")
 toplot
 ```
