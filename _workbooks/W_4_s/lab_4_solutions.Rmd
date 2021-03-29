@@ -16,7 +16,7 @@ output:
   distill::distill_article:
     self_contained: false
     toc: true
-    highlight: tango
+    highlight: kate
 ---
 
 ## Setup
@@ -33,8 +33,24 @@ library(patchwork)
 
 ```
 
-Run this code
+
+
+```{r setup, include=FALSE}
+# setup
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  layout = "l-body-outset",
+  fig.width= 12,
+  fig.height= 10,
+  collapse =TRUE,
+  R.options = list(width = 60)
+)
+```
+
 ```{r eval=FALSE}
+# you might need to run this code
 #easystats::install_easystats_latest()
 ```
 
@@ -95,7 +111,6 @@ Make all the hours variables into integers
 This would be the quick way:
 
 ```{r}
-head(df)
 df <-df %>%
   dplyr::mutate(across(starts_with("Hours"), as.integer))
 ```
@@ -220,7 +235,8 @@ Suppose you were born on Dec 25, 1995 at 5.02:22 am Calculate your age in months
 
 ```{r}
 library(lubridate)
-alive <-lubridate::interval(ymd_hms("1995-12-25 05:02:22"), ymd_hms("2021-03-21 13:22:04"))
+alive <- lubridate::interval(ymd_hms("1995-12-25 05:02:22"),
+                             ymd_hms("2021-03-21 13:22:04"))
 
 time_length(alive, "months")
 ```
@@ -241,20 +257,10 @@ Make sure to re-level the factor so that the ordinal ranking moves from lowest t
 
 ###  Solution
 
-```{r}
-nz %>%
-  dplyr::mutate(church_attendance_cats = cut(
-    Religion.Church,
-    breaks = c(-Inf, 0, 3.99, Inf),
-    labels = c("zero", "less_4", "gr_4"),
-    right = TRUE,
-  )) %>% 
-  group_by(church_attendance_cats) %>%
-  count()
-```
 
-### Another solution
+### Solution
 
+Here is one approach: 
 ```{r}
 nz %>%
   dplyr::select(Religion.Church) %>%
@@ -278,17 +284,18 @@ Using methods described in lecture 4, create a table for average hours of sleep 
 
 ```{r}
 library(kableExtra)
-tabnz<-nz %>%
+tabnz <- nz %>%
   select(Id, date, HLTH.SleepHours) %>%
-  mutate(month = month(date, label = TRUE))%>%
+  mutate(month = month(date, label = TRUE)) %>%
   group_by(month) %>%
   summarise(
     average_sleep =  mean(HLTH.SleepHours, na.rm = TRUE),
     sd_sleep  =  sd(HLTH.SleepHours, na.rm = TRUE),
-    n  = n()  ) 
-tabnz%>%
+    n  = n()
+  )
+tabnz %>%
   kbl(caption = "Distress by month") %>%
-   kable_classic_2(c("striped", "hover"), full_width = TRUE)
+  kable_classic_2(c("striped", "hover"), full_width = TRUE)
 ```
 
 
@@ -302,21 +309,22 @@ Briefly explain why some intervals are wider than others.
 ```{r, eval = TRUE, echo = TRUE}
 nz %>%
   select(Id, date, HLTH.SleepHours) %>%
-  mutate(month = month(date, label = TRUE))%>%
+  mutate(month = month(date, label = TRUE)) %>%
   group_by(month) %>%
   summarise(
     mn_sh =  mean(HLTH.SleepHours, na.rm = TRUE),
     sd_sh  =  sd(HLTH.SleepHours, na.rm = TRUE),
-    n_sh  = n()  ) %>%
-  mutate(
-    se_sh  = sd_sh  / sqrt(n_sh ),
-    lw_ci = mn_sh  - qt(1 - (0.05 / 2), n_sh  - 1) * se_sh ,
-    up_ci = mn_sh  + qt(1 - (0.05 / 2), n_sh  - 1) * se_sh 
+    n_sh  = n()
   ) %>%
-  ggplot(., aes(x = month, y = mn_sh , colour = mn_sh )) +
+  mutate(
+    se_sh  = sd_sh  / sqrt(n_sh),
+    lw_ci = mn_sh  - qt(1 - (0.05 / 2), n_sh  - 1) * se_sh ,
+    up_ci = mn_sh  + qt(1 - (0.05 / 2), n_sh  - 1) * se_sh
+  ) %>%
+  ggplot(., aes(x = month, y = mn_sh , colour = mn_sh)) +
   geom_errorbar(aes(ymin = lw_ci, ymax = up_ci), width = .1) +
   geom_point(size = 3)  +
-  scale_y_continuous(limits = c(0,8)) + 
+  scale_y_continuous(limits = c(0, 8)) +
   theme_classic() + scale_fill_viridis_d()
 ```
 
@@ -324,18 +332,19 @@ nz %>%
 Some intervals are wider than others because the number of responses by month varies, and a confidence interval divides by the number of cases.
 
 ```{r, eval = FALSE, echo = FALSE}
-gnz <-nz %>%
-  select(Id, date, HLTH.SleepHours,Wave) %>%
-  mutate(month = month(date, label = TRUE))%>%
+gnz <- nz %>%
+  select(Id, date, HLTH.SleepHours, Wave) %>%
+  mutate(month = month(date, label = TRUE)) %>%
   group_by(month, Wave) %>%
   summarise(
     mn_sh =  mean(HLTH.SleepHours, na.rm = TRUE),
     sd_sh  =  sd(HLTH.SleepHours, na.rm = TRUE),
-    n_sh  = n()  ) %>%
+    n_sh  = n()
+  ) %>%
   mutate(
-    se_sh  = sd_sh  / sqrt(n_sh ),
+    se_sh  = sd_sh  / sqrt(n_sh),
     lw_ci = mn_sh  - qt(1 - (0.05 / 2), n_sh  - 1) * se_sh ,
-    up_ci = mn_sh  + qt(1 - (0.05 / 2), n_sh  - 1) * se_sh 
+    up_ci = mn_sh  + qt(1 - (0.05 / 2), n_sh  - 1) * se_sh
   )
 ```
 
@@ -349,12 +358,17 @@ gnz%>%
 We can graph the year-wise differences, focusing on April:
 
 ```{r, eval = FALSE, echo = FALSE}
-gnz%>%
-  ggplot(., aes(x = month, y = mn_sh , colour = factor(Wave) )) +
+gnz %>%
+  ggplot(., aes(
+    x = month,
+    y = mn_sh ,
+    colour = factor(Wave)
+  )) +
   geom_errorbar(aes(ymin = lw_ci, ymax = up_ci), width = .1) +
   geom_point(size = 3)  +
- # scale_y_continuous(limits = c(0,8)) + 
-  theme_classic() + scale_colour_viridis_d()
+  # scale_y_continuous(limits = c(0,8)) +
+  theme_classic() + 
+  scale_colour_viridis_d() # nice colours
 ```
 
 
@@ -372,15 +386,23 @@ What do you find most interesting about this plot? Explain.
 ### Solution
 
 ```{r}
-k6<-nz%>%
-  select(FeelHopeless,FeelDepressed,FeelRestless,EverythingIsEffort,
-         FeelWorthless,FeelNervous, Id)%>%
-  mutate_all(.,as.numeric) %>%
-  mutate(Id= as.factor(Id))# make numeric for correlation plot
+k6 <- nz %>%
+  select(
+    FeelHopeless,
+    FeelDepressed,
+    FeelRestless,
+    EverythingIsEffort,
+    FeelWorthless,
+    FeelNervous,
+    Id
+  ) %>%
+  mutate_all(., as.numeric) %>%
+  mutate(Id = as.factor(Id))# make numeric for correlation plot
 
 k6 %>%
-  correlation::correlation( partial = FALSE, multilevel = TRUE ) %>%
-  plot() + theme_gray()
+  correlation::correlation(partial = FALSE, multilevel = TRUE) %>%
+  plot() +
+  theme_gray()
 
 ```
 
@@ -390,8 +412,9 @@ Setting the correlations to `partial` does not destroy this effect.
 
 ```{r}
 k6 %>%
-  correlation::correlation( partial = TRUE, multilevel = TRUE ) %>%
-  plot() + theme_gray()
+  correlation::correlation(partial = TRUE, multilevel = TRUE) %>%
+  plot() +
+  theme_gray()
 ```
 
 
@@ -409,10 +432,12 @@ Use the `patchwork` library to create a figure with two plots on top of each oth
 ```{r dualfig, fig.cap="\\label{fig:dualfig}"}
 library(patchwork)
 library(ggplot2)
-p1 <- qplot(mtcars$cyl, geom = "histogram") + labs(title = "this plot") + xlab("mt cycle")
-p2 <- qplot(mtcars$disp, geom = "histogram")+ labs(title = "that plot")
+p1 <-
+  qplot(mtcars$cyl, geom = "histogram") + labs(title = "this plot") + xlab("mt cycle")
+p2 <-
+  qplot(mtcars$disp, geom = "histogram") + labs(title = "that plot")
 
-p1/p2 + plot_annotation(title = "my title", tag_levels = 'a') + xlab("mt cycle") +  plot_layout(guides = 'collect')
+p1 / p2 + plot_annotation(title = "my title", tag_levels = 'a') + xlab("mt cycle") +  plot_layout(guides = 'collect')
 
 ```
 

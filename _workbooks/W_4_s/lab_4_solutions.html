@@ -45,42 +45,46 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
+    background-color: #ffffff;
+    color: #a0a0a0;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
 div.sourceCode
-  {  background-color: #f8f8f8; }
+  { color: #1f1c1b; background-color: #ffffff; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
@@ -89,8 +93,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2021-03-24"/>
-  <meta property="article:created" itemprop="dateCreated" content="2021-03-24"/>
+  <meta property="article:published" itemprop="datePublished" content="2021-03-29"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-03-29"/>
   <meta name="article:author" content="Joseph Bulbulia"/>
   <meta name="article:author" content="Johannes Karl"/>
 
@@ -107,12 +111,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","output","date"]}},"value":[{"type":"character","attributes":{},"value":["Week 4 solutions"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Joseph Bulbulia"]},{"type":"character","attributes":{},"value":["https://josephbulbulia.netlify.app"]},{"type":"character","attributes":{},"value":["Victoria University of Wellington"]},{"type":"character","attributes":{},"value":["https://www.wgtn.ac.nz"]},{"type":"character","attributes":{},"value":["0000-0002-5861-2056"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Johannes Karl"]},{"type":"character","attributes":{},"value":["https://johannes-karl.com"]},{"type":"character","attributes":{},"value":["Victoria University of Wellington"]},{"type":"character","attributes":{},"value":["https://www.wgtn.ac.nz"]},{"type":"character","attributes":{},"value":["0000-0001-5166-0728"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","highlight"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["tango"]}]}]},{"type":"character","attributes":{},"value":["03-24-2021"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","output","date"]}},"value":[{"type":"character","attributes":{},"value":["Week 4 solutions"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Joseph Bulbulia"]},{"type":"character","attributes":{},"value":["https://josephbulbulia.netlify.app"]},{"type":"character","attributes":{},"value":["Victoria University of Wellington"]},{"type":"character","attributes":{},"value":["https://www.wgtn.ac.nz"]},{"type":"character","attributes":{},"value":["0000-0002-5861-2056"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Johannes Karl"]},{"type":"character","attributes":{},"value":["https://johannes-karl.com"]},{"type":"character","attributes":{},"value":["Victoria University of Wellington"]},{"type":"character","attributes":{},"value":["https://www.wgtn.ac.nz"]},{"type":"character","attributes":{},"value":["0000-0001-5166-0728"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","highlight"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["kate"]}]}]},{"type":"character","attributes":{},"value":["03-29-2021"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["lab_4_solutions_files/anchor-4.2.2/anchor.min.js","lab_4_solutions_files/bowser-1.9.3/bowser.min.js","lab_4_solutions_files/distill-2.2.21/template.v2.js","lab_4_solutions_files/figure-html5/dualfig-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-16-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-20-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-21-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-22-1.png","lab_4_solutions_files/header-attrs-2.7.1/header-attrs.js","lab_4_solutions_files/jquery-1.11.3/jquery.min.js","lab_4_solutions_files/kePrint-0.0.1/kePrint.js","lab_4_solutions_files/lightable-0.0.1/lightable.css","lab_4_solutions_files/popper-2.6.0/popper.min.js","lab_4_solutions_files/tippy-6.2.7/tippy-bundle.umd.min.js","lab_4_solutions_files/tippy-6.2.7/tippy-light-border.css","lab_4_solutions_files/tippy-6.2.7/tippy.css","lab_4_solutions_files/tippy-6.2.7/tippy.umd.min.js","lab_4_solutions_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["lab_4_solutions_files/anchor-4.2.2/anchor.min.js","lab_4_solutions_files/bowser-1.9.3/bowser.min.js","lab_4_solutions_files/distill-2.2.21/template.v2.js","lab_4_solutions_files/figure-html5/dualfig-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-15-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-16-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-19-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-20-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-21-1.png","lab_4_solutions_files/figure-html5/unnamed-chunk-22-1.png","lab_4_solutions_files/header-attrs-2.7.1/header-attrs.js","lab_4_solutions_files/jquery-1.11.3/jquery.min.js","lab_4_solutions_files/kePrint-0.0.1/kePrint.js","lab_4_solutions_files/lightable-0.0.1/lightable.css","lab_4_solutions_files/popper-2.6.0/popper.min.js","lab_4_solutions_files/tippy-6.2.7/tippy-bundle.umd.min.js","lab_4_solutions_files/tippy-6.2.7/tippy-light-border.css","lab_4_solutions_files/tippy-6.2.7/tippy.css","lab_4_solutions_files/tippy-6.2.7/tippy.umd.min.js","lab_4_solutions_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1453,7 +1457,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Week 4 solutions","authors":[{"author":"Joseph Bulbulia","authorURL":"https://josephbulbulia.netlify.app","affiliation":"Victoria University of Wellington","affiliationURL":"https://www.wgtn.ac.nz","orcidID":"0000-0002-5861-2056"},{"author":"Johannes Karl","authorURL":"https://johannes-karl.com","affiliation":"Victoria University of Wellington","affiliationURL":"https://www.wgtn.ac.nz","orcidID":"0000-0001-5166-0728"}],"publishedDate":"2021-03-24T00:00:00.000+00:00","citationText":"Bulbulia & Karl, 2021"}
+{"title":"Week 4 solutions","authors":[{"author":"Joseph Bulbulia","authorURL":"https://josephbulbulia.netlify.app","affiliation":"Victoria University of Wellington","affiliationURL":"https://www.wgtn.ac.nz","orcidID":"0000-0002-5861-2056"},{"author":"Johannes Karl","authorURL":"https://johannes-karl.com","affiliation":"Victoria University of Wellington","affiliationURL":"https://www.wgtn.ac.nz","orcidID":"0000-0001-5166-0728"}],"publishedDate":"2021-03-29T00:00:00.000+00:00","citationText":"Bulbulia & Karl, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1474,7 +1478,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   
 ,   Johannes Karl <a href="https://johannes-karl.com" class="uri">https://johannes-karl.com</a> (Victoria University of Wellington)<a href="https://www.wgtn.ac.nz" class="uri">https://www.wgtn.ac.nz</a>
   
-<br/>03-24-2021
+<br/>03-29-2021
 </div>
 
 <div class="d-article">
@@ -1501,13 +1505,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#solution-6">Solution</a></li>
 <li><a href="#q6-create-an-ordered-factor-from-numeric-data">Q6 Create an ordered factor from numeric data</a></li>
 <li><a href="#solution-7">Solution</a></li>
-<li><a href="#another-solution">Another solution</a></li>
-<li><a href="#q7-make-a-summary-table">Q7 Make a summary table</a></li>
 <li><a href="#solution-8">Solution</a></li>
-<li><a href="#q7.-make-a-summary-graph">Q7. Make a summary graph</a></li>
+<li><a href="#q7-make-a-summary-table">Q7 Make a summary table</a></li>
 <li><a href="#solution-9">Solution</a></li>
-<li><a href="#q8.-correlation-graph">Q8. Correlation graph</a></li>
+<li><a href="#q7.-make-a-summary-graph">Q7. Make a summary graph</a></li>
 <li><a href="#solution-10">Solution</a></li>
+<li><a href="#q8.-correlation-graph">Q8. Correlation graph</a></li>
+<li><a href="#solution-11">Solution</a></li>
 <li><a href="#q9-create-a-blank-papaja-report">Q9 Create a blank <code>papaja</code> report</a></li>
 <li><a href="#q10-patchwork">Q10 <code>Patchwork</code></a></li>
 </ul></li>
@@ -1527,15 +1531,15 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </code></pre>
 </div>
 </div>
-Run this code
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#easystats::install_easystats_latest()</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># you might need to run this code</span>
+<span class='co'>#easystats::install_easystats_latest()</span>
 </code></pre>
 </div>
 </div>
 <h3 id="import-data">Import data</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># read data</span>
 <span class='va'>nz_0</span> <span class='op'>&lt;-</span> <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span><span class='op'>(</span><span class='st'>"https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"</span><span class='op'>)</span><span class='op'>)</span>
@@ -1571,7 +1575,7 @@ Run this code
 <h3 id="q1a.-warmup">Q1a. Warmup</h3>
 <p>Make a new dataframe from the <code>nz</code> dataframe. Call it <code>df</code></p>
 <h3 id="solution">Solution</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>nz</span>
 </code></pre>
@@ -1581,42 +1585,7 @@ Run this code
 <p>Make all the hours variables into integers</p>
 <h3 id="solution-1">Solution</h3>
 <p>This would be the quick way:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code># A tibble: 6 x 63
-     Id Wave  years   Age Male  Gender   Edu Partner BornNZ Employed
-  &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
-1     1 2019  10.4     47 Male       1     3       1      1        1
-2     1 2018   9.47    46 Male       1     3       1      1        0
-3     2 2019  10.6     47 Male       1     7       1      1        1
-4     2 2018   9.90    46 Male       1     7       1      1        1
-5     3 2019  10.2     53 Male       1     4       0      1        1
-6     3 2018   9.20    52 Male       1     4       0      1        1
-# … with 53 more variables: BigDoms &lt;fct&gt;, TSCORE &lt;dbl&gt;,
-#   GenCohort &lt;fct&gt;, Religion.Church &lt;dbl&gt;,
-#   Religion.Believe.Cats &lt;dbl&gt;, Relid &lt;dbl&gt;, HLTH.Fatigue &lt;dbl&gt;,
-#   HLTH.SleepHours &lt;dbl&gt;, HLTH.BMI &lt;dbl&gt;, HLTH.Weight &lt;dbl&gt;,
-#   HLTH.Height &lt;dbl&gt;, HomeOwner &lt;dbl&gt;, Pol.Orient &lt;dbl&gt;,
-#   PATRIOT &lt;dbl&gt;, Env.SatNZEnvironment &lt;dbl&gt;,
-#   Env.MotorwaySpend &lt;dbl&gt;, Env.PubTransSubs &lt;dbl&gt;,
-#   Env.ClimateChgConcern &lt;dbl&gt;, LIFEMEANING &lt;dbl&gt;,
-#   Hours.Internet &lt;dbl&gt;, Issue.GovtSurveillance &lt;dbl&gt;,
-#   Issue.RegulateAI &lt;dbl&gt;, Issue.IncomeRedistribution &lt;dbl&gt;,
-#   Hours.Exercise &lt;dbl&gt;, Hours.Work &lt;dbl&gt;, Hours.News &lt;dbl&gt;,
-#   CONSCIENTIOUSNESS &lt;dbl&gt;, EXTRAVERSION &lt;dbl&gt;, AGREEABLENESS &lt;dbl&gt;,
-#   OPENNESS &lt;dbl&gt;, Religious &lt;fct&gt;, Spiritual.Identification &lt;dbl&gt;,
-#   Believe.God &lt;fct&gt;, Believe.Spirit &lt;fct&gt;, HoursCharity &lt;dbl&gt;,
-#   CharityDonate &lt;dbl&gt;, Your.Personal.Relationships &lt;dbl&gt;,
-#   Your.Future.Security &lt;dbl&gt;, Standard.Living &lt;dbl&gt;,
-#   NZ.Economic.Situation &lt;dbl&gt;, NZ.Social.Conditions &lt;dbl&gt;,
-#   NZ.Business.Conditions &lt;dbl&gt;, Emp.JobSecure &lt;dbl&gt;,
-#   Issue.Food.GMO &lt;dbl&gt;, Env.SacMade &lt;lgl&gt;, KESSLER6sum &lt;dbl&gt;,
-#   FeelHopeless &lt;fct&gt;, FeelDepressed &lt;fct&gt;, FeelRestless &lt;fct&gt;,
-#   EverythingIsEffort &lt;fct&gt;, FeelWorthless &lt;fct&gt;, FeelNervous &lt;fct&gt;,
-#   date &lt;date&gt;</code></pre>
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'>&lt;-</span><span class='va'>df</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'>across</span><span class='op'>(</span><span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"Hours"</span><span class='op'>)</span>, <span class='va'>as.integer</span><span class='op'>)</span><span class='op'>)</span>
@@ -1624,7 +1593,7 @@ Run this code
 </div>
 </div>
 <p>But more likely they’ll do it by hand, which is fine:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span><span class='op'>&lt;-</span> <span class='va'>df</span><span class='op'>%&gt;%</span>
   <span class='fu'>mutate</span><span class='op'>(</span>Hours.Exercise <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>Hours.Exercise</span><span class='op'>)</span>,
@@ -1637,7 +1606,7 @@ Run this code
 <p>Create a new indicator that standardises the <code>Pol.Orient</code> variable, create a new indicator that centers the <code>Pol.Orient</code> variable, create a new indicator that centres the <code>Age</code> variable in decade-long units. Do this in a single piped workflow.</p>
 <p><strong>Print the head of the data frame so that we can see your work </strong></p>
 <h3 id="solution-2">Solution</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df1</span><span class='op'>&lt;-</span><span class='va'>df</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Pol.Orient</span>,
@@ -1655,7 +1624,7 @@ Run this code
 <p>Select <code>Hour.Exercise</code> and filter Wave 2019.</p>
 <h3 id="solution-3">Solution</h3>
 <p>Note that this won’t. We need to filter first because otherwise there would be no Wave column to select!</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span><span class='op'>$</span><span class='va'>Wave</span>
 <span class='va'>df</span><span class='op'>%&gt;%</span>
@@ -1669,7 +1638,7 @@ Run this code
 <p>What are the maximum number of responses for a single day in 2018 and the maximum number of responses for a single day in 2019?</p>
 <h4 id="solution-4">Solution</h4>
 <p>This is how I’d do it:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>Wave</span><span class='op'>)</span><span class='op'>%&gt;%</span>
@@ -1686,7 +1655,7 @@ Run this code
 2 2019-12-03 2019     54</code></pre>
 </div>
 <p>Here’s a longer approach:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># 2018 take the first</span>
 <span class='va'>nz</span> <span class='op'>%&gt;%</span>
@@ -1700,11 +1669,12 @@ Run this code
 <pre><code>Rows: 312
 Columns: 3
 Groups: date, Wave [312]
-$ date &lt;date&gt; 2018-06-21, 2018-06-22, 2018-06-24, 2018-06-20, 2018-0…
-$ Wave &lt;fct&gt; 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2…
-$ n    &lt;int&gt; 112, 93, 80, 67, 59, 58, 52, 44, 44, 34, 27, 27, 27, 27…</code></pre>
+$ date &lt;date&gt; 2018-06-21, 2018-06-22, 2018-06-24, 2018-06-…
+$ Wave &lt;fct&gt; 2018, 2018, 2018, 2018, 2018, 2018, 2018, 201…
+$ n    &lt;int&gt; 112, 93, 80, 67, 59, 58, 52, 44, 44, 34, 27, …</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># 2019  take the first</span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># 2019  take the first</span>
 <span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>Wave</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>count</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -1716,16 +1686,16 @@ $ n    &lt;int&gt; 112, 93, 80, 67, 59, 58, 52, 44, 44, 34, 27, 27, 27, 27…</c
 <pre><code>Rows: 298
 Columns: 3
 Groups: date, Wave [298]
-$ date &lt;date&gt; 2019-12-03, 2019-10-04, 2019-12-02, 2019-12-09, 2019-1…
-$ Wave &lt;fct&gt; 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2…
-$ n    &lt;int&gt; 54, 47, 46, 46, 45, 44, 43, 39, 39, 38, 38, 37, 35, 34,…</code></pre>
+$ date &lt;date&gt; 2019-12-03, 2019-10-04, 2019-12-02, 2019-12-…
+$ Wave &lt;fct&gt; 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201…
+$ n    &lt;int&gt; 54, 47, 46, 46, 45, 44, 43, 39, 39, 38, 38, 3…</code></pre>
 </div>
 <h3 id="q4-caculating-dates-and-creating-summaries">Q4 Caculating dates and creating summaries</h3>
 <p>How many days are there between the date with the highest number of responses and the date with the second highest number of responses?</p>
 <p>Bonus: Calculate difference between the number of responses on the highest response date and second highest response date.</p>
 <h3 id="solution-5">Solution</h3>
 <p>Here is an approach:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ts</span><span class='op'>&lt;-</span><span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>%&gt;%</span>
@@ -1747,10 +1717,11 @@ $ n    &lt;int&gt; 54, 47, 46, 46, 45, 44, 43, 39, 39, 38, 38, 37, 35, 34,…</c
 <h3 id="q5.-working-with-date-intervals">Q5. Working with date intervals</h3>
 <p>Suppose you were born on Dec 25, 1995 at 5.02:22 am Calculate your age in months on March 20,2021, at 1:22:04pm. (Hint use the <code>lubridate</code> package. Look up the <code>interval</code> function).</p>
 <h3 id="solution-6">Solution</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
-<span class='va'>alive</span> <span class='op'>&lt;-</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></span><span class='op'>(</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hms</a></span><span class='op'>(</span><span class='st'>"1995-12-25 05:02:22"</span><span class='op'>)</span>, <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hms</a></span><span class='op'>(</span><span class='st'>"2021-03-21 13:22:04"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>alive</span> <span class='op'>&lt;-</span> <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></span><span class='op'>(</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hms</a></span><span class='op'>(</span><span class='st'>"1995-12-25 05:02:22"</span><span class='op'>)</span>,
+                             <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hms</a></span><span class='op'>(</span><span class='st'>"2021-03-21 13:22:04"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'><a href='http://lubridate.tidyverse.org/reference/time_length.html'>time_length</a></span><span class='op'>(</span><span class='va'>alive</span>, <span class='st'>"months"</span><span class='op'>)</span>
 </code></pre>
@@ -1767,30 +1738,9 @@ $ n    &lt;int&gt; 54, 47, 46, 46, 45, 44, 43, 39, 39, 38, 38, 37, 35, 34,…</c
 </ol>
 <p>Make sure to re-level the factor so that the ordinal ranking moves from lowest to highest.</p>
 <h3 id="solution-7">Solution</h3>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>church_attendance_cats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span><span class='op'>(</span>
-    <span class='va'>Religion.Church</span>,
-    breaks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='cn'>Inf</span>, <span class='fl'>0</span>, <span class='fl'>3.99</span>, <span class='cn'>Inf</span><span class='op'>)</span>,
-    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"zero"</span>, <span class='st'>"less_4"</span>, <span class='st'>"gr_4"</span><span class='op'>)</span>,
-    right <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>church_attendance_cats</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>count</span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code># A tibble: 4 x 2
-# Groups:   church_attendance_cats [4]
-  church_attendance_cats     n
-  &lt;fct&gt;                  &lt;int&gt;
-1 zero                    3366
-2 less_4                   288
-3 gr_4                     363
-4 &lt;NA&gt;                     109</code></pre>
-</div>
-<h3 id="another-solution">Another solution</h3>
-<div class="layout-chunk" data-layout="l-body">
+<h3 id="solution-8">Solution</h3>
+Here is one approach:
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Religion.Church</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -1814,26 +1764,27 @@ $ n    &lt;int&gt; 54, 47, 46, 46, 45, 44, 43, 39, 39, 38, 38, 37, 35, 34,…</c
 </div>
 <h3 id="q7-make-a-summary-table">Q7 Make a summary table</h3>
 <p>Using methods described in lecture 4, create a table for average hours of sleep by month in the <code>nz</code> dataset</p>
-<h3 id="solution-8">Solution</h3>
-<div class="layout-chunk" data-layout="l-body">
+<h3 id="solution-9">Solution</h3>
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://haozhu233.github.io/kableExtra/'>kableExtra</a></span><span class='op'>)</span>
-<span class='va'>tabnz</span><span class='op'>&lt;-</span><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+<span class='va'>tabnz</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>select</span><span class='op'>(</span><span class='va'>Id</span>, <span class='va'>date</span>, <span class='va'>HLTH.SleepHours</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>month <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/month.html'>month</a></span><span class='op'>(</span><span class='va'>date</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>month <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/month.html'>month</a></span><span class='op'>(</span><span class='va'>date</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>month</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>summarise</span><span class='op'>(</span>
     average_sleep <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>HLTH.SleepHours</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
     sd_sleep  <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>HLTH.SleepHours</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-    n  <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>)</span> 
-<span class='va'>tabnz</span><span class='op'>%&gt;%</span>
+    n  <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='va'>tabnz</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kbl.html'>kbl</a></span><span class='op'>(</span>caption <span class='op'>=</span> <span class='st'>"Distress by month"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_classic.html'>kable_classic_2</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"striped"</span>, <span class='st'>"hover"</span><span class='op'>)</span>, full_width <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_classic.html'>kable_classic_2</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"striped"</span>, <span class='st'>"hover"</span><span class='op'>)</span>, full_width <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <table class=" lightable-classic-2 lightable-striped lightable-hover" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-15">Table 1: </span>Distress by month
+<span id="tab:unnamed-chunk-14">Table 1: </span>Distress by month
 </caption>
 <thead>
 <tr>
@@ -2026,41 +1977,42 @@ Dec
 <h3 id="q7.-make-a-summary-graph">Q7. Make a summary graph</h3>
 <p>Graph the average hours of sleep by month including 95% confidence intervals</p>
 <p>Briefly explain why some intervals are wider than others.</p>
-<h3 id="solution-9">Solution</h3>
-<div class="layout-chunk" data-layout="l-body">
+<h3 id="solution-10">Solution</h3>
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz</span> <span class='op'>%&gt;%</span>
   <span class='fu'>select</span><span class='op'>(</span><span class='va'>Id</span>, <span class='va'>date</span>, <span class='va'>HLTH.SleepHours</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>month <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/month.html'>month</a></span><span class='op'>(</span><span class='va'>date</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>month <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/month.html'>month</a></span><span class='op'>(</span><span class='va'>date</span>, label <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>month</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>summarise</span><span class='op'>(</span>
     mn_sh <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>HLTH.SleepHours</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
     sd_sh  <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>HLTH.SleepHours</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-    n_sh  <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>
-    se_sh  <span class='op'>=</span> <span class='va'>sd_sh</span>  <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>n_sh</span> <span class='op'>)</span>,
-    lw_ci <span class='op'>=</span> <span class='va'>mn_sh</span>  <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_sh</span>  <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_sh</span> ,
-    up_ci <span class='op'>=</span> <span class='va'>mn_sh</span>  <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_sh</span>  <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_sh</span> 
+    n_sh  <span class='op'>=</span> <span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>month</span>, y <span class='op'>=</span> <span class='va'>mn_sh</span> , colour <span class='op'>=</span> <span class='va'>mn_sh</span> <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>
+    se_sh  <span class='op'>=</span> <span class='va'>sd_sh</span>  <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>n_sh</span><span class='op'>)</span>,
+    lw_ci <span class='op'>=</span> <span class='va'>mn_sh</span>  <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_sh</span>  <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_sh</span> ,
+    up_ci <span class='op'>=</span> <span class='va'>mn_sh</span>  <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>qt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='op'>(</span><span class='fl'>0.05</span> <span class='op'>/</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>n_sh</span>  <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>se_sh</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>month</span>, y <span class='op'>=</span> <span class='va'>mn_sh</span> , colour <span class='op'>=</span> <span class='va'>mn_sh</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>geom_errorbar</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>lw_ci</span>, ymax <span class='op'>=</span> <span class='va'>up_ci</span><span class='op'>)</span>, width <span class='op'>=</span> <span class='fl'>.1</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>geom_point</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>  <span class='op'>+</span>
-  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>scale_fill_viridis_d</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="lab_4_solutions_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+<p><img src="lab_4_solutions_files/figure-html5/unnamed-chunk-15-1.png" width="1152" /></p>
 </div>
 <p>Some intervals are wider than others because the number of responses by month varies, and a confidence interval divides by the number of cases.</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 
 </div>
 <p>Here we see high standard errors of the mean with low n’s</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 
 </div>
 <p>We can graph the year-wise differences, focusing on April:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 
 </div>
 <h3 id="q8.-correlation-graph">Q8. Correlation graph</h3>
@@ -2068,55 +2020,66 @@ Dec
 <p>These are <code>FeelHopeless,FeelDepressed,FeelRestless,EverythingIsEffort,FeelWorthless,FeelNervous</code></p>
 <p>Hint you must transform the factors into integers.</p>
 <p>What do you find most interesting about this plot? Explain.</p>
-<h3 id="solution-10">Solution</h3>
-<div class="layout-chunk" data-layout="l-body">
+<h3 id="solution-11">Solution</h3>
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>k6</span><span class='op'>&lt;-</span><span class='va'>nz</span><span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>FeelHopeless</span>,<span class='va'>FeelDepressed</span>,<span class='va'>FeelRestless</span>,<span class='va'>EverythingIsEffort</span>,
-         <span class='va'>FeelWorthless</span>,<span class='va'>FeelNervous</span>, <span class='va'>Id</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate_all</span><span class='op'>(</span><span class='va'>.</span>,<span class='va'>as.numeric</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>Id<span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Id</span><span class='op'>)</span><span class='op'>)</span><span class='co'># make numeric for correlation plot</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>k6</span> <span class='op'>&lt;-</span> <span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span>
+    <span class='va'>FeelHopeless</span>,
+    <span class='va'>FeelDepressed</span>,
+    <span class='va'>FeelRestless</span>,
+    <span class='va'>EverythingIsEffort</span>,
+    <span class='va'>FeelWorthless</span>,
+    <span class='va'>FeelNervous</span>,
+    <span class='va'>Id</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate_all</span><span class='op'>(</span><span class='va'>.</span>, <span class='va'>as.numeric</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>Id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Id</span><span class='op'>)</span><span class='op'>)</span><span class='co'># make numeric for correlation plot</span>
 
 <span class='va'>k6</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>correlation</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span> partial <span class='op'>=</span> <span class='cn'>FALSE</span>, multilevel <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>theme_gray</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'>correlation</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span>partial <span class='op'>=</span> <span class='cn'>FALSE</span>, multilevel <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme_gray</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="lab_4_solutions_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
+<p><img src="lab_4_solutions_files/figure-html5/unnamed-chunk-19-1.png" width="1152" /></p>
 </div>
 <p>I find it interesting that <code>Nervousness</code> and <code>Restlessness</code> are not correlated, or inversely correlated with <code>Depression.</code></p>
 <p>Setting the correlations to <code>partial</code> does not destroy this effect.</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>k6</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>correlation</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span> partial <span class='op'>=</span> <span class='cn'>TRUE</span>, multilevel <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>theme_gray</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'>correlation</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span>partial <span class='op'>=</span> <span class='cn'>TRUE</span>, multilevel <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme_gray</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="lab_4_solutions_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+<p><img src="lab_4_solutions_files/figure-html5/unnamed-chunk-20-1.png" width="1152" /></p>
 </div>
 <h3 id="q9-create-a-blank-papaja-report">Q9 Create a blank <code>papaja</code> report</h3>
 <p>Include your your name, affiliation, contributors and r packages used in your analysis</p>
 <h3 id="q10-patchwork">Q10 <code>Patchwork</code></h3>
 <p>Use the <code>patchwork</code> library to create a figure with two plots on top of each other.</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://patchwork.data-imaginist.com'>patchwork</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-<span class='va'>p1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>cyl</span>, geom <span class='op'>=</span> <span class='st'>"histogram"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"this plot"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"mt cycle"</span><span class='op'>)</span>
-<span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>disp</span>, geom <span class='op'>=</span> <span class='st'>"histogram"</span><span class='op'>)</span><span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"that plot"</span><span class='op'>)</span>
+<span class='va'>p1</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>cyl</span>, geom <span class='op'>=</span> <span class='st'>"histogram"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"this plot"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"mt cycle"</span><span class='op'>)</span>
+<span class='va'>p2</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>disp</span>, geom <span class='op'>=</span> <span class='st'>"histogram"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"that plot"</span><span class='op'>)</span>
 
-<span class='va'>p1</span><span class='op'>/</span><span class='va'>p2</span> <span class='op'>+</span> <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_annotation.html'>plot_annotation</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"my title"</span>, tag_levels <span class='op'>=</span> <span class='st'>'a'</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"mt cycle"</span><span class='op'>)</span> <span class='op'>+</span>  <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_layout.html'>plot_layout</a></span><span class='op'>(</span>guides <span class='op'>=</span> <span class='st'>'collect'</span><span class='op'>)</span>
+<span class='va'>p1</span> <span class='op'>/</span> <span class='va'>p2</span> <span class='op'>+</span> <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_annotation.html'>plot_annotation</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"my title"</span>, tag_levels <span class='op'>=</span> <span class='st'>'a'</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"mt cycle"</span><span class='op'>)</span> <span class='op'>+</span>  <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_layout.html'>plot_layout</a></span><span class='op'>(</span>guides <span class='op'>=</span> <span class='st'>'collect'</span><span class='op'>)</span>
 </code></pre>
 </div>
 <div class="figure"><span id="fig:dualfig"></span>
-<img src="lab_4_solutions_files/figure-html5/dualfig-1.png" alt="\label{fig:dualfig}" width="624" />
+<img src="lab_4_solutions_files/figure-html5/dualfig-1.png" alt="\label{fig:dualfig}" width="1152" />
 <p class="caption">
 Figure 1: 
 </p>
 </div>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
