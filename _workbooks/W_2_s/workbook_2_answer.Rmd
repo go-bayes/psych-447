@@ -15,6 +15,19 @@ output:
     highlight_downlit: false
 ---
 
+```{r setup, include=FALSE}
+# setup
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  layout = "l-body-outset",
+  fig.width= 12,
+  fig.height= 10,
+  collapse =TRUE,
+  R.options = list(width = 60)
+)
+```
 
 ### Create Repos (if you have not already)
 

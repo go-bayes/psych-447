@@ -12,7 +12,25 @@ output:
   distill::distill_article:
     self_contained: false
     toc: true
+    toc_depth: 3
+    highlight: kate
 ---
+
+
+```{r echo = FALSE, message = FALSE}
+# libraries
+library("tidyverse")
+library("patchwork")
+library("brms")
+library("lubridate")
+library("splines")
+if (!require(equatiomatic)) {
+  remotes::install_github("datalorax/equatiomatic")
+  }
+# set theme
+# theme set
+theme_set(theme_classic())
+```
 
 ```{r}
 # libraries
@@ -46,7 +64,7 @@ This week we will:
 
 ## Learning outcomes
 
-By learning how to simulate data you will better understand how what a regression model is doing, to evaluate your regression model, and to plan research. Note, that we will not expect you to simulate a dataset just yet. Instead, we will illustrate the use of tools for simulation, and ask that you try out very basic simulation functions. It will not be until after the April break that you will simulate any data for the purposes of assisting in statistical inference.
+By learning how to simulate data you will better understand what a regression model is doing, and better able to plan research. 
 
 ## Functions for simulation
 
@@ -54,14 +72,16 @@ By learning how to simulate data you will better understand how what a regressio
 
 `rnorm` is a R's random number generator. Within this function:
 
--   `n`specifies the number of observations
+-   `n` specifies the number of observations
 -   `sd` specifies the value of the standard deviation
 -   `mean` specifies the value of the mean
 
 ```{r code_folding=FALSE}
 set.seed(12345)
 # generate random numbers
-ds <- rnorm(n = 1000, mean = 0, sd = 1)
+ds <- rnorm(n = 1000, 
+            mean = 0, 
+            sd = 1)
 dplyr::glimpse(ds)
 ```
 
@@ -72,38 +92,43 @@ p1 <- ggplot2::qplot(ds) + labs(title = "1st random number list")
 p1
 ```
 
-We use shorthand for generating numbers:
+Note that R users frequently shorten the above code, which might have been written briefly as:
+
+```{r}
+set.seed(12345)
+# generate random numbers
+ds2 <- rnorm(1000)
+
+# check whether the abbreviated simulated vector is the same as the long form vector
+all.equal(ds,ds2)
+```
+
+
+We used `set.seed` to ensure that the same random vector will be generated for our audience. We can also use `set.seed` to ensure that a different vector will be generated.
 
 ```{r code_folding=FALSE}
 set.seed(54321)
-ds_0 <- rnorm(1000)
-dplyr::glimpse(ds_0)
+ds3 <- rnorm(1000)
+dplyr::glimpse(ds3)
+
+#check equality
+all.equal(ds,ds3)
 ```
 
-Note that the first and the second graphs differ:
+
+```{r code_folding=FALSE}
+# better method
+identical(ds, ds3)
+```
+
+
+The different seed has led to a different series of vectors.  Indeed, the differences are large enough to detect visually.
 
 ```{r layout="l-body-outset", fig.width=10, fig.height=10}
-p2 <- ggplot2::qplot(ds_0) + labs(title = "2d random number list")
+p2 <- ggplot2::qplot(ds3) + labs(title = "2d random number list")
 p1 + p2 + plot_annotation("The two graphs differ", tag_levels = 'i')
 ```
 
-Or more formally we can ask R to test the equivalence:
-
-```{r message=TRUE,  code_folding=FALSE}
-identical(ds, ds_0)
-```
-
-Because we want to have reproducible code, we will use the `set.seed()` function in R to ensure the same random numbers are generated each time.
-
-```{r warning=TRUE,  code_folding=FALSE}
-set.seed(123)
-t1 <-stats::rnorm(100)
-set.seed(123)
-t2 <-stats::rnorm(100)
-
-# test
-identical(t1, t2)
-```
 
 ### `runif`
 
@@ -111,9 +136,15 @@ We use r uniform to generate continuous data within a point range
 
 ```{r}
 set.seed(123)
-ds1 <- runif(n =100, min = 0, max = 50)
-dplyr::glimpse(ds1)
-hist(ds1)
+# 100 numbers between zero and 50
+ds4 <- runif(n =100, min = 0, max = 50)
+dplyr::glimpse(ds4)
+
+# how long is the vector
+length(ds4)
+
+# visualise how are the data distributed?
+hist(ds4, breaks=100)
 ```
 
 Say we want to simulate a range of values between two endpoints. This is useful for simulating explanatory variables.
@@ -122,7 +153,7 @@ Say we want to simulate a range of values between two endpoints. This is useful 
 
 ### `rep`
 
-Frequently we'll need to generate random factors. For this, R's `rep` function, `letters` function, and `LETTERS` function make happy friends.
+Sometimes we'll need to generate random factors. For this, R's `rep` function, `letters` function, and `LETTERS` function make happy friends.
 
 Here's how these functions work
 
@@ -216,7 +247,6 @@ dplyr::glimpse(vdf)
 qplot(vdf, binwidth=4)
 ```
 
-
 ## Why Simulate?
 
 ## Simulate to assess result against noise
@@ -235,7 +265,7 @@ explore_md
 
 What would a random relationship look like? Simulation can help us to address this question
 
-```{r layout="l-body-outset", fig.width=10, fig.height=10, code_folding = FALSE}
+```{r layout="l-body-outset", fig.width=12, fig.height=10, code_folding = FALSE}
 av_dh <-mean(md_df$daughter_height, na.rm=TRUE)
 sd_dh <-sd(md_df$daughter_height, na.rm=TRUE)
 av_mh <-mean(md_df$mother_height, na.rm=TRUE)
@@ -284,6 +314,56 @@ df<-data.frame(x,y)
 ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
 ```
 
+We can replicate this result many times
+
+First we make a function like this:
+
+```{r}
+# function for simulating a relationship
+simple_sim = function(n, sd ) {
+     x_out = rnorm(n, sd)
+     y_out = rnorm(n, sd)
+     dat = data.frame(x_out, y_out)
+     lm(y_out ~ x_out, data = dat)
+}
+
+set.seed(123)
+m1<-simple_sim(10,1)
+sjPlot::tab_model(m1)
+```
+
+Next we use `replicate` to generate many instances of the function
+
+```{r}
+set.seed(123) 
+sms = replicate(100, simple_sim(10,1), simplify = FALSE )
+sms[[100]]
+```
+
+Use `purrr` and `broom` to get the simulations and supparise them
+
+```{r}
+library(purrr)
+library(broom)
+## all regressions
+# map(sms, coef)
+
+map_dfr(sms, broom::tidy)
+```
+
+How many p.values are less than p = .05?
+
+```{r}
+mapped<-map_dfr(sms, broom::tidy)%>%
+  filter(term == "x_out")
+
+# In 5 cases we find p <=.05
+sum(mapped$p.value <=.05) / length(mapped$p.value)
+```
+
+Is this surprising? 
+
+
 ### Simulate a relationship between two variables
 
 ```{r  code_folding=FALSE}
@@ -292,7 +372,7 @@ ggplot2::ggplot(df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
 library(ggplot2)
 N = 1000
 weight <-runif(N, min = 50, max =100)
-b <- rlnorm(N,.78,.1)
+b <- rlnorm(N,.78,.1) # "rlnorm" is forcing b to be positive
 
 sigma <- runif(N, 0 , 10 )
 height = weight * b
@@ -386,7 +466,6 @@ performance::compare_performance(m1, m2, m3)
 
 ### Use fake data to create a factor
 
-Here we simulate no relationship between a group and an outcome
 
 ```{r}
 N <- 200 # number of observations
@@ -445,23 +524,19 @@ test_fun = function() {
   sim_cells
 }
 
-sim_lm = replicate(20, test_fun(), simplify = FALSE )
-length(sim_lm)
+r_lm = replicate(20, test_fun(), simplify = FALSE )
+length(r_lm)
 ```
 
-We can use the `purrr` package to generate many replicates of a model
+We can use the `purrr`and `broom` packages to generate many replicates of a model and summarise them, and ask: What percentage of simulations yield statistically significant results?
 
 ```{r}
-library(dplyr)
-tab_sim<-purrr::map_dfr(sim_lm, broom::tidy)
-tab_sim %>%
+tab_sim<-purrr::map_dfr(r_lm, broom::tidy)
+mout<-tab_sim %>%
+  dplyr::filter(term =="cellsb")%>%
   dplyr::mutate_if(is.numeric, round, 5)
-```
 
-What percentage of simulations yield "significant results?
-
-```{r}
-sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
+sum(mout$p.value <= .05) / length(mout$p.value)
 ```
 
 Does balance fix the issue?
@@ -469,9 +544,9 @@ Does balance fix the issue?
 ```{r}
 # Make a function for the simulation
 set.seed(12)
-test_fun = function() {
+test_fun = function(cell1, cell2) {
   N <- 120
-  cells <-rep( letters[1:2], times = c(60, 60))
+  cells <-rep( letters[1:2], times = c(cell1, cell2))
   a <- rnorm(N, 2, 1)
   b1 <- rnorm(N, 1, .1)
   sigma <- rexp(N, 1)
@@ -481,31 +556,34 @@ test_fun = function() {
   sim_cells
 }
 
-sim_lm = replicate(20, test_fun(), simplify = FALSE )
+# balenced cells of 60 each
+sim_lm = replicate(20, test_fun(60,60), simplify = FALSE )
 length(sim_lm)
 
 ```
 
-We can use the `purrr` package to generate many replicates of a model
+We can use the `purrr` package to generate many replicates of a model.
+
+The simulation suggests that balances of 60/60 is good here. 
+
 
 ```{r}
-library(dplyr)
-tab_sim<-purrr::map_dfr(sim_lm, broom::tidy)
-tab_sim %>%
+mout2<-tab_sim %>%
+  dplyr::filter(term =="cellsb")%>%
   dplyr::mutate_if(is.numeric, round, 5)
+
+sum(mout2$p.value <= .05) / length(mout2$p.value)
 ```
 
-What percentage of simulations yield "significant results?
 
-```{r}
-sum(tab_sim$p.value <= .05) / length(tab_sim$p.value)
-```
 
 ## Acknowledgments
 
-The approach to simulation presented here owes to:
+The approach to simulation presented here owes to Ariel Muldoon
 
-1.  Ariel Muldoon: <https://aosmith.rbind.io/>
+PLease check out Ariel's wonderful R webpage here:
+<https://aosmith.rbind.io>
+
 
 
 

@@ -21,8 +21,8 @@ bibliography: references.bib
 knitr::include_graphics("op.png")
 ```
 
-```{r echo = FALSE, message = FALSE}
 
+```{r echo = FALSE, message = FALSE}
 # libraries
 library("tidyverse")
 library("patchwork")
@@ -78,15 +78,15 @@ This week we introduce regression.
 
 ## Learning outcomes
 
-By learning regression, you will better equipped to do psychological science and to evaluate psychological research.
+By learning regression, you will be better equipped to do psychological science and to evaluate psychological research.
 
 ## What is regression?
 
-Broadly speaking, a regression model is method for inferring the expected average features of a population, and the variance of a population, conditional on other features of the a population as embodied in measurements obtained from a sample.
+Broadly speaking, a regression model is method for inferring the expected average features of a population, and the variance of a population, conditional on other features of the population as measured in a sample.
 
-We'll see that regression encompasses more than this definition, however, the definition makes a start.
+We'll see that regression encompasses more than this definition, however, this definition makes a start.
 
-To understand regression we need to understand the following jargon words: population, sample, measurement, and inference.
+To understand regression, then, we need to understand the following jargon words: population, sample, measurement, and inference.
 
 #### What is a population?
 

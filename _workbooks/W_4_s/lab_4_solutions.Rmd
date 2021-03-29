@@ -19,21 +19,6 @@ output:
     highlight: kate
 ---
 
-## Setup
-
-### Libraries
-
-```{r}
-library(tidyverse)
-library(lubridate)
-library(pmdplyr)
-library(correlation)
-library(ggraph)
-library(patchwork)
-
-```
-
-
 
 ```{r setup, include=FALSE}
 # setup
@@ -48,6 +33,18 @@ knitr::opts_chunk$set(
   R.options = list(width = 60)
 )
 ```
+### Libraries
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(pmdplyr)
+library(correlation)
+library(ggraph)
+library(patchwork)
+
+```
+
 
 ```{r eval=FALSE}
 # you might need to run this code

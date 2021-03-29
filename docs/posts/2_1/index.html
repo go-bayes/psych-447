@@ -1889,7 +1889,7 @@ gtag('config', 'G-GQF269N0S4');
 <p>Similarly, in R-studio, (for starters) you can can use install packages by clicking the <code>Install</code> tab in the package pane (generally lower right pane) to install packagees.</p>
 <h2 id="how-to-use-r-as-calculator">How to use R as calculator</h2>
 <p>We can use R as a calculator. You can run any mathematical operation you would normally use by entering it into the console:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## Addition</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>3</span> <span class='op'>+</span> <span class='fl'>2</span>
@@ -1898,42 +1898,48 @@ gtag('config', 'G-GQF269N0S4');
 </div>
 <pre><code>[1] 5</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## Subtraction</span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'>## Subtraction</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span>  <span class='fl'>3</span> <span class='op'>-</span> <span class='fl'>2</span>
 <span class='va'>x</span>
 </code></pre>
 </div>
 <pre><code>[1] 1</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## Multiplication</span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'>## Multiplication</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span>  <span class='fl'>3</span> <span class='op'>*</span> <span class='fl'>2</span>
 <span class='va'>x</span>
 </code></pre>
 </div>
 <pre><code>[1] 6</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## Division</span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'>## Division</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span>  <span class='fl'>3</span> <span class='op'>/</span> <span class='fl'>2</span>
 <span class='va'>x</span>
 </code></pre>
 </div>
 <pre><code>[1] 1.5</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## Modulus (Remainder from division)</span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'>## Modulus (Remainder from division)</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span>  <span class='fl'>3</span> <span class='op'>%%</span> <span class='fl'>2</span>
 <span class='va'>x</span>
 </code></pre>
 </div>
 <pre><code>[1] 1</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## Exponentiation</span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'>## Exponentiation</span>
 <span class='va'>x</span> <span class='op'>=</span> <span class='fl'>3</span> <span class='op'>^</span> <span class='fl'>2</span>
 <span class='va'>x</span>
 </code></pre>
 </div>
 <pre><code>[1] 9</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## Integer Division (Number of times denominator fits in numerator)</span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'>## Integer Division (Number of times denominator fits in numerator)</span>
 <span class='va'>x</span> <span class='op'>=</span> <span class='fl'>3</span> <span class='op'>%/%</span> <span class='fl'>2</span>
 <span class='va'>x</span>
 </code></pre>
@@ -1944,7 +1950,7 @@ gtag('config', 'G-GQF269N0S4');
 <p>In a moment, we’ll teach you how to import data into R. For now, let’s work with a dataset that is already present in your R environment, the <code>iris</code> dataset.</p>
 <p>Here are some useful commands for inspecting data</p>
 <h3 id="check-head-of-dataset-sing-head">check head of dataset sing <code>head</code></h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># the top rows and columns of the dataset</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
@@ -1959,7 +1965,7 @@ gtag('config', 'G-GQF269N0S4');
 6          5.4         3.9          1.7         0.4  setosa</code></pre>
 </div>
 <h3 id="check-data-types-using-str">check data types using <code>str</code></h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
@@ -1972,37 +1978,39 @@ gtag('config', 'G-GQF269N0S4');
  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 </div>
 <h3 id="names">names</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#names of the columns</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot; 
-[5] &quot;Species&quot;     </code></pre>
+<pre><code>[1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot;
+[4] &quot;Petal.Width&quot;  &quot;Species&quot;     </code></pre>
 </div>
 <h3 id="view-rownames">view rownames</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># view rownames</span>
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>  [1] &quot;1&quot;   &quot;2&quot;   &quot;3&quot;   &quot;4&quot;   &quot;5&quot;   &quot;6&quot;   &quot;7&quot;   &quot;8&quot;   &quot;9&quot;   &quot;10&quot; 
- [11] &quot;11&quot;  &quot;12&quot;  &quot;13&quot;  &quot;14&quot;  &quot;15&quot;  &quot;16&quot;  &quot;17&quot;  &quot;18&quot;  &quot;19&quot;  &quot;20&quot; 
- [21] &quot;21&quot;  &quot;22&quot;  &quot;23&quot;  &quot;24&quot;  &quot;25&quot;  &quot;26&quot;  &quot;27&quot;  &quot;28&quot;  &quot;29&quot;  &quot;30&quot; 
- [31] &quot;31&quot;  &quot;32&quot;  &quot;33&quot;  &quot;34&quot;  &quot;35&quot;  &quot;36&quot;  &quot;37&quot;  &quot;38&quot;  &quot;39&quot;  &quot;40&quot; 
- [41] &quot;41&quot;  &quot;42&quot;  &quot;43&quot;  &quot;44&quot;  &quot;45&quot;  &quot;46&quot;  &quot;47&quot;  &quot;48&quot;  &quot;49&quot;  &quot;50&quot; 
- [51] &quot;51&quot;  &quot;52&quot;  &quot;53&quot;  &quot;54&quot;  &quot;55&quot;  &quot;56&quot;  &quot;57&quot;  &quot;58&quot;  &quot;59&quot;  &quot;60&quot; 
- [61] &quot;61&quot;  &quot;62&quot;  &quot;63&quot;  &quot;64&quot;  &quot;65&quot;  &quot;66&quot;  &quot;67&quot;  &quot;68&quot;  &quot;69&quot;  &quot;70&quot; 
- [71] &quot;71&quot;  &quot;72&quot;  &quot;73&quot;  &quot;74&quot;  &quot;75&quot;  &quot;76&quot;  &quot;77&quot;  &quot;78&quot;  &quot;79&quot;  &quot;80&quot; 
- [81] &quot;81&quot;  &quot;82&quot;  &quot;83&quot;  &quot;84&quot;  &quot;85&quot;  &quot;86&quot;  &quot;87&quot;  &quot;88&quot;  &quot;89&quot;  &quot;90&quot; 
- [91] &quot;91&quot;  &quot;92&quot;  &quot;93&quot;  &quot;94&quot;  &quot;95&quot;  &quot;96&quot;  &quot;97&quot;  &quot;98&quot;  &quot;99&quot;  &quot;100&quot;
-[101] &quot;101&quot; &quot;102&quot; &quot;103&quot; &quot;104&quot; &quot;105&quot; &quot;106&quot; &quot;107&quot; &quot;108&quot; &quot;109&quot; &quot;110&quot;
-[111] &quot;111&quot; &quot;112&quot; &quot;113&quot; &quot;114&quot; &quot;115&quot; &quot;116&quot; &quot;117&quot; &quot;118&quot; &quot;119&quot; &quot;120&quot;
-[121] &quot;121&quot; &quot;122&quot; &quot;123&quot; &quot;124&quot; &quot;125&quot; &quot;126&quot; &quot;127&quot; &quot;128&quot; &quot;129&quot; &quot;130&quot;
-[131] &quot;131&quot; &quot;132&quot; &quot;133&quot; &quot;134&quot; &quot;135&quot; &quot;136&quot; &quot;137&quot; &quot;138&quot; &quot;139&quot; &quot;140&quot;
-[141] &quot;141&quot; &quot;142&quot; &quot;143&quot; &quot;144&quot; &quot;145&quot; &quot;146&quot; &quot;147&quot; &quot;148&quot; &quot;149&quot; &quot;150&quot;</code></pre>
+<pre><code>  [1] &quot;1&quot;   &quot;2&quot;   &quot;3&quot;   &quot;4&quot;   &quot;5&quot;   &quot;6&quot;   &quot;7&quot;   &quot;8&quot;   &quot;9&quot;  
+ [10] &quot;10&quot;  &quot;11&quot;  &quot;12&quot;  &quot;13&quot;  &quot;14&quot;  &quot;15&quot;  &quot;16&quot;  &quot;17&quot;  &quot;18&quot; 
+ [19] &quot;19&quot;  &quot;20&quot;  &quot;21&quot;  &quot;22&quot;  &quot;23&quot;  &quot;24&quot;  &quot;25&quot;  &quot;26&quot;  &quot;27&quot; 
+ [28] &quot;28&quot;  &quot;29&quot;  &quot;30&quot;  &quot;31&quot;  &quot;32&quot;  &quot;33&quot;  &quot;34&quot;  &quot;35&quot;  &quot;36&quot; 
+ [37] &quot;37&quot;  &quot;38&quot;  &quot;39&quot;  &quot;40&quot;  &quot;41&quot;  &quot;42&quot;  &quot;43&quot;  &quot;44&quot;  &quot;45&quot; 
+ [46] &quot;46&quot;  &quot;47&quot;  &quot;48&quot;  &quot;49&quot;  &quot;50&quot;  &quot;51&quot;  &quot;52&quot;  &quot;53&quot;  &quot;54&quot; 
+ [55] &quot;55&quot;  &quot;56&quot;  &quot;57&quot;  &quot;58&quot;  &quot;59&quot;  &quot;60&quot;  &quot;61&quot;  &quot;62&quot;  &quot;63&quot; 
+ [64] &quot;64&quot;  &quot;65&quot;  &quot;66&quot;  &quot;67&quot;  &quot;68&quot;  &quot;69&quot;  &quot;70&quot;  &quot;71&quot;  &quot;72&quot; 
+ [73] &quot;73&quot;  &quot;74&quot;  &quot;75&quot;  &quot;76&quot;  &quot;77&quot;  &quot;78&quot;  &quot;79&quot;  &quot;80&quot;  &quot;81&quot; 
+ [82] &quot;82&quot;  &quot;83&quot;  &quot;84&quot;  &quot;85&quot;  &quot;86&quot;  &quot;87&quot;  &quot;88&quot;  &quot;89&quot;  &quot;90&quot; 
+ [91] &quot;91&quot;  &quot;92&quot;  &quot;93&quot;  &quot;94&quot;  &quot;95&quot;  &quot;96&quot;  &quot;97&quot;  &quot;98&quot;  &quot;99&quot; 
+[100] &quot;100&quot; &quot;101&quot; &quot;102&quot; &quot;103&quot; &quot;104&quot; &quot;105&quot; &quot;106&quot; &quot;107&quot; &quot;108&quot;
+[109] &quot;109&quot; &quot;110&quot; &quot;111&quot; &quot;112&quot; &quot;113&quot; &quot;114&quot; &quot;115&quot; &quot;116&quot; &quot;117&quot;
+[118] &quot;118&quot; &quot;119&quot; &quot;120&quot; &quot;121&quot; &quot;122&quot; &quot;123&quot; &quot;124&quot; &quot;125&quot; &quot;126&quot;
+[127] &quot;127&quot; &quot;128&quot; &quot;129&quot; &quot;130&quot; &quot;131&quot; &quot;132&quot; &quot;133&quot; &quot;134&quot; &quot;135&quot;
+[136] &quot;136&quot; &quot;137&quot; &quot;138&quot; &quot;139&quot; &quot;140&quot; &quot;141&quot; &quot;142&quot; &quot;143&quot; &quot;144&quot;
+[145] &quot;145&quot; &quot;146&quot; &quot;147&quot; &quot;148&quot; &quot;149&quot; &quot;150&quot;</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
@@ -2016,7 +2024,7 @@ gtag('config', 'G-GQF269N0S4');
 6          5.4         3.9          1.7         0.4  setosa</code></pre>
 </div>
 <h3 id="table-and-use-of">table (and use of <code>$</code>)</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># create a table</span>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span>
@@ -2027,7 +2035,7 @@ gtag('config', 'G-GQF269N0S4');
         50         50         50 </code></pre>
 </div>
 <h3 id="change-column-names">change column names</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># change column names</span>
 <span class='co'># create new dataset for </span>
@@ -2048,7 +2056,7 @@ gtag('config', 'G-GQF269N0S4');
 </div>
 <h2 id="basic-data-structures">Basic data structures</h2>
 <h3 id="vectors-of-numbers-and-use-of-c-and-ix">vectors of numbers ( and use of <code>c</code> and <code>i:x</code> )</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>go_vector</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
 <span class='va'>go_vector</span>
@@ -2057,7 +2065,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] 1 2 3 4 5</code></pre>
 </div>
 <h3 id="vectors-of-characters">vectors of characters</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>go_vector2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"hello"</span>, <span class='st'>"world"</span><span class='op'>)</span>
 <span class='va'>go_vector2</span>
@@ -2065,39 +2073,47 @@ gtag('config', 'G-GQF269N0S4');
 </div>
 <pre><code>[1] &quot;hello&quot; &quot;world&quot;</code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='va'>irisdat2</span><span class='op'>$</span><span class='va'>s_l</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7
- [17] 5.4 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4
- [33] 5.2 5.5 4.9 5.0 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6
- [49] 5.3 5.0 7.0 6.4 6.9 5.5 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1
- [65] 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7
- [81] 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5 5.5 6.1 5.8 5.0 5.6 5.7
- [97] 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3 6.7 7.2 6.5 6.4
-[113] 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2 6.2 6.1
-[129] 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8
-[145] 6.7 6.7 6.3 6.5 6.2 5.9</code></pre>
+<pre><code>  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8
+ [14] 4.3 5.8 5.7 5.4 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0
+ [27] 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0 5.5 4.9 4.4
+ [40] 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4
+ [53] 6.9 5.5 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6
+ [66] 6.7 5.6 5.8 6.2 5.6 5.9 6.1 6.3 6.1 6.4 6.6 6.8 6.7
+ [79] 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5 5.5
+ [92] 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3
+[105] 6.5 7.6 4.9 7.3 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5
+[118] 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2 6.2 6.1 6.4 7.2
+[131] 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8
+[144] 6.8 6.7 6.7 6.3 6.5 6.2 5.9</code></pre>
 </div>
 <h3 id="dataframes-2-dimensional-square-arrays-of-vectors">dataframes (2 dimensional square arrays of vectors)</h3>
 <p>2 x dimensional “square” array with equal column and row lengths. Can contain data with multiple formats characters, facotors, integers, etc.</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>yuk</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"the"</span>, <span class='st'>"enumeration"</span>, <span class='st'>"of"</span>, <span class='st'>"the"</span>, <span class='st'>"constitution"</span><span class='op'>)</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
 <span class='va'>yuk</span>
 </code></pre>
 </div>
-<pre><code>  c..the....enumeration....of....the....constitution.. X6.10
-1                                                  the     6
-2                                          enumeration     7
-3                                                   of     8
-4                                                  the     9
-5                                         constitution    10</code></pre>
+<pre><code>  c..the....enumeration....of....the....constitution..
+1                                                  the
+2                                          enumeration
+3                                                   of
+4                                                  the
+5                                         constitution
+  X6.10
+1     6
+2     7
+3     8
+4     9
+5    10</code></pre>
 </div>
 <h3 id="rename-columns-of-a-data-frame">rename columns of a data frame</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>yuk</span><span class='op'>)</span><span class='op'>[</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"short"</span>, <span class='st'>"best"</span><span class='op'>)</span>
 <span class='va'>yuk</span>
@@ -2112,7 +2128,7 @@ gtag('config', 'G-GQF269N0S4');
 </div>
 <h3 id="matrix">matrix</h3>
 <p>Same as a dataframe but can only contain one format (e.g. numbers <em>or</em> characters)</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>yok</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>yuk</span><span class='op'>)</span>
 <span class='va'>yok</span>
@@ -2127,7 +2143,7 @@ gtag('config', 'G-GQF269N0S4');
 </div>
 <h3 id="lists">lists</h3>
 <p>Arrays with constraints on “squareness” or data types.</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lok</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>yok</span>, <span class='va'>yuk</span><span class='op'>)</span>
 <span class='va'>lok</span>
@@ -2152,7 +2168,7 @@ gtag('config', 'G-GQF269N0S4');
 <h2 id="classes-in-r">Classes in R</h2>
 <h3 id="numeric-and-integer"><code>numeric</code> and <code>integer</code></h3>
 <p><code>numeric</code> means number</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='fl'>4.2</span><span class='op'>)</span>
 </code></pre>
@@ -2160,7 +2176,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] TRUE</code></pre>
 </div>
 <p><code>integer</code> means a number that is not a fraction</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span><span class='op'>(</span><span class='fl'>4.2</span><span class='op'>)</span>
 </code></pre>
@@ -2168,14 +2184,14 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] FALSE</code></pre>
 </div>
 <p>Note the default here:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] FALSE</code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>is.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
@@ -2185,7 +2201,7 @@ gtag('config', 'G-GQF269N0S4');
 <p>We’ll need to ensure that certain numbers are integers later on, when we are estimating poisson models and/or doing bayesian data analysis.</p>
 <h4 id="characters">characters</h4>
 <p>Characters are strings:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># this is a character</span>
 <span class='fu'><a href='https://rdrr.io/r/base/character.html'>is.character</a></span><span class='op'>(</span><span class='st'>"chapeau"</span><span class='op'>)</span>
@@ -2201,7 +2217,7 @@ gtag('config', 'G-GQF269N0S4');
 </div>
 <h3 id="factors">factors</h3>
 <p>A factor is a category. It can be ordered (e.g. an ordinal scale) or unordered (say a participant in a study, or a wave in a longitidunal study)</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
@@ -2217,7 +2233,7 @@ gtag('config', 'G-GQF269N0S4');
 <p>There was is a famous retraction recently where a group found that religion was associated with immorality, however the countries in the the study had been coded as numbers, not as factors. The study’s effect entirely disappeared once this error was corrected!</p>
 <h2 id="indexing-in-r">Indexing in R</h2>
 <h3 id="columns">columns</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># select second column of "yuk"</span>
 <span class='va'>yuk</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>
@@ -2226,7 +2242,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1]  6  7  8  9 10</code></pre>
 </div>
 <h3 id="rows">rows</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># select second row of yuk</span>
 <span class='va'>yuk</span><span class='op'>[</span><span class='fl'>2</span>, <span class='op'>]</span>
@@ -2236,7 +2252,7 @@ gtag('config', 'G-GQF269N0S4');
 2 enumeration    7</code></pre>
 </div>
 <h3 id="rows-and-columns">rows and columns</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#select first row and first column of yuk</span>
 <span class='va'>yuk</span><span class='op'>[</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>]</span>
@@ -2245,7 +2261,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] 6</code></pre>
 </div>
 <h3 id="selection-by-negation">selection by negation</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># negate the first column of yuk</span>
 <span class='va'>yuk</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>
@@ -2253,18 +2269,18 @@ gtag('config', 'G-GQF269N0S4');
 </div>
 <pre><code>[1]  6  7  8  9 10</code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># negate the second column of yuk</span>
 <span class='va'>yuk</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>2</span><span class='op'>]</span>
 </code></pre>
 </div>
-<pre><code>[1] &quot;the&quot;          &quot;enumeration&quot;  &quot;of&quot;           &quot;the&quot;         
-[5] &quot;constitution&quot;</code></pre>
+<pre><code>[1] &quot;the&quot;          &quot;enumeration&quot;  &quot;of&quot;          
+[4] &quot;the&quot;          &quot;constitution&quot;</code></pre>
 </div>
 <h2 id="basic-data-wrangling-in-r">Basic data wrangling in R</h2>
 <h4 id="c"><code>c</code></h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># select only the first and second cols of iris</span>
 <span class='va'>iris_short2</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span> ,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>)</span> <span class='op'>]</span>
@@ -2280,7 +2296,7 @@ gtag('config', 'G-GQF269N0S4');
 6          5.4         3.9</code></pre>
 </div>
 <h4 id="c-1"><code>-c</code></h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># select all columns but the first and second of iris</span>
 <span class='va'>iris_short</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span> ,<span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>)</span> <span class='op'>]</span>
@@ -2296,7 +2312,7 @@ gtag('config', 'G-GQF269N0S4');
 6          1.7         0.4  setosa</code></pre>
 </div>
 <h4 id="cbind"><code>cbind</code></h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># for use with dataframes and matrices -- note that srings a are c</span>
 <span class='va'>yokyuk</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>yok</span>,<span class='va'>yuk</span><span class='op'>)</span>
@@ -2320,7 +2336,7 @@ gtag('config', 'G-GQF269N0S4');
  $ best : int  6 7 8 9 10</code></pre>
 </div>
 <h4 id="rbind"><code>rbind</code></h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>yuk</span><span class='op'>[</span>,<span class='op'>]</span>,<span class='va'>yok</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
 </code></pre>
@@ -2334,7 +2350,7 @@ gtag('config', 'G-GQF269N0S4');
 6  enumeration   of</code></pre>
 </div>
 <h4 id="use-of-and">use of <code>$</code> and []</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#select the fifth row of the column</span>
 <span class='va'>iris_short</span><span class='op'>$</span><span class='va'>Petal.Width</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>]</span>
@@ -2343,14 +2359,14 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] 0.2</code></pre>
 </div>
 <h3 id="use-of-and-ix">use of <code>$</code> and [i:x]</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#select the 5th-25th row of the column</span>
 <span class='va'>iris_short</span><span class='op'>$</span><span class='va'>Petal.Width</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>25</span><span class='op'>]</span>
 </code></pre>
 </div>
-<pre><code> [1] 0.2 0.4 0.3 0.2 0.2 0.1 0.2 0.2 0.1 0.1 0.2 0.4 0.4 0.3 0.3 0.3
-[17] 0.2 0.4 0.2 0.5 0.2</code></pre>
+<pre><code> [1] 0.2 0.4 0.3 0.2 0.2 0.1 0.2 0.2 0.1 0.1 0.2 0.4 0.4 0.3
+[15] 0.3 0.3 0.2 0.4 0.2 0.5 0.2</code></pre>
 </div>
 <h2 id="indexing-for-logical-operations">Indexing for logical operations</h2>
 <h3 id="definitions">definitions</h3>
@@ -2371,7 +2387,7 @@ gtag('config', 'G-GQF269N0S4');
 </aside>
 <h3 id="evaluation-using-logical-operators">evaluation using logical operators</h3>
 <h4 id="create-dataframe">create dataframe</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># create data frame</span>
 <span class='va'>df</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span> x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>,y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>)</span> <span class='op'>)</span>
@@ -2379,16 +2395,17 @@ gtag('config', 'G-GQF269N0S4');
 </div>
 </div>
 <h4 id="evaluate-cases">evaluate cases</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#evaluate cases in y that greater  than 15</span>
 <span class='va'>df</span><span class='op'>[</span>,<span class='st'>"y"</span><span class='op'>]</span> <span class='op'>&gt;</span> <span class='fl'>15</span>
 </code></pre>
 </div>
-<pre><code> [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code> [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
+[10]  TRUE</code></pre>
 </div>
 <h4 id="sum-instances">sum instances</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># count these cases</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>[</span>,<span class='st'>"y"</span><span class='op'>]</span> <span class='op'>&gt;</span> <span class='fl'>15</span><span class='op'>)</span>
@@ -2397,7 +2414,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] 5</code></pre>
 </div>
 <h4 id="sum-instances-with-a-different-operator">sum instances with a different operator</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># count cases greater than or equal to 15</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>[</span>,<span class='st'>"y"</span><span class='op'>]</span> <span class='op'>&gt;=</span> <span class='fl'>15</span><span class='op'>)</span>
@@ -2406,7 +2423,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] 6</code></pre>
 </div>
 <h4 id="another-methods">another methods</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># another approach</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&gt;=</span> <span class='fl'>15</span><span class='op'>)</span>
@@ -2415,7 +2432,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] 6</code></pre>
 </div>
 <h4 id="using-the-or-function">using the <code>or</code> function</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># combine operators</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&gt;=</span> <span class='fl'>15</span> <span class='op'>|</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&lt;=</span><span class='fl'>11</span><span class='op'>)</span>
@@ -2424,7 +2441,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] 7</code></pre>
 </div>
 <h4 id="go-meta">go meta</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># go "meta"</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&gt;=</span> <span class='fl'>15</span> <span class='op'>|</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&lt;=</span> <span class='fl'>11</span><span class='op'>)</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>&gt;=</span><span class='fl'>5</span> <span class='op'>|</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>&lt;=</span><span class='fl'>1</span> <span class='op'>)</span>
@@ -2433,7 +2450,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] TRUE</code></pre>
 </div>
 <h4 id="go-meta-meta">go meta-meta!</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># go meta-meta</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&gt;=</span> <span class='fl'>15</span> <span class='op'>|</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&lt;=</span> <span class='fl'>11</span><span class='op'>)</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>&gt;=</span><span class='fl'>5</span> <span class='op'>|</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>&lt;=</span><span class='fl'>1</span> <span class='op'>)</span><span class='op'>)</span>
@@ -2442,7 +2459,7 @@ gtag('config', 'G-GQF269N0S4');
 <pre><code>[1] 1</code></pre>
 </div>
 <h4 id="use-operators-to-modify-data">use operators to modify data</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># using assignment to modify data</span>
 <span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>&gt;=</span><span class='fl'>5</span> <span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
@@ -2462,21 +2479,21 @@ gtag('config', 'G-GQF269N0S4');
 10 NA 20</code></pre>
 </div>
 <h4 id="using-is.na-and-is.na">using <code>is.na</code> and <code>!is.na</code></h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 6</code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 4</code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> 
 </code></pre>
@@ -2492,7 +2509,7 @@ gtag('config', 'G-GQF269N0S4');
 <li><span style="color:blue"><code>operators</code></span>.</li>
 </ul>
 <p>Figure <a href="#fig:syntax-figure">1</a> provides a simple example, that produces a new object which contains the mean of variable x.</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="figure"><span id="fig:syntax-figure"></span>
 <img src="syntax.png" alt="\label{fig:syntax-figure}The Basic Syntax of R" width="642" />
 <p class="caption">
@@ -2502,7 +2519,7 @@ Figure 1: The Basic Syntax of R
 </div>
 <h3 id="mean"><code>mean</code></h3>
 <p>The function <code>mean</code> generates the arithmetic mean of an input object:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># a function to assess the mean of a Sepal.Length</span>
 <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span>
@@ -2512,7 +2529,7 @@ Figure 1: The Basic Syntax of R
 </div>
 <h3 id="sd"><code>sd</code></h3>
 <p>The function <code>sd</code> gives us the standard deviation:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># standard deviation of Sepal.Length</span>
 <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span>
@@ -2521,7 +2538,7 @@ Figure 1: The Basic Syntax of R
 <pre><code>[1] 0.8280661</code></pre>
 </div>
 <h3 id="summary"><code>summary</code></h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># summary of the "Sepal Length" column</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span>
@@ -2530,26 +2547,26 @@ Figure 1: The Basic Syntax of R
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   4.300   5.100   5.800   5.843   6.400   7.900 </code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># summary of the Iris data set</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
- Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
- 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
- Median :5.800   Median :3.000   Median :4.350   Median :1.300  
- Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
- 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
- Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
-       Species  
- setosa    :50  
- versicolor:50  
- virginica :50  
-                
-                
-                </code></pre>
+<pre><code>  Sepal.Length    Sepal.Width     Petal.Length  
+ Min.   :4.300   Min.   :2.000   Min.   :1.000  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600  
+ Median :5.800   Median :3.000   Median :4.350  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900  
+  Petal.Width          Species  
+ Min.   :0.100   setosa    :50  
+ 1st Qu.:0.300   versicolor:50  
+ Median :1.300   virginica :50  
+ Mean   :1.199                  
+ 3rd Qu.:1.800                  
+ Max.   :2.500                  </code></pre>
 </div>
 <h3 id="coding">Coding</h3>
 <p>The object needs to be specified inside of the function brackets as the x argument, in this case we define x = df .</p>
@@ -2563,70 +2580,70 @@ Figure 1: The Basic Syntax of R
 <p>It is important that you only need to install a package once on your machine, expect if you want to upgrade the package. Generally speaking you regularly want to upgrade your packages, but keep a permanent note in your code which version of a package you used when it was initially written.</p>
 <h3 id="installing-package">Installing package</h3>
 <h4 id="install-these-packages-well-be-using-them-later">install these packages (we’ll be using them later)</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"devtools"</span><span class='op'>)</span> <span class='co'># installing packages</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"remotes"</span><span class='op'>)</span> <span class='co'># installing packages</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"tidyverse"</span><span class='op'>)</span> <span class='co'>## data wrangling and visualisation</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"lme4"</span><span class='op'>)</span> <span class='co'># multilevel modelling</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"patchwork"</span><span class='op'>)</span> <span class='co'># arranging multiple graphs</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://devtools.r-lib.org/'>devtools</a></span><span class='op'>)</span>
 <span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"strengejacke/sjPlot"</span><span class='op'>)</span> <span class='co'># plots and tables</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"papaja"</span><span class='op'>)</span>  <span class='co'># writing APA documents</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"table1"</span><span class='op'>)</span> <span class='co'># summary tables</span>
 </code></pre>
 </div>
 </div>
 <h4 id="extra-credit">extra credit</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"easystats/easystats"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"strengejacke/ggeffects"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <h4 id="super-extra-credit">super extra credit</h4>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"remotes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"remotes"</span><span class='op'>)</span>
@@ -2635,7 +2652,7 @@ Figure 1: The Basic Syntax of R
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"stan-dev/cmdstanr"</span><span class='op'>)</span>
 </code></pre>
@@ -2644,7 +2661,7 @@ Figure 1: The Basic Syntax of R
 <h2 id="rolling-your-own-code">Rolling your own code</h2>
 <p>Let’s use R to write a function. Recall that a factorial for a number <span class="math inline">\(n\)</span> is the product of all positive inters less than or equal to <span class="math inline">\(n\)</span>. Thus the factorial for 5 = <span class="math display">\[1 \times 2 \times 3 \times 4 \times 5\]</span></p>
 <p>In R we can write a function:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># create a function to perform the factorial operation </span>
 <span class='va'>go_factorial</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
@@ -2658,7 +2675,7 @@ Figure 1: The Basic Syntax of R
 </div>
 </div>
 <p>Let’s try it out</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># test of the `go_factorial` function</span>
 <span class='fu'>go_factorial</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
@@ -2667,7 +2684,7 @@ Figure 1: The Basic Syntax of R
 <pre><code>[1] 120</code></pre>
 </div>
 <p>Let’s see if this is the number that R’s <code>factorial</code> function produces:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># R's native factorial function</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Special.html'>factorial</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
@@ -2676,18 +2693,18 @@ Figure 1: The Basic Syntax of R
 <pre><code>[1] 120</code></pre>
 </div>
 <p>We can use R’s <code>==</code> relational operator to evaluate whether the two functions are the same</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># are the two functions equivalent for factorial five</span>
 <span class='fu'>go_factorial</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Special.html'>factorial</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 120</code></pre>
-<pre><code>[1] TRUE</code></pre>
+<pre><code>[1] 120
+[1] TRUE</code></pre>
 </div>
 <aside>
 <p>For more information about relational operators type the following into your console:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='op'>?</span><span class='va'>`==`</span>
 </code></pre>
@@ -2695,7 +2712,7 @@ Figure 1: The Basic Syntax of R
 </div>
 </aside>
 <p>We can make more complicated functions:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># function for factorial that throws warnings when the data that are entered are not appropriate. </span>
 <span class='va'>go_bayes_factorial</span> <span class='op'>&lt;-</span> <span class='kw'>function</span> <span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
@@ -2720,16 +2737,17 @@ Figure 1: The Basic Syntax of R
 <h3 id="coding-etiquette">Coding etiquette</h3>
 <p>Keep your code legible and annotate</p>
 <p>Why is this bad code?</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>a<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>,b<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>4</span>,<span class='fl'>8</span><span class='op'>)</span>,c<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>8</span>,<span class='fl'>1</span><span class='op'>)</span>,d<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>7</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <p>Why is this better code?</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Create a data frame with four columns of randomly generated numbers specifying different means and standard deviations </span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Create a data frame with four columns of randomly generated numbers specifying different means and standard deviations </span>
 <span class='va'>df1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
   a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span> <span class='fl'>10</span>, mean <span class='op'>=</span> <span class='fl'>1</span>, sd <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>)</span>,
   b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span> <span class='fl'>10</span>, mean <span class='op'>=</span> <span class='fl'>4</span>, sd <span class='op'>=</span> <span class='fl'>8</span> <span class='op'>)</span>,
@@ -2741,28 +2759,28 @@ Figure 1: The Basic Syntax of R
 </div>
 <h2 id="using-r">using R!</h2>
 <h3 id="data-summary">data summary</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># basic summary</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
- Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
- 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
- Median :5.800   Median :3.000   Median :4.350   Median :1.300  
- Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
- 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
- Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
-       Species  
- setosa    :50  
- versicolor:50  
- virginica :50  
-                
-                
-                </code></pre>
+<pre><code>  Sepal.Length    Sepal.Width     Petal.Length  
+ Min.   :4.300   Min.   :2.000   Min.   :1.000  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600  
+ Median :5.800   Median :3.000   Median :4.350  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900  
+  Petal.Width          Species  
+ Min.   :0.100   setosa    :50  
+ 1st Qu.:0.300   versicolor:50  
+ Median :1.300   virginica :50  
+ Mean   :1.199                  
+ 3rd Qu.:1.800                  
+ Max.   :2.500                  </code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>table1</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/table1/man/table1.html'>table1</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>Sepal.Length</span>   <span class='op'>+</span> <span class='va'>Sepal.Width</span>   <span class='op'>+</span> <span class='va'>Petal.Length</span>  <span class='op'>+</span> <span class='va'>Petal.Width</span> <span class='op'>|</span><span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span>  <span class='op'>)</span>
 </code></pre>
@@ -2866,16 +2884,16 @@ Figure 1: The Basic Syntax of R
 </table>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># plot relationship (what is happening here? )</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span> <span class='va'>Sepal.Length</span>   <span class='op'>~</span> <span class='va'>Sepal.Width</span> , data <span class='op'>=</span> <span class='va'>iris</span> <span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-69-1.png" width="624" /></p>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-69-1.png" width="1152" /></p>
 </div>
 <h3 id="model">model</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>  <span class='co'># plotting</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://strengejacke.github.io/ggeffects/'>"ggeffects"</a></span><span class='op'>)</span>  <span class='co'># plotting</span>
@@ -2901,14 +2919,15 @@ Coefficients:
 (Intercept)   6.5262     0.4789   13.63   &lt;2e-16 ***
 Sepal.Width  -0.2234     0.1551   -1.44    0.152    
 ---
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Signif. codes:  
+0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 0.8251 on 148 degrees of freedom
 Multiple R-squared:  0.01382,   Adjusted R-squared:  0.007159 
 F-statistic: 2.074 on 1 and 148 DF,  p-value: 0.1519</code></pre>
 </div>
 <h3 id="results">results</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># better summary method</span>
 <span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
@@ -2983,16 +3002,16 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 </tr>
 </table>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># plot the coefficients</span>
 <span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/plot_model.html'>plot_model</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-72-1.png" width="624" /></p>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-72-1.png" width="1152" /></p>
 </div>
 <h3 id="graph-predicted-effects">graph predicted effects</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># plot the predicted relationship of Sepal Width on Sepal Length</span>
 <span class='va'>p1</span> <span class='op'>&lt;-</span> <span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>m1</span>, terms <span class='op'>=</span> <span class='st'>"Sepal.Width"</span><span class='op'>)</span>
@@ -3002,7 +3021,7 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 <p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-73-1.png" width="1152" /></p>
 </div>
 <h3 id="what-is-the-advantage-of-this-graph">What is the advantage of this graph?</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pp1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>p1</span>,
             add.data <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -3011,10 +3030,10 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 <span class='va'>pp1</span>
 </code></pre>
 </div>
-<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-74-1.png" width="624" /></p>
+<p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-74-1.png" width="1152" /></p>
 </div>
 <h3 id="try-another-model">try another model</h3>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
@@ -3043,13 +3062,14 @@ Coefficients:
 (Intercept)  1.08356    0.07297   14.85   &lt;2e-16 ***
 Petal.Width  2.22994    0.05140   43.39   &lt;2e-16 ***
 ---
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Signif. codes:  
+0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 0.4782 on 148 degrees of freedom
 Multiple R-squared:  0.9271,    Adjusted R-squared:  0.9266 
 F-statistic:  1882 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pp2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>m2</span>, terms <span class='op'>=</span> <span class='st'>"Petal.Width"</span><span class='op'>)</span>,
@@ -3062,7 +3082,7 @@ F-statistic:  1882 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p><img src="week_2_visualising_coding_files/figure-html5/unnamed-chunk-76-1.png" width="1152" /></p>
 </div>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## arange plots</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://patchwork.data-imaginist.com'>patchwork</a></span><span class='op'>)</span>
@@ -3073,7 +3093,7 @@ F-statistic:  1882 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <h3 id="appendix-symbol-is-for-commenting-code">Appendix: <code>#</code> symbol is for commenting code</h3>
 <p>In case you haven’t figured it out yet, the hash symbol <code>#</code> is for commenting:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>r_comments</span> <span class='op'>&lt;-</span> <span class='fl'>200</span> <span class='co'># here I am creating the variable for the number of time Jack says R is great</span>
 
@@ -3088,7 +3108,7 @@ F-statistic:  1882 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <h3 id="rounding">Rounding</h3>
 <p>It is often useful to round numbers:</p>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>outcome</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='co'># illustrate the useful `round` function.</span>
 </code></pre>
