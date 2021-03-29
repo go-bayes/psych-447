@@ -1,7 +1,6 @@
 ---
 title: "Elements of a linear model"
 description: |
-  "What is a statistical model?" 
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
