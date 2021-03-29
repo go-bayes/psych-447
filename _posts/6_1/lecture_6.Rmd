@@ -24,11 +24,11 @@ library("patchwork")
 library("brms")
 library("lubridate")
 library("splines")
-if (!require(equatiomatic)) {
-  remotes::install_github("datalorax/equatiomatic")
-  }
+if (!require(broom)) {
+  devtools::install_github("tidymodels/broom")
+}
+
 # set theme
-# theme set
 theme_set(theme_classic())
 ```
 
