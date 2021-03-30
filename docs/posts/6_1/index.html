@@ -1890,6 +1890,7 @@ gtag('config', 'G-GQF269N0S4');
 <li><a href="#simulate-a-relationship-between-two-variables">Simulate a relationship between two variables</a></li>
 <li><a href="#simulate-a-non-linear-relationship">Simulate a non-linear relationship</a></li>
 <li><a href="#create-fake-factors">Create fake factors</a></li>
+<li><a href="#simulate-a-relationship-between-two-factors">Simulate a relationship between two factors</a></li>
 <li><a href="#is-imbalance-in-my-study-causing-a-problem">Is imbalance in my study causing a problem?</a></li>
 </ul></li>
 <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -3047,6 +3048,121 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 </tr>
 </table>
 </div>
+<h3 id="simulate-a-relationship-between-two-factors">Simulate a relationship between two factors</h3>
+<p>Simulate two groups with mean = 6 and mean = 12</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cdf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>, length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>, <span class='co'># 2 groups</span>
+                  response <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>100</span>, mean <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>12</span><span class='op'>)</span>, sd <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># mean of 3 mean of</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>cdf</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code>  group  response
+1     a  1.898622
+2     b 10.131812
+3     a  2.736358
+4     b 12.508020
+5     a  3.962040
+6     b 10.471951</code></pre>
+</div>
+<p>Model:</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m_gr</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>response</span> <span class='op'>~</span> <span class='op'>-</span><span class='fl'>1</span> <span class='op'>+</span>  <span class='va'>group</span>, data <span class='op'>=</span> <span class='va'>cdf</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+</div>
+<p>Results</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>m_gr</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+response
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+group [a]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+3.06
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+2.78 – 3.34
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+group [b]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+11.93
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+11.66 – 12.21
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+100
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.988 / 0.987
+</td>
+</tr>
+</table>
+</div>
 <h3 id="is-imbalance-in-my-study-causing-a-problem">Is imbalance in my study causing a problem?</h3>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -3231,7 +3347,7 @@ Show code
 <h2 id="acknowledgments">Acknowledgments</h2>
 <p>Much in my approach to teaching simulation owes to Ariel Muldoon. PLease check out Ariel’s wonderful R webpage here: <a href="https://aosmith.rbind.io" class="uri">https://aosmith.rbind.io</a></p>
 <p>Try out Ariel’s tutorial for simulation functions <a href="https://aosmith.shinyapps.io/tutorial_simulation_helper_functions/#section-simulating-datasets">here</a></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

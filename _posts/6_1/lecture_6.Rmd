@@ -701,7 +701,7 @@ sjPlot::tab_model(ms2)
 Simulate two groups with mean = 6 and mean = 12
 
 ```{r}
-cdf <- data.frame(group = rep(letters(1:2), length.out = 100), # 2 groups
+cdf <- data.frame(group = rep(letters[1:2], length.out = 100), # 2 groups
                   response = rnorm(n = 100, mean = c(3, 12), sd = 1)) # mean of 3 mean of
 
 head(cdf)
