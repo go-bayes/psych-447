@@ -696,6 +696,28 @@ sjPlot::plot_model(ms2)
 sjPlot::tab_model(ms2)
 ```
 
+### Simulate a relationship between two factors 
+
+Simulate two groups with mean = 6 and mean = 12
+
+```{r}
+cdf <- data.frame(group = rep(letters(1:2), length.out = 100), # 2 groups
+                  response = rnorm(n = 100, mean = c(3, 12), sd = 1)) # mean of 3 mean of
+
+head(cdf)
+```
+
+Model:
+
+```{r}
+m_gr<- lm(response ~ -1 +  group, data = cdf)
+```
+
+Results
+
+```{r}
+sjPlot::tab_model(m_gr)
+```
 
 
 
@@ -796,6 +818,10 @@ sum(mout2$p.value <= .05) / length(mout2$p.value)
 
 Much in my approach to teaching simulation owes to Ariel Muldoon. PLease check out Ariel's wonderful R webpage here:
 <https://aosmith.rbind.io>
+
+Try out Ariel's tutorial for simulation functions [here](
+https://aosmith.shinyapps.io/tutorial_simulation_helper_functions/#section-simulating-datasets)
+
 
 
 
