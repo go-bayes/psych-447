@@ -179,6 +179,7 @@ code span.wa { color: #bf0303; } /* Warning */
 
 <div id="section-warm-up" class="section level2">
 <h2>Warm Up</h2>
+<p>The warm up will not be assessed</p>
 <div id="section-w1." class="section level3">
 <h3>W1.</h3>
 <p>Simulate 25 draws from a normal distribution with a mean of 10 and and a standard deviation of 2.</p>
@@ -191,19 +192,18 @@ rnorm(n = , mean = , sd = )</code></pre>
 <pre class="text"><code>set.seed(123)
 rnorm(n = 25, mean = 10, sd = 2)</code></pre>
 </div>
-<p>What does <code>f(n)</code> evaluate to, for n = 10? (See if you can work it out in your head)</p>
 </div>
 <div id="section-w2" class="section level3">
 <h3>W2</h3>
-<p>Below is code for creating a sample of 100 with means of 0, 10, and 50. Assign standard deviations of 1, 2, and 5 to each the the three means</p>
+<p>Below is code for creating a sample of 12 with means of 0, 10, and 50. Assign standard deviations of 1, 2, and 5 to each the the three means</p>
 <div class="tutorial-exercise" data-label="rnorm2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>set.seed(123)
-rnorm(n = 100, mean = c(0, 10, 50)  )</code></pre>
+rnorm(n = 12, mean = c(0, 10, 50)  )</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="rnorm2-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>set.seed(123)
-rnorm(n = 100, mean = c(0, 10, 50) , sd = c(1,2,5) )</code></pre>
+rnorm(n = 12, mean = c(0, 10, 50) , sd = c(1,2,5) )</code></pre>
 </div>
 </div>
 <div id="section-w3" class="section level3">
@@ -288,42 +288,12 @@ lm(y ~ x, data = df)</code></pre>
 <p>Make a two-group variable of length 9.</p>
 <div class="tutorial-exercise" data-label="lengthout" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>rep( , length.out = )</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="lengthout-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>rep(letters[1:2], length.out = 9)</code></pre>
 </div>
 <p>Describe how the groups are unbalanced.</p>
-<div class="sourceCode" id="section-cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb16-1"><a href="#section-cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
-<pre><code>## function (check_env) 
-## {
-##     if (is.list(check_env)) {
-##         check_env &lt;- list2env(check_env)
-##     }
-##     user_code &lt;- check_env$.user_code
-##     if (is.null(user_code)) {
-##         return(legacy_graded(correct = FALSE, message = &quot;I didn&#39;t receive your code. Did you write any?&quot;))
-##     }
-##     solution_code &lt;- check_env$.solution_code
-##     if (is.null(solution_code) || length(str2expression(solution_code)) == 
-##         0) {
-##         return(legacy_graded(correct = FALSE, message = &quot;No exercise solution provided. Defaulting to _incorrect_.&quot;))
-##     }
-##     message &lt;- code_feedback(user_code = user_code, solution_code = solution_code, 
-##         env = check_env, allow_partial_matching = allow_partial_matching)
-##     if (is.null(message)) {
-##         return(legacy_graded(correct = TRUE, message = glue_message(glue_correct %||% 
-##             gradethis_legacy_options$gradethis.glue_correct, 
-##             .is_correct = TRUE, .message = NULL, .correct = correct, 
-##             .user_code = user_code)))
-##     }
-##     message &lt;- glue_message(glue_incorrect %||% gradethis_legacy_options$gradethis.glue_incorrect, 
-##         .is_correct = FALSE, .message = message, .incorrect = incorrect, 
-##         .user_code = user_code)
-##     legacy_graded(correct = FALSE, message = message)
-## }
-## &lt;bytecode: 0x7fbc034b4860&gt;
-## &lt;environment: 0x7fbc034b6278&gt;</code></pre>
 </div>
 <div id="section-w8" class="section level3">
 <h3>W8</h3>
@@ -355,7 +325,7 @@ data.frame(group,
 <div id="section-w9" class="section level3">
 <h3>W9</h3>
 <p>Recall that we can create big letters this way:</p>
-<div class="sourceCode" id="section-cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb21-1"><a href="#section-cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(LETTERS[<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">times =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="section-cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb19-1"><a href="#section-cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(LETTERS[<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">times =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot;</code></pre>
 <p>Imagine that the you have two factors <code>a</code> and <code>b</code> that are crossed in three groups say <code>C</code>,<code>D</code>,<code>E</code>. (e.g. male and not_male in manipulation_1, manipulation_2, and a control condition)</p>
 <p>using the <code>times</code> function, create a dataframe in which the factors are crossed by the three conditions exactly once</p>
@@ -367,7 +337,7 @@ data.frame(group,
 </div>
 <div class="tutorial-exercise-support" data-label="dat3-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>data.frame(group = rep(letters[1:2], each = 3),
-           factor = rep(LETTERS[3:5], times = 2),
+           factor = rep(LETTERS[3:5], length.out = 6),
            response = rnorm(n = 6, mean = 0, sd = 1) )</code></pre>
 </div>
 <p>Next create a dataframe with the same properties using the <code>length.out</code> function</p>
@@ -379,7 +349,7 @@ data.frame(group,
 </div>
 <div class="tutorial-exercise-support" data-label="dat4-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>data.frame(group = rep(letters[1:2], each = 3),
-           factor = rep(LETTERS[3:5], length.out = 2),
+           factor = rep(LETTERS[3:5], length.out = 6),
            response = rnorm(n = 6, mean = 0, sd = 1) )</code></pre>
 </div>
 </div>
@@ -394,23 +364,23 @@ data.frame(group,
 <div class="tutorial-exercise-support" data-label="twomeans-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>rnorm(n = 6, mean = c(5, 10), sd = 1)</code></pre>
 </div>
-<p>Using the code above, create a data frame in which there are two factors crossed by three groups and the means differ between the groups</p>
+<p>note: <code>sd = c(1,1)</code> would be fine, but I’ve called a different function above.</p>
+<p>Create a data in which there are two groups and the means differ between the groups. One mean is 5 and the other is 10. Both means have a common sd of 1.</p>
 <div class="tutorial-exercise" data-label="dat5" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>data.frame(group = rep(),
-            response = rnorm() )</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
-</div>
-<div id="section-dat5-hint">
-<p><strong>Hint:</strong> Repeat the vector three times.</p>
+           response = rnorm())</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="dat5-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>data.frame(group = rep(letters[1:2], times = 3),
-            response = rnorm(n = 6, mean = c(5, 10), sd = 1) )</code></pre>
+                 response = rnorm(n = 6, mean = c(5, 10), sd = 1))</code></pre>
 </div>
 </div>
 <div id="section-fun-fun-fun" class="section level3">
 <h3>FUN FUN FUN</h3>
-<p>The following was on Twitter yesterday. Can you imagine the solution in your head? Try:</p>
+<p>The following was on Twitter yesterday.</p>
+<p>What does <code>f(n)</code> evaluate to, for n = 10? (See if you can work it out in your head)</p>
+<p>Can you imagine the solution in your head? Try:</p>
 <div class="tutorial-exercise" data-label="function1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>f &lt;- function(x) {
   f &lt;- function(x) {
@@ -439,11 +409,11 @@ f(10)</code></pre>
 </div>
 <div id="section-acknowledgments" class="section level3">
 <h3>Acknowledgments</h3>
-<p>The warmup exercises are from Ariel Muldoon’s tutorial on simulation, with only minor modifications: <a href="https://aosmith.rbind.io" class="uri">https://aosmith.rbind.io</a></p>
+<p>These warmup exercises are derived with modification from Ariel Muldoon’s tutorial on simulation: <a href="https://aosmith.rbind.io" class="uri">https://aosmith.rbind.io</a></p>
 
 <script type="application/shiny-prerendered" data-context="server-start">
 library('learnr')
-# Comment out the following line if you can install grade this:
+# Comment out the following line if you cannot install grade this:
 gradethis::gradethis_setup()
 
 knitr::opts_chunk$set(error = TRUE)
@@ -464,13 +434,13 @@ session$onSessionEnded(function() {
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_setup_chunk("__setup__", c("library('learnr')", "# Comment out the following line if you can install grade this:", 
+learnr:::store_exercise_setup_chunk("__setup__", c("library('learnr')", "# Comment out the following line if you cannot install grade this:", 
 "gradethis::gradethis_setup()", "", "knitr::opts_chunk$set(error = TRUE)"
 ), overwrite = FALSE)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_setup_chunk("__setup__", c("library('learnr')", "# Comment out the following line if you can install grade this:", 
+learnr:::store_exercise_setup_chunk("__setup__", c("library('learnr')", "# Comment out the following line if you cannot install grade this:", 
 "gradethis::gradethis_setup()", "", "knitr::opts_chunk$set(error = TRUE)"
 ), overwrite = FALSE)
 </script>
@@ -521,11 +491,11 @@ output$`tutorial-exercise-rnorm2-output` <- renderUI({
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache("rnorm2", list(setup = NULL, chunks = list(list(label = "rnorm2", code = "set.seed(123)\nrnorm(n = 100, mean = c(0, 10, 50)  )", 
+learnr:::store_exercise_cache("rnorm2", list(setup = NULL, chunks = list(list(label = "rnorm2", code = "set.seed(123)\nrnorm(n = 12, mean = c(0, 10, 50)  )", 
     opts = list(label = "\"rnorm2\"", exercise = "TRUE"), engine = "r")), 
     code_check = structure("grade_code()", chunk_opts = list(
         label = "rnorm2-code-check")), error_check = NULL, check = NULL, 
-    solution = structure(c("set.seed(123)", "rnorm(n = 100, mean = c(0, 10, 50) , sd = c(1,2,5) )"
+    solution = structure(c("set.seed(123)", "rnorm(n = 12, mean = c(0, 10, 50) , sd = c(1,2,5) )"
     ), chunk_opts = list(label = "rnorm2-solution")), options = list(
         eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
         tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
@@ -546,7 +516,7 @@ learnr:::store_exercise_cache("rnorm2", list(setup = NULL, chunks = list(list(la
         exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "rnorm2", exercise = TRUE, code = c("set.seed(123)", 
-        "rnorm(n = 100, mean = c(0, 10, 50)  )"), out.width.px = 624, 
+        "rnorm(n = 12, mean = c(0, 10, 50)  )"), out.width.px = 624, 
         out.height.px = 384, params.src = "rnorm2, exercise = TRUE", 
         fig.num = 0, exercise.df_print = "kable"), engine = "r"))
 </script>
@@ -814,7 +784,8 @@ output$`tutorial-exercise-lengthout-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache("lengthout", list(setup = NULL, chunks = list(list(label = "lengthout", code = "rep( , length.out = )", 
     opts = list(label = "\"lengthout\"", exercise = "TRUE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
+    engine = "r")), code_check = structure("grade_code()", chunk_opts = list(
+    label = "lengthout-code-check")), error_check = NULL, check = NULL, 
     solution = structure("rep(letters[1:2], length.out = 9)", chunk_opts = list(
         label = "lengthout-solution")), options = list(eval = FALSE, 
         echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
@@ -927,15 +898,16 @@ learnr:::store_exercise_cache("dat3", list(setup = NULL, chunks = list(list(labe
     code_check = structure("grade_code()", chunk_opts = list(
         label = "dat3-code-check")), error_check = NULL, check = NULL, 
     solution = structure(c("data.frame(group = rep(letters[1:2], each = 3),", 
-    "           factor = rep(LETTERS[3:5], times = 2),", "           response = rnorm(n = 6, mean = 0, sd = 1) )"
-    ), chunk_opts = list(label = "dat3-solution")), options = list(
-        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
-        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
-        highlight = FALSE, strip.white = TRUE, size = "normalsize", 
-        background = "#F7F7F7", cache = 0, cache.path = "w_b6_cache/html/", 
-        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
-        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
-        fig.show = "asis", fig.align = "default", fig.path = "w_b6_files/figure-html/", 
+    "           factor = rep(LETTERS[3:5], length.out = 6),", 
+    "           response = rnorm(n = 6, mean = 0, sd = 1) )"), chunk_opts = list(
+        label = "dat3-solution")), options = list(eval = FALSE, 
+        echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+        collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+        strip.white = TRUE, size = "normalsize", background = "#F7F7F7", 
+        cache = 0, cache.path = "w_b6_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "w_b6_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -966,7 +938,7 @@ learnr:::store_exercise_cache("dat4", list(setup = NULL, chunks = list(list(labe
     code_check = structure("grade_code()", chunk_opts = list(
         label = "dat4-code-check")), error_check = NULL, check = NULL, 
     solution = structure(c("data.frame(group = rep(letters[1:2], each = 3),", 
-    "           factor = rep(LETTERS[3:5], length.out = 2),", 
+    "           factor = rep(LETTERS[3:5], length.out = 6),", 
     "           response = rnorm(n = 6, mean = 0, sd = 1) )"), chunk_opts = list(
         label = "dat4-solution")), options = list(eval = FALSE, 
         echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
@@ -1038,10 +1010,12 @@ output$`tutorial-exercise-dat5-output` <- renderUI({
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache("dat5", list(setup = NULL, chunks = list(list(label = "dat5", code = "data.frame(group = rep(),\n            response = rnorm() )", 
+learnr:::store_exercise_cache("dat5", list(setup = NULL, chunks = list(list(label = "dat5", code = "data.frame(group = rep(),\n           response = rnorm())", 
     opts = list(label = "\"dat5\"", exercise = "TRUE"), engine = "r")), 
-    code_check = NULL, error_check = NULL, check = NULL, solution = structure(c("data.frame(group = rep(letters[1:2], times = 3),", 
-    "            response = rnorm(n = 6, mean = c(5, 10), sd = 1) )"
+    code_check = structure("grade_code()", chunk_opts = list(
+        label = "dat5-code-check")), error_check = NULL, check = NULL, 
+    solution = structure(c("data.frame(group = rep(letters[1:2], times = 3),", 
+    "                 response = rnorm(n = 6, mean = c(5, 10), sd = 1))"
     ), chunk_opts = list(label = "dat5-solution")), options = list(
         eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
         tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
@@ -1062,7 +1036,7 @@ learnr:::store_exercise_cache("dat5", list(setup = NULL, chunks = list(list(labe
         exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "dat5", exercise = TRUE, code = c("data.frame(group = rep(),", 
-        "            response = rnorm() )"), out.width.px = 624, 
+        "           response = rnorm())"), out.width.px = 624, 
         out.height.px = 384, params.src = "dat5, exercise = TRUE", 
         fig.num = 0, exercise.df_print = "kable"), engine = "r"))
 </script>

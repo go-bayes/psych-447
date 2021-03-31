@@ -7,33 +7,65 @@ author:
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
-  - name: Johannes Karl 
-    url: https://johannes-karl.com
-    affiliation: Victoria University of Wellington
-    affiliation_url: https://www.wgtn.ac.nz
-    orcid_id: 0000-0001-5166-0728
 output:
   distill::distill_article:
     self_contained: false
     toc: true
-    highlight: tango
+    highlight: kate
 ---
 
+```{r include=FALSE}
+library("emojifont")
+```
 
-## Warm up
+## Warm-up
 
-Download the R markdown file from here:
+Download the R markdown file from [here](https://raw.githubusercontent.com/go-bayes/psych-447/main/_workbooks/W_6/w_b6.Rmd)
+
+Copy the text and drop it into a blank R markdown file. 
 
 Render the R markdown file on your computer. 
 
 Do the exercises. 
 
-The warm up will not be assessed
+The warm-up exercises will not be assessed, however they will teach you skills that you need for simulating data. So do them `r emojifont::emoji('smiley_cat')`
+
 
 ## Assignment
 
 
-The workbook and solutions can be found [here](https://dl.dropboxusercontent.com/s/iidlb4b33sr7ow2/workbook_6.Rmd?dl=0)
+Your final exercises is a 2500 word report for a substantive research question in psychological science. 
+
+This week, 
+
+1. Write a two-three paragraph introduction to your report. The introduction should do the following
+
+- State your research question;
+- Clarify, in plain terms and without jargon, why your research question is important;
+- Clarify your research hypothesis or hypotheses;
+-  Identify the data you will use to address your research question.^[Note: you might need to simulate data because you have yet to collect data.]
+
+2. Quantitatively summarise your sample information and indicator variables using methods that you have learned in this class. Your summary should do the following:
+
+- Include at least one summary table;
+- Include at least one summary graph; 
+- Report your data features.
+
+You will be marked on how effectively your summary introduces your research question and clarifies properties of your sample. 
+
+To keep the summary streamlined, you may include an appendix. 
+
+Summaries should contain a bibliography where relevant. 
+
+Please submit your R markdown file as well as a rendered pdf or word document to Blackboard by midnight April 20th.
+
+Please annotate your R markdown file to clarify your approach and any decisions. 
+
+Please keep a record of your summary on Github (i.e. push to Github).
+
+
+
+
 
 
 

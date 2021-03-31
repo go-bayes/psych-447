@@ -14,7 +14,7 @@ description: "Workbook 6."
 
 ```{r setup, include = FALSE}
 library('learnr')
-# Comment out the following line if you can install grade this:
+# Comment out the following line if you cannot install grade this:
 gradethis::gradethis_setup()
 
 knitr::opts_chunk$set(error = TRUE)
@@ -44,23 +44,19 @@ grade_code()
 
 
 
-What does `f(n)` evaluate to, for n = 10? (See if you can work it out in your head)
-
-
-
 ### W2
 
-Below is code for creating a sample of 100 with means of 0, 10, and 50.  Assign standard deviations of 1, 2, and 5 to each the the three means
+Below is code for creating a sample of 12 with means of 0, 10, and 50.  Assign standard deviations of 1, 2, and 5 to each the the three means
 
 ```{r rnorm2, exercise = TRUE}
 set.seed(123)
-rnorm(n = 100, mean = c(0, 10, 50)  )
+rnorm(n = 12, mean = c(0, 10, 50)  )
 ```
 
 
 ```{r rnorm2-solution}
 set.seed(123)
-rnorm(n = 100, mean = c(0, 10, 50) , sd = c(1,2,5) )
+rnorm(n = 12, mean = c(0, 10, 50) , sd = c(1,2,5) )
 ```
 
 ```{r rnorm2-code-check}
@@ -200,7 +196,7 @@ rep(letters[1:2], length.out = 9)
 Describe how the groups are unbalanced.  
 
 
-```{r times2-code-check}
+```{r lengthout-code-check}
 grade_code()
 ```
 
@@ -260,7 +256,7 @@ data.frame(group = rep(letters[1:2], each = 3),
 
 ```{r dat3-solution}
 data.frame(group = rep(letters[1:2], each = 3),
-           factor = rep(LETTERS[3:5], times = 2),
+           factor = rep(LETTERS[3:5], length.out = 6),
            response = rnorm(n = 6, mean = 0, sd = 1) )
 ```
 
@@ -280,7 +276,7 @@ data.frame(group = rep(letters[1:2], each = 3),
 
 ```{r dat4-solution}
 data.frame(group = rep(letters[1:2], each = 3),
-           factor = rep(LETTERS[3:5], length.out = 2),
+           factor = rep(LETTERS[3:5], length.out = 6),
            response = rnorm(n = 6, mean = 0, sd = 1) )
 ```
 
@@ -302,34 +298,43 @@ rnorm(n = 6, mean = , sd = )
 rnorm(n = 6, mean = c(5, 10), sd = 1)
 ```
 
+note: `sd = c(1,1)` would be fine, but I've called a different function above.
+
 ```{r twomeans-code-check}
 grade_code()
 ```
 
-Using the code above, create a data frame in which there are two factors crossed by three groups and the means differ between the groups
+Create a data in which there are two groups and the means differ between the groups. One mean is 5 and the other is 10. Both means have a common sd of 1.
 
 
 ```{r dat5, exercise = TRUE}
 data.frame(group = rep(),
-            response = rnorm() )
+           response = rnorm())
 ```
-
-
-<div id="dat5-hint">
-**Hint:** Repeat the vector three times.
-</div>
 
 
 
 ```{r dat5-solution}
 data.frame(group = rep(letters[1:2], times = 3),
-            response = rnorm(n = 6, mean = c(5, 10), sd = 1) )
+                 response = rnorm(n = 6, mean = c(5, 10), sd = 1))
 ```
+
+```{r dat5-code-check}
+grade_code()
+```
+
 
 
 ### FUN FUN FUN
 
-The following was on Twitter yesterday.  Can you imagine the solution in your head? Try:
+The following was on Twitter yesterday.  
+
+
+What does `f(n)` evaluate to, for n = 10? (See if you can work it out in your head)
+
+
+
+Can you imagine the solution in your head? Try:
 
 ```{r function1, exercise = TRUE}
 f <- function(x) {
@@ -360,7 +365,7 @@ f(10)
 
 ### Acknowledgments
 
-The warmup exercises are from Ariel Muldoon's tutorial on simulation, with only minor modifications: https://aosmith.rbind.io
+These warmup exercises are derived with modification from Ariel Muldoon's tutorial on simulation: https://aosmith.rbind.io
 
 
 
