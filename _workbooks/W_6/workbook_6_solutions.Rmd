@@ -1,7 +1,6 @@
 ---
 title: "Workbook 6"
 output: 
- distill::distill_article:
    learnr::tutorial:
        progressive: TRUE
        allow_skip: TRUE
