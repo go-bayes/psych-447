@@ -20,7 +20,7 @@
   },
   {
     "path": "workbooks/W_6/",
-    "title": "Week 6 workbook and Solutions",
+    "title": "Week 6 workbook and solutions",
     "description": {},
     "author": [
       {
@@ -32,7 +32,7 @@
     "categories": [],
     "contents": "\n\nContents\nWarm-up\nAssignment\n\nWarm-up\nDownload the R markdown file from here\nCopy the text and drop it into a blank R markdown file.\nRender the R markdown file on your computer.\nDo the exercises.\nThe warm-up exercises will not be assessed, however they will teach you skills that you need for simulating data. So do them 😺\nAssignment\nYour final exercises is a 2500 word report for a substantive research question in psychological science.\nThis week,\nWrite a two-three paragraph introduction to your report. The introduction should do the following\nState your research question;\nClarify, in plain terms and without jargon, why your research question is important;\nClarify your research hypothesis or hypotheses;\nIdentify the data you will use to address your research question.1\nQuantitatively summarise your sample information and indicator variables using methods that you have learned in this class. Your summary should do the following:\nInclude at least one summary table;\nInclude at least one summary graph;\nReport your data features.\nYou will be marked on how effectively your summary introduces your research question and clarifies properties of your sample.\nTo keep the summary streamlined, you may include an appendix.\nSummaries should contain a bibliography where relevant.\nPlease submit your R markdown file as well as a rendered pdf or word document to Blackboard by midnight April 20th.\nPlease annotate your R markdown file to clarify your approach and any decisions.\nPlease keep a record of your summary on Github (i.e. push to Github).\n\nNote: you might need to simulate data because you have yet to collect data.↩︎\n",
     "preview": {},
-    "last_modified": "2021-03-31T21:46:22+13:00",
+    "last_modified": "2021-03-31T21:50:28+13:00",
     "input_file": "workbook_6_solutions.utf8.md"
   },
   {
