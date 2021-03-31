@@ -1,8 +1,8 @@
 ---
 title: "Workbook 6"
 output: 
-  distill::distill_article:
-  learnr::tutorial:
+ distill::distill_article:
+   learnr::tutorial:
        progressive: TRUE
        allow_skip: TRUE
        ace_theme: "iplastic"
@@ -367,7 +367,7 @@ f <- function(x) {
 f(10)
 ```
 
-## Workbook
+## Work book
 
 Your final exercises is a 2500 report for a substantive research question in psychological science. 
 
