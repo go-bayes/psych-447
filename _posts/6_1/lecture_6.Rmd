@@ -61,11 +61,8 @@ theme_set(theme_classic())
 ```{r echo = FALSE, include = FALSE}
 md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
 # Center mother's height for later example
-md_df <- md_df %>%
-  dplyr::mutate(mother_height_c = as.numeric(scale(mother_height, center = TRUE, scale = FALSE)))
-dplyr::glimpse(md_df)
-
 ```
+
 
 
 ## Overview

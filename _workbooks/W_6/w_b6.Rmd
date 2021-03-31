@@ -1,0 +1,368 @@
+---
+title: "Workbook 6"
+output: 
+   learnr::tutorial:
+       progressive: TRUE
+       allow_skip: TRUE
+       ace_theme: "iplastic"
+       df_print: "kable"
+       highlight: "kate"
+runtime: shiny_prerendered
+description: "Workbook 6."
+---
+
+
+```{r setup, include = FALSE}
+library('learnr')
+# Comment out the following line if you can install grade this:
+gradethis::gradethis_setup()
+
+knitr::opts_chunk$set(error = TRUE)
+```
+
+## Warm Up
+
+The warm up will not be assessed
+
+### W1.
+
+Simulate 25 draws from a normal distribution with a mean of 10 and and a standard deviation of 2.
+
+```{r rnorm1, exercise = TRUE}
+set.seed(123)
+rnorm(n = , mean = , sd = )
+```
+
+```{r rnorm1-solution}
+set.seed(123)
+rnorm(n = 25, mean = 10, sd = 2)
+```
+
+```{r rnorm1-code-check}
+grade_code()
+```
+
+
+
+What does `f(n)` evaluate to, for n = 10? (See if you can work it out in your head)
+
+
+
+### W2
+
+Below is code for creating a sample of 100 with means of 0, 10, and 50.  Assign standard deviations of 1, 2, and 5 to each the the three means
+
+```{r rnorm2, exercise = TRUE}
+set.seed(123)
+rnorm(n = 100, mean = c(0, 10, 50)  )
+```
+
+
+```{r rnorm2-solution}
+set.seed(123)
+rnorm(n = 100, mean = c(0, 10, 50) , sd = c(1,2,5) )
+```
+
+```{r rnorm2-code-check}
+grade_code()
+```
+
+### W3
+
+
+Create two samples of 100, x and y, with N = 100 and with a mean of 0 and an sd of 1.  Use `plot()` to quickly graph the relationship between this two distributions 
+
+```{r plotrnorm, exercise = TRUE}
+x = rnorm(n = , mean = , sd = )
+y = rnorm(n = , mean = , sd = )
+plot(y ~ x)
+```
+
+```{r plotrnorm-solution}
+x = rnorm(n = 100, mean = 0, sd = 1)
+y = rnorm(n = 100, mean = 0, sd = 1)
+plot(y ~ x)
+```
+
+```{r plotrnorm-code-check}
+grade_code()
+```
+
+
+Repeat this code and inspect the output. How is the graph changing? 
+
+
+### W4
+
+Create a uniform distribution by producing 10 numbers between between 0 and 1 using the `runif()` command.  
+
+```{r runif1, exercise = TRUE}
+
+```
+
+<div id="filter-hint">
+**Hint:** You may want to use `min = ` and `max =` 
+</div>
+
+
+```{r runif1-solution}
+runif(n = 10, min = 0, max = 1)
+```
+
+```{r runif1-code-check}
+grade_code()
+```
+
+### W5
+
+Sample 100 draws from a normal distribution with mean 5 and sd = 1 and call the vector 'y',  Sample 100 draws from a uniform distribution from 1 to 50 and call the vector 'x'.  Make a dataframe called `df` and regress y on x. 
+
+```{r dfrg, exercise = TRUE}
+
+```
+
+<div id="filter-hint">
+**Hint:** `lm( this ~ that)`
+</div>
+
+
+```{r dfrg-solution}
+set.seed(16)
+y = rnorm(n = 100, mean = 5, sd = 1)
+x = runif(n = 100, min = 1, max = 50)
+df = data.frame(y,x)
+lm(y ~ x, data = df)
+```
+
+```{r dfrg-code-check}
+grade_code()
+```
+
+
+### W6 
+
+Letters
+
+We can create letters like this
+
+Here are the first two `letters` of the English alphabet.
+
+```{r letters, exercise = TRUE}
+letters[1:2]
+```
+
+And the final 15 `LETTERS` of the English alphabet.
+
+```{r LETTERS, exercise = TRUE}
+LETTERS[12:26]
+```
+
+Here is how we use each to create a vector of letters
+
+
+```{r each, exercise = TRUE}
+rep(x = letters[1:2], each = 3)
+```
+
+
+We can create a two-group vector again, how can we get the sequence to alternate three times, instead of repeat three times? 
+
+```{r times, exercise = TRUE}
+rep(letters[1:2], )
+```
+
+<div id="filter-hint">
+**Hint:** `times` they are a chang'n
+</div>
+
+
+```{r times-solution}
+rep(letters[1:2], times = 3)
+```
+
+
+```{r times-code-check}
+grade_code()
+```
+
+### W7 
+
+Make a two-group variable of length 9.  
+
+```{r lengthout, exercise = TRUE}
+rep( , length.out = )
+```
+
+```{r lengthout-solution}
+rep(letters[1:2], length.out = 9)
+```
+
+Describe how the groups are unbalanced.  
+
+
+```{r times2-code-check}
+grade_code()
+```
+
+### W8 
+
+- Make a variable named `group` that repeats the first two `letters` 3 times each (element-wise).  
+- Make a variable named `response` that samples from a normal distribution with mean zero and a standard deviation of 1. create a data frame
+
+```{r dat1, exercise = TRUE}
+group = 
+response = 
+data.frame(group,
+           response)
+```
+
+```{r dat1-solution}
+group = rep(letters[1:2], each = 3)
+response = rnorm(n = 6, mean = 0, sd = 1)
+data.frame(group,
+           response)
+```
+
+```{r dat1-code-check}
+grade_code()
+```
+
+
+Note you can create the data frame from the previous exercise at one go:
+
+```{r dat2, exercise = TRUE}
+data.frame(group = rep(letters[1:2], each = 3),
+           response = rnorm(n = 6, mean = 0, sd = 1))
+```
+
+
+### W9
+
+Recall that we can create big letters this way:
+
+
+```{r dateach-solution}
+rep(LETTERS[3:5], times = 2)
+```
+
+
+Imagine that the you have two factors `a` and `b` that are crossed in three groups say `C`,`D`,`E`. (e.g. male and not_male in manipulation_1, manipulation_2, and a control condition)
+
+using the `times` function, create a dataframe in which the factors are crossed by the three conditions exactly once
+
+
+```{r dat3, exercise = TRUE}
+data.frame(group = rep(letters[1:2], each = 3),
+           factor = ,
+           response =  rnorm(n = 6, mean = 0, sd = 1) )
+```
+
+
+```{r dat3-solution}
+data.frame(group = rep(letters[1:2], each = 3),
+           factor = rep(LETTERS[3:5], times = 2),
+           response = rnorm(n = 6, mean = 0, sd = 1) )
+```
+
+```{r dat3-code-check}
+grade_code()
+```
+
+
+Next create a dataframe with the same properties using the `length.out` function
+
+```{r dat4, exercise = TRUE}
+data.frame(group = rep(letters[1:2], each = 3),
+           factor = ,
+           response =  rnorm(n = 6, mean = 0, sd = 1) )
+```
+
+
+```{r dat4-solution}
+data.frame(group = rep(letters[1:2], each = 3),
+           factor = rep(LETTERS[3:5], length.out = 2),
+           response = rnorm(n = 6, mean = 0, sd = 1) )
+```
+
+```{r dat4-code-check}
+grade_code()
+```
+
+### W10
+
+Recall how rnorm works:
+
+Create n = 6 responses divided into two groups, one with a mean of 5, and one with a mean of 10, each has a standard deviation of 1 and both sample from a normal distribution
+
+```{r twomeans, exercise = TRUE}
+rnorm(n = 6, mean = , sd = )
+```
+
+```{r twomeans-solution}
+rnorm(n = 6, mean = c(5, 10), sd = 1)
+```
+
+```{r twomeans-code-check}
+grade_code()
+```
+
+Using the code above, create a data frame in which there are two factors crossed by three groups and the means differ between the groups
+
+
+```{r dat5, exercise = TRUE}
+data.frame(group = rep(),
+            response = rnorm() )
+```
+
+
+<div id="dat5-hint">
+**Hint:** Repeat the vector three times.
+</div>
+
+
+
+```{r dat5-solution}
+data.frame(group = rep(letters[1:2], times = 3),
+            response = rnorm(n = 6, mean = c(5, 10), sd = 1) )
+```
+
+
+### FUN FUN FUN
+
+The following was on Twitter yesterday.  Can you imagine the solution in your head? Try:
+
+```{r function1, exercise = TRUE}
+f <- function(x) {
+  f <- function(x) {
+    f <- function() {
+      x ^ 2
+    }
+    f() + 1
+  }
+  f(x) * 2
+}
+f(n)
+```
+
+
+```{r function1-solution}
+f <- function(x) {
+  f <- function(x) {
+    f <- function() {
+      x ^ 2
+    }
+    f() + 1
+  }
+  (y) * 2
+}
+f(10)
+```
+
+### Acknowledgments
+
+The warmup exercises are from Ariel Muldoon's tutorial on simulation, with only minor modifications: https://aosmith.rbind.io
+
+
+
+
+

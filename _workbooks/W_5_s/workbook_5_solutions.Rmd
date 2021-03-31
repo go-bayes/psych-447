@@ -1,0 +1,441 @@
+---
+title: "Week 5 workbook solutions"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 3
+    highlight: kate
+---
+
+```{r setup, include=FALSE}
+# setup
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  layout = "l-body-outset",
+  fig.width= 12,
+  fig.height= 10,
+  collapse =TRUE,
+  R.options = list(width = 60)
+)
+```
+```{r  libraries}
+### Libraries
+library("tidyverse")
+library("patchwork")
+library("lubridate")
+library("kableExtra")
+library("gtsummary")
+```
+
+```{r  nzdata}
+# read data
+nz_0 <- readr::read_csv2(
+  url(
+    "https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"
+  )
+)
+
+# to relevel kessler 6 variables
+f <-
+  c(
+    "None Of The Time",
+    "A Little Of The Time",
+    "Some Of The Time",
+    "Most Of The Time",
+    "All Of The Time"
+  )
+
+# get data into shape
+nz <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(male_id = as.factor(Male)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)
+
+```
+```{r pearson_lee_data}
+### Import `Pearson and Lee` mother's and daughters data
+md_df <- data.frame(read.table(
+  url(
+    "https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"
+  ),
+  header = TRUE
+))
+# Center mother's height for later example
+md_df <- md_df %>%
+  dplyr::mutate(mother_height_c = as.numeric(scale(
+    mother_height, center = TRUE, scale = FALSE
+  )))
+dplyr::glimpse(md_df)
+```
+
+# In 1903, Pearson and Lee collected 5,524 observations from mother/daughter height pairs. See lecture 5 for details
+
+
+### Notes
+
+**For all exercises below, use only the 2019 wave of the `nz` dataset.**
+
+
+## Q1. Create a descriptive table and a descriptive graph for the `HLTH.Weight` and `HLTH.Height` variables in the `nz` dataset
+
+Select `HLTH.Weight`, `HLTH.Height` from the nz dataset. 
+
+Filter only the 2019 wave.
+
+Create a descriptive table and graph these two variables
+
+Annotate your workflow (at each step, describe what you are doing and why).
+
+### Solution 
+
+
+```{r   layout = "l-body-outset"}
+library(gtable)
+# select focal variables and rename them for clarity
+nzdat <- nz %>%
+  dplyr::filter(Wave == 2019) %>%
+  dplyr::select(HLTH.Weight, HLTH.Height, male_id) %>%
+  dplyr::rename(weight = HLTH.Weight,
+                height = HLTH.Height) %>%
+  dplyr::select(weight, height, male_id) %>%
+  dplyr::mutate(weight_c = as.numeric(scale(
+    weight, scale = F, center = TRUE
+  )))
+
+# create table
+nzdat %>%
+  dplyr::select(weight,
+                height) %>%
+  gtsummary::tbl_summary(
+    #by = Wave,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} / {N} ({p}%)"
+    ),
+    digits = all_continuous() ~ 2,
+    missing_text = "(Missing)"
+  ) %>%
+  bold_labels() 
+```
+
+
+
+Here's another approach:
+
+
+```{r   layout = "l-body-outset"}
+library(table1)
+
+# filter 2019 wave
+nz1 <- nz %>%
+  dplyr::filter(Wave == 2019)
+
+# nicer labels
+table1::label(nz1$HLTH.Weight)     <- "Weight"
+table1::label(nz1$HLTH.Height)     <- "Height"
+
+# table
+table1::table1(~ HLTH.Weight + HLTH.Height, data = nz1)     
+```
+
+
+
+Create graph
+
+```{r   layout = "l-body-outset"}
+nzdat1 <- nzdat%>%
+    dplyr::filter(!is.na(weight),
+                  !is.na(height),
+                  !is.na(male_id)) # filter na's for density plots
+  
+weight_density <-ggplot2::ggplot(data = nzdat1, aes(x = weight)) + geom_density(fill = "chocolate2") + 
+  labs(title = "Density plot of weight of NZ sample years 2019/2020") + theme_classic()
+
+height_density <-ggplot2::ggplot(data = nzdat1, aes(x = height)) + geom_density(fill ="blue2") + 
+  labs(title = "Density plot of height of NZ sample years 2019/2020") + theme_classic()
+
+weight_density / height_density + plot_annotation(tag_levels = 'a')
+```
+
+## Q2. Write up a sample summary of the `HLTH.Weight` and `HLTH.Height` variables in the `nz` dataset in APA style. 
+
+Using the analysis in Q1, describe Height and Weight in the `nz` dataset
+
+Write brief APA methods summary for these two variables. 
+
+Note: *if useful, use the 'male_id' variable to clarify interesting or puzzling features of the `HLTH.Weight` and `HLTH.Height` responses.
+
+[NZAVS data dictionary](https://www.dropbox.com/s/e7krce01taya8a1/Copy%20of%20NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+
+
+#### Solution
+
+Why aren't the distributions of height and weight normal? Likely there is a hidden co-variate. 
+
+
+Let's assess whether there might be differences in these parameters that  might owe to sex.
+
+```{r   layout = "l-body-outset"}
+# plot of weight ~ is_male
+weight_density2 <-
+  ggplot2::ggplot(data = nzdat1, aes(x = weight, fill = male_id)) +
+  geom_density() +
+  labs(title = "Density plot of weight of NZ sample years 2019/2020") +
+  theme_classic() +
+  facet_grid(. ~ male_id)
+weight_density2 <-
+  weight_density2 + 
+  aes(fill = male_id) + 
+  scale_fill_viridis_d() # nicer colour
+
+# plot of height ~ is_male
+height_density2 <-
+  height_density2 <-
+  ggplot2::ggplot(data = nzdat1, aes(x = height, fill = male_id)) +
+  geom_density() +
+  labs(title = "Density plot of height of NZ sample years 2019/2020") +
+  theme_classic() +
+  facet_grid(. ~ male_id)  + 
+  aes(fill = male_id) +  
+  scale_fill_viridis_d() # nicer colour
+
+height_density2 <- height_density2 + aes(fill = male_id)
+weight_density2 / height_density2 + plot_annotation(tag_levels = 'a')
+```
+
+
+
+## Q3. Regress height ~ weight and report results
+
+Using the `nz` dataset, write a regression model for height as predicted by weight. 
+
+Create a table for your results. 
+
+Create a graphs/graphs to clarify the results of your regression model. 
+
+Briefly report your results. 
+
+
+#### Solution
+
+Model:
+
+```{r}
+# regression of height ~ weight
+mod1 <- lm(height ~ weight_c, data = nzdat)
+```
+
+Table:
+
+```{r   layout = "l-body-outset"}
+sjPlot::tab_model(mod1)
+```
+
+Prediction
+
+```{r layout = "l-body-outset"}
+sjPlot::tab_model(mod1)
+plot(ggeffects::ggpredict(mod1,terms = "weight_c"))
+```
+
+
+Briefly report your results. (note: please replace "significant" with "statistically significant.)
+
+```{r   layout = "l-body-outset"}
+report::report(mod1)
+```
+
+## Q4. Regress height ~ male_id and report results
+
+
+Using the `nz` dataset, write a regression model for height as predicted by `male_id` 
+
+Create a table for your results. 
+
+Create a graph/graphs to clarify the results of your regression model. 
+
+Briefly report your results. 
+
+#### Solution
+
+Model and table:
+
+```{r   layout = "l-body-outset"}
+# regression of height ~ weight
+mod2 <- lm(height ~ male_id, data = nzdat)
+sjPlot::tab_model(mod2)
+```
+
+Graph:
+
+```{r   layout = "l-body-outset"}
+# plot over the range of the data
+pl1<- plot(
+  ggeffects::ggpredict(mod2, terms = "male_id [all]"),
+  add.data = TRUE,
+  dot.alpha = .2
+) 
+pl1 + 
+  scale_y_continuous(limits = c(1.2, 2.1)) +  # range of data
+  geom_point(colour = c("brown2", "cadetblue2")) 
+```
+
+
+Report
+
+```{r   layout = "l-body-outset"}
+report::report(mod1)
+```
+## Q5. Regression to predict
+
+Using the regression coefficients from the Pearson and Lee 1903 dataset, predict the heights of daughters of women in the `nz` dataset. 
+
+### Solutoin 
+
+```{r   layout = "l-body-outset"}
+# model for daughter height from mother height
+mpf<- lm(daughter_height ~ mother_height, data = md_df)
+
+# create data frame of not_male's in 2019
+# Notice problem. not_male != woman
+# additionally, woman != mother! 
+
+nz2 <-nzdat %>%
+  filter(male_id == "Not_Male")%>% # not_males
+  dplyr::select(height) %>% # variable of interest
+  dplyr::mutate(mother_height = height * 39.36)%>% # Convert meters to inches
+  dplyr::select(mother_height)%>%
+  dplyr::arrange((mother_height)) 
+
+# find min and max heights, store as objects 
+mnh<-min(nz2$mother_height, na.rm = TRUE)
+mxh<-max(nz2$mother_height, na.rm = TRUE)
+
+# expand grid, use stored objects to define boundaries.
+ndat2<-expand.grid(mother_height = seq(from = mnh, to = mxh, length.out=200))
+
+# use the `predict` function to create a new response using the pearson and fox regression model
+
+pr2<- predict(mpf, type = "response", interval = "confidence", newdata =ndat2)
+
+# create a new dataframe for the response variables, following the method in lecture 5
+
+# combine variables into a data frame
+newdata2 <- data.frame(ndat2,pr2)
+
+# graph the expected average hypothetical heights of "daughters"  
+predplot2 <-
+  ggplot(data = newdata2, aes(x = mother_height, y = fit))  +
+  geom_line(colour = "cadetblue")  +  geom_errorbar(aes(ymin = lwr, ymax = upr), width = .1) + scale_x_continuous(limits = c(50, 75)) + scale_y_continuous(limits = c(50, 75)) + theme_classic()  +
+  xlab("NZ 2019 female population") +
+  ylab("predicted daughter heights in inches") +
+  labs(title = "Regression prediction for hypothetical daughter heights of NZ population in 2019 ")
+
+# plot
+predplot2
+```
+
+## Q6. Bonus, not marked
+
+On average, how much taller or shorter are women in New Zealand as sampled in 2019 `nz` dataset compared with women in 1903 as sampled in the Pearson and Lee dataset. 
+
+### Solution 
+
+```{r   layout = "l-body-outset"}
+#create var for 1903 dataset
+md_df2 <- md_df %>%
+  dplyr::select(mother_height, daughter_height) %>%
+  tidyr::pivot_longer(everything(),
+                      names_to = c("height")) %>%
+  dplyr::select(value) %>%
+  dplyr::rename(f_height = value) %>%
+  dplyr::mutate(is_2019 = factor(rep("1903", nrow(.)))) # create identifier
+
+# create var for 2019 dataset
+nz_df2 <-
+  nz2 %>%  # dataset with only women and height transformed to inches
+  dplyr::rename(f_height = mother_height) %>%
+  dplyr::mutate(is_2019 = factor(rep("2019", nrow(.))))
+
+# combine data frames row-wise
+rdf <- rbind(md_df2, nz_df2)
+
+# look at data structure
+dplyr::glimpse(rdf)
+```
+
+Look at heights in sample 
+
+```{r   layout = "l-body-outset"}
+ggplot2::ggplot(data = rdf, aes(x= is_2019, y= f_height, fill = is_2019))+ geom_boxplot(notch = TRUE) + 
+  labs(title = "Differences in female height 1903/2019") + theme_classic() + scale_fill_viridis_d()
+```
+
+
+Predict heights out of sample
+
+```{r   layout = "l-body-outset"}
+mod3<-lm(f_height ~   is_2019, data = rdf)
+sjPlot::tab_model(mod3)
+```
+
+Women in 2019 are taller
+
+```{r   layout = "l-body-outset"}
+report::report(mod3)
+```
+
+
+Graph:
+```{r}
+plot(
+  ggeffects::ggpredict(mod3, terms = "is_2019"),
+  add.data = F,
+  dot.alpha = .2
+) + labs(title = "Predicted difference in female heights 1903/2019") + 
+  xlab("Study year") + 
+  ylab ("Predicted femal height (inches)")
+```
+
+Graph with predicted points:
+
+```{r}
+plot(
+  ggeffects::ggpredict(mod3, terms = "is_2019"),
+  add.data = F,
+  dot.alpha = .2
+) + labs(title = "Predicted difference in female heights 1903/2019") + 
+  xlab("Study year") + 
+  ylab ("Predicted femal height (inches)")
+```
+
+
+
