@@ -358,7 +358,7 @@ f <- function(x) {
     }
     f() + 1
   }
-  (y) * 2
+  f(x) * 2
 }
 f(10)
 ```
@@ -366,6 +366,9 @@ f(10)
 ### Acknowledgments
 
 These warmup exercises are derived with modification from Ariel Muldoon's tutorial on simulation: https://aosmith.rbind.io
+
+
+
 
 
 
