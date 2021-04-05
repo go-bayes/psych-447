@@ -28,16 +28,16 @@ Room: EA402
 
 ## Names and contact details
 
-Lecturer & course coordinator: Prof. Joseph Bulbulia 
+Course coordinator: Prof. Joseph Bulbulia 
 Email: joseph.bulbulia@vuw.ac.nz 
 
-Lecturer & workshop coordinator: Johannes Karl
+Course administration: Johannes Karl
 Email: johannes.karl@vuw.ac.nz
 
 
 ## Learning objectives
 
-This course offers a gentle introduction to the R statistical programming language with practical applications for psychological science. We start with basic coding and workflow protocols, data wrangling and visualisation, and elementary regression, and gradually progress to more complex multilevel models.  The practical skills you acquire will prepare you for advanced research in psychological science  as well as for work in other areas of science, government, and industry. No prior familiarity with R or computer programming is required. 
+This course is introduction to the R statistical programming language with practical applications for postgraduate students in psychological science. We start with basic coding and workflow protocols, data wrangling and visualisation, and elementary regression, and gradually progress to more complex multilevel models.  The practical skills you acquire will prepare you for advanced research in psychological science  as well as for work in other areas of science, government, and industry. No prior familiarity with R or computer programming is required. 
 
 
 ## Where to find material

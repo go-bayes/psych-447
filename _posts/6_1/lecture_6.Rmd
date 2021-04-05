@@ -141,11 +141,13 @@ all.equal(ds , ds3)
 Indeed, these differences are large enough to detect visually":
 
 ```{r layout="l-body-outset", fig.width=10, fig.height=10}
+
 p2 <- ggplot2::qplot(ds3) + labs(title = "2d random number list")
 
 # plot two graphs, each with different random samples
 p1 + p2 + 
   plot_annotation("Random samples",  tag_levels = 'i')
+
 ```
 
 
@@ -335,12 +337,15 @@ What would a postive linear relationship look like?
 
 Simulation can help us to address this question too.
 
-```{r}
+```{r code_folding = FALSE}
 N <- nrow(md_df)
 # average mother height
+set.seed(123)
+md_df$daughter_height_c = scale(md_df$daughter_height, scale = FALSE) # center but not scale
+md_df$mother_height_c = scale(md_df$mother_height, scale = FALSE) # center but not scale
 mh_fake_c <- runif(N,
-  min = min(md_df$mother_height_c),
-  max = max(md_df$mother_height_c))
+  min = min(as.numeric(md_df$mother_height_c), na.rm=TRUE),
+  max = max(as.numeric(md_df$mother_height_c), na.rm = TRUE))
 
 # let's take the intercept as the average height of daughters
 a <- rnorm(N, mean = , mean(md_df$daughter_height), sd = 5)
@@ -697,7 +702,7 @@ sjPlot::tab_model(ms2)
 
 Simulate two groups with mean = 6 and mean = 12
 
-```{r}
+```{r code_folding = FALSE}
 cdf <- data.frame(group = rep(letters[1:2], length.out = 100), # 2 groups
                   response = rnorm(n = 100, mean = c(3, 12), sd = 1)) # mean of 3 mean of
 
@@ -706,13 +711,13 @@ head(cdf)
 
 Model:
 
-```{r}
+```{r code_folding = FALSE}
 m_gr<- lm(response ~ -1 +  group, data = cdf)
 ```
 
 Results
 
-```{r}
+```{r code_folding = FALSE}
 sjPlot::tab_model(m_gr)
 ```
 
@@ -720,7 +725,7 @@ sjPlot::tab_model(m_gr)
 
 ### Is imbalance in my study causing a problem?
 
-```{r}
+```{r code_folding = FALSE}
 ### Is imbalance wrecking my inference? 
 set.seed(123)
 N <- 120
@@ -739,7 +744,7 @@ sjPlot::tab_model(sim_cells)
 
 This isn't too convincing. We need to replicate the model many times
 
-```{r}
+```{r code_folding = FALSE}
 # Make a function for the simulation
 set.seed(12)
 test_fun = function() {

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://vuw-psych-447.netlify.app/about.html</loc>
-    <lastmod>2021-03-02T15:13:35+13:00</lastmod>
+    <lastmod>2021-04-05T17:02:02+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/assessments.html</loc>
@@ -14,11 +14,11 @@
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/index_workbooks.html</loc>
-    <lastmod>2021-03-31T20:36:37+13:00</lastmod>
+    <lastmod>2021-04-05T16:35:49+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/</loc>
-    <lastmod>2021-03-31T21:37:25+13:00</lastmod>
+    <lastmod>2021-04-05T16:36:58+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/posts/12_1/</loc>
@@ -93,12 +93,16 @@
     <lastmod>2021-02-24T18:56:24+13:00</lastmod>
   </url>
   <url>
-    <loc>https://vuw-psych-447.netlify.app/workbooks/W_5_s/</loc>
-    <lastmod>2021-03-31T20:38:07+13:00</lastmod>
+    <loc>https://vuw-psych-447.netlify.app/workbooks/W_6_s/</loc>
+    <lastmod>2021-04-05T16:35:31+12:00</lastmod>
   </url>
   <url>
-    <loc>https://vuw-psych-447.netlify.app/workbooks/W_6/</loc>
-    <lastmod>2021-03-31T21:50:28+13:00</lastmod>
+    <loc>https://vuw-psych-447.netlify.app/workbooks/W_4/</loc>
+    <lastmod>2021-04-01T19:50:52+13:00</lastmod>
+  </url>
+  <url>
+    <loc>https://vuw-psych-447.netlify.app/workbooks/W_5_s/</loc>
+    <lastmod>2021-03-31T20:38:07+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_4_s/</loc>
@@ -119,10 +123,6 @@
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_2_s/</loc>
     <lastmod>2021-03-17T00:02:20+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/workbooks/W_4/</loc>
-    <lastmod>2021-03-17T01:32:36+13:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_3/</loc>
