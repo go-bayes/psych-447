@@ -12,6 +12,7 @@ output:
   distill::distill_article:
     self_contained: false
     toc: true
+bibliography: references.bib
 ---
 
 ```{r echo=F}
@@ -39,22 +40,23 @@ if (!require(rethinking)) {
 }
 ```
 
+## Required readings
+
+Required readings are as follows:
+
+- @rohrer2018 [link](https://journals.sagepub.com/doi/full/10.1177/2515245917745629)
+- @barrett2021 [link]()
 
 
-
-# What is causal confounding? 
-
+## What is causal confounding?
 
 ```{r figopen, echo=F}
 knitr::include_graphics("op2.png")
 ```
 
-
-# The difference between prediction and explanation? 
-
+## The difference between prediction and explanation?
 
 ## Examples of confounding
-
 
 ```{r echo = FALSE, include = FALSE}
 N <-100
@@ -69,7 +71,6 @@ md<-lm(mar ~ age, data = df)
 summary(md)
 sjPlot::plot_model(md)
 ```
-
 
 ```{r echo = FALSE, include = FALSE}
 ## Confound 
