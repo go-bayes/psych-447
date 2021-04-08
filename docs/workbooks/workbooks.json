@@ -17,6 +17,27 @@
     "input_file": "workbook_6_solutions.utf8.md"
   },
   {
+    "path": "workbooks/W_5/",
+    "title": "Week 5 workbook",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      },
+      {
+        "name": "Johannes Karl",
+        "url": "https://johannes-karl.com"
+      }
+    ],
+    "date": "2021-04-08",
+    "categories": [],
+    "contents": "\n\nContents\nSetup\nLibraries\nImport nz data\nImport Pearson and Lee mother’s and daughters data\nNote\n\nQ1. Create a descriptive table and a descriptive graph for the HLTH.Weight and HLTH.Height variables in the nz dataset\nQ2. Write up a sample summary of the HLTH.Weight and HLTH.Height variables in the nz dataset in APA style.\nQ3. Regression height ~ weight and report results\nQ4. Regress height ~ male_id and report results\nQ5. Regression to predict\nQ6. Bonus, not marked\n\nSetup\nLibraries\n\n\nlibrary(tidyverse)\nlibrary(patchwork)\nlibrary(lubridate)\nlibrary(kableExtra)\nlibrary(gtsummary)\n\n\n\nImport nz data\n\n\n# read data\nnz_0 <- readr::read_csv2(url(\"https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv\"))\n\n# to relevel kessler 6 variables\nf<-c(\"None Of The Time\",\"A Little Of The Time\",\"Some Of The Time\",  \"Most Of The Time\", \"All Of The Time\")\n\n# get data into shape\nnz <- nz_0 %>%\n  dplyr::mutate_if(is.character, factor) %>%\n  select(\n    -c(\n      SWB.Kessler01,\n      SWB.Kessler02,\n      SWB.Kessler03,\n      SWB.Kessler04,\n      SWB.Kessler05,\n      SWB.Kessler06\n    )\n  ) %>%\n  dplyr::mutate(Wave = as.factor(Wave)) %>%\n  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%\n  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%\n  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%\n  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%\n  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%\n  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%\n  dplyr::mutate(Wave = as.factor(Wave)) %>%\n  dplyr::mutate(male_id = as.factor(Male)) %>%\n  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)\n\n\n\nImport Pearson and Lee mother’s and daughters data\n\n\nmd_df <- data.frame(read.table(url(\"https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt\"), header=TRUE))\n# Center mother's height for later example\nmd_df <- md_df %>%\n  dplyr::mutate(mother_height_c = as.numeric(scale(mother_height, center = TRUE, scale = FALSE)))\ndplyr::glimpse(md_df)\n\n\nRows: 5,524\nColumns: 3\n$ daughter_height <dbl> 52.5, 52.5, 53.5, 53.5, 55.5, 55.5, 55.5, 55…\n$ mother_height   <dbl> 59.5, 59.5, 59.5, 59.5, 59.5, 59.5, 59.5, 59…\n$ mother_height_c <dbl> -2.9987328, -2.9987328, -2.9987328, -2.99873…\n\n# In 1903, Pearson and Lee collected 5,524 observations from mother/daughter height pairs. See lecture 5 for details\n\n\n\nNote\nFor all exercises below, use only the 2019 wave of the nz dataset.\nQ1. Create a descriptive table and a descriptive graph for the HLTH.Weight and HLTH.Height variables in the nz dataset\nSelect HLTH.Weight, HLTH.Height from the nz dataset.\nFilter only the 2019 wave.\nCreate a descriptive table and graph these two variables\nAnnotate your workflow (at each step, describe what you are doing and why).\nQ2. Write up a sample summary of the HLTH.Weight and HLTH.Height variables in the nz dataset in APA style.\nUsing the analysis in Q1, describe Height and Weight in the nz dataset\nWrite brief APA methods summary for these two variables.\nNote: *if useful, use the ‘male_id’ variable to clarify interesting or puzzling features of the HLTH.Weight and HLTH.Height responses.\nNZAVS data dictionary\nQ3. Regression height ~ weight and report results\nUsing the nz dataset, write a regression model for height as predicted by weight.\nCreate a table for your results.\nCreate a graphs/graphs to clarify the results of your regression model.\nBriefly report your results.\nQ4. Regress height ~ male_id and report results\nUsing the nz dataset, write a regression model for height as predicted by male_id\nCreate a table for your results.\nCreate a graphs/graphs to clarify the results of your regression model.\nBriefly report your results.\nQ5. Regression to predict\nUsing the regression coefficients from the Pearson and Lee 1903 dataset\nPredict the heights of daughters of women in the nz dataset.\nQ6. Bonus, not marked\nOn average, how much taller or shorter are women in New Zealand as sampled in 2019 nz dataset compared with women in 1903 as sampled in the Pearson and Lee dataset.\nClarify your inference.\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-04-08T19:59:50+12:00",
+    "input_file": "workbook_5.utf8.md"
+  },
+  {
     "path": "workbooks/W_4/",
     "title": "Workbook 4",
     "description": {},
@@ -74,27 +95,6 @@
     "input_file": {},
     "preview_width": 2304,
     "preview_height": 1920
-  },
-  {
-    "path": "workbooks/W_5/",
-    "title": "Week 5 workbook",
-    "description": {},
-    "author": [
-      {
-        "name": "Joseph Bulbulia",
-        "url": "https://josephbulbulia.netlify.app"
-      },
-      {
-        "name": "Johannes Karl",
-        "url": "https://johannes-karl.com"
-      }
-    ],
-    "date": "2021-03-24",
-    "categories": [],
-    "contents": "\n\nContents\nSetup\nLibraries\nImport nz data\nImport Pearson and Lee mother’s and daughters data\nNote\n\nQ1. Create a descriptive table and a descriptive graph for the HLTH.Weight and HLTH.Height variables in the nz dataset\nQ2. Write up a sample summary of the HLTH.Weight and HLTH.Height variables in the nz dataset in APA style.\nQ3. Regression height ~ weight and report results\nQ4. Regress height ~ male_id and report results\nQ5. Regression to predict\nQ6. Bonus, not marked\n\nSetup\nLibraries\n\n\nlibrary(tidyverse)\nlibrary(patchwork)\nlibrary(lubridate)\nlibrary(kableExtra)\nlibrary(gtsummary)\n\n\n\nImport nz data\n\n\n# read data\nnz_0 <- readr::read_csv2(url(\"https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv\"))\n\n# to relevel kessler 6 variables\nf<-c(\"None Of The Time\",\"A Little Of The Time\",\"Some Of The Time\",  \"Most Of The Time\", \"All Of The Time\")\n\n# get data into shape\nnz <- nz_0 %>%\n  dplyr::mutate_if(is.character, factor) %>%\n  select(\n    -c(\n      SWB.Kessler01,\n      SWB.Kessler02,\n      SWB.Kessler03,\n      SWB.Kessler04,\n      SWB.Kessler05,\n      SWB.Kessler06\n    )\n  ) %>%\n  dplyr::mutate(Wave = as.factor(Wave)) %>%\n  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%\n  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%\n  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%\n  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%\n  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%\n  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%\n  dplyr::mutate(Wave = as.factor(Wave)) %>%\n  dplyr::mutate(male_id = as.factor(Male)) %>%\n  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)\n\n\n\nImport Pearson and Lee mother’s and daughters data\n\n\nmd_df <- data.frame(read.table(url(\"https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt\"), header=TRUE))\n# Center mother's height for later example\nmd_df <- md_df %>%\n  dplyr::mutate(mother_height_c = as.numeric(scale(mother_height, center = TRUE, scale = FALSE)))\ndplyr::glimpse(md_df)\n\n\nRows: 5,524\nColumns: 3\n$ daughter_height <dbl> 52.5, 52.5, 53.5, 53.5, 55.5, 55.5, 55.5, 55…\n$ mother_height   <dbl> 59.5, 59.5, 59.5, 59.5, 59.5, 59.5, 59.5, 59…\n$ mother_height_c <dbl> -2.9987328, -2.9987328, -2.9987328, -2.99873…\n\n# In 1903, Pearson and Lee collected 5,524 observations from mother/daughter height pairs. See lecture 5 for details\n\n\n\nNote\nFor all exercises below, use only the 2019 wave of the nz dataset.\nQ1. Create a descriptive table and a descriptive graph for the HLTH.Weight and HLTH.Height variables in the nz dataset\nSelect HLTH.Weight, HLTH.Height from the nz dataset.\nFilter only the 2019 wave.\nCreate a descriptive table and graph these two variables\nAnnotate your workflow (at each step, describe what you are doing and why).\nQ2. Write up a sample summary of the HLTH.Weight and HLTH.Height variables in the nz dataset in APA style.\nUsing the analysis in Q1, describe Height and Weight in the nz dataset\nWrite brief APA methods summary for these two variables.\nNote: *if useful, use the ‘male_id’ variable to clarify interesting or puzzling features of the HLTH.Weight and HLTH.Height responses.\nNZAVS data dictionary\nQ3. Regression height ~ weight and report results\nUsing the nz dataset, write a regression model for height as predicted by weight.\nCreate a table for your results.\nCreate a graphs/graphs to clarify the results of your regression model.\nBriefly report your results.\nQ4. Regress height ~ male_id and report results\nUsing the nz dataset, write a regression model for height as predicted by male_id\nCreate a table for your results.\nCreate a graphs/graphs to clarify the results of your regression model.\nBriefly report your results.\nQ5. Regression to predict\nUsing the regression coefficients from the Pearson and Lee 1903 dataset\nPredict the heights of daughters of women in the nz dataset.\nQ6. Bonus, not marked\nOn average, how much taller or shorter are women in New Zealand as sampled in 2019 nz dataset compared with women in 1903 as sampled in the Pearson and Lee dataset.\nClarify your inference.\n\n\n\n",
-    "preview": {},
-    "last_modified": "2021-04-08T18:47:22+12:00",
-    "input_file": {}
   },
   {
     "path": "workbooks/W_2/",

@@ -16,6 +16,7 @@ description: "Workbook 6."
 library('learnr')
 # Comment out the following line if you cannot install grade this:
 gradethis::gradethis_setup()
+#remotes::install_github("rstudio-education/gradethis")
 
 knitr::opts_chunk$set(error = TRUE)
 ```
