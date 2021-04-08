@@ -51,3 +51,6 @@ solutions/*
 /docs/**/*_files/
 
 _workbooks/**/*.html
+_workbooks/**/*_files/
+_workbooks/**/**.html
+
