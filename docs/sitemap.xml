@@ -2,134 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://vuw-psych-447.netlify.app/about.html</loc>
-    <lastmod>2021-04-05T17:02:02+12:00</lastmod>
+    <lastmod>2021-04-08T19:34:05+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/assessments.html</loc>
-    <lastmod>2021-03-16T18:52:09+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/index_labs.html</loc>
-    <lastmod>2021-03-31T15:26:46+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:23+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/index_workbooks.html</loc>
-    <lastmod>2021-04-05T16:35:49+12:00</lastmod>
+    <lastmod>2021-04-08T18:47:23+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/</loc>
-    <lastmod>2021-04-05T16:36:58+12:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/12_1/</loc>
-    <lastmod>2021-03-23T22:23:22+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/11_1/</loc>
-    <lastmod>2021-02-23T15:06:35+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/10_1/</loc>
-    <lastmod>2021-03-23T21:38:34+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/9_1/</loc>
-    <lastmod>2021-03-23T22:24:03+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/8_1/</loc>
-    <lastmod>2021-03-23T22:23:38+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/7_1/</loc>
-    <lastmod>2021-03-23T22:23:36+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/6_1/</loc>
-    <lastmod>2021-03-30T16:10:55+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/5_1/</loc>
-    <lastmod>2021-03-30T11:10:57+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/4_1/</loc>
-    <lastmod>2021-03-31T20:43:47+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/3_1/</loc>
-    <lastmod>2021-03-17T01:36:04+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/2_1/</loc>
-    <lastmod>2021-03-31T13:53:54+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/1_1/</loc>
-    <lastmod>2021-03-18T17:32:19+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/1_2/</loc>
-    <lastmod>2021-02-19T18:35:55+13:00</lastmod>
-  </url>
-  <url>
-    <loc>https://vuw-psych-447.netlify.app/posts/1_3/</loc>
-    <lastmod>2021-02-19T18:36:56+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:23+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/labs/L_4/</loc>
-    <lastmod>2021-03-16T20:26:05+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:21+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/labs/L_3/</loc>
-    <lastmod>2021-03-10T14:59:03+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:21+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/labs/L_2/</loc>
-    <lastmod>2021-03-03T13:43:32+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:21+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/labs/L_1/</loc>
-    <lastmod>2021-02-24T18:56:24+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:21+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_6_s/</loc>
-    <lastmod>2021-04-05T16:35:31+12:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_4/</loc>
-    <lastmod>2021-04-01T19:50:52+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_5_s/</loc>
-    <lastmod>2021-03-31T20:38:07+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_4_s/</loc>
-    <lastmod>2021-03-29T20:29:06+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_5/</loc>
-    <lastmod>2021-03-24T11:54:53+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_2/</loc>
-    <lastmod>2021-03-23T11:06:19+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_3_s/</loc>
-    <lastmod>2021-03-18T17:35:24+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_2_s/</loc>
-    <lastmod>2021-03-17T00:02:20+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_3/</loc>
-    <lastmod>2021-03-10T14:58:42+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
   <url>
     <loc>https://vuw-psych-447.netlify.app/workbooks/W_1/</loc>
-    <lastmod>2021-02-24T18:56:41+13:00</lastmod>
+    <lastmod>2021-04-08T18:47:22+12:00</lastmod>
   </url>
 </urlset>
