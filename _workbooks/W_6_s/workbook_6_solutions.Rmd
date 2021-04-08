@@ -20,7 +20,7 @@ library("emojifont")
 
 ## Warm-up
 
-Download the R markdown file from [here](https://raw.githubusercontent.com/go-bayes/psych-447/main/_workbooks/W_6/w_b6.Rmd)
+Copy the R markdown file from [here](https://github.com/go-bayes/psych-447/blob/main/_workbooks/W_6_s/w_b6.Rmd)
 
 Copy the text and drop it into a blank R markdown file. 
 
