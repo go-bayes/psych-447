@@ -49,3 +49,5 @@ solutions/*
 */solutions/
 
 /docs/**/*_files/
+
+_workbooks/**/*.html
