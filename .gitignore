@@ -9,7 +9,7 @@
 .Ruserdata
 
 # Example code in package build process
-*-Ex.R
+#*-Ex.R
 
 # Output files from R CMD check
 /*.Rcheck/
@@ -25,7 +25,7 @@ vignettes/*.pdf
 .httr-oauth
 
 # Big gifs
-_post/**/*.gif
+#_post/**/*.gif
 # knitr and R markdown default cache directories *_cache/
 
 
