@@ -13,7 +13,7 @@ output:
     self_contained: false
     toc: true
     toc_depth: 3
-    code_folding: true
+    code_folding: false
     highlight: kate
 ---
 
