@@ -17,7 +17,6 @@ output:
     highlight: kate
 ---
 
-
 ```{r setup, echo=FALSE}
 # setup
 knitr::opts_chunk$set(
@@ -57,25 +56,24 @@ devtools::install_github("tjmahr/WrapRmd")
 theme_set(theme_classic())
 ```
 
-
 ```{r echo = FALSE, include = FALSE}
 md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
 # Center mother's height for later example
 ```
 
-
+## Required readings
 
 ## Overview
 
 This week we will:
 
--  Learn how to use R to generate random numbers
--  Use random numbers to simulate data
--  Relate lessons from simulation to lessons from regression.
+-   Learn how to use R to generate random numbers
+-   Use random numbers to simulate data
+-   Relate lessons from simulation to lessons from regression.
 
 ## Learning outcomes
 
-By learning how to simulate data you will better understand what a regression model is doing. 
+By learning how to simulate data you will better understand what a regression model is doing.
 
 Additionally, you will need to understand simulation to follow the seminars on causal inference and multilevel modelling.
 
@@ -117,10 +115,9 @@ ds2 <- rnorm(1000)
 all.equal( ds, ds2 )
 ```
 
+We used `set.seed` to ensure that the same random vector will be generated for our audience. We can also use `set.seed` to ensure that a different vector will be generated.
 
-We used `set.seed` to ensure that the same random vector will be generated for our audience. We can also use `set.seed` to ensure that a different vector will be generated.  
-
-Here we ise a different seed to produce a new random sample; we then check whether the  new simulated sample differs from the previous random sample:
+Here we ise a different seed to produce a new random sample; we then check whether the new simulated sample differs from the previous random sample:
 
 ```{r code_folding=FALSE}
 set.seed(54321)
@@ -137,7 +134,6 @@ We can assess the average by-row difference:
 all.equal(ds , ds3)
 ```
 
-
 Indeed, these differences are large enough to detect visually":
 
 ```{r layout="l-body-outset", fig.width=10, fig.height=10}
@@ -149,7 +145,6 @@ p1 + p2 +
   plot_annotation("Random samples",  tag_levels = 'i')
 
 ```
-
 
 ### `runif`
 
@@ -168,11 +163,9 @@ length(ds4)
 hist(ds4, breaks = 100)
 ```
 
-
-
 ### `rep`
 
-How can we generate random factors. 
+How can we generate random factors.
 
 For this, R's `rep` function, `letters` function, and `LETTERS` function make happy friends. Here's how these functions may be combined:
 
@@ -228,7 +221,7 @@ Create a vector of numbers of a specific length:
 seq(from = 1, to = 45, by = 1)
 ```
 
-17 unit steps: 
+17 unit steps:
 
 ```{r  code_folding=FALSE}
 seq(from = 1, to = 45, by = 17)
@@ -239,7 +232,6 @@ seq(from = 1, to = 45, by = 17)
 ```{r  code_folding=FALSE}
 seq(from = 1, to = 45, length.out = 17)
 ```
-
 
 ### Custom sequences
 
@@ -279,8 +271,7 @@ explore_md <- ggplot2::ggplot(data = md_df,
 explore_md
 ```
 
-
-What would a random relationship look like? 
+What would a random relationship look like?
 
 Simulation can help us to address this question.
 
@@ -332,8 +323,7 @@ library(patchwork)
 fake_md + explore_md  + plot_annotation(tag_levels = "a")
 ```
 
-
-What would a postive linear relationship look like? 
+What would a postive linear relationship look like?
 
 Simulation can help us to address this question too.
 
@@ -387,8 +377,7 @@ sim_plot + real_plot +
 
 ```
 
-What do we learn from the real data that we cannot obtain from the fake data? 
-
+What do we learn from the real data that we cannot obtain from the fake data?
 
 Here's a shortcut we will occasionally use to simulate a dependency
 
@@ -414,12 +403,12 @@ sim_dh4 = rnorm(N, -sim_mh, sd = 5)
 plot(sim_dh4 ~ sim_mh) + title(main = "Qucik simulation of a data dependency with larger standard deviation")
 ```
 
-
 ### We can use simulation to explore potential problems with a sample
 
 We might think there is a relationship when we know (owing to simulation) that there is no relationship.
 
 Do you see a linear relationship?
+
 ```{r  code_folding=FALSE}
 set.seed(123)
 # no relationship between x and y
@@ -432,20 +421,25 @@ summary(bad <-lm(y ~ x , data = bar_df))
 ggplot2::ggplot(bar_df,aes(y,x)) + geom_point() + geom_smooth(method=lm)
 ```
 
-Is this a one off? 
+Is this a one off?
 
 <!-- Someone might try bootstrapping -->
 
 <!-- ```{r} -->
+
 <!-- # library -->
+
 <!-- library(simpleboot) -->
+
 <!-- bader<-simpleboot::lm.boot(bad, R = 1000) -->
+
 <!-- sam<-simpleboot::plot(bader) -->
+
 <!-- perc.lm(bader, p = c(0.1, 0.9)) -->
+
 <!-- ``` -->
 
-
-Go Bayesian?  Note that the default implies a reliable association
+Go Bayesian? Note that the default implies a reliable association
 
 ```{r code_folding = FALSE}
 bad_bayes <- brms::brm(y ~ x, data = bar_df, file = here::here("models", "bad_bayes"))
@@ -455,12 +449,11 @@ bayestestR::describe_posterior( bad_bayes )
 plot( parameters::model_parameters( bad_bayes ) )
 ```
 
-
 We can replicate a result many times, without relying on one seeded draw.
 
-The are two steps. 
+The are two steps.
 
-First we make our one off simulation into a function. We do this so that the simulation can be repeated many times. 
+First we make our one off simulation into a function. We do this so that the simulation can be repeated many times.
 
 Here is a function:
 
@@ -509,16 +502,15 @@ mapped<-map_dfr(sms, broom::tidy)%>%
 sum(mapped$p.value <=.05) / length(mapped$p.value) # we find 5% of the simulations yield "significant values"
 ```
 
-Is this surprising? 
+Is this surprising?
 
-Which proportion is negative and statistically significant? 
-
+Which proportion is negative and statistically significant?
 
 ```{r code_folding = FALSE}
 sum((mapped$estimate < 0) &  mapped$p.value <=.05 )/ length(mapped$estimate) # we find 5% of the simulations yield "significant values"
 ```
 
-And which proportion is positive? 
+And which proportion is positive?
 
 ```{r code_folding = FALSE}
 
@@ -532,34 +524,55 @@ sum((mapped$estimate > 0) &  mapped$p.value <=.05 )/ length(mapped$estimate) # w
 <!-- ```{r  code_folding=FALSE} -->
 
 <!-- ### Simulate a relationship between two variables  -->
+
 <!-- library(ggplot2) -->
+
 <!-- N = 1000 -->
+
 <!-- weight <-runif(N, min = 50, max =100) -->
+
 <!-- b <- rlnorm(N,.78,.1) # "rlnorm" is forcing b to be positive -->
 
 <!-- sigma <- runif(N, 0 , 10 ) -->
+
 <!-- height = weight * b -->
 
 <!-- # simulated height/ weight data -->
+
 <!-- df<-data.frame(height,weight) -->
 
 <!-- m0<-lm(height ~ weight, data = df) -->
+
 <!-- plot(ggeffects::ggpredict(m0, terms = c("weight")), -->
+
 <!--      add.data = TRUE, -->
+
 <!--      dot.alpha = .8) + -->
+
 <!--   labs(x = "simulated weight", -->
+
 <!--        y = "simulated height", -->
+
 <!--        title = "simulated linear relationship") -->
+
 <!-- ``` -->
 
 ### Simulate a non-linear relationship
+
 <!-- #  -->
+
 <!-- #  -->
+
 <!-- # a <-160 -->
+
 <!-- # b <- c(2, 0.75) -->
+
 <!-- # x <- rnorm(100) -->
+
 <!-- # y <- rnorm(100, mean = b[1] * exp(b[2] * x)) -->
+
 <!-- # dat1 <- data.frame(x, y) -->
+
 <!-- # plot(y ~ x , data = dat1) -->
 
 ```{r}
@@ -583,7 +596,6 @@ df1 <- data.frame(height, weight_c, weight)
 
 plot(height ~ weight)
 ```
-
 
 Let's fit a linear model to the data and graph the results
 
@@ -628,8 +640,7 @@ Check the linear model and perform model checks:
 performance::check_model(m1)
 ```
 
-The model looks OK. 
-
+The model looks OK.
 
 Check quadratic model (polynomial = 2)
 
@@ -653,11 +664,11 @@ We can compare model performance:
 performance::compare_performance(m1, m2, m3)
 ```
 
-Which do we prefer? 
+Which do we prefer?
 
 ### Create fake factors
 
-The key thing to remember about regression with factors is that the intercept is intercept as the lowest category of the factor. 
+The key thing to remember about regression with factors is that the intercept is intercept as the lowest category of the factor.
 
 ```{r code_folding = FALSE}
 N <- 200 # number of observations
@@ -682,10 +693,9 @@ sjPlot::plot_model(ms)
 sjPlot::tab_model(ms)
 ```
 
-The key thing to remember about regression with factors is that the intercept is intercept as the lowest category of the factor. 
+The key thing to remember about regression with factors is that the intercept is intercept as the lowest category of the factor.
 
 To see this we can remove the intercept by including `-1` in the model. This recovers contrasts:
-
 
 ```{r code_folding = FALSE}
 #model removing the intercept to show the difference
@@ -698,7 +708,7 @@ sjPlot::plot_model(ms2)
 sjPlot::tab_model(ms2)
 ```
 
-### Simulate a relationship between two factors 
+### Simulate a relationship between two factors
 
 Simulate two groups with mean = 6 and mean = 12
 
@@ -720,8 +730,6 @@ Results
 ```{r code_folding = FALSE}
 sjPlot::tab_model(m_gr)
 ```
-
-
 
 ### Is imbalance in my study causing a problem?
 
@@ -799,8 +807,7 @@ length(sim_lm)
 
 We can use the `purrr` package to generate many replicates of a model.
 
-The simulation suggests that balances of 60/60 is good here. 
-
+The simulation suggests that balances of 60/60 is good here.
 
 ```{r code_folding = FALSE}
 # summarise coefficients 
@@ -814,17 +821,8 @@ mout2<-tab_sim2 %>%
 sum(mout2$p.value <= .05) / length(mout2$p.value)
 ```
 
-
-
 ## Acknowledgments
 
-Much in my approach to teaching simulation owes to Ariel Muldoon. PLease check out Ariel's wonderful R webpage here:
-<https://aosmith.rbind.io>
+Much in my approach to teaching simulation owes to Ariel Muldoon. PLease check out Ariel's wonderful R webpage here: <https://aosmith.rbind.io>
 
-Try out Ariel's tutorial for simulation functions [here](
-https://aosmith.shinyapps.io/tutorial_simulation_helper_functions/#section-simulating-datasets)
-
-
-
-
-
+Try out Ariel's tutorial for simulation functions [here](https://aosmith.shinyapps.io/tutorial_simulation_helper_functions/#section-simulating-datasets)
