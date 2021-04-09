@@ -82,7 +82,7 @@ Additionally, you will need to understand simulation to follow the seminars on c
 -   `sd`: specifies the value of the standard deviation
 -   `mean`: specifies the value of the mean
 
-```{r code_folding=FALSE}
+```{r}
 # seed
 set.seed(123)
 # generate random numbers
@@ -94,14 +94,14 @@ dplyr::glimpse(ds)
 
 We can create a histogram:
 
-```{r code_folding=FALSE}
+```{r }
 p1 <- ggplot2::qplot(ds) + labs(title = "1st random number list")
 p1
 ```
 
 Note that R users frequently shorten the above code, which can be written:
 
-```{r code_folding=FALSE}
+```{r }
 set.seed(123)
 # generate random numbers
 ds2 <- rnorm(1000)
@@ -114,7 +114,7 @@ We used `set.seed` to ensure that the same random vector will be generated for o
 
 Here we ise a different seed to produce a new random sample; we then check whether the new simulated sample differs from the previous random sample:
 
-```{r code_folding=FALSE}
+```{r }
 set.seed(54321)
 ds3 <- rnorm(1000)
 # dplyr::glimpse( ds3 ) # uncomment to glimpse at the data
@@ -124,7 +124,7 @@ identical(ds, ds3)
 
 We can assess the average by-row difference:
 
-```{r code_folding=FALSE}
+```{r }
 #check equality
 all.equal(ds , ds3)
 ```
@@ -145,7 +145,7 @@ p1 + p2 +
 
 We use r uniform to generate continuous data within a point range
 
-```{r code_folding=FALSE}
+```{r }
 set.seed(123)
 # 100 numbers between zero and 50
 ds4 <- runif(n = 100, min = 0, max = 50)
@@ -166,43 +166,43 @@ For this, R's `rep` function, `letters` function, and `LETTERS` function make ha
 
 Create lower case letters:
 
-```{r  code_folding=FALSE}
+```{r  }
 letters[1:3]
 ```
 
 Create upper case letters:
 
-```{r  code_folding=FALSE}
+```{r  }
 LETTERS[4:10]
 ```
 
 Create sequences using `each`
 
-```{r code_folding=FALSE }
+```{r  }
 rep(letters[1:3], each = 3)
 ```
 
 Create sequences using `times`
 
-```{r  code_folding=FALSE}
+```{r  }
 rep( letters[1:3], times = 3 )
 ```
 
 Create uneven sequences:
 
-```{r code_folding=FALSE }
+```{r  }
 rep( letters[1:3], times = c(3, 1, 4) )
 ```
 
 Combine `each` + `times`:
 
-```{r  code_folding=FALSE}
+```{r  }
 rep(letters[1:3], each = 2, times = 3)
 ```
 
 `length.out`
 
-```{r  code_folding=FALSE}
+```{r  }
 rep(letters[1:3], each = 2, length.out = 17)
 ```
 
@@ -212,19 +212,19 @@ Note `length.out` take priority over `times` -- use `length.out` if you have a f
 
 Create a vector of numbers of a specific length:
 
-```{r  code_folding=FALSE}
+```{r  }
 seq(from = 1, to = 45, by = 1)
 ```
 
 17 unit steps:
 
-```{r  code_folding=FALSE}
+```{r  }
 seq(from = 1, to = 45, by = 17)
 ```
 
 17 steps:
 
-```{r  code_folding=FALSE}
+```{r  }
 seq(from = 1, to = 45, length.out = 17)
 ```
 
@@ -232,7 +232,7 @@ seq(from = 1, to = 45, length.out = 17)
 
 We can use vectors within random number generation
 
-```{r  code_folding=FALSE}
+```{r  }
 set.seed(123)
 vdf<-rnorm(n = 20, 
            mean = c(0, 500, 1000, 10000), 
@@ -404,7 +404,7 @@ We might think there is a relationship when we know (owing to simulation) that t
 
 Do you see a linear relationship?
 
-```{r  code_folding=FALSE}
+```{r  }
 set.seed(123)
 # no relationship between x and y
 x = rnorm(n = 10, mean = 0, sd = 1)
@@ -516,7 +516,7 @@ sum((mapped$estimate > 0) &  mapped$p.value <=.05 )/ length(mapped$estimate) # w
 
 ### Simulate a relationship between two variables
 
-<!-- ```{r  code_folding=FALSE} -->
+<!-- ```{r  } -->
 
 <!-- ### Simulate a relationship between two variables  -->
 
