@@ -36,7 +36,7 @@ vignettes/*.pdf
 
 *_cache/
 *models/
-_posts/**/*.html
+#_posts/**/*.html
 _posts/**/*_files/
 #*.DS_Store
 
