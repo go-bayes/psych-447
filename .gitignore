@@ -34,13 +34,11 @@ vignettes/*.pdf
 *.knit.md
 *.txt
 
-.RData
-.Ruserdata
 *_cache/
 *models/
 _posts/**/*.html
 _posts/**/*_files/
-*.DS_Store
+#*.DS_Store
 
 # Solutions
 #
