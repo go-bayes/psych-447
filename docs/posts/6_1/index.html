@@ -1801,7 +1801,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.7.1/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.7.6/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1873,6 +1873,7 @@ gtag('config', 'G-GQF269N0S4');
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#required-readings">Required readings</a></li>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#learning-outcomes">Learning outcomes</a></li>
 <li><a href="#functions-for-simulation">Functions for simulation</a>
@@ -1935,12 +1936,12 @@ Show code
 </div>
 </details>
 <pre><code># Attaching packages (red = needs update)
-✔ insight     0.13.1.1   ✔ bayestestR  0.8.3.1 
-✔ performance 0.7.0.1    ✔ parameters  0.12.0.1
+⚠ insight     0.13.1.1   ⚠ bayestestR  0.8.3.1 
+⚠ performance 0.7.0.1    ⚠ parameters  0.12.0.1
 ✔ see         0.6.2.1    ⚠ effectsize  0.4.3.1 
-✔ correlation 0.6.0.1    ✔ modelbased  0.5.9   
+⚠ correlation 0.6.0.1    ✔ modelbased  0.5.9   
 ✔ report      0.2.0      
-Warnings or errors in CRAN checks for package(s) &#39;bayestestR&#39;, &#39;parameters&#39;, &#39;effectsize&#39;, &#39;correlation&#39;.
+Warnings or errors in CRAN checks for package(s) &#39;bayestestR&#39;, &#39;parameters&#39;, &#39;effectsize&#39;, &#39;correlation&#39;, &#39;see&#39;.
 Restart the R-Session and update packages in red with &#39;easystats::easystats_update()&#39;.</code></pre>
 <details>
 <summary>
@@ -1966,6 +1967,7 @@ Show code
 </div>
 </details>
 </div>
+<h2 id="required-readings">Required readings</h2>
 <h2 id="overview">Overview</h2>
 <p>This week we will:</p>
 <ul>
@@ -2048,7 +2050,8 @@ Show code
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span><span class='op'>(</span><span class='va'>ds3</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"2d random number list"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span><span class='op'>(</span><span class='va'>ds3</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"2d random number list"</span><span class='op'>)</span>
 
 <span class='co'># plot two graphs, each with different random samples</span>
 <span class='va'>p1</span> <span class='op'>+</span> <span class='va'>p2</span> <span class='op'>+</span> 
@@ -2274,16 +2277,15 @@ Show code
 <p>What would a postive linear relationship look like?</p>
 <p>Simulation can help us to address this question too.</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>md_df</span><span class='op'>)</span>
 <span class='co'># average mother height</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>md_df</span><span class='op'>$</span><span class='va'>daughter_height_c</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>md_df</span><span class='op'>$</span><span class='va'>daughter_height</span>, scale <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='co'># center but not scale</span>
+<span class='va'>md_df</span><span class='op'>$</span><span class='va'>mother_height_c</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>md_df</span><span class='op'>$</span><span class='va'>mother_height</span>, scale <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='co'># center but not scale</span>
 <span class='va'>mh_fake_c</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>N</span>,
-  min <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>md_df</span><span class='op'>$</span><span class='va'>mother_height_c</span><span class='op'>)</span>,
-  max <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>md_df</span><span class='op'>$</span><span class='va'>mother_height_c</span><span class='op'>)</span><span class='op'>)</span>
+  min <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>md_df</span><span class='op'>$</span><span class='va'>mother_height_c</span><span class='op'>)</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>,
+  max <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>md_df</span><span class='op'>$</span><span class='va'>mother_height_c</span><span class='op'>)</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># let's take the intercept as the average height of daughters</span>
 <span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N</span>, mean <span class='op'>=</span> , <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>md_df</span><span class='op'>$</span><span class='va'>daughter_height</span><span class='op'>)</span>, sd <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
@@ -2324,7 +2326,6 @@ Show code
                   subtitle <span class='op'>=</span> <span class='st'>"Daughters heights predicted by mother's heights"</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <p><img src="lecture_6_files/figure-html5/unnamed-chunk-23-1.png" width="1152" /></p>
 </div>
 <p>What do we learn from the real data that we cannot obtain from the fake data?</p>
@@ -2378,7 +2379,7 @@ Show code
 </div>
 <h3 id="we-can-use-simulation-to-explore-potential-problems-with-a-sample">We can use simulation to explore potential problems with a sample</h3>
 <p>We might think there is a relationship when we know (owing to simulation) that there is no relationship.</p>
-Do you see a linear relationship?
+<p>Do you see a linear relationship?</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
@@ -3051,10 +3052,6 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 <h3 id="simulate-a-relationship-between-two-factors">Simulate a relationship between two factors</h3>
 <p>Simulate two groups with mean = 6 and mean = 12</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cdf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>, length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>, <span class='co'># 2 groups</span>
                   response <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>100</span>, mean <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>12</span><span class='op'>)</span>, sd <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># mean of 3 mean of</span>
@@ -3062,7 +3059,6 @@ Show code
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>cdf</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <pre><code>  group  response
 1     a  1.898622
 2     b 10.131812
@@ -3073,27 +3069,17 @@ Show code
 </div>
 <p>Model:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m_gr</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>response</span> <span class='op'>~</span> <span class='op'>-</span><span class='fl'>1</span> <span class='op'>+</span>  <span class='va'>group</span>, data <span class='op'>=</span> <span class='va'>cdf</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 </div>
 <p>Results</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>m_gr</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <table style="border-collapse:collapse; border:none;">
 <tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
@@ -3165,10 +3151,6 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 </div>
 <h3 id="is-imbalance-in-my-study-causing-a-problem">Is imbalance in my study causing a problem?</h3>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>### Is imbalance wrecking my inference? </span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
@@ -3186,7 +3168,6 @@ Show code
 <span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>sim_cells</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <table style="border-collapse:collapse; border:none;">
 <tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
@@ -3258,10 +3239,6 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 </div>
 <p>This isn’t too convincing. We need to replicate the model many times</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Make a function for the simulation</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>12</span><span class='op'>)</span>
@@ -3281,7 +3258,6 @@ Show code
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>r_lm</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <pre><code>[1] 20</code></pre>
 </div>
 <p>We can use the <code>purrr</code>and <code>broom</code> packages to generate many replicates of a model and summarise them, and ask: What percentage of simulations yield statistically significant results?</p>
