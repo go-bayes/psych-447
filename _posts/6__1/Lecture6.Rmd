@@ -56,6 +56,11 @@ md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/R
 # Center mother's height for later example
 ```
 
+
+```{r spss-old, echo=F}
+knitr::include_graphics("bibpng1.png")
+```
+
 ## Required readings
 
 ## Overview
