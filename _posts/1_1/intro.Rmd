@@ -391,4 +391,12 @@ xaringanExtra::embed_xaringan(url = "slides.html", ratio = "16:9")
 ```
 
 
+## Religion 
+
+
+```{r}
+knitr::include_graphics("church_growth.gif")
+```
+
+
 
