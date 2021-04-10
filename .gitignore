@@ -38,7 +38,6 @@ vignettes/*.pdf
 *models/
 _posts/**/*.html
 _posts/**/*_files/
-!_posts/6_1/lecture__6_files
 #*.DS_Store
 
 # Solutions
