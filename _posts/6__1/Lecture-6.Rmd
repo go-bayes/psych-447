@@ -57,10 +57,6 @@ md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/R
 ```
 
 
-```{r spss-old, echo=F}
-knitr::include_graphics("bibpng1.png")
-```
-
 ## Required readings
 
 ## Overview
@@ -101,7 +97,7 @@ We can create a histogram:
 
 ```{r }
 p1 <- ggplot2::qplot(ds) + labs(title = "1st random number list")
-p1
+plot(p1)
 ```
 
 Note that R users frequently shorten the above code, which can be written:
