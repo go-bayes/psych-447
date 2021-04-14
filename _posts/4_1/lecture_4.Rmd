@@ -66,7 +66,7 @@ nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-4
 # Note the convention of renaming dataframe when creating a new one:
 # ` nz <-nz_0 %>%... `
 
-f<-c("None Of The Time","A Little Of The Time","Some Of The Time",  "Most Of The Time", "All Of The Time")
+f<-c("None Of The Time","A Little Of The Time", "Some Of The Time",  "Most Of The Time", "All Of The Time")
 
 nz <-nz_0 %>%
   dplyr::mutate_if(is.character, factor) %>%

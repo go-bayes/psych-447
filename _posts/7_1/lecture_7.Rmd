@@ -19,17 +19,29 @@ bibliography: references.bib
 knitr::include_graphics("op.png")
 ```
 
-```{r echo = FALSE, include = FALSE}
+
+## Required readings
+
+Required readings are as follows:
+
+- @rohrer2018 [link](https://journals.sagepub.com/doi/full/10.1177/2515245917745629)
+- @barrett2021 [link]()
+
+
+## Preamble 
+
+Make sure that you install the `rethinking` package and the `ggdag` package.  Note that the rethinking package is not on cran.
+
+```{r echo = TRUE, include = FALSE}
 # packages
 # ```{r install_rethinking}
 # function for installing dependencies
 ipak <- function(pkg){
 new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
 if (length(new.pkg)) 
-    install.packages(new.pkg, dependencies = TRUE)
+    install.packages(new.pkg, dependencies = TRUE) 
 sapply(pkg, require, character.only = TRUE)
 }
-
 # usage
 packages <- c("coda", "plyr", "mvtnorm", "scales", "dagitty")
 ipak(packages)
@@ -38,14 +50,12 @@ ipak(packages)
 if (!require(rethinking)) {
   devtools::install_github("rmcelreath/rethinking")
 }
+
+#next install ggdag
+if (!require(rethinking)) {
+  devtools::install_github("malcolmbarrett/ggdag")
+}
 ```
-
-## Required readings
-
-Required readings are as follows:
-
-- @rohrer2018 [link](https://journals.sagepub.com/doi/full/10.1177/2515245917745629)
-- @barrett2021 [link]()
 
 
 ## What is causal confounding?
