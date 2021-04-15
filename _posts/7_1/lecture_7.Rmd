@@ -185,25 +185,20 @@ We have already encountered multiple regression. Perhaps the most familiar case 
 nz_0 <- as.data.frame(readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv")))
 ```
 
-```{r}
-nz_0$age <- round(nz_0$Age,2)
-nz_0$age
-
-df0<- nz_0 %>%
-  dplyr::filter(Wave == 2019) 
-glimpse(df0)
-%>%
+```{r echo = FALSE}
+df<- nz_0 %>%
+  dplyr::filter(Wave == 2019) %>%
+  dplyr::mutate(age = Age) %>%
   dplyr::select(age, HLTH.Height, Household.INC, Male, Employed, Edu, Id, Wave) %>% # collect variables
   dplyr::filter(Employed == 1) %>% # restrict inference to people who are employed
   dplyr::rename(income = Household.INC, # shorter names
-                not_male = Male) %>%
-  dplyr::mutate(edu_s = scale(Edu)) # standard deviation units for education
+                not_male = Male) 
 
-df['height_cm_c'] = as.data.frame(scale(df$HLTH.Height, center = TRUE, scale = FALSE)*1000) # work around for a bug - center and convert meter units to cm
-
+df['height_cm_c'] = as.data.frame(scale(df$HLTH.Height, center = TRUE, scale = FALSE)*1000) # work around for a bug - center and convert meter units to cmd
 # not working
 df['age_10_c'] = as.data.frame(scale(df$age, center = TRUE, scale = FALSE)/10) # work around for a bug - center and convert to decade units
 
+df['edu_s'] = as.data.frame(scale(df$Edu) )# work around for a bug - center and convert to decade units
 
 ```
 
@@ -228,12 +223,11 @@ Are men expected to make `r coef(model_theory)[[3]]` more than woman? No because
 ```{r}
 model_theory2 <- lm(income ~ not_male, data = df)
 sjPlot::tab_model(model_theory2)
-str(df1)
 ```
 
 We find that women (and others who do not identify as male) are are expected to make `r coef(model_theory2)[[2]]` less than men. 
 
-Note that regression allows us to stratify across other segments of a population by adding more covariates. Let's add education to the model. In the NZAVS education `Edu` is a 10-level factor.  However, for now, we'll think of it as numeric. A standard deviation of `Edu` is `r sd(df1$Edu, na.rm = TRUE)` out of `r min(df1$Edu, na.rm = TRUE)` to `r max(df1$Edu, na.rm = TRUE)`.  Adding `edu_s` to the model we find:
+Note that regression allows us to stratify across other segments of a population by adding more covariates. Let's add education to the model. In the NZAVS education `Edu` is a 10-level factor.  However, for now, we'll think of it as numeric. A standard deviation of `Edu` is `r sd(df$Edu, na.rm = TRUE)` out of `r min(df$Edu, na.rm = TRUE)` to `r max(df$Edu, na.rm = TRUE)`.  Adding `edu_s` to the model we find:
 
 ### Futher adjustments 
 
@@ -320,15 +314,44 @@ However **wherever you have interactions it is essential to graph the results**.
 
 
 ```{r}
-plot(ggeffects::ggpredict(model_theory4, terms = c("not_male","height_cm_c")))
+pp1 <- plot(ggeffects::ggpredict(model_theory4, terms = c("not_male","height_cm_c")))
+pp1
 ```
 
-What we find is a non-linearity.  The model predicts that, on average, short men are expected to make much less than short women. Among women, height differences are not a reliable predictor of household income. By contrast among main, height differences are a reliable predictor. Women tend to be shorter than men by about 13cm
+
+
+The following graph makes it easier to see how male-id fails to predict income whereas the interaction of male-id x income does predict income:
+
+```{r}
+x <- ggeffects::ggpredict(model_theory4, terms = c("height_cm_c","not_male"))
+pp2 <- plot( x )
+pp2
+```
+
+Or consider this graph
+
+```{r}
+pp3 <- plot( x,
+      add.data = TRUE, 
+      jitter = 0.2, 
+      dot.alpha =.05
+      ) + scale_y_continuous(limits = c(0,5e+5))
+
+pp3
+```
+
+This graph graphs height along the x-axis, and plots two different line. What we find is a non-linearity.  The model predicts that, on average, short men are expected to make much less than short women. Among non male-ids, height differences are not a reliable predictor of household income. By contrast among male-ids, height differences are a reliable predictor. non-male-ids tend to be shorter than men by about 13cm
+
+Sample averages:
 
 ```{r}
 df%>%
   summarise(mean(HLTH.Height, na.rm = TRUE))
+```
 
+Sample differences by gender-id:
+
+```{r}
 df%>%
   group_by(not_male)%>%
   summarise(mean(HLTH.Height, na.rm = TRUE))
@@ -418,13 +441,31 @@ performance::compare_performance(model_theory3,model_theory6)
 What about if we were to include age? 
 
 
-```{r eval = FALSE}
-model_theory7 <- lm(income ~ GenCohort + height_cm_c + not_male + edu_s, data = df)
-head(df)
+```{r}
+library("splines")
+model_theory7 <- lm(income ~ bs(age_10_c) + height_cm_c * not_male + edu_s, data = df)
+parameters::parameters(model_theory7)
 ```
 
+
+The model has an improved fit, and explains more, the AIC decreases, but the BIC increases. This is because the BIC penalises the extra parameters.
+
+
 ```{r}
-performance::compare_performance(model_theory3)
+za<-performance::compare_performance(model_theory3, model_theory7) # age, benefit but only if polynomial
+za
+plot(za)
+```
+
+The predicted effect of age (splines)
+
+```{r}
+plot( ggeffects::ggpredict(model_theory7, terms = c("age_10_c")) ) 
+```
+
+
+```{r}
+plot( ggeffects::ggpredict(model_theory7, terms = c("height_cm_c","not_male")) ) 
 ```
 
 
@@ -496,7 +537,7 @@ I'm not goint to spend any more time with ANOVA.  This isn't because I'm dimissi
 
 #### One way ANOVA
 
-```{r include = FALSE}
+```{r eval = FALSE}
 aov(Y ~ Grp, data = data)
 ```
 
@@ -509,13 +550,13 @@ Assumptions:
 
 #### Two way ANOVA
 
-```{r include = FALSE}
+```{r eval = FALSE}
 aov(Y ~ Grp * Male, data = data)
 ```
 
 This model can be written
 
-```{r include = FALSE}
+```{r eval = FALSE}
 aov(Y ~ Grp + Male + Grp:Male, data = data)
 ```
 

@@ -137,7 +137,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["lecture_7_files/anchor-4.2.2/anchor.min.js","lecture_7_files/bowser-1.9.3/bowser.min.js","lecture_7_files/distill-2.2.21/template.v2.js","lecture_7_files/figure-html5/unnamed-chunk-11-1.png","lecture_7_files/figure-html5/unnamed-chunk-12-1.png","lecture_7_files/figure-html5/unnamed-chunk-12-2.png","lecture_7_files/figure-html5/unnamed-chunk-13-1.png","lecture_7_files/figure-html5/unnamed-chunk-3-1.png","lecture_7_files/figure-html5/unnamed-chunk-3-2.png","lecture_7_files/figure-html5/unnamed-chunk-4-1.png","lecture_7_files/figure-html5/unnamed-chunk-8-1.png","lecture_7_files/header-attrs-2.7.1/header-attrs.js","lecture_7_files/header-attrs-2.7.4/header-attrs.js","lecture_7_files/header-attrs-2.7.8/header-attrs.js","lecture_7_files/jquery-1.11.3/jquery.min.js","lecture_7_files/popper-2.6.0/popper.min.js","lecture_7_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_7_files/tippy-6.2.7/tippy-light-border.css","lecture_7_files/tippy-6.2.7/tippy.css","lecture_7_files/tippy-6.2.7/tippy.umd.min.js","lecture_7_files/webcomponents-2.0.0/webcomponents.js","op.png","op2.png","references.bib"]}
+  {"type":"character","attributes":{},"value":["lecture_7_files/anchor-4.2.2/anchor.min.js","lecture_7_files/bowser-1.9.3/bowser.min.js","lecture_7_files/distill-2.2.21/template.v2.js","lecture_7_files/figure-html5/unnamed-chunk-11-1.png","lecture_7_files/figure-html5/unnamed-chunk-12-1.png","lecture_7_files/figure-html5/unnamed-chunk-12-2.png","lecture_7_files/figure-html5/unnamed-chunk-13-1.png","lecture_7_files/figure-html5/unnamed-chunk-22-1.png","lecture_7_files/figure-html5/unnamed-chunk-25-1.png","lecture_7_files/figure-html5/unnamed-chunk-26-1.png","lecture_7_files/figure-html5/unnamed-chunk-28-1.png","lecture_7_files/figure-html5/unnamed-chunk-29-1.png","lecture_7_files/figure-html5/unnamed-chunk-3-1.png","lecture_7_files/figure-html5/unnamed-chunk-3-2.png","lecture_7_files/figure-html5/unnamed-chunk-30-1.png","lecture_7_files/figure-html5/unnamed-chunk-38-1.png","lecture_7_files/figure-html5/unnamed-chunk-4-1.png","lecture_7_files/figure-html5/unnamed-chunk-43-1.png","lecture_7_files/figure-html5/unnamed-chunk-44-1.png","lecture_7_files/figure-html5/unnamed-chunk-45-1.png","lecture_7_files/figure-html5/unnamed-chunk-55-1.png","lecture_7_files/figure-html5/unnamed-chunk-55-2.png","lecture_7_files/figure-html5/unnamed-chunk-56-1.png","lecture_7_files/figure-html5/unnamed-chunk-8-1.png","lecture_7_files/header-attrs-2.7.1/header-attrs.js","lecture_7_files/header-attrs-2.7.4/header-attrs.js","lecture_7_files/header-attrs-2.7.8/header-attrs.js","lecture_7_files/jquery-1.11.3/jquery.min.js","lecture_7_files/popper-2.6.0/popper.min.js","lecture_7_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_7_files/tippy-6.2.7/tippy-light-border.css","lecture_7_files/tippy-6.2.7/tippy.css","lecture_7_files/tippy-6.2.7/tippy.umd.min.js","lecture_7_files/webcomponents-2.0.0/webcomponents.js","op.png","op2.png","references.bib"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -1877,6 +1877,13 @@ gtag('config', 'G-GQF269N0S4');
 <li><a href="#required-readings">Required readings</a></li>
 <li><a href="#preamble">Preamble</a></li>
 <li><a href="#what-is-a-regression-model">What is a regression model</a></li>
+<li><a href="#multiple-regression">Multiple regression</a>
+<ul>
+<li><a href="#futher-adjustments">Futher adjustments</a></li>
+<li><a href="#interactions">Interactions</a></li>
+<li><a href="#model-selection">Model selection</a></li>
+<li><a href="#anova-and-t-test">Anova and T-test</a></li>
+</ul></li>
 <li><a href="#what-is-causal-confounding">What is causal confounding?</a></li>
 <li><a href="#the-difference-between-prediction-and-explanation">The difference between prediction and explanation?</a></li>
 <li><a href="#examples-of-confounding">Examples of confounding</a></li>
@@ -2008,14 +2015,812 @@ speed_s     |        3.93 | 0.42 | [ 3.10,  4.77] |  9.46 | &lt; .001</code></pr
 <p>This examples serves as a reminder about how a regression model works. However it also makes an important point to which we’ll return repeatedly throughout this course:</p>
 <p>The output of a statistical model is is <strong>not</strong> self evident. We must therefore <strong>think</strong> both before and after we write a statistical model. If we don’t think, our statistical models will lead us astray.</p>
 <p>In the remainder of this lecture I’m going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.</p>
-<p>To introduce multiple regression I’m going to follow Richard McElreath’s <strong>Statistical Rethinking</strong>. We have an online version of this book in our library.</p>
+<p>To introduce multiple regression I’m going to follow Richard McElreath’s <strong>Statistical Rethinking</strong>. We have an online version of this book in our library (see the link above.)</p>
+<h2 id="multiple-regression">Multiple regression</h2>
+<p>We have already encountered multiple regression. Perhaps the most familiar case is prediction. Suppose we want to predict someones expected income based on their gender identification. Suppose we theory is true there might be an added income advantage from height. We can include an additional term in our model and evaluate whether or theory is true. Let’s assess this question using the jittered NZAVS dataset</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># turn off scienitific notation</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>scipen <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+
+<span class='co'># model</span>
+<span class='va'>model_theory</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>height_cm_c</span> <span class='op'>+</span> <span class='va'>not_male</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model_theory</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+income
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+142397.64
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+131258.64 – 153536.64
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+height_cm_c
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+138.22
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+61.15 – 215.29
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+not_male [Not_Male]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-9927.30
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-25243.88 – 5389.29
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.204
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1731
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.020 / 0.019
+</td>
+</tr>
+</table>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>nz_0</span><span class='op'>$</span><span class='va'>HLTH.Height</span>, na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 1.694277</code></pre>
+</div>
+<p>The model tells us the following. The expected household income is 1.4239764^{5} for men at sample average height, which is 1.6942769meters. The expected increase in income for each additional centimeter of height is 138.2239286. The expected reduction in income for people who do not identify as male is -9927.2961633</p>
+<p>Are men expected to make -9927.2961633 more than woman? No because on average woman are shorter. If we focus on male-id but remove height we have:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_theory2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>not_male</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model_theory2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+income
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+153753.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+144623.34 – 162882.82
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+not_male [Not_Male]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-28349.98
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-39814.07 – -16885.89
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1736
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.013 / 0.013
+</td>
+</tr>
+</table>
+</div>
+<p>We find that women (and others who do not identify as male) are are expected to make -2.8349981^{4} less than men.</p>
+<p>Note that regression allows us to stratify across other segments of a population by adding more covariates. Let’s add education to the model. In the NZAVS education <code>Edu</code> is a 10-level factor. However, for now, we’ll think of it as numeric. A standard deviation of <code>Edu</code> is 2.5441461 out of 0 to 10. Adding <code>edu_s</code> to the model we find:</p>
+<h3 id="futher-adjustments">Futher adjustments</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_theory3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>height_cm_c</span> <span class='op'>+</span> <span class='va'>not_male</span> <span class='op'>+</span> <span class='va'>edu_s</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model_theory3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+income
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+147759.81
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+136605.32 – 158914.29
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+height_cm_c
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+110.12
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+33.15 – 187.10
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.005</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+not_male [Not_Male]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-17251.89
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-32584.57 – -1919.22
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.027</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+edu_s
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+21228.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+15726.56 – 26729.50
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1710
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.053 / 0.051
+</td>
+</tr>
+</table>
+</div>
+<p>Do height differences make more of a difference for male-id’s than non-male-id’s? To assess this we add an interaction term. <strong>NOTE: we should always center and preferably also scale our interaction terms for the same reason that we should center polynomials: otherwise the multi-collinearity renders the model unstable</strong></p>
+<h3 id="interactions">Interactions</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># model</span>
+<span class='va'>model_theory4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>height_cm_c</span> <span class='op'>*</span> <span class='va'>not_male</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Note that this model is equivalent to:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_theory4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>height_cm_c</span> <span class='op'>+</span> <span class='va'>not_male</span> <span class='op'>+</span> <span class='va'>not_male</span><span class='op'>:</span><span class='va'>height_cm_c</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>The <code>*</code> in the model is merely shorthand for the two main effects <code>height_cm_c + not_male</code> <span class="math inline">\(+\)</span> their interaction <code>not_male:height_cm_c</code>. Note that if we merely wanted to estimate the interaction without also estimating the main effects we would write:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_theory5</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>not_male</span><span class='op'>:</span><span class='va'>height_cm_c</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>parameters</a></span><span class='op'>(</span><span class='va'>model_theory5</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Parameter                         | Coefficient |      SE |               95% CI | t(1728) |      p
+---------------------------------------------------------------------------------------------------
+(Intercept)                       |    1.31e+05 | 3663.35 | [1.24e+05, 1.38e+05] |   35.68 | &lt; .001
+not_male [Male] * height_cm_c     |      258.06 |   47.68 | [  164.53,   351.59] |    5.41 | &lt; .001
+not_male [Not_Male] * height_cm_c |       81.67 |   48.75 | [  -13.95,   177.28] |    1.68 | 0.094 </code></pre>
+</div>
+<p>Such a model tells us that the population household average is about NZD 131,000, and the slope difference for height by gender is three times greater for male-id’s than for non-male-id’s in the population.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>model_theory5</span>, terms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"not_male"</span>, <span class='st'>"height_cm_c"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
+</div>
+<p>Generally you should include the main effects and the interactions of your indicator:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_theory4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>height_cm_c</span> <span class='op'>*</span> <span class='va'>not_male</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Which gives us:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+income
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+134509.30
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+121020.07 – 147998.53
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+height_cm_c
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+233.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+113.38 – 352.90
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+not_male [Not_Male]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-5311.89
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-21251.36 – 10627.58
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.513
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+height_cm_c * not_male<br>[Not_Male]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-161.81
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-318.18 – -5.45
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.043</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1731
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.023 / 0.021
+</td>
+</tr>
+</table>
+</div>
+<p>Whoooah what just happened? There’s huge uncertainty about the main effect of male-id – it is no longer a reliable predictor in this model.</p>
+<p>To assess the magnitude of the uncertainty let’s plot the regression coefficients:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/plot_model.html'>plot_model</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-25-1.png" width="624" /></p>
+</div>
+<p>The main effect of not_male is nearly 35k per year! What’s going on here? Recall that multi-collinearity – or when two indicators are highly correlated, tend to result in large uncertainty in coefficient estimates. Is the interaction messing up the model? Let’s check:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span><span class='op'>&lt;-</span><span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/check_collinearity.html'>check_collinearity</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='co'>## looks ok</span>
+</code></pre>
+</div>
+<pre><code># Check for Multicollinearity
+
+Low Correlation
+
+                 Term  VIF Increased SE Tolerance
+          height_cm_c 4.33         2.08      0.23
+             not_male 1.94         1.39      0.51
+ height_cm_c:not_male 2.87         1.69      0.35</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-26-1.png" width="624" /></p>
+</div>
+<p>As indicated in the graph, the problem isn’t multi-collinearity.</p>
+<p>Does this mean that income is really predicted by height, and gender is a red herring? I have seen regression models interpreted that way.</p>
+<p>It looks that way:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>modelbased</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/modelbased/reference/estimate_means.html'>estimate_means</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>not_male |     Mean |      SE |               95% CI
+----------------------------------------------------
+Male     | 1.34e+05 | 6903.13 | [1.21e+05, 1.48e+05]
+Not_Male | 1.29e+05 | 4312.74 | [1.21e+05, 1.38e+05]
+
+p-values are uncorrected.</code></pre>
+</div>
+<p>However this is comparing male-ids and not-male ids at equivalent levels of height, but we know that non-male-id’s tend to be shorter.</p>
+<p>However <strong>wherever you have interactions it is essential to graph the results</strong>. This is so important I’m going to write it again: <strong>wherever you have interactions it is essential to graph the results</strong>. Tables are notoreously difficult to interpret. So let’s probe further by graphing the model predictions. Recall that we can do this using the <code>ggeffects</code> package.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pp1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>model_theory4</span>, terms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"not_male"</span>,<span class='st'>"height_cm_c"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pp1</span>
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-28-1.png" width="624" /></p>
+</div>
+<p>The following graph makes it easier to see how male-id fails to predict income whereas the interaction of male-id x income does predict income:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>model_theory4</span>, terms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"height_cm_c"</span>,<span class='st'>"not_male"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pp2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span> <span class='va'>x</span> <span class='op'>)</span>
+<span class='va'>pp2</span>
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-29-1.png" width="624" /></p>
+</div>
+<p>Or consider this graph</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pp3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span> <span class='va'>x</span>,
+      add.data <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+      jitter <span class='op'>=</span> <span class='fl'>0.2</span>, 
+      dot.alpha <span class='op'>=</span><span class='fl'>.05</span>
+      <span class='op'>)</span> <span class='op'>+</span> <span class='fu'>scale_y_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>5e+5</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>pp3</span>
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-30-1.png" width="624" /></p>
+</div>
+<p>This graph graphs height along the x-axis, and plots two different line. What we find is a non-linearity. The model predicts that, on average, short men are expected to make much less than short women. Among non male-ids, height differences are not a reliable predictor of household income. By contrast among male-ids, height differences are a reliable predictor. non-male-ids tend to be shorter than men by about 13cm</p>
+<p>Sample averages:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span><span class='op'>%&gt;%</span>
+  <span class='fu'>summarise</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>HLTH.Height</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  mean(HLTH.Height, na.rm = TRUE)
+1                        1.698797</code></pre>
+</div>
+<p>Sample differences by gender-id:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span><span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>not_male</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>summarise</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>HLTH.Height</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 3 x 2
+  not_male `mean(HLTH.Height, na.rm = TRUE)`
+  &lt;chr&gt;                                &lt;dbl&gt;
+1 Male                                  1.78
+2 Not_Male                              1.65
+3 &lt;NA&gt;                                  1.69</code></pre>
+</div>
+<p>Let’s plug in the values for male-id and not male-id at the population average for each population:</p>
+<p><span class="math display">\[
+\operatorname{\widehat{income}} = 134509.3 + 233.14(\operatorname{height\_cm\_c}) - 5311.89(\operatorname{not\_male}_{\operatorname{Not\_Male}}) - 161.81(\operatorname{height\_cm\_c} \times \operatorname{not\_male}_{\operatorname{Not\_Male}})
+\]</span> To get the expected average for the male-id population we compute the regression equation as follows</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='co'># intercept about 170 cm</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>*</span> <span class='fl'>80</span> <span class='op'>+</span> <span class='co'># male-id are 8 cm taller than sample average # note we include this even though the coefficient is unreliable</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span><span class='op'>*</span> <span class='fl'>0</span> <span class='op'>+</span> <span class='co'># male-id are coded as zero  + </span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span><span class='op'>*</span> <span class='fl'>80</span> <span class='op'>*</span> <span class='fl'>0</span> <span class='co'># 8cm difference * male-id are coded as zero  (which zeros this out)</span>
+</code></pre>
+</div>
+<pre><code>[1] 153160.5</code></pre>
+</div>
+<p>For the female-id population we compute the regression equation as follows</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='co'># intercept about 170 cm</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>*</span> <span class='op'>-</span><span class='fl'>50</span> <span class='op'>+</span> <span class='co'># not male-id are 5 cm shorter than sample average # </span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span><span class='op'>*</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='co'># not male-id are coded as 1  + </span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model_theory4</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>*</span> <span class='op'>-</span><span class='fl'>50</span> <span class='co'># 5cm shorter * male-id are coded as zero  (which zeros this out)</span>
+</code></pre>
+</div>
+<pre><code>[1] 125631</code></pre>
+</div>
+<p>Compare these estimates with the model in which we did not have the interaction but only the additive predictors of male-id and height. We can do this quickly using the <code>modelbased</code> package.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>modelbased</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/modelbased/reference/estimate_means.html'>estimate_means</a></span><span class='op'>(</span><span class='va'>model_theory2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>not_male |     Mean |      SE |               95% CI
+----------------------------------------------------
+Male     | 1.54e+05 | 4654.86 | [1.45e+05, 1.63e+05]
+Not_Male | 1.25e+05 | 3535.09 | [1.18e+05, 1.32e+05]
+
+p-values are uncorrected.</code></pre>
+</div>
+<p>We find that the estimates are similar.</p>
+<h3 id="model-selection">Model selection</h3>
+<p>Which model should we prefer? Recall that we can use the AIC or BIC information criterion to select a model, with a decrease in the absolute values of either as affording a reason to prefer one over the other.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/compare_performance.html'>compare_performance</a></span><span class='op'>(</span><span class='va'>model_theory</span>, 
+                                 <span class='va'>model_theory2</span>,
+                                 <span class='va'>model_theory3</span>,
+                                 <span class='va'>model_theory4</span>,
+                                 <span class='va'>model_theory5</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># Comparison of Model Performance Indices
+
+Name          | Model |       AIC |       BIC |    R2 | R2 (adj.) |      RMSE |     Sigma
+-----------------------------------------------------------------------------------------
+model_theory  |    lm | 45318.490 | 45340.316 | 0.020 |     0.019 | 1.169e+05 | 1.170e+05
+model_theory2 |    lm | 45457.405 | 45473.783 | 0.013 |     0.013 | 1.172e+05 | 1.173e+05
+model_theory3 |    lm | 44725.128 | 44752.349 | 0.053 |     0.051 | 1.153e+05 | 1.155e+05
+model_theory4 |    lm | 45316.366 | 45343.648 | 0.023 |     0.021 | 1.168e+05 | 1.169e+05
+model_theory5 |    lm | 45314.794 | 45336.620 | 0.022 |     0.021 | 1.168e+05 | 1.169e+05</code></pre>
+</div>
+<p>We can graph the models along different criteria</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>xx</span> <span class='op'>&lt;-</span> <span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/compare_performance.html'>compare_performance</a></span><span class='op'>(</span><span class='va'>model_theory</span>, 
+                                 <span class='va'>model_theory2</span>,
+                                 <span class='va'>model_theory3</span>,
+                                 <span class='va'>model_theory4</span>,
+                                 <span class='va'>model_theory5</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>xx</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-38-1.png" width="624" /></p>
+</div>
+<p>We find that model three performed the best. Recall that this is the model that included education:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_theory3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>height_cm_c</span> <span class='op'>+</span> <span class='va'>not_male</span> <span class='op'>+</span> <span class='va'>edu_s</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>What if we were to include an interaction with height and male-id?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_theory6</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>height_cm_c</span> <span class='op'>*</span> <span class='va'>not_male</span> <span class='op'>+</span> <span class='va'>edu_s</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>There’s no improvement in this model. After adjusting for education, height, and male-id, we do not see an improvement from including a non-linear ajustment for the height effect for the different male-id factors:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/compare_performance.html'>compare_performance</a></span><span class='op'>(</span><span class='va'>model_theory3</span>,<span class='va'>model_theory6</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># Comparison of Model Performance Indices
+
+Name          | Model |       AIC |       BIC |    R2 | R2 (adj.) |      RMSE |     Sigma
+-----------------------------------------------------------------------------------------
+model_theory3 |    lm | 44725.128 | 44752.349 | 0.053 |     0.051 | 1.153e+05 | 1.155e+05
+model_theory6 |    lm | 44723.874 | 44756.540 | 0.054 |     0.052 | 1.152e+05 | 1.154e+05</code></pre>
+</div>
+<p>What about if we were to include age?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"splines"</span><span class='op'>)</span>
+<span class='va'>model_theory7</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/splines/bs.html'>bs</a></span><span class='op'>(</span><span class='va'>age_10_c</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>height_cm_c</span> <span class='op'>*</span> <span class='va'>not_male</span> <span class='op'>+</span> <span class='va'>edu_s</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>parameters</a></span><span class='op'>(</span><span class='va'>model_theory7</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Parameter                         | Coefficient |       SE |                95% CI |   t(1702) |      p
+-------------------------------------------------------------------------------------------------------
+(Intercept)                       |    88679.91 | 26433.28 | [ 36834.77, 1.41e+05] |      3.35 | &lt; .001
+age_10_c [1st degree]             |    1.06e+05 | 61189.54 | [-14209.40, 2.26e+05] |      1.73 | 0.084 
+age_10_c [2nd degree]             |    70138.47 | 27538.88 | [ 16124.85, 1.24e+05] |      2.55 | 0.011 
+age_10_c [3rd degree]             |     -179.26 | 43887.04 | [-86257.49, 85898.96] | -4.08e-03 | 0.997 
+height_cm_c                       |      175.22 |    61.41 | [    54.77,   295.66] |      2.85 | 0.004 
+not_male [Not_Male]               |   -16438.03 |  8293.88 | [-32705.32,  -170.75] |     -1.98 | 0.048 
+edu_s                             |    21199.41 |  2834.48 | [ 15639.98, 26758.84] |      7.48 | &lt; .001
+height_cm_c * not_male [Not_Male] |     -125.68 |    79.28 | [  -281.17,    29.81] |     -1.59 | 0.113 </code></pre>
+</div>
+<p>The model has an improved fit, and explains more, the AIC decreases, but the BIC increases. This is because the BIC penalises the extra parameters.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>za</span><span class='op'>&lt;-</span><span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/compare_performance.html'>compare_performance</a></span><span class='op'>(</span><span class='va'>model_theory3</span>, <span class='va'>model_theory7</span><span class='op'>)</span> <span class='co'># age, benefit but only if polynomial</span>
+<span class='va'>za</span>
+</code></pre>
+</div>
+<pre><code># Comparison of Model Performance Indices
+
+Name          | Model |       AIC |       BIC |    R2 | R2 (adj.) |      RMSE |     Sigma
+-----------------------------------------------------------------------------------------
+model_theory3 |    lm | 44725.128 | 44752.349 | 0.053 |     0.051 | 1.153e+05 | 1.155e+05
+model_theory7 |    lm | 44711.671 | 44760.669 | 0.064 |     0.061 | 1.146e+05 | 1.149e+05</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>za</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-43-1.png" width="624" /></p>
+</div>
+<p>The predicted effect of age (splines)</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span> <span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>model_theory7</span>, terms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age_10_c"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>)</span> 
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-44-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span> <span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>model_theory7</span>, terms <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"height_cm_c"</span>,<span class='st'>"not_male"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>)</span> 
+</code></pre>
+</div>
+<p><img src="lecture_7_files/figure-html5/unnamed-chunk-45-1.png" width="624" /></p>
+</div>
+<h3 id="anova-and-t-test">Anova and T-test</h3>
+<p>You can write these as linear models.</p>
+<p>This is a one-way anova in which the grouping variable “not_male” is the condition and “income” is the outcome.</p>
+Anova
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#anova</span>
+<span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>not_male</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>parameters</a></span><span class='op'>(</span><span class='va'>m2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Parameter | Sum_Squares |   df | Mean_Square |     F |      p
+-------------------------------------------------------------
+not_male  |    3.24e+11 |    1 |    3.24e+11 | 23.52 | &lt; .001
+Residuals |    2.39e+13 | 1734 |    1.38e+10 |       |       </code></pre>
+</div>
+<p>This is how the report package says you should report. I’ve tweaked the wording because I cannot write “statistically significant” without vomitting:</p>
+<p>The ANOVA (formula: income ~ not_male) suggests that:</p>
+<ul>
+<li>The main effect of not_male is statistically significant (F(1, 1734) = 23.52, p &lt; .001; Eta2 = 0.01, 90% CI [5.87e-03, 0.02])</li>
+</ul>
+<p>Effect sizes were labelled following Field’s (2013) recommendations.</p>
+<p>I recommend the <code>modelbased</code> package, which comes as part of <code>easystats</code> to explore your model</p>
+These are the estimated means
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>modelbased</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/modelbased/reference/estimate_relation.html'>estimate_relation</a></span><span class='op'>(</span><span class='va'>m2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  not_male Predicted       SE   CI_low  CI_high
+1     Male  153753.1 4654.863 144623.3 162882.8
+2 Not_Male  125403.1 3535.087 118469.6 132336.6</code></pre>
+</div>
+<p>Compare this against the linear model:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m2l</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>income</span> <span class='op'>~</span> <span class='va'>not_male</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>parameters</a></span><span class='op'>(</span><span class='va'>m2l</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Parameter           | Coefficient |      SE |                 95% CI | t(1734) |      p
+---------------------------------------------------------------------------------------
+(Intercept)         |    1.54e+05 | 4654.86 | [ 1.45e+05,  1.63e+05] |   33.03 | &lt; .001
+not_male [Not_Male] |   -28349.98 | 5845.05 | [-39814.07, -16885.89] |   -4.85 | &lt; .001</code></pre>
+</div>
+<p>This is how the report package says you should report. I’ve tweaked the wording because I cannot write “statistically significant” without vomiting.</p>
+<p>We fitted a linear model (estimated using OLS) to predict income with not_male (formula: income ~ not_male). The model explains a statistically significant proportion of variance (R2 = 0.01, F(1, 1734) = 23.52, p &lt; .001, adj. R2 = 0.01). The model’s intercept, corresponding to not_male = 0, is at 1.54e+05 (95% CI [1.45e+05, 1.63e+05], t(1734) = 33.03, p &lt; .001). Within this model:</p>
+<ul>
+<li>The effect of not_male [Not_Male] is significantly negative (beta = -28349.98, 95% CI [-39814.07, -16885.89], t(1734) = -4.85, p &lt; .001; Std. beta = -0.24, 95% CI [-0.34, -0.14])</li>
+</ul>
+<p>Standardized parameters were obtained by fitting the model on a standardized version of the dataset.</p>
+<p>These are the estimated means, which are identical to the ANOVA.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>modelbased</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/modelbased/reference/estimate_relation.html'>estimate_relation</a></span><span class='op'>(</span><span class='va'>m2l</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  not_male Predicted       SE   CI_low  CI_high
+1     Male  153753.1 4654.863 144623.3 162882.8
+2 Not_Male  125403.1 3535.087 118469.6 132336.6</code></pre>
+</div>
+<p>I’m not goint to spend any more time with ANOVA. This isn’t because I’m dimissive of ANOVA. It can be a useful framework for certain questions. However, it is never going to produce different answers than you would obtain in a linear regression framework. Moreover the linear regression framework is much more flexible, and can be extending However in case you are required to formulate your regression model, I’ve included some R syntax for you here.</p>
+<h4 id="one-way-anova">One way ANOVA</h4>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>Grp</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Assumptions:</p>
+<ul>
+<li>normal distribution of the of the DV’s within each group</li>
+<li>homogeneity of variances within each group</li>
+<li>random sample from the population</li>
+<li>independent observations</li>
+</ul>
+<h4 id="two-way-anova">Two way ANOVA</h4>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>Grp</span> <span class='op'>*</span> <span class='va'>Male</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>This model can be written</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>Grp</span> <span class='op'>+</span> <span class='va'>Male</span> <span class='op'>+</span> <span class='va'>Grp</span><span class='op'>:</span><span class='va'>Male</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<ul>
+<li>normal distribution of the of the DV’s within each group</li>
+<li>homogeneity of variances within each group</li>
+<li>random sample from the population</li>
+<li>independent observations</li>
+</ul>
 <h2 id="what-is-causal-confounding">What is causal confounding?</h2>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="op2.png" width="600" /></p>
 </div>
 <h2 id="the-difference-between-prediction-and-explanation">The difference between prediction and explanation?</h2>
 <h2 id="examples-of-confounding">Examples of confounding</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-barrett2021" class="csl-entry" role="doc-biblioentry">
 Barrett, Malcolm. 2021. <em>Ggdag: Analyze and Create Elegant Directed Acyclic Graphs</em>. <a href="https://CRAN.R-project.org/package=ggdag">https://CRAN.R-project.org/package=ggdag</a>.
