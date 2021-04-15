@@ -1,5 +1,5 @@
 ---
-title: "An introduction to directed acylical graphs (DAGS) "
+title: "Multiple Regression (ANOVA, ANOVCA, MANOVA)"
 description: 
 author:
   - name: Joseph Bulbulia
@@ -16,7 +16,8 @@ bibliography: references.bib
 ---
 
 ```{r echo=F}
-knitr::include_graphics("op.png")
+knitr::include_graphics("op_A.png")
+devtools::install_github("easystats/easystats")
 ```
 
 ## Required readings
@@ -170,11 +171,6 @@ ggplot2::ggplot(data = cars,
 
 This examples serves as a reminder about how a regression model works. However it also makes an important point to which we'll return repeatedly throughout this course:
 
-The output of a statistical model is is **not** self evident. We must therefore **think** both before and after we write a statistical model. If we don't think, our statistical models will lead us astray.
-
-In the remainder of this lecture I'm going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.
-
-To introduce multiple regression I'm going to follow Richard McElreath's **Statistical Rethinking**. We have an online version of this book in our library (see the link above.)
 
 
 ## Multiple regression 
@@ -469,12 +465,6 @@ plot( ggeffects::ggpredict(model_theory7, terms = c("height_cm_c","not_male")) )
 ```
 
 
-
-
-
-
-
-
 ### Anova and T-test
 
 You can write these as linear models.
@@ -560,9 +550,6 @@ This model can be written
 aov(Y ~ Grp + Male + Grp:Male, data = data)
 ```
 
-
-
-
 - normal distribution of the of the DV's within each group
 - homogeneity of variances within each group
 - random sample from the population
@@ -571,40 +558,3 @@ aov(Y ~ Grp + Male + Grp:Male, data = data)
 
 
 
-## What is causal confounding?
-
-```{r figopen, echo=F}
-knitr::include_graphics("op2.png")
-```
-
-## The difference between prediction and explanation?
-
-## Examples of confounding
-
-```{r echo = FALSE, include = FALSE}
-N <-100
-age <- rnorm( N )# sim A
-mar <- rnorm( N , -age ) # sim A -> M
-div <- rnorm( N , age ) # sim A -> D
-df <- data.frame(age,mar,div)
-
-plot(age ~ mar)
-
-md<-lm(mar ~ age, data = df)
-summary(md)
-sjPlot::plot_model(md)
-```
-
-```{r echo = FALSE, include = FALSE}
-## Confound 
-south<-rnorm(N)
-waffles <-rnorm(N, south)
-age <- rnorm(N, south)
-mar <- rnorm( N, -age ) # sim A -> M
-div <- rnorm( N,  age ) # sim A -> D
-df <- data.frame(age,mar,div,south,waffles)
-
-md<-lm(div ~ waffles + mar + south, data = df)
-summary(md)
-sjPlot::plot_model(md)
-```

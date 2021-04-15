@@ -1,5 +1,5 @@
 ---
-title: "Longitudinal data: within and between-individual effects"
+title: "Introduction to multilevel models"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -7,7 +7,7 @@ author:
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
-date: 2021-MAY-11
+date: 2021-MAY-04
 output:
   distill::distill_article:
     self_contained: false
@@ -16,14 +16,18 @@ output:
 
 
 
-## Longitudional data and the multi-level model
+## Partial pooling
+
+
+## Random intercepts
+
+
+## Covariance
 
 ```{r figopen, echo=F}
-knitr::include_graphics("op2.png")
+knitr::include_graphics("op.png")
 ```
 
-
-## Mediation from the vantage point of causal inference (when and when not)
 
 
 
