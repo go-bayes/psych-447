@@ -55,6 +55,9 @@ if (!require(rethinking)) {
   devtools::install_github("malcolmbarrett/ggdag")
 }
 
+if (!require(rethinking)) {
+  devtools::install_github("larmarange/labelled")
+}
 # installed from previous lectures
 library("equatiomatic")
 library("tidyverse")
@@ -178,16 +181,352 @@ To introduce multiple regression I'm going to follow Richard McElreath's **Stati
 
 We have already encountered multiple regression. Perhaps the most familiar case is prediction. Suppose we want to predict someones expected income based on their gender identification. Suppose we theory is true there might be an added income advantage from height.  We can include an additional term in our model and evaluate whether or theory is true.   Let's assess this question using the jittered NZAVS dataset 
 
+```{r echo = FALSE}
+nz_0 <- as.data.frame(readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv")))
+```
+
 ```{r}
-nz_0 <- readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv"))
-nz_0$Household.INC
-nz <- nz_0 %>%
-  dplyr::select(HLTH.Height,Household.INC, Male)
+nz_0$age <- round(nz_0$Age,2)
+nz_0$age
+
+df0<- nz_0 %>%
+  dplyr::filter(Wave == 2019) 
+glimpse(df0)
+%>%
+  dplyr::select(age, HLTH.Height, Household.INC, Male, Employed, Edu, Id, Wave) %>% # collect variables
+  dplyr::filter(Employed == 1) %>% # restrict inference to people who are employed
+  dplyr::rename(income = Household.INC, # shorter names
+                not_male = Male) %>%
+  dplyr::mutate(edu_s = scale(Edu)) # standard deviation units for education
+
+df['height_cm_c'] = as.data.frame(scale(df$HLTH.Height, center = TRUE, scale = FALSE)*1000) # work around for a bug - center and convert meter units to cm
+
+# not working
+df['age_10_c'] = as.data.frame(scale(df$age, center = TRUE, scale = FALSE)/10) # work around for a bug - center and convert to decade units
+
 
 ```
 
 
-Multiple regression has many uses.  
+```{r}
+# turn off scienitific notation
+options(scipen = 0)
+
+# model
+model_theory <- lm(income ~ height_cm_c + not_male, data = df)
+sjPlot::tab_model(model_theory)
+```
+
+```{r}
+mean(nz_0$HLTH.Height, na.rm=TRUE)
+```
+
+The model tells us the following. The expected household income is `r coef(model_theory)[[1]]` for men at sample average height, which is `r mean(nz_0$HLTH.Height, na.rm=TRUE)`meters. The expected increase in income for each additional centimeter of height is `r coef(model_theory)[[2]]`. The expected reduction in income for people who do not identify as male is `r coef(model_theory)[[3]]`
+
+Are men expected to make `r coef(model_theory)[[3]]` more than woman? No because on average woman are shorter. If we focus on male-id but remove height we have: 
+
+```{r}
+model_theory2 <- lm(income ~ not_male, data = df)
+sjPlot::tab_model(model_theory2)
+str(df1)
+```
+
+We find that women (and others who do not identify as male) are are expected to make `r coef(model_theory2)[[2]]` less than men. 
+
+Note that regression allows us to stratify across other segments of a population by adding more covariates. Let's add education to the model. In the NZAVS education `Edu` is a 10-level factor.  However, for now, we'll think of it as numeric. A standard deviation of `Edu` is `r sd(df1$Edu, na.rm = TRUE)` out of `r min(df1$Edu, na.rm = TRUE)` to `r max(df1$Edu, na.rm = TRUE)`.  Adding `edu_s` to the model we find:
+
+### Futher adjustments 
+
+```{r}
+model_theory3 <- lm(income ~ height_cm_c + not_male + edu_s, data = df)
+sjPlot::tab_model(model_theory3)
+```
+
+Do height differences make more of a difference for male-id's than non-male-id's?  To assess this we add an interaction term. **NOTE: we should always center and preferably also scale our interaction terms for the same reason that we should center polynomials: otherwise the multi-collinearity renders the model unstable**
+
+
+### Interactions
+
+```{r}
+# model
+model_theory4 <- lm(income ~ height_cm_c * not_male, data = df)
+```
+
+Note that this model is equivalent to:
+
+```{r eval = FALSE}
+model_theory4 <- lm(income ~ height_cm_c + not_male + not_male:height_cm_c, data = df)
+```
+
+
+The `*` in the model is merely shorthand for the two main effects `height_cm_c + not_male` $+$ their interaction `not_male:height_cm_c`.   Note that if we merely wanted to estimate the interaction without also estimating the main effects we would write:
+
+```{r}
+model_theory5<- lm(income ~ not_male:height_cm_c, data = df)
+```
+```{r}
+parameters::parameters(model_theory5)
+```
+
+
+Such a model tells us that the population household average is about NZD 131,000, and the slope difference for height by gender is three times greater for male-id's than for non-male-id's in the population.
+
+```{r}
+plot(ggeffects::ggpredict(model_theory5, terms = c("not_male", "height_cm_c")))
+```
+
+Generally you should include the main effects and the interactions of your indicator:
+
+```{r eval = FALSE}
+model_theory4 <- lm(income ~ height_cm_c * not_male, data = df)
+```
+
+Which gives us:
+
+```{r}
+sjPlot::tab_model(model_theory4)
+```
+
+
+Whoooah what just happened? There's huge uncertainty about the main effect of male-id -- it is no longer a reliable predictor in this model. 
+
+To assess the magnitude of the uncertainty let's plot the regression coefficients:
+
+```{r}
+sjPlot::plot_model(model_theory4)
+```
+
+The main effect of not_male is nearly 35k per year!  What's going on here? Recall that multi-collinearity -- or when two indicators are highly correlated, tend to result in large uncertainty in coefficient estimates. Is the interaction messing up the model?  Let's check:
+
+```{r}
+x<-performance::check_collinearity(model_theory4)
+x ## looks ok
+plot(x)
+```
+As indicated in the graph, the problem isn't multi-collinearity.  
+
+Does this mean that income is really predicted by height, and gender is a red herring? I have seen regression models interpreted that way. 
+
+It looks that way:
+
+
+```{r}
+modelbased::estimate_means(model_theory4)
+```
+
+However this is comparing male-ids and not-male ids at equivalent levels of height, but we know that non-male-id's tend to be shorter. 
+ 
+However **wherever you have interactions it is essential to graph the results**.  This is so important I'm going to write it again: **wherever you have interactions it is essential to graph the results**.  Tables are notoreously difficult to interpret. So let's probe further by graphing the model predictions. Recall that we can do this using the `ggeffects` package.
+
+
+```{r}
+plot(ggeffects::ggpredict(model_theory4, terms = c("not_male","height_cm_c")))
+```
+
+What we find is a non-linearity.  The model predicts that, on average, short men are expected to make much less than short women. Among women, height differences are not a reliable predictor of household income. By contrast among main, height differences are a reliable predictor. Women tend to be shorter than men by about 13cm
+
+```{r}
+df%>%
+  summarise(mean(HLTH.Height, na.rm = TRUE))
+
+df%>%
+  group_by(not_male)%>%
+  summarise(mean(HLTH.Height, na.rm = TRUE))
+```
+
+
+Let's plug in the values for male-id and not male-id at the population average for each population:
+
+```{r eval = FALSE, include = FALSE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory4,  use_coefs = TRUE)
+```
+
+$$
+\operatorname{\widehat{income}} = 134509.3 + 233.14(\operatorname{height\_cm\_c}) - 5311.89(\operatorname{not\_male}_{\operatorname{Not\_Male}}) - 161.81(\operatorname{height\_cm\_c} \times \operatorname{not\_male}_{\operatorname{Not\_Male}})
+$$
+To get the expected average for the male-id population we compute the regression equation as follows
+
+```{r}
+coef(model_theory4)[[1]] + # intercept about 170 cm
+  coef(model_theory4)[[2]] * 80 + # male-id are 8 cm taller than sample average # note we include this even though the coefficient is unreliable
+  coef(model_theory4)[[3]]* 0 + # male-id are coded as zero  + 
+  coef(model_theory4)[[4]]* 80 * 0 # 8cm difference * male-id are coded as zero  (which zeros this out)
+```
+
+For the female-id population we compute the regression equation as follows 
+
+```{r}
+coef(model_theory4)[[1]] + # intercept about 170 cm
+  coef(model_theory4)[[2]] * -50 + # not male-id are 5 cm shorter than sample average # 
+  coef(model_theory4)[[3]]* 1 + # not male-id are coded as 1  + 
+  coef(model_theory4)[[4]] * -50 # 5cm shorter * male-id are coded as zero  (which zeros this out)
+```
+
+Compare these estimates with the model in which we did not have the interaction but only the additive predictors of male-id and height. We can do this quickly using the `modelbased` package.
+
+```{r}
+modelbased::estimate_means(model_theory2)
+```
+
+We find that the estimates are similar. 
+
+
+### Model selection 
+
+Which model should we prefer?  Recall that we can use the AIC or BIC information criterion to select a model, with a decrease in the absolute values of either as affording a reason to prefer one over the other.
+
+```{r}
+performance::compare_performance(model_theory, 
+                                 model_theory2,
+                                 model_theory3,
+                                 model_theory4,
+                                 model_theory5)
+```
+
+We can graph the models along different criteria
+
+```{r}
+
+xx <- performance::compare_performance(model_theory, 
+                                 model_theory2,
+                                 model_theory3,
+                                 model_theory4,
+                                 model_theory5)
+
+plot(xx)
+```
+
+We find that model three performed the best. Recall that this is the model that included education:
+
+```{r eval = FALSE}
+model_theory3 <- lm(income ~ height_cm_c + not_male + edu_s, data = df)
+```
+
+What if we were to include an interaction with height and male-id? 
+
+```{r}
+model_theory6 <- lm(income ~ height_cm_c * not_male + edu_s, data = df)
+```
+
+There's no improvement in this model. After adjusting for education, height, and male-id, we do not see an improvement from including a non-linear ajustment for the height effect for the different male-id factors: 
+
+```{r}
+performance::compare_performance(model_theory3,model_theory6)
+```
+
+What about if we were to include age? 
+
+
+```{r eval = FALSE}
+model_theory7 <- lm(income ~ GenCohort + height_cm_c + not_male + edu_s, data = df)
+head(df)
+```
+
+```{r}
+performance::compare_performance(model_theory3)
+```
+
+
+
+
+
+
+
+
+### Anova and T-test
+
+You can write these as linear models.
+
+This is a one-way anova in which the grouping variable "not_male" is the condition and "income" is the outcome.
+
+Anova
+```{r}
+#anova
+m2 <- aov(income ~ not_male, data = df)
+parameters::parameters(m2)
+```
+
+This is how the report package says you should report. I've tweaked the wording because I cannot write "statistically significant" without vomitting:
+```{r include = FALSE}
+report::report(m2)
+```
+
+The ANOVA (formula: income ~ not_male) suggests that:
+
+  - The main effect of not_male is statistically significant (F(1, 1734) = 23.52, p < .001; Eta2 = 0.01, 90% CI [5.87e-03, 0.02])
+
+Effect sizes were labelled following Field's (2013) recommendations.
+
+I recommend the `modelbased` package, which comes as part of `easystats` to explore your model
+
+These are the estimated means
+```{r}
+modelbased::estimate_relation(m2)
+```
+
+Compare this against the linear model:
+
+```{r}
+m2l <- lm(income ~ not_male, data = df)
+parameters::parameters(m2l)
+```
+
+This is how the report package says you should report. I've tweaked the wording because I cannot write "statistically significant" without vomiting. 
+
+```{r include = FALSE}
+report::report(m2l)
+```
+
+We fitted a linear model (estimated using OLS) to predict income with not_male (formula: income ~ not_male). The model explains a statistically significant proportion of variance (R2 = 0.01, F(1, 1734) = 23.52, p < .001, adj. R2 = 0.01). The model's intercept, corresponding to not_male = 0, is at 1.54e+05 (95% CI [1.45e+05, 1.63e+05], t(1734) = 33.03, p < .001). Within this model:
+
+  - The effect of not_male [Not_Male] is significantly negative (beta = -28349.98, 95% CI [-39814.07, -16885.89], t(1734) = -4.85, p < .001; Std. beta = -0.24, 95% CI [-0.34, -0.14])
+
+Standardized parameters were obtained by fitting the model on a standardized version of the dataset.
+
+
+These are the estimated means, which are identical to the ANOVA. 
+
+```{r}
+modelbased::estimate_relation(m2l)
+```
+
+I'm not goint to spend any more time with ANOVA.  This isn't because I'm dimissive of ANOVA. It can be a useful framework for certain questions. However, it is never going to produce different answers than you would obtain in a linear regression framework. Moreover the linear regression framework is much more flexible, and can be extending However in case you are required to formulate your regression model, I've included some R syntax for you here.
+
+
+#### One way ANOVA
+
+```{r include = FALSE}
+aov(Y ~ Grp, data = data)
+```
+
+Assumptions:
+
+- normal distribution of the of the DV's within each group
+- homogeneity of variances within each group
+- random sample from the population
+- independent observations
+
+#### Two way ANOVA
+
+```{r include = FALSE}
+aov(Y ~ Grp * Male, data = data)
+```
+
+This model can be written
+
+```{r include = FALSE}
+aov(Y ~ Grp + Male + Grp:Male, data = data)
+```
+
+
+
+
+- normal distribution of the of the DV's within each group
+- homogeneity of variances within each group
+- random sample from the population
+- independent observations
+
 
 
 
