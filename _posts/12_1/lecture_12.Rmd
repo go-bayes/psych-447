@@ -1,5 +1,5 @@
 ---
-title: "Bayesian inference and consolidation of statistics"
+title: "Probability and Bayesian inference"
 description: |
   "With an excursion into the whens and when nots of mediation"
 author:
@@ -17,7 +17,7 @@ toc: true
 
 
 ```{r figopen, echo=F}
-knitr::include_graphics("op2.png")
+knitr::include_graphics("op.png")
 ```
 
 

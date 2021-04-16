@@ -1,5 +1,5 @@
 ---
-title: "Multiple Regression (ANOVA, ANOVCA, MANOVA)"
+title: "Multiple regression (ANOVA, ANOVCA, MANOVA)"
 description: 
 author:
   - name: Joseph Bulbulia
@@ -17,7 +17,6 @@ bibliography: references.bib
 
 ```{r echo=F}
 knitr::include_graphics("op_A.png")
-devtools::install_github("easystats/easystats")
 ```
 
 ## Required readings
@@ -277,8 +276,7 @@ Which gives us:
 sjPlot::tab_model(model_theory4)
 ```
 
-
-Whoooah what just happened? There's huge uncertainty about the main effect of male-id -- it is no longer a reliable predictor in this model. 
+Whoooah what just happened?! There's huge uncertainty about the main effect of male-id -- it is no longer a reliable predictor in this model. 
 
 To assess the magnitude of the uncertainty let's plot the regression coefficients:
 
@@ -289,9 +287,9 @@ sjPlot::plot_model(model_theory4)
 The main effect of not_male is nearly 35k per year!  What's going on here? Recall that multi-collinearity -- or when two indicators are highly correlated, tend to result in large uncertainty in coefficient estimates. Is the interaction messing up the model?  Let's check:
 
 ```{r}
-x<-performance::check_collinearity(model_theory4)
-x ## looks ok
-plot(x)
+z<-performance::check_collinearity(model_theory4)
+z ## looks ok
+plot(z) ## looks ok
 ```
 As indicated in the graph, the problem isn't multi-collinearity.  
 

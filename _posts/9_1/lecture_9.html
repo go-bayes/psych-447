@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -85,34 +86,38 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Introduction to multilevel models</title>
+  <title>An introduction to directed acylical graphs (DAGS) </title>
 
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2021-05-04"/>
-  <meta property="article:created" itemprop="dateCreated" content="2021-05-04"/>
+  <meta property="article:published" itemprop="datePublished" content="2021-04-20"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-04-20"/>
   <meta name="article:author" content="Joseph Bulbulia"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Introduction to multilevel models"/>
+  <meta property="og:title" content="An introduction to directed acylical graphs (DAGS) "/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Introduction to multilevel models"/>
+  <meta property="twitter:title" content="An introduction to directed acylical graphs (DAGS) "/>
 
   <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Thinking clearly about correlations and causation: Graphical causal models for observational data;citation_publication_date=2018;citation_publisher=Sage;citation_volume=1;citation_author=Julia M Rohrer"/>
+  <meta name="citation_reference" content="citation_title=Ggdag: Analyze and create elegant directed acyclic graphs;citation_publication_date=2021;citation_author=Malcolm Barrett"/>
+  <meta name="citation_reference" content="citation_title=Statistical rethinking: A bayesian course with examples in r and stan;citation_publication_date=2020;citation_publisher=CRC press;citation_author=Richard McElreath"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Introduction to multilevel models"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Joseph Bulbulia"]},{"type":"character","attributes":{},"value":["https://josephbulbulia.netlify.app"]},{"type":"character","attributes":{},"value":["Victoria University of Wellington"]},{"type":"character","attributes":{},"value":["https://www.wgtn.ac.nz"]},{"type":"character","attributes":{},"value":["0000-0002-5861-2056"]}]}]},{"type":"character","attributes":{},"value":["2021-MAY-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["An introduction to directed acylical graphs (DAGS) "]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Joseph Bulbulia"]},{"type":"character","attributes":{},"value":["https://josephbulbulia.netlify.app"]},{"type":"character","attributes":{},"value":["Victoria University of Wellington"]},{"type":"character","attributes":{},"value":["https://www.wgtn.ac.nz"]},{"type":"character","attributes":{},"value":["0000-0002-5861-2056"]}]}]},{"type":"character","attributes":{},"value":["2021-APRIL-20"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["references.bib"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["lecture_9_files/anchor-4.2.2/anchor.min.js","lecture_9_files/bowser-1.9.3/bowser.min.js","lecture_9_files/distill-2.2.21/template.v2.js","lecture_9_files/header-attrs-2.7.1/header-attrs.js","lecture_9_files/jquery-1.11.3/jquery.min.js","lecture_9_files/popper-2.6.0/popper.min.js","lecture_9_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_9_files/tippy-6.2.7/tippy-light-border.css","lecture_9_files/tippy-6.2.7/tippy.css","lecture_9_files/tippy-6.2.7/tippy.umd.min.js","lecture_9_files/webcomponents-2.0.0/webcomponents.js","op_A.png","op.png"]}
+  {"type":"character","attributes":{},"value":["lecture_9_files/figure-html5/unnamed-chunk-3-1.png","lecture_9_files/figure-html5/unnamed-chunk-3-2.png","lecture_9_files/figure-html5/unnamed-chunk-4-1.png","op.png","op2.png","references.bib"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1430,7 +1435,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="lecture_9_files/header-attrs-2.7.1/header-attrs.js"></script>
+  <script src="lecture_9_files/header-attrs-2.7/header-attrs.js"></script>
   <script src="lecture_9_files/jquery-1.11.3/jquery.min.js"></script>
   <script src="lecture_9_files/popper-2.6.0/popper.min.js"></script>
   <link href="lecture_9_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1451,7 +1456,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Introduction to multilevel models","authors":[{"author":"Joseph Bulbulia","authorURL":"https://josephbulbulia.netlify.app","affiliation":"Victoria University of Wellington","affiliationURL":"https://www.wgtn.ac.nz","orcidID":"0000-0002-5861-2056"}],"publishedDate":"2021-05-04T00:00:00.000+00:00","citationText":"Bulbulia, 2021"}
+{"title":"An introduction to directed acylical graphs (DAGS) ","authors":[{"author":"Joseph Bulbulia","authorURL":"https://josephbulbulia.netlify.app","affiliation":"Victoria University of Wellington","affiliationURL":"https://www.wgtn.ac.nz","orcidID":"0000-0002-5861-2056"}],"publishedDate":"2021-04-20T00:00:00.000+00:00","citationText":"Bulbulia, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1461,7 +1466,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Introduction to multilevel models</h1>
+<h1>An introduction to directed acylical graphs (DAGS)</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -1470,7 +1475,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-byline">
   Joseph Bulbulia <a href="https://josephbulbulia.netlify.app" class="uri">https://josephbulbulia.netlify.app</a> (Victoria University of Wellington)<a href="https://www.wgtn.ac.nz" class="uri">https://www.wgtn.ac.nz</a>
   
-<br/>2021-MAY-04
+<br/>2021-APRIL-20
 </div>
 
 <div class="d-article">
@@ -1478,19 +1483,52 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#partial-pooling">Partial pooling</a></li>
-<li><a href="#random-intercepts">Random intercepts</a></li>
-<li><a href="#covariance">Covariance</a></li>
+<li><a href="#required-readings">Required readings</a></li>
+<li><a href="#preamble">Preamble</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#what-is-causal-confounding">What is causal confounding?</a></li>
+<li><a href="#the-difference-between-prediction-and-explanation">The difference between prediction and explanation?</a></li>
+<li><a href="#examples-of-confounding">Examples of confounding</a></li>
 </ul>
 </nav>
 </div>
-<h2 id="partial-pooling">Partial pooling</h2>
-<h2 id="random-intercepts">Random intercepts</h2>
-<h2 id="covariance">Covariance</h2>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="op.png" width="600" /></p>
+<p><img src="op.png" width="960" /></p>
 </div>
+<h2 id="required-readings">Required readings</h2>
+<p>Required readings are as follows:</p>
+<ul>
+<li><span class="citation" data-cites="rohrer2018"><a href="#ref-rohrer2018" role="doc-biblioref">Rohrer</a> (<a href="#ref-rohrer2018" role="doc-biblioref">2018</a>)</span> <a href="https://journals.sagepub.com/doi/full/10.1177/2515245917745629">link</a></li>
+<li><span class="citation" data-cites="barrett2021"><a href="#ref-barrett2021" role="doc-biblioref">Barrett</a> (<a href="#ref-barrett2021" role="doc-biblioref">2021</a>)</span> <a href="https://cran.r-project.org/package=ggdag">link</a></li>
+<li><span class="citation" data-cites="mcelreath2020"><a href="#ref-mcelreath2020" role="doc-biblioref">McElreath</a> (<a href="#ref-mcelreath2020" role="doc-biblioref">2020</a>)</span><a href="https://tewaharoa.victoria.ac.nz/discovery/fulldisplay?docid=alma99179374299902386&amp;context=L&amp;vid=64VUW_INST:VUWNUI&amp;search_scope=MyInst_and_CI&amp;tab=all&amp;lang=en">link</a></li>
+</ul>
+<h2 id="preamble">Preamble</h2>
+<p>Make sure that you install the <code>rethinking</code> package and the <code>ggdag</code> package. Note that the rethinking package is not on cran.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Recall from lecture 7,</p>
+<blockquote>
+<p>the output of a statistical model is is <strong>not</strong> self evident. We must therefore <strong>think</strong> both before and after we write a statistical model. If we don’t think, our statistical models will lead us astray.</p>
+</blockquote>
+<p>In the remainder of this lecture, I’m going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.</p>
+<p>To introduce multiple regression I’m going to follow Richard McElreath’s <strong>Statistical Rethinking</strong>. We have an online version of this book in our library (see the link above.)</p>
+<h2 id="what-is-causal-confounding">What is causal confounding?</h2>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="op2.png" width="600" /></p>
+</div>
+<h2 id="the-difference-between-prediction-and-explanation">The difference between prediction and explanation?</h2>
+<h2 id="examples-of-confounding">Examples of confounding</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-barrett2021" class="csl-entry" role="doc-biblioentry">
+Barrett, Malcolm. 2021. <em>Ggdag: Analyze and Create Elegant Directed Acyclic Graphs</em>. <a href="https://CRAN.R-project.org/package=ggdag">https://CRAN.R-project.org/package=ggdag</a>.
+</div>
+<div id="ref-mcelreath2020" class="csl-entry" role="doc-biblioentry">
+McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. CRC press.
+</div>
+<div id="ref-rohrer2018" class="csl-entry" role="doc-biblioentry">
+Rohrer, Julia M. 2018. <span>“Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data.”</span> <em>Advances in Methods and Practices in Psychological Science</em> 1 (1): 27–42.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -1502,7 +1540,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->
