@@ -14,7 +14,7 @@
     "contents": "\n\nContents\n\n\n\n\n\nProbability\nWe have been working with probability throughout this course.\nSuppose there is a test that is 99% accurate at detecting COVID if you have it.\nVery rarely it throws up a false positive,say one in a thousand.\nYou just tested positve. What is the probability that you have COVID? Our intuition is that we probably have COVID. However, let’s assume COVID is rare. Currently in NZ, there are about 50 cases, so 1 in 100,000. The background rate matters.\nBayes rule says\n\\[ Pr(COVID|Positive) = \\frac{Pr(Positive|COVID)\\times Pr (COVID}{Pr(Positive)}\n\\]\nWe plug in the numbers:\nPr_Positive_COVID <- 0.99 Pr_Positive_Healthy <- 0.01 Pr_COVID <- 0.00001\nCalculate the background probability of testing positive\nPr_Positive <- Pr_Positive_COVID * Pr_COVID + Pr_Positive_Healthy * ( 1 - Pr_COVID )\nNow calculated your probability of testing positive\nPr_COVID_Positive <- Pr_Positive_COVID * Pr_COVID / Pr_Positive Pr_COVID_Positive\nUncertainty\nFuture Horizons\n\n\n\n",
     "preview": "posts/12_1/distill-preview.png",
     "last_modified": "2021-04-16T11:50:43+12:00",
-    "input_file": "lecture_12.utf8.md",
+    "input_file": {},
     "preview_width": 1200,
     "preview_height": 1500
   },
@@ -76,25 +76,6 @@
     "preview_height": 1000
   },
   {
-    "path": "posts/9_1/",
-    "title": "An introduction to directed acylical graphs (DAGS) ",
-    "description": {},
-    "author": [
-      {
-        "name": "Joseph Bulbulia",
-        "url": "https://josephbulbulia.netlify.app"
-      }
-    ],
-    "date": "2021-04-20",
-    "categories": [],
-    "contents": "\n\nContents\nRequired readings\nPreamble\nIntroduction\nWhat is causal confounding?\nThe difference between prediction and explanation?\nExamples of confounding\n\n\n\n\nRequired readings\nRequired readings are as follows:\nRohrer (2018) link\nBarrett (2021) link\nMcElreath (2020)link\nPreamble\nMake sure that you install the rethinking package and the ggdag package. Note that the rethinking package is not on cran.\nIntroduction\nRecall from lecture 7,\n\nthe output of a statistical model is is not self evident. We must therefore think both before and after we write a statistical model. If we don’t think, our statistical models will lead us astray.\n\nIn the remainder of this lecture, I’m going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.\nTo introduce multiple regression I’m going to follow Richard McElreath’s Statistical Rethinking. We have an online version of this book in our library (see the link above.)\nWhat is causal confounding?\n\n\n\nThe difference between prediction and explanation?\nExamples of confounding\n\n\n\nBarrett, Malcolm. 2021. Ggdag: Analyze and Create Elegant Directed Acyclic Graphs. https://CRAN.R-project.org/package=ggdag.\n\n\nMcElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and Stan. CRC press.\n\n\nRohrer, Julia M. 2018. “Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data.” Advances in Methods and Practices in Psychological Science 1 (1): 27–42.\n\n\n\n\n",
-    "preview": "posts/9_1/op.png",
-    "last_modified": "2021-04-16T11:47:09+12:00",
-    "input_file": "lecture_9.utf8.md",
-    "preview_width": 1920,
-    "preview_height": 1920
-  },
-  {
     "path": "posts/7_1/",
     "title": "Multiple Regression (ANOVA, ANOVCA, MANOVA)",
     "description": {},
@@ -112,6 +93,25 @@
     "input_file": {},
     "preview_width": 1920,
     "preview_height": 1536
+  },
+  {
+    "path": "posts/9_1/",
+    "title": "An introduction to directed acylical graphs (DAGS) ",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      }
+    ],
+    "date": "2021-04-20",
+    "categories": [],
+    "contents": "\n\nContents\nRequired readings\nPreamble\nIntroduction\nWhat is causal confounding?\nThe difference between prediction and explanation?\nExamples of confounding\n\n\n\n\nRequired readings\nRequired readings are as follows:\nRohrer (2018) link\nBarrett (2021) link\nMcElreath (2020)link\nPreamble\nMake sure that you install the rethinking package and the ggdag package. Note that the rethinking package is not on cran.\nIntroduction\nRecall from lecture 7,\n\nthe output of a statistical model is is not self evident. We must therefore think both before and after we write a statistical model. If we don’t think, our statistical models will lead us astray.\n\nIn the remainder of this lecture, I’m going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.\nTo introduce multiple regression I’m going to follow Richard McElreath’s Statistical Rethinking. We have an online version of this book in our library (see the link above.)\nWhat is causal confounding?\n\n\n\nThe difference between prediction and explanation?\nExamples of confounding\n\n\n\nBarrett, Malcolm. 2021. Ggdag: Analyze and Create Elegant Directed Acyclic Graphs. https://CRAN.R-project.org/package=ggdag.\n\n\nMcElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and Stan. CRC press.\n\n\nRohrer, Julia M. 2018. “Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data.” Advances in Methods and Practices in Psychological Science 1 (1): 27–42.\n\n\n\n\n",
+    "preview": "posts/9_1/op.png",
+    "last_modified": "2021-04-16T11:47:10+12:00",
+    "input_file": {},
+    "preview_width": 1920,
+    "preview_height": 1920
   },
   {
     "path": "posts/5_1/",
