@@ -12,24 +12,12 @@ output:
   distill::distill_article:
     self_contained: false
     toc: true
-bibliography: references.bib
 ---
 
 ```{r echo=F}
 knitr::include_graphics("op_A.png")
 ```
 
-## Required readings
-
-Required readings are as follows:
-
--   @rohrer2018 [link](https://journals.sagepub.com/doi/full/10.1177/2515245917745629)
--   @barrett2021 [link](https://cran.r-project.org/package=ggdag)
--   @mcelreath2020[link](https://tewaharoa.victoria.ac.nz/discovery/fulldisplay?docid=alma99179374299902386&context=L&vid=64VUW_INST:VUWNUI&search_scope=MyInst_and_CI&tab=all&lang=en)
-
-## Preamble
-
-Make sure that you install the `rethinking` package and the `ggdag` package. Note that the rethinking package is not on cran.
 
 ```{r echo = TRUE, include = FALSE}
 # packages
@@ -68,33 +56,78 @@ library("rstanarm")
 # library("tidybayes")
 library("bayesplot")
 library("easystats")
+library("kableExtra")
+library("broom")
 # rstan options
 rstan_options(auto_write=TRUE)
 options(mc.cores=parallel::detectCores ())
 theme_set(theme_classic())
 ```
 
-## What is a regression model
 
-Before the break, we introduced basic concepts in statistical regression.
+## Learning objectives
 
-To refresh your memory, let's focus on the relationship between the speed of a car and the distance that it takes for a car to stop. We'll use the `cars` dataset which is automatically loaded when you start R. Note: the data were collected in the 1920s
+Before the break, we introduced basic concepts in statistical regression, focusing on regression using a single covariate. 
 
-Here is our model
+Today, we will introduce regression using multiple co-variates. You will acquire the following skills: 
+
+1. Understand how to write a regression model with multiple co-variates in R. 
+
+2. Understand how to interpret a regression model with multiple co-variates in R. 
+
+3. Understand methods for comparing simple and complex models. 
+
+4. Understand how to create a table for your results. 
+
+5. Understand how to graph your results. 
+
+6. Understand how to write equivalent models in an ANOVA framework, in case someone forces you to do this. 
+
+
+## What is a regression model?
+
+In the first instance, linear regression is a method for predicting features of the world, or as we put it in lecture 5:
+
+> [R]egression ...  is method for inferring the expected average features of a population, and the variance of a population, conditional on other features of the population as measured in a sample.
+
+In week 9, we'll discussion how to use regression for explaining features of the world. However, for the next two weeks, we'll restrict our interests to prediction.
+
+
+To referesh your memory about how the magic of prediction by regression works, let's look at an example. Consider data collected in the 1920s on the relationship between the speed at which a car is travelling and the distance that it takes for that car to stop. The data are found in the `cars` dataset, which is automatically loaded when you start R.
+
+Here is our model:
 
 ```{r}
 model_simple <- lm(dist ~ speed, data = cars)
 ```
 
-Here we have the output:
+Let's look at the output.  You can create a table like this: 
 
 ```{r}
 parameters::parameters(model_simple)
 ```
 
-How do we interpret the results?
 
-We can write this output in the following way:
+Recall that we can create an html table in this way
+
+```{r}
+parameters::parameters(model_simple)%>%
+    parameters::print_html(caption = "Breaking distance as predicted by speed")
+
+```
+
+## How do we interpret the results of a regression model?
+
+
+In terms of workflow, recall the report package makes your life easy:
+
+```{r}
+report::report(model_simple)
+```
+
+However, before you go rushing to report your "signficant" p-value, what does any of this output mean?  
+
+Recall that can write the output of a model as an equation. The `equatiomatic` package in R makes this work easy for you.
 
 ```{r eval = FALSE, include = FALSE}
 # this is how to quickly generate the equation
@@ -105,11 +138,22 @@ $$
 \operatorname{\widehat{dist}} = -17.58 + 3.93(\operatorname{speed})
 $$
 
+The generic form of the a linear model is:
+
+```{r eval = FALSE, include = FALSE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_simple,  use_coefs = FALSE)
+```
+```{r eval=FALSE, include = FALSE}
+emojifont::search_emoji('thinking')
+```
+
+
 The model says that the expected stopping distance for a car is -17.58 feet when the speed of the car is set to zero, plus an additional 3.93 feet for each additional unit of speed (here in miles per hour).
 
 What strikes you about this model?
 
-If you are like me you probably feel confusion when you see the number "-17.58" predicting speed. Did car manufacturers of the 1920s invent a method for traversing space and time as we know it? Or is regression a hopeless tool for understanding the world and should you demand your money back for this course?
+If you are like me you probably feel confusion when you see the number "-17.58" predicting speed `r emojifont::emoji('astonished')`. Did car manufacturers of the 1920s invent a method for traversing space and time as we know it `r emojifont::emoji('thinking')`? Or is regression a hopeless tool for understanding the world and should you demand your money back for this course `r emojifont::emoji('crying_cat_face')`?
 
 Let's look at the data more carefully:
 
@@ -122,7 +166,27 @@ cars%>%
 
 Here we find that the lowest speed measured in this dataset is 4 miles per hour, at which distance the car stopped in 2 feet. Another car travelling at 4 mph took 10 feet to stop.
 
-Let's plug these two numbers into the regression equation that we just estimated.
+Let's plug these two numbers into the regression equation that we just estimated.  We do not need to copy and paste coefficients from the output, you can recover the interecept as follows:
+
+```{r eval}
+coef(model_simple)[[1]]
+```
+
+
+And for each coefficient thereafter just add the relevant index as follows:
+
+```{r}
+coef(model_simple)[[2]]
+```
+
+So we can write the expected (or predicted) speed for a car travelling at the maximum speed in the dataset (`r max(cars$speed, na.rm = TRUE)` as follows:
+
+
+```{r}
+coef(model_simple)[[1]] + coef(model_simple)[[2]] * max(cars$speed, na.rm = TRUE)
+```
+
+and for the minimum speed (`r min(cars$speed, na.rm = TRUE)`) as follows:
 
 ```{r}
 coef(model_simple)[[1]] + coef(model_simple)[[2]] * min(cars$speed, na.rm = FALSE)
@@ -130,7 +194,8 @@ coef(model_simple)[[1]] + coef(model_simple)[[2]] * min(cars$speed, na.rm = FALS
 
 Is this any better? We're still getting a negative speed.
 
-Plotting the data we have:
+
+Let's turn to the most useful tool in your R toolkit, your graph. We can plot the model as follows:
 
 ```{r}
 ggplot2::ggplot(data = cars, 
@@ -139,27 +204,38 @@ ggplot2::ggplot(data = cars,
   geom_point()
 ```
 
-Here, our linear model is minimising the average distance between between observed speed and observed distance in the sample. The model hits at most a few points in the dataset. Otherwise it estimates a response that is either too high or two low.
+Here, our linear model is minimising the average distance between between observed speed and observed distance in the sample. The model hits at most a few points in the dataset. Otherwise it estimates a response that is either too high or two low. 
 
-In this case, we render the meaningless intercept term `r coef(model_simple)[[1]]` interpretable by setting centering our predictor variable speed:
+Note that by allowing our predictor variable to start at 0 we render the intercept term `r coef(model_simple)[[1]]` in our model uninterpretable. There is no coherent concept we can attach to  an expected stopping distance from an expected speed of 0 mp, and the value 0mph never occurs in the dataset. 
+
+For this reason, it is very helpful to center all your continuous predictors. In such a model, the intercept is interpretable as the expected response when all continuous predictors are set to their sample average, which in this case is `r mean(cars$speed)`mph.
+
+Recall that we can center our variables using the following code
 
 ```{r}
 # center and create new dataframe
-schmars <- cars%>%
-  dplyr::mutate(speed_s = scale(speed, center = TRUE, scale = FALSE))
+schmars <- cars
 
-model_simple2 <- lm(dist ~ speed_s, data = schmars)
-parameters::parameters(model_simple2)
+# not that I am presently having trouble with dplyr output. The following code will allow me to graph results (which I found by searching stackoverflow.com)
+
+schmars['speed_c'] = as.data.frame(scale(schmars$speed, scale = FALSE) )# work around for a bug - center and convert to decade units
+schmars$speed_c
+# model
+model_simple2 <- lm(dist ~ speed_c, data = schmars)
+
+# graph
+parameters::parameters(model_simple2)%>%
+  print_html()
 ```
 
-Notice that the estimated coefficient for speed is the same:
+Notice that the estimated coefficient in for speed is this second model is the same as the estimated coefficient for speed in the first model:
 
 ```{r}
 # evaluate whether the two coefficients are the same at least to five decimal places
 round(coef(model_simple)[[2]],5) == round(coef(model_simple2)[[2]],5)
 ```
 
-And the graph is the same:
+And the graph is identical:
 
 ```{r}
 ggplot2::ggplot(data = cars, 
@@ -168,19 +244,83 @@ ggplot2::ggplot(data = cars,
   geom_point()
 ```
 
-This examples serves as a reminder about how a regression model works. However it also makes an important point to which we'll return repeatedly throughout this course:
+
+However, the intercept is now interpretable as the expected (or predicted) outcome when speed is set to its sample average (25mph)
+
+```{r}
+round(coef(model_simple2)[[1]],5)
+```
+
+We interpret the coefficient for speed as the expected increase or decrease in stopping distance for a one-unit change in speed (which was measured in miles per hour in the population from which this sample was collected.  For a car travelling 3 mph faster than the sample average we would expect an average stopping distance of:
+
+
+```{r}
+coef(model_simple2)[[1]] + coef(model_simple2)[[2]] * 3
+```
+
+
+And for a car travelling 10.33 mph slower than the sampling average we would expect an average stopping distance of:
+
+```{r}
+coef(model_simple2)[[1]] + coef(model_simple2)[[2]] - 10.33
+```
+
+
+Recall that you can create a nice prediction plot using the `ggeffects` package:
+
+```{r}
+# graph espected means
+plot(ggeffects::ggpredict(model_simple2, terms = "speed_c [all]"), 
+     add.data = TRUE, 
+     dot.alpha = .8, 
+     jitter = .01, 
+     ci.style = "errorbar") + 
+  ylab("Distance in feet") + 
+  xlab("Speed in MPH (centered at 25 mph") + 
+  labs(title = "Predicted average stopping distance by speed for cars in the 1920s",
+       subtitle = "Speed centered at 25 MPH") + theme_classic()
+```
+
+or another method:
+
+
+```{r}
+# graph espected means
+plot(ggeffects::ggpredict(model_simple2, terms = "speed_c [all]"), 
+     add.data = TRUE, 
+     dot.alpha = .8, 
+     jitter = .01) + 
+  ylab("Distance in feet") + 
+  xlab("Speed in MPH (centered at 25 mph") + 
+  labs(title = "Predicted average stopping distance by speed for cars in the 1920s",
+       subtitle = "Speed centered at 25 MPH") + theme_classic()
+```
+
+
+
+
+
+
+The essential take home messages so far:
+
+- inspect your data
+- center your continuous predictors (standardise? maybe...)
+- graph your model
+- generate a prediction plot
+
+
 
 
 
 ## Multiple regression 
 
-We have already encountered multiple regression. Perhaps the most familiar case is prediction. Suppose we want to predict someones expected income based on their gender identification. Suppose we theory is true there might be an added income advantage from height.  We can include an additional term in our model and evaluate whether or theory is true.   Let's assess this question using the jittered NZAVS dataset 
+We have already encountered multiple regression. Perhaps the most familiar case is prediction. Suppose we want to predict someones expected income based on their gender identification. Suppose we theory is true there might be an added income advantage from height.  We can include an additional term in our model and evaluate whether or theory is true.   Let's assess this question using the jittered NZAVS dataset.
 
-```{r echo = FALSE}
+```{r echo = FALSE, cache = TRUE}
 nz_0 <- as.data.frame(readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv")))
 ```
 
-```{r echo = FALSE}
+```{r echo = FALSE, cache=TRUE}
 df<- nz_0 %>%
   dplyr::filter(Wave == 2019) %>%
   dplyr::mutate(age = Age) %>%
@@ -198,43 +338,82 @@ df['edu_s'] = as.data.frame(scale(df$Edu) )# work around for a bug - center and 
 ```
 
 
-```{r}
-# turn off scienitific notation
-options(scipen = 0)
+Here is a regression model with two predictors. We have centered height to the population average. The outcome is expected household income for the NZ population simultaneously stratified by height and by male identification. (Question: can you think of why household income is not an ideal indicator in a setting where we are looking at gender differences...? We'll come back to this question in a few weeks.) 
 
+```{r}
 # model
 model_theory <- lm(income ~ height_cm_c + not_male, data = df)
 sjPlot::tab_model(model_theory)
 ```
 
+How do we interpret this model?  First we need the average sample height (across all gender identifications):
+
 ```{r}
 mean(nz_0$HLTH.Height, na.rm=TRUE)
 ```
 
-The model tells us the following. The expected household income is `r coef(model_theory)[[1]]` for men at sample average height, which is `r mean(nz_0$HLTH.Height, na.rm=TRUE)`meters. The expected increase in income for each additional centimeter of height is `r coef(model_theory)[[2]]`. The expected reduction in income for people who do not identify as male is `r coef(model_theory)[[3]]`
 
-Are men expected to make `r coef(model_theory)[[3]]` more than woman? No because on average woman are shorter. If we focus on male-id but remove height we have: 
+The model tells us the following. The expected household income for the population of men who are at the sample average height is:  `r coef(model_theory)[[1]]`.The expected increase in income for each additional centimeter of height whether or not one is male or not-male identified is `r coef(model_theory)[[2]]`. The expected reduction in income for people who do not identify as male is `r coef(model_theory)[[3]]`.
+
+Are men expected to make `r coef(model_theory)[[3]]` more than woman? 
+
+No because on average non-male is shorter and we are stratifying across male and non-male gender identifications. If we focus only on the gender difference we can include male-id and remove height and this gives us: 
 
 ```{r}
 model_theory2 <- lm(income ~ not_male, data = df)
 sjPlot::tab_model(model_theory2)
 ```
 
-We find that women (and others who do not identify as male) are are expected to make `r coef(model_theory2)[[2]]` less than men. 
+Thus the expected not-male income is 153753.08	- 28349.98 = or about $NZD 125,400.
 
-Note that regression allows us to stratify across other segments of a population by adding more covariates. Let's add education to the model. In the NZAVS education `Edu` is a 10-level factor.  However, for now, we'll think of it as numeric. A standard deviation of `Edu` is `r sd(df$Edu, na.rm = TRUE)` out of `r min(df$Edu, na.rm = TRUE)` to `r max(df$Edu, na.rm = TRUE)`.  Adding `edu_s` to the model we find:
+We can recover this expectation in the original model by adding the difference between the sample averages in male heights over not-male heights as follows: 
 
-### Futher adjustments 
+Find approx deviations in male height and female heights from sample:
+
+```{r}
+df%>%
+  group_by(not_male)%>%
+  summarise(genmean = mean(HLTH.Height, na.rm = TRUE))
+# difference 
+df%>%
+  summarise(mean = mean(HLTH.Height, na.rm = TRUE))
+```
+
+
+Plug in expected values for male Id:
+
+```{r}
+coef(model_theory)[[1]] + # intercept at average height
+  coef(model_theory)[[2]]* 83 + #increase in average male height over sample average in cm
+  coef(model_theory)[[3]]* 0 # code for male id = 0
+```
+
+And for not-male Id:
+
+```{r}
+coef(model_theory)[[1]] + coef(model_theory)[[2]]* - 47  + coef(model_theory)[[3]]*1
+```
+
+These are the equivalent expectations to the stratified models.
+
+Either way you cut it, we find that women (and others who do not identify as male) are are expected to make `r coef(model_theory2)[[2]]` less in household income than men. 
+
+## Multiple regression with more than than two covariates
+
+
+Note that regression allows us to stratify across other segments of a population by adding even more co-variates. 
+
+Let's add education to the model. In the NZAVS education `Edu` is a 10-level factor.  However, for now, we'll think of it as numeric. A standard deviation of `Edu` is `r sd(df$Edu, na.rm = TRUE)` out of `r min(df$Edu, na.rm = TRUE)` to `r max(df$Edu, na.rm = TRUE)`.  Adding `edu_s` to the model we find:
 
 ```{r}
 model_theory3 <- lm(income ~ height_cm_c + not_male + edu_s, data = df)
 sjPlot::tab_model(model_theory3)
 ```
 
-Do height differences make more of a difference for male-id's than non-male-id's?  To assess this we add an interaction term. **NOTE: we should always center and preferably also scale our interaction terms for the same reason that we should center polynomials: otherwise the multi-collinearity renders the model unstable**
+Do height differences predict difference greater income differences ?  To assess this we add an interaction term. **NOTE: we should always center our interaction terms for the same reason that we should center polynomials: otherwise the multi-collinearity renders the model unstable**
 
 
-### Interactions
+## Multiple regression with interactions
 
 ```{r}
 # model
@@ -389,9 +568,11 @@ modelbased::estimate_means(model_theory2)
 We find that the estimates are similar. 
 
 
-### Model selection 
+## How do we select a model?
 
-Which model should we prefer?  Recall that we can use the AIC or BIC information criterion to select a model, with a decrease in the absolute values of either as affording a reason to prefer one over the other.
+Which model should we prefer?  Answer: it depends on your question.  We'll come back to this point when we focus on the uses of regression for causal inference (week 9).  For now, you should now that there are no canned methods for selecting a model. 
+
+However because reviewers will ask, you can use the AIC or BIC information criteria to select a model. Recall that a decrease in the absolute values of either statistic offers a reason to prefer one model over the other.
 
 ```{r}
 performance::compare_performance(model_theory, 
@@ -401,7 +582,7 @@ performance::compare_performance(model_theory,
                                  model_theory5)
 ```
 
-We can graph the models along different criteria
+We can graph the models along different criteria:
 
 ```{r}
 
@@ -426,13 +607,13 @@ What if we were to include an interaction with height and male-id?
 model_theory6 <- lm(income ~ height_cm_c * not_male + edu_s, data = df)
 ```
 
-There's no improvement in this model. After adjusting for education, height, and male-id, we do not see an improvement from including a non-linear ajustment for the height effect for the different male-id factors: 
+There's no improvement in this model. After adjusting for education, height, and male-id, we do not see an improvement from including a non-linear adjustment for the height effect for the different male-id factors: 
 
 ```{r}
 performance::compare_performance(model_theory3,model_theory6)
 ```
 
-What about if we were to include age? 
+What about if we were to include age?  REcall that a linear model can (and often should) include non-linear terms. We encountered this point when we were discussing polynomials and splines.  We can include a spline term for age using the `bs` command from the `splines` package. 
 
 
 ```{r}
@@ -442,28 +623,42 @@ parameters::parameters(model_theory7)
 ```
 
 
-The model has an improved fit, and explains more, the AIC decreases, but the BIC increases. This is because the BIC penalises the extra parameters.
+As judged by the AIC, this model has an improved fit. However as judged by the BIC, this model has reduced fit.  This happened because the BIC penalises the extra parameters.
 
+We can graph this outcome as follows:
 
 ```{r}
 za<-performance::compare_performance(model_theory3, model_theory7) # age, benefit but only if polynomial
-za
 plot(za)
 ```
 
-The predicted effect of age (splines)
+Why might we include age?  We might be interested in the predicted comparisons for age among, here for the population that is set to zero in our model (male-id's who are shorter than average male height by about 83 cms, and have an sample average education). Age here has been converted to 2 x decade units.
 
 ```{r}
 plot( ggeffects::ggpredict(model_theory7, terms = c("age_10_c")) ) 
 ```
 
 
+We can see here that the interaction term has shifted because have added more variables. However, this is because the population we are predicting here is slightly different from the population before ... the change might have occurred merely because we have added more terms or, as we shall come to understand in Week 9, the change might have occurred because adding indicators produce new understanding. 
+
 ```{r}
 plot( ggeffects::ggpredict(model_theory7, terms = c("height_cm_c","not_male")) ) 
 ```
 
 
-### Anova and T-test
+
+## Can we estimate multiple outcomes at the same time? 
+
+Yes. I do this using the BRMS package. 
+
+
+
+
+## ANOVA
+
+Don't use it, but if you must. The following code can be useful.
+
+### ANOVA and T-tests
 
 You can write these as linear models.
 
@@ -476,7 +671,8 @@ m2 <- aov(income ~ not_male, data = df)
 parameters::parameters(m2)
 ```
 
-This is how the report package says you should report. I've tweaked the wording because I cannot write "statistically significant" without vomitting:
+This is how the report package says you should report. I've tweaked the wording because I cannot write "statistically significant" without gagging:
+
 ```{r include = FALSE}
 report::report(m2)
 ```
@@ -490,6 +686,7 @@ Effect sizes were labelled following Field's (2013) recommendations.
 I recommend the `modelbased` package, which comes as part of `easystats` to explore your model
 
 These are the estimated means
+
 ```{r}
 modelbased::estimate_relation(m2)
 ```
@@ -501,7 +698,7 @@ m2l <- lm(income ~ not_male, data = df)
 parameters::parameters(m2l)
 ```
 
-This is how the report package says you should report. I've tweaked the wording because I cannot write "statistically significant" without vomiting. 
+This is how the report package says you should report as follows
 
 ```{r include = FALSE}
 report::report(m2l)
@@ -523,7 +720,9 @@ modelbased::estimate_relation(m2l)
 I'm not goint to spend any more time with ANOVA.  This isn't because I'm dimissive of ANOVA. It can be a useful framework for certain questions. However, it is never going to produce different answers than you would obtain in a linear regression framework. Moreover the linear regression framework is much more flexible, and can be extending However in case you are required to formulate your regression model, I've included some R syntax for you here.
 
 
-#### One way ANOVA
+## One-way ANOVA
+
+Syntax
 
 ```{r eval = FALSE}
 aov(Y ~ Grp, data = data)
@@ -536,13 +735,15 @@ Assumptions:
 - random sample from the population
 - independent observations
 
-#### Two way ANOVA
+## Two-way ANOVA
+
+Syntax
 
 ```{r eval = FALSE}
 aov(Y ~ Grp * Male, data = data)
 ```
 
-This model can be written
+Or this model can be written
 
 ```{r eval = FALSE}
 aov(Y ~ Grp + Male + Grp:Male, data = data)
@@ -552,6 +753,44 @@ aov(Y ~ Grp + Male + Grp:Male, data = data)
 - homogeneity of variances within each group
 - random sample from the population
 - independent observations
+
+
+## MANOVA
+
+This model can be written: 
+
+```{r eval=FALSE}
+# MANOVA test
+model<- manova(cbind(Y1, Y2) ~ GRP, data = data)
+summary(model)
+```
+
+
+## Appendix A: LaTeX tables
+
+For advanced users, if you wish to write in $\LaTeX$ you can create a table in many way, for example copying and/pasting the output of the following code into your $\LaTeX$ document:
+
+```{r}
+parameters::parameters(model_simple)%>%
+ kable( booktabs = F, "latex")%>%
+  print()
+```
+
+The package I tend to go to for $\LaTeX$ is the texreg package:
+
+```{r}
+texreg::texreg(list(model_simple),
+           custom.model.names = c("Cars ..."),
+           caption = "Breaking distance as predicted by speed",
+           sideways = F,
+           scalebox = .5,
+           #fontsize= "footnotesize",
+           label = "tab:model_simple",
+           ci.force.level = 0.95, bold = 0.05,
+           settingstars = 0,
+           booktabs = TRUE,
+           custom.note ="")
+```
 
 
 
