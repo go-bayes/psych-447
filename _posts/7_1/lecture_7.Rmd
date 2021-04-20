@@ -108,7 +108,7 @@ parameters::parameters(model_simple)
 ```
 
 
-Recall that we can create an html table in this way
+Recall that we can create an html table in this way:
 
 ```{r}
 parameters::parameters(model_simple)%>%
@@ -119,17 +119,19 @@ parameters::parameters(model_simple)%>%
 ## How do we interpret the results of a regression model?
 
 
-In terms of workflow, recall the report package makes your life easy:
+Recall that the report package makes your life easy:
 
 ```{r}
 report::report(model_simple)
 ```
 
-However, before you go rushing to report your "signficant" p-value, what does any of this output mean?  
+However, before you go rushing to report your "signficant" p-value, how shall we intepret this output? 
 
-Recall that can write the output of a model as an equation. The `equatiomatic` package in R makes this work easy for you.
+Recall that can write the output of a model as an equation. 
 
-```{r eval = FALSE, include = FALSE}
+The `equatiomatic` package in R makes this work easy for you.
+
+```{r eval = TRUE, include = TRUE}
 # this is how to quickly generate the equation
 equatiomatic::extract_eq(model_simple,  use_coefs = TRUE)
 ```
@@ -140,16 +142,18 @@ $$
 
 The generic form of the a linear model is:
 
-```{r eval = FALSE, include = FALSE}
+```{r eval = TRUE, echo = TRUE}
 # this is how to quickly generate the equation
 equatiomatic::extract_eq(model_simple,  use_coefs = FALSE)
 ```
+
+
 ```{r eval=FALSE, include = FALSE}
 emojifont::search_emoji('thinking')
 ```
 
 
-The model says that the expected stopping distance for a car is -17.58 feet when the speed of the car is set to zero, plus an additional 3.93 feet for each additional unit of speed (here in miles per hour).
+The model says that the expected stopping distance for a car is -17.58 feet when the care is traveling zero mph; To this we an additional 3.93 feet for each additional unit of speed (here in miles per hour).
 
 What strikes you about this model?
 
@@ -164,22 +168,23 @@ cars%>%
   tibble()
 ```
 
-Here we find that the lowest speed measured in this dataset is 4 miles per hour, at which distance the car stopped in 2 feet. Another car travelling at 4 mph took 10 feet to stop.
+We can see that the lowest speed measured in this dataset is 4 miles per hour, at which distance the car stopped in 2 feet. Another car travelling at 4 mph took 10 feet to stop. So there's variability.
 
-Let's plug these two numbers into the regression equation that we just estimated.  We do not need to copy and paste coefficients from the output, you can recover the interecept as follows:
+Let's plug these two numbers into the regression equation that we just estimated. 
+We do not need to copy and paste coefficients from the output of the model. Rather we can recover the intercept as follows:
 
 ```{r eval}
 coef(model_simple)[[1]]
 ```
 
 
-And for each coefficient thereafter just add the relevant index as follows:
+And for each mph thereafter we just multiply by this value
 
 ```{r}
 coef(model_simple)[[2]]
 ```
 
-So we can write the expected (or predicted) speed for a car travelling at the maximum speed in the dataset (`r max(cars$speed, na.rm = TRUE)` as follows:
+So we can write the expected (or predicted) speed for a car travelling at the maximum speed in the dataset (`r max(cars$speed, na.rm = TRUE)`) as follows:
 
 
 ```{r}
@@ -195,20 +200,27 @@ coef(model_simple)[[1]] + coef(model_simple)[[2]] * min(cars$speed, na.rm = FALS
 Is this any better? We're still getting a negative speed.
 
 
-Let's turn to the most useful tool in your R toolkit, your graph. We can plot the model as follows:
+To avoid confusion, let's turn to the most useful tool in your R toolkit, your graph. 
+
+We can plot the model as follows:
 
 ```{r}
+library(ggplot2)
 ggplot2::ggplot(data = cars, 
                 aes( x = speed,  y = dist )) +
   geom_smooth(method = "lm") + 
-  geom_point()
+  geom_point() + theme_classic()
 ```
 
 Here, our linear model is minimising the average distance between between observed speed and observed distance in the sample. The model hits at most a few points in the dataset. Otherwise it estimates a response that is either too high or two low. 
 
-Note that by allowing our predictor variable to start at 0 we render the intercept term `r coef(model_simple)[[1]]` in our model uninterpretable. There is no coherent concept we can attach to  an expected stopping distance from an expected speed of 0 mp, and the value 0mph never occurs in the dataset. 
+Note that by allowing our predictor variable to start at 0 we render the intercept term `r coef(model_simple)[[1]]` in our model un-interpretable. 
 
-For this reason, it is very helpful to center all your continuous predictors. In such a model, the intercept is interpretable as the expected response when all continuous predictors are set to their sample average, which in this case is `r mean(cars$speed)`mph.
+There is no coherent concept we can attach to  an expected stopping distance from an expected speed of 0 mp, and the value 0mph never occurs in the dataset. 
+
+## How to get an interpretable intercept?
+
+Center (or center and scale) all your continuous predictors. In such a model, the intercept is interpretable as the expected response when all continuous predictors are set to their sample average, which in this case is `r mean(cars$speed)` mph.
 
 Recall that we can center our variables using the following code
 
@@ -245,13 +257,13 @@ ggplot2::ggplot(data = cars,
 ```
 
 
-However, the intercept is now interpretable as the expected (or predicted) outcome when speed is set to its sample average (25mph)
+However, the intercept is now meaningful. It is the expected (or predicted) outcome when speed is set to its sample average (25mph)
 
 ```{r}
 round(coef(model_simple2)[[1]],5)
 ```
 
-We interpret the coefficient for speed as the expected increase or decrease in stopping distance for a one-unit change in speed (which was measured in miles per hour in the population from which this sample was collected.  For a car travelling 3 mph faster than the sample average we would expect an average stopping distance of:
+Westill interpret the coefficient for speed as the expected increase or decrease in stopping distance for a one-unit change in speed (which was measured in miles per hour in the population from which this sample was collected.  For a car travelling 3 mph faster than the sample average we would expect an average stopping distance of:
 
 
 ```{r}
@@ -262,7 +274,7 @@ coef(model_simple2)[[1]] + coef(model_simple2)[[2]] * 3
 And for a car travelling 10.33 mph slower than the sampling average we would expect an average stopping distance of:
 
 ```{r}
-coef(model_simple2)[[1]] + coef(model_simple2)[[2]] - 10.33
+coef(model_simple2)[[1]] + coef(model_simple2)[[2]] * 10.33
 ```
 
 
@@ -273,7 +285,7 @@ Recall that you can create a nice prediction plot using the `ggeffects` package:
 plot(ggeffects::ggpredict(model_simple2, terms = "speed_c [all]"), 
      add.data = TRUE, 
      dot.alpha = .8, 
-     jitter = .01, 
+    # jitter = .01, 
      ci.style = "errorbar") + 
   ylab("Distance in feet") + 
   xlab("Speed in MPH (centered at 25 mph") + 
@@ -299,17 +311,12 @@ plot(ggeffects::ggpredict(model_simple2, terms = "speed_c [all]"),
 
 
 
-
-
-The essential take home messages so far:
+The essential take home messages about regression are as follows:
 
 - inspect your data
 - center your continuous predictors (standardise? maybe...)
 - graph your model
 - generate a prediction plot
-
-
-
 
 
 ## Multiple regression 
@@ -320,6 +327,9 @@ We have already encountered multiple regression. Perhaps the most familiar case 
 nz_0 <- as.data.frame(readr::read_csv2(url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv")))
 ```
 
+
+
+
 ```{r echo = FALSE, cache=TRUE}
 df<- nz_0 %>%
   dplyr::filter(Wave == 2019) %>%
@@ -329,7 +339,7 @@ df<- nz_0 %>%
   dplyr::rename(income = Household.INC, # shorter names
                 not_male = Male) 
 
-df['height_cm_c'] = as.data.frame(scale(df$HLTH.Height, center = TRUE, scale = FALSE)*1000) # work around for a bug - center and convert meter units to cmd
+df['height_cm_c'] = as.data.frame(scale(df$HLTH.Height, center = TRUE, scale = FALSE)*100) # work around for a bug - center and convert meter units to cmd
 # not working
 df['age_10_c'] = as.data.frame(scale(df$age, center = TRUE, scale = FALSE)/10) # work around for a bug - center and convert to decade units
 
@@ -346,7 +356,26 @@ model_theory <- lm(income ~ height_cm_c + not_male, data = df)
 sjPlot::tab_model(model_theory)
 ```
 
-How do we interpret this model?  First we need the average sample height (across all gender identifications):
+
+
+How do we interpret this model? First we can write the equation:
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory,  use_coefs = FALSE)
+```
+
+And plugging in the values
+
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory,  use_coefs = TRUE)
+```
+
+
+
+First we need the average sample height (across all gender identifications):
 
 ```{r}
 mean(nz_0$HLTH.Height, na.rm=TRUE)
@@ -362,6 +391,21 @@ No because on average non-male is shorter and we are stratifying across male and
 ```{r}
 model_theory2 <- lm(income ~ not_male, data = df)
 sjPlot::tab_model(model_theory2)
+```
+
+We write the model equation here:
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory2,  use_coefs = FALSE)
+```
+
+And plugging in the values
+
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory,  use_coefs = TRUE)
 ```
 
 Thus the expected not-male income is 153753.08	- 28349.98 = or about $NZD 125,400.
@@ -384,14 +428,14 @@ Plug in expected values for male Id:
 
 ```{r}
 coef(model_theory)[[1]] + # intercept at average height
-  coef(model_theory)[[2]]* 83 + #increase in average male height over sample average in cm
+  coef(model_theory)[[2]]* 8.3 + #increase in average male height over sample average in cm
   coef(model_theory)[[3]]* 0 # code for male id = 0
 ```
 
 And for not-male Id:
 
 ```{r}
-coef(model_theory)[[1]] + coef(model_theory)[[2]]* - 47  + coef(model_theory)[[3]]*1
+coef(model_theory)[[1]] + coef(model_theory)[[2]]* - 4.7  + coef(model_theory)[[3]]*1
 ```
 
 These are the equivalent expectations to the stratified models.
@@ -410,6 +454,23 @@ model_theory3 <- lm(income ~ height_cm_c + not_male + edu_s, data = df)
 sjPlot::tab_model(model_theory3)
 ```
 
+
+
+We write the model equation as follows:
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory3,  use_coefs = FALSE)
+```
+
+And plugging in the values:
+
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory3,  use_coefs = TRUE)
+```
+
 Do height differences predict difference greater income differences ?  To assess this we add an interaction term. **NOTE: we should always center our interaction terms for the same reason that we should center polynomials: otherwise the multi-collinearity renders the model unstable**
 
 
@@ -426,44 +487,34 @@ Note that this model is equivalent to:
 model_theory4 <- lm(income ~ height_cm_c + not_male + not_male:height_cm_c, data = df)
 ```
 
+We write the model equation as follows:
 
-The `*` in the model is merely shorthand for the two main effects `height_cm_c + not_male` $+$ their interaction `not_male:height_cm_c`.   Note that if we merely wanted to estimate the interaction without also estimating the main effects we would write:
-
-```{r}
-model_theory5<- lm(income ~ not_male:height_cm_c, data = df)
-```
-```{r}
-parameters::parameters(model_theory5)
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory4,  use_coefs = FALSE)
 ```
 
+And plugging in the values:
 
-Such a model tells us that the population household average is about NZD 131,000, and the slope difference for height by gender is three times greater for male-id's than for non-male-id's in the population.
 
-```{r}
-plot(ggeffects::ggpredict(model_theory5, terms = c("not_male", "height_cm_c")))
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(model_theory4,  use_coefs = TRUE)
 ```
 
-Generally you should include the main effects and the interactions of your indicator:
+The `*` in the model is merely shorthand for the two main effects `height_cm_c + not_male` $+$ their interaction `not_male:height_cm_c`.   
 
-```{r eval = FALSE}
-model_theory4 <- lm(income ~ height_cm_c * not_male, data = df)
-```
+Lots graph the coefficients:
 
-Which gives us:
-
-```{r}
-sjPlot::tab_model(model_theory4)
-```
-
-Whoooah what just happened?! There's huge uncertainty about the main effect of male-id -- it is no longer a reliable predictor in this model. 
-
-To assess the magnitude of the uncertainty let's plot the regression coefficients:
 
 ```{r}
 sjPlot::plot_model(model_theory4)
 ```
 
-The main effect of not_male is nearly 35k per year!  What's going on here? Recall that multi-collinearity -- or when two indicators are highly correlated, tend to result in large uncertainty in coefficient estimates. Is the interaction messing up the model?  Let's check:
+Whoooah what just happened?! There's huge uncertainty about the main effect of male-id -- it is no longer a reliable predictor in this model. 
+
+
+Is the interaction messing up the model?  We can look for mutli-collinearity using the following code from the performance package.
 
 ```{r}
 z<-performance::check_collinearity(model_theory4)
@@ -472,28 +523,37 @@ plot(z) ## looks ok
 ```
 As indicated in the graph, the problem isn't multi-collinearity.  
 
-Does this mean that income is really predicted by height, and gender is a red herring? I have seen regression models interpreted that way. 
+Does this mean that income is really predicted by height, and gender is a red herring? 
 
-It looks that way:
-
+I have seen regression models interpreted that way. However this is confused. The confusion mounts when we compare the expected means of the population by stratifying on genderidentification:
 
 ```{r}
 modelbased::estimate_means(model_theory4)
 ```
 
-However this is comparing male-ids and not-male ids at equivalent levels of height, but we know that non-male-id's tend to be shorter. 
+However, our model has compared male-ids and not-male ids *at equivalent levels of height.* However, we know that non-male-id's tend to be shorter. 
  
-However **wherever you have interactions it is essential to graph the results**.  This is so important I'm going to write it again: **wherever you have interactions it is essential to graph the results**.  Tables are notoreously difficult to interpret. So let's probe further by graphing the model predictions. Recall that we can do this using the `ggeffects` package.
+ **Wherever you have interactions, it is essential to graph your results**.  This is so important I'm going to write it again: **wherever you have interactions, it is essential to graph the results**.  Tables are inscrutable. We need probe our model by graphing its predictions. Recall that we can do this using the `ggeffects` package.
 
+Here is a graph comparing men/non male at different levels of height.
 
 ```{r}
 pp1 <- plot(ggeffects::ggpredict(model_theory4, terms = c("not_male","height_cm_c")))
 pp1
 ```
 
+The interpretation is now clear. Greater height predicts much greater income for males and non_males. However the importance of and equivalent change in height differs for non-males, which is much lower. There is a non-linearity in the predicted effects of height by gender.  Or put another way, gender moderates income by height.  
+ 
+```{r eval = FALSE}
+terms = c("not_male","height_cm_c")
+```
 
+Or equivalently, height moderates income by gender. We can graph this equivalent interpretation by reversing the order of our syntax. This gives us the same interpretation outcomes but visualised with income on the x-axis:
 
-The following graph makes it easier to see how male-id fails to predict income whereas the interaction of male-id x income does predict income:
+```{r eval=FALSE}
+terms = c("height_cm_c","not_male")
+```
+
 
 ```{r}
 x <- ggeffects::ggpredict(model_theory4, terms = c("height_cm_c","not_male"))
@@ -501,19 +561,27 @@ pp2 <- plot( x )
 pp2
 ```
 
-Or consider this graph
+
+My preferred method for graphing is to include all the data points:
+
+```{r eval=FALSE}
+add.data = TRUE,
+```
+
+This allows us to see what happening in our dataset:
 
 ```{r}
 pp3 <- plot( x,
       add.data = TRUE, 
       jitter = 0.2, 
-      dot.alpha =.05
-      ) + scale_y_continuous(limits = c(0,5e+5))
+      dot.alpha =.2,
+      ) + scale_y_continuous(limits = c(0,5e+5))  + 
+  theme_classic()
 
 pp3
 ```
 
-This graph graphs height along the x-axis, and plots two different line. What we find is a non-linearity.  The model predicts that, on average, short men are expected to make much less than short women. Among non male-ids, height differences are not a reliable predictor of household income. By contrast among male-ids, height differences are a reliable predictor. non-male-ids tend to be shorter than men by about 13cm
+There is a non-linearity in our model.  The model predicts that, on average, short men are expected to make much less than short women. Among non male-ids, height differences are not a reliable predictor of household income. By contrast among male-ids, height differences are a reliable predictor. non-male-ids tend to be shorter than men by about 13cm.
 
 Sample averages:
 
@@ -533,7 +601,7 @@ df%>%
 
 Let's plug in the values for male-id and not male-id at the population average for each population:
 
-```{r eval = FALSE, include = FALSE}
+```{r eval = FALSE, include = TRUE}
 # this is how to quickly generate the equation
 equatiomatic::extract_eq(model_theory4,  use_coefs = TRUE)
 ```
@@ -541,7 +609,7 @@ equatiomatic::extract_eq(model_theory4,  use_coefs = TRUE)
 $$
 \operatorname{\widehat{income}} = 134509.3 + 233.14(\operatorname{height\_cm\_c}) - 5311.89(\operatorname{not\_male}_{\operatorname{Not\_Male}}) - 161.81(\operatorname{height\_cm\_c} \times \operatorname{not\_male}_{\operatorname{Not\_Male}})
 $$
-To get the expected average for the male-id population we compute the regression equation as follows
+To get the expected average for the male-id population we could compute the regression equation as follows
 
 ```{r}
 coef(model_theory4)[[1]] + # intercept about 170 cm
@@ -559,7 +627,9 @@ coef(model_theory4)[[1]] + # intercept about 170 cm
   coef(model_theory4)[[4]] * -50 # 5cm shorter * male-id are coded as zero  (which zeros this out)
 ```
 
-Compare these estimates with the model in which we did not have the interaction but only the additive predictors of male-id and height. We can do this quickly using the `modelbased` package.
+Compare these estimates with the model in which we did not have the interaction but only the additive predictors of male-id and height. 
+
+We can do this quickly using the `modelbased` package.
 
 ```{r}
 modelbased::estimate_means(model_theory2)
@@ -570,16 +640,17 @@ We find that the estimates are similar.
 
 ## How do we select a model?
 
-Which model should we prefer?  Answer: it depends on your question.  We'll come back to this point when we focus on the uses of regression for causal inference (week 9).  For now, you should now that there are no canned methods for selecting a model. 
+Which model should we prefer?  Answer: it depends on your question!
 
-However because reviewers will ask, you can use the AIC or BIC information criteria to select a model. Recall that a decrease in the absolute values of either statistic offers a reason to prefer one model over the other.
+We'll come back to this point when we focus on the uses of regression for causal inference (week 9).  For now, you should now that there are no canned methods for selecting a model. 
+
+However, because reviewers will ask, you can use the AIC or BIC information criteria to select a model. Recall that a decrease in the absolute values of either statistic offers a reason to prefer one model over the other.
 
 ```{r}
 performance::compare_performance(model_theory, 
                                  model_theory2,
                                  model_theory3,
-                                 model_theory4,
-                                 model_theory5)
+                                 model_theory4)
 ```
 
 We can graph the models along different criteria:
@@ -589,8 +660,7 @@ We can graph the models along different criteria:
 xx <- performance::compare_performance(model_theory, 
                                  model_theory2,
                                  model_theory3,
-                                 model_theory4,
-                                 model_theory5)
+                                 model_theory4)
 
 plot(xx)
 ```
@@ -645,12 +715,22 @@ We can see here that the interaction term has shifted because have added more va
 plot( ggeffects::ggpredict(model_theory7, terms = c("height_cm_c","not_male")) ) 
 ```
 
-
-
 ## Can we estimate multiple outcomes at the same time? 
 
 Yes. I do this using the BRMS package. 
 
+```{r eval = FALSE}
+library(brms)
+bf1(y1 ~ x)
+bf2(y2 ~ x)
+
+fit <- brms(bf1 + bf2, 
+            set_rescor(rescor = TRUE), # allow estimation of residual correlations
+            data = data)
+
+```
+
+We will encounter multivariate regression again in future weeks.
 
 
 

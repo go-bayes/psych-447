@@ -22,6 +22,7 @@ listing:
   - W_4_s
   - W_5_s
   - W_6_s
+  - W_7_s
 ---
 
 ```{r setup, include=FALSE}

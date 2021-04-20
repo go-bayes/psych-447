@@ -1,0 +1,131 @@
+---
+title: "Week 7 workbook and solutions"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    highlight: kate
+---
+
+Important the jittered NZAVS dataset:
+
+
+```{r setup, include=FALSE}
+# setup
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  layout = "l-body-outset",
+  fig.width= 12,
+  fig.height= 10,
+  collapse =TRUE,
+  R.options = list(width = 60)
+)
+```
+```{r  libraries}
+### Libraries
+library("tidyverse")
+library("patchwork")
+library("lubridate")
+library("kableExtra")
+library("gtsummary")
+library("lubridate")
+devtools::install_github("data-edu/tidyLPA")
+if (!require(tidyLPA)) {
+  install.packages("tidyLPA")
+}
+
+
+```
+
+```{r  nzdata, cache=TRUE}
+# read data
+
+nz_0 <- as.data.frame(readr::read_csv2(
+  url(
+    "https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv"
+  )
+))
+
+
+# to relevel kessler 6 variables
+f <-
+  c(
+    "None Of The Time",
+    "A Little Of The Time",
+    "Some Of The Time",
+    "Most Of The Time",
+    "All Of The Time"
+  )
+
+# get data into shape
+nz <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(male_id = as.factor(Male)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)%>%
+  dplyr::filter(Wave == 2019)
+
+```
+
+```{r}
+dplyr::glimpse(nz)
+```
+
+### Assessment
+
+#### Information
+Link to the NZAVS data dictionary is 
+[here](https://dl.dropboxusercontent.com/s/but0pz9h4jdpy6f/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+ 
+Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucvo/nzavs-data-dictionary.htm?dl=0)
+ 
+#### Task
+
+1. Select up to five variables from Wave 11 (2019) NZAVS jittered dataset.
+
+2. Briefly describe your variables. Use graphs and tables as you deem helpful. 
+
+3. Write a single co-variate regression model with a continuous outcome. Interpret your results, using graphs and tables as you deem helpful.
+
+4. Write a multiple co-variate regression model and interpret your results, using graphs and tables as you deem helpful.
+
+
+#### Marking criteria
+
+1. Clarity and organisation in the descriptive component of your work. 
+
+2. Clarity and organisation in description of your regression model.
+
+3. Accuracy and insight in the interpretation of your regression model.
+
+
+
+
+
+

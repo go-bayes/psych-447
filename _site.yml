@@ -17,6 +17,7 @@ collections:
     feed_item_max: false
   workbooks:
     feed_item_max: false
+theme: theme.css
 navbar:
   source_url: https://go-bayes.github.io/psych-447/
   search: false
