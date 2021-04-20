@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -118,7 +119,7 @@ code span.wa { color: #bf0303; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["bib.bib","lecture_4_files/anchor-4.2.2/anchor.min.js","lecture_4_files/bowser-1.9.3/bowser.min.js","lecture_4_files/distill-2.2.21/template.v2.js","lecture_4_files/figure-html5/bdommodelgraph-1.png","lecture_4_files/figure-html5/unnamed-chunk-12-1.png","lecture_4_files/figure-html5/unnamed-chunk-14-1.png","lecture_4_files/figure-html5/unnamed-chunk-15-1.png","lecture_4_files/figure-html5/unnamed-chunk-16-1.png","lecture_4_files/figure-html5/unnamed-chunk-17-1.png","lecture_4_files/figure-html5/unnamed-chunk-18-1.png","lecture_4_files/figure-html5/unnamed-chunk-19-1.png","lecture_4_files/figure-html5/unnamed-chunk-19-2.png","lecture_4_files/figure-html5/unnamed-chunk-20-1.png","lecture_4_files/figure-html5/unnamed-chunk-22-1.png","lecture_4_files/figure-html5/unnamed-chunk-23-1.png","lecture_4_files/figure-html5/unnamed-chunk-24-1.png","lecture_4_files/figure-html5/unnamed-chunk-25-1.png","lecture_4_files/figure-html5/unnamed-chunk-26-1.png","lecture_4_files/figure-html5/unnamed-chunk-27-1.png","lecture_4_files/figure-html5/unnamed-chunk-28-1.png","lecture_4_files/figure-html5/unnamed-chunk-29-1.png","lecture_4_files/figure-html5/unnamed-chunk-30-1.png","lecture_4_files/figure-html5/unnamed-chunk-31-1.png","lecture_4_files/figure-html5/unnamed-chunk-32-1.png","lecture_4_files/figure-html5/unnamed-chunk-33-1.png","lecture_4_files/figure-html5/unnamed-chunk-34-1.png","lecture_4_files/figure-html5/unnamed-chunk-35-1.png","lecture_4_files/figure-html5/unnamed-chunk-36-1.png","lecture_4_files/figure-html5/unnamed-chunk-37-1.png","lecture_4_files/figure-html5/unnamed-chunk-38-1.png","lecture_4_files/figure-html5/unnamed-chunk-39-1.png","lecture_4_files/figure-html5/unnamed-chunk-40-1.png","lecture_4_files/figure-html5/unnamed-chunk-41-1.png","lecture_4_files/figure-html5/unnamed-chunk-42-1.png","lecture_4_files/figure-html5/unnamed-chunk-43-1.png","lecture_4_files/figure-html5/unnamed-chunk-44-1.png","lecture_4_files/figure-html5/unnamed-chunk-45-1.png","lecture_4_files/figure-html5/unnamed-chunk-46-1.png","lecture_4_files/header-attrs-2.7.1/header-attrs.js","lecture_4_files/jquery-1.11.3/jquery.min.js","lecture_4_files/kePrint-0.0.1/kePrint.js","lecture_4_files/lightable-0.0.1/lightable.css","lecture_4_files/popper-2.6.0/popper.min.js","lecture_4_files/table1-1.0/table1_defaults.css","lecture_4_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_4_files/tippy-6.2.7/tippy-light-border.css","lecture_4_files/tippy-6.2.7/tippy.css","lecture_4_files/tippy-6.2.7/tippy.umd.min.js","lecture_4_files/webcomponents-2.0.0/webcomponents.js","op.pdf","op.png","table.tex","yaml.pptx"]}
+  {"type":"character","attributes":{},"value":["bib.bib","lecture_4_files/figure-html5/bdommodelgraph-1.png","lecture_4_files/figure-html5/unnamed-chunk-14-1.png","lecture_4_files/figure-html5/unnamed-chunk-17-1.png","lecture_4_files/figure-html5/unnamed-chunk-18-1.png","lecture_4_files/figure-html5/unnamed-chunk-19-1.png","lecture_4_files/figure-html5/unnamed-chunk-23-1.png","lecture_4_files/figure-html5/unnamed-chunk-24-1.png","lecture_4_files/figure-html5/unnamed-chunk-25-1.png","lecture_4_files/figure-html5/unnamed-chunk-33-1.png","lecture_4_files/figure-html5/unnamed-chunk-34-1.png","lecture_4_files/figure-html5/unnamed-chunk-35-1.png","lecture_4_files/figure-html5/unnamed-chunk-36-1.png","lecture_4_files/figure-html5/unnamed-chunk-37-1.png","lecture_4_files/figure-html5/unnamed-chunk-38-1.png","lecture_4_files/figure-html5/unnamed-chunk-39-1.png","lecture_4_files/figure-html5/unnamed-chunk-40-1.png","lecture_4_files/figure-html5/unnamed-chunk-44-1.png","op.pdf","op.png","table.tex","yaml.pptx"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1436,7 +1437,7 @@ code span.wa { color: #bf0303; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="lecture_4_files/header-attrs-2.7.4/header-attrs.js"></script>
+  <script src="lecture_4_files/header-attrs-2.7.10/header-attrs.js"></script>
   <link href="lecture_4_files/table1-1.0/table1_defaults.css" rel="stylesheet" />
   <script src="lecture_4_files/kePrint-0.0.1/kePrint.js"></script>
   <link href="lecture_4_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
@@ -1538,18 +1539,7 @@ code span.wa { color: #bf0303; } /* Warning */
   <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"devtools"</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/easystats/easystats'>easystats</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"easystats/easystats"</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code># Attaching packages (red = needs update)
-✔ insight     0.13.1.1   ✔ bayestestR  0.8.3.1 
-✔ performance 0.7.0.1    ✔ parameters  0.12.0.1
-✔ see         0.6.2.1    ⚠ effectsize  0.4.3.1 
-✔ correlation 0.6.0.1    ✔ modelbased  0.5.9   
-✔ report      0.2.0      
-Warnings or errors in CRAN checks for package(s) &#39;bayestestR&#39;, &#39;parameters&#39;, &#39;effectsize&#39;, &#39;correlation&#39;.
-Restart the R-Session and update packages in red with &#39;easystats::easystats_update()&#39;.</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jrnold/ggthemes'>ggthemes</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'ggthemes'</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jrnold/ggthemes'>ggthemes</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'ggthemes'</span><span class='op'>)</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://nickch-k.github.io/pmdplyr'>pmdplyr</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"pmdplyr"</span><span class='op'>)</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://haozhu233.github.io/kableExtra/'>kableExtra</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"kableExtra"</span><span class='op'>)</span>
 <span class='co'># this should be part of easystats but in case not:</span>
@@ -1564,7 +1554,7 @@ Restart the R-Session and update packages in red with &#39;easystats::easystats_
 
 
 <span class='co'># load tidyverse</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>
 
 <span class='co'># theme set</span>
 <span class='fu'>theme_set</span><span class='op'>(</span><span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
@@ -1583,18 +1573,18 @@ Restart the R-Session and update packages in red with &#39;easystats::easystats_
 <span class='co'># Note the convention of renaming dataframe when creating a new one:</span>
 <span class='co'># ` nz &lt;-nz_0 %&gt;%... `</span>
 
-<span class='va'>f</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"None Of The Time"</span>,<span class='st'>"A Little Of The Time"</span>,<span class='st'>"Some Of The Time"</span>,  <span class='st'>"Most Of The Time"</span>, <span class='st'>"All Of The Time"</span><span class='op'>)</span>
+<span class='va'>f</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"None Of The Time"</span>,<span class='st'>"A Little Of The Time"</span>, <span class='st'>"Some Of The Time"</span>,  <span class='st'>"Most Of The Time"</span>, <span class='st'>"All Of The Time"</span><span class='op'>)</span>
 
 <span class='va'>nz</span> <span class='op'>&lt;-</span><span class='va'>nz_0</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span><span class='op'>(</span><span class='va'>is.character</span>, <span class='va'>factor</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>SWB.Kessler01</span>,<span class='va'>SWB.Kessler02</span>,<span class='va'>SWB.Kessler03</span>,<span class='va'>SWB.Kessler04</span>,<span class='va'>SWB.Kessler05</span>, <span class='va'>SWB.Kessler06</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>SWB.Kessler01</span>,<span class='va'>SWB.Kessler02</span>,<span class='va'>SWB.Kessler03</span>,<span class='va'>SWB.Kessler04</span>,<span class='va'>SWB.Kessler05</span>, <span class='va'>SWB.Kessler06</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>FeelHopeless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelHopeless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>FeelDepressed <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelDepressed</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>FeelRestless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelRestless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>EverythingIsEffort <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>EverythingIsEffort</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>FeelWorthless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelWorthless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>FeelNervous <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelNervous</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelHopeless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelHopeless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelDepressed <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelDepressed</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelRestless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelRestless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>EverythingIsEffort <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>EverythingIsEffort</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelWorthless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelWorthless</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelNervous <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelNervous</span>,<span class='va'>f</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># not used</span>
 <span class='co'># nz &lt;- haven::zap_formats(nz)</span>
@@ -1618,7 +1608,7 @@ Restart the R-Session and update packages in red with &#39;easystats::easystats_
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Rows: 4,136
+<pre><code>Rows: 4,126
 Columns: 2
 $ Believe.God    &lt;fct&gt; Not Believe God, Not Believe God, Believe God…
 $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</code></pre>
@@ -1631,7 +1621,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Rows: 4,136
+<pre><code>Rows: 4,126
 Columns: 2
 $ Believe.God    &lt;fct&gt; Not Believe God, Not Believe God, Believe God…
 $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</code></pre>
@@ -1644,10 +1634,10 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Rows: 4,136
+<pre><code>Rows: 4,126
 Columns: 2
-$ NZ.Social.Conditions   &lt;dbl&gt; 4, 6, 3, 0, 4, 3, 4, 5, 4, 6, 5, 5, 6…
-$ NZ.Business.Conditions &lt;dbl&gt; 8, 6, 4, 7, 5, 3, 4, 6, 6, 6, 5, 6, 5…</code></pre>
+$ NZ.Social.Conditions   &lt;dbl&gt; 7, 7, 2, 6, 5, 5, 2, 0, 9, 7, 3, 2, 2…
+$ NZ.Business.Conditions &lt;dbl&gt; 7, 8, 2, 6, 5, 5, 6, 5, 9, 7, 9, 5, 5…</code></pre>
 </div>
 <p>We can cast a broader net and select all instances of a variable within a string by using <code>contains</code></p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1657,9 +1647,9 @@ $ NZ.Business.Conditions &lt;dbl&gt; 8, 6, 4, 7, 5, 3, 4, 6, 6, 6, 5, 6, 5…</c
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Rows: 4,136
+<pre><code>Rows: 4,126
 Columns: 3
-$ Religion.Believe.Cats &lt;dbl&gt; 4, 4, 1, 1, 1, 1, 4, NA, 3, 3, 4, 4, 2…
+$ Religion.Believe.Cats &lt;dbl&gt; 4, 4, 1, 1, 1, 1, 1, NA, 3, 1, 4, 4, 4…
 $ Believe.God           &lt;fct&gt; Not Believe God, Not Believe God, Beli…
 $ Believe.Spirit        &lt;fct&gt; Not Believe Spirit, Not Believe Spirit…</code></pre>
 </div>
@@ -1672,7 +1662,7 @@ $ Believe.Spirit        &lt;fct&gt; Not Believe Spirit, Not Believe Spirit…</c
    <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Rows: 4,136
+<pre><code>Rows: 4,126
 Columns: 2
 $ Believe.God    &lt;fct&gt; Not Believe God, Not Believe God, Believe God…
 $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</code></pre>
@@ -1689,7 +1679,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
 </div>
 <pre><code>.
  Buddhist Christian    Muslim   Not_Rel TheOthers      &lt;NA&gt; 
-       37      1176        13      2697       136        77 </code></pre>
+       36      1204         9      2655       128        94 </code></pre>
 </div>
 <p>Note the use of <code>ifany</code> to print the NAs in this table. It’s almost never sensible to ignore missing values!</p>
 <p>Suppose we wanted to make “Not Rel” our base category for this factor. We could do so as follows:</p>
@@ -1712,12 +1702,12 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
 # Groups:   BigDoms [6]
   BigDoms       n
   &lt;fct&gt;     &lt;int&gt;
-1 Not_Rel    2697
-2 Christian  1176
-3 Buddhist     37
-4 Muslim       13
-5 TheOthers   136
-6 &lt;NA&gt;         77</code></pre>
+1 Not_Rel    2655
+2 Christian  1204
+3 Buddhist     36
+4 Muslim        9
+5 TheOthers   128
+6 &lt;NA&gt;         94</code></pre>
 </div>
 <p>The reordering makes for a more sensible model because the base category is now <code>Not_Rel</code> or not-religious. Hence comparisons are to this category.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1731,7 +1721,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hngmbjbciu .gt_table {
+#sddwdpguyy .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1756,7 +1746,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-left-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_heading {
+#sddwdpguyy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1768,7 +1758,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-right-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_title {
+#sddwdpguyy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1778,7 +1768,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-bottom-width: 0;
 }
 
-#hngmbjbciu .gt_subtitle {
+#sddwdpguyy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1788,13 +1778,13 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-top-width: 0;
 }
 
-#hngmbjbciu .gt_bottom_border {
+#sddwdpguyy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_col_headings {
+#sddwdpguyy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1809,7 +1799,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-right-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_col_heading {
+#sddwdpguyy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1829,7 +1819,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   overflow-x: hidden;
 }
 
-#hngmbjbciu .gt_column_spanner_outer {
+#sddwdpguyy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1841,15 +1831,15 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   padding-right: 4px;
 }
 
-#hngmbjbciu .gt_column_spanner_outer:first-child {
+#sddwdpguyy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hngmbjbciu .gt_column_spanner_outer:last-child {
+#sddwdpguyy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hngmbjbciu .gt_column_spanner {
+#sddwdpguyy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1861,7 +1851,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   width: 100%;
 }
 
-#hngmbjbciu .gt_group_heading {
+#sddwdpguyy .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1883,7 +1873,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   vertical-align: middle;
 }
 
-#hngmbjbciu .gt_empty_group_heading {
+#sddwdpguyy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1898,15 +1888,15 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   vertical-align: middle;
 }
 
-#hngmbjbciu .gt_from_md > :first-child {
+#sddwdpguyy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hngmbjbciu .gt_from_md > :last-child {
+#sddwdpguyy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hngmbjbciu .gt_row {
+#sddwdpguyy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1925,7 +1915,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   overflow-x: hidden;
 }
 
-#hngmbjbciu .gt_stub {
+#sddwdpguyy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1937,7 +1927,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   padding-left: 12px;
 }
 
-#hngmbjbciu .gt_summary_row {
+#sddwdpguyy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1947,7 +1937,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   padding-right: 5px;
 }
 
-#hngmbjbciu .gt_first_summary_row {
+#sddwdpguyy .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1957,7 +1947,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-top-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_grand_summary_row {
+#sddwdpguyy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1967,7 +1957,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   padding-right: 5px;
 }
 
-#hngmbjbciu .gt_first_grand_summary_row {
+#sddwdpguyy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1977,11 +1967,11 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-top-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_striped {
+#sddwdpguyy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hngmbjbciu .gt_table_body {
+#sddwdpguyy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1990,7 +1980,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-bottom-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_footnotes {
+#sddwdpguyy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2004,13 +1994,13 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-right-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_footnote {
+#sddwdpguyy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#hngmbjbciu .gt_sourcenotes {
+#sddwdpguyy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2024,46 +2014,46 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
   border-right-color: #D3D3D3;
 }
 
-#hngmbjbciu .gt_sourcenote {
+#sddwdpguyy .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#hngmbjbciu .gt_left {
+#sddwdpguyy .gt_left {
   text-align: left;
 }
 
-#hngmbjbciu .gt_center {
+#sddwdpguyy .gt_center {
   text-align: center;
 }
 
-#hngmbjbciu .gt_right {
+#sddwdpguyy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hngmbjbciu .gt_font_normal {
+#sddwdpguyy .gt_font_normal {
   font-weight: normal;
 }
 
-#hngmbjbciu .gt_font_bold {
+#sddwdpguyy .gt_font_bold {
   font-weight: bold;
 }
 
-#hngmbjbciu .gt_font_italic {
+#sddwdpguyy .gt_font_italic {
   font-style: italic;
 }
 
-#hngmbjbciu .gt_super {
+#sddwdpguyy .gt_super {
   font-size: 65%;
 }
 
-#hngmbjbciu .gt_footnote_marks {
+#sddwdpguyy .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hngmbjbciu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="sddwdpguyy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="6" class="gt_heading gt_title gt_font_normal" style>Model of Distress by Denomination with the base category is `No Religion'</th>
@@ -2078,50 +2068,50 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Coefficient</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">SE</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">95% CI</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">t(4026)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">t(3991)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">p</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr>
       <td class="gt_row gt_left">(Intercept)</td>
-      <td class="gt_row gt_center">5.17</td>
+      <td class="gt_row gt_center">5.38</td>
       <td class="gt_row gt_center">0.08</td>
-      <td class="gt_row gt_center">(5.02, 5.32)</td>
-      <td class="gt_row gt_center">67.55</td>
+      <td class="gt_row gt_center">(5.23, 5.54)</td>
+      <td class="gt_row gt_center">69.49</td>
       <td class="gt_row gt_center">&lt; .001</td>
     </tr>
     <tr>
       <td class="gt_row gt_left">BigDoms (Christian)</td>
-      <td class="gt_row gt_center">-0.25</td>
+      <td class="gt_row gt_center">-0.48</td>
       <td class="gt_row gt_center">0.14</td>
-      <td class="gt_row gt_center">(-0.53, 0.02)</td>
-      <td class="gt_row gt_center">-1.82</td>
-      <td class="gt_row gt_center">0.069 </td>
+      <td class="gt_row gt_center">(-0.76, -0.21)</td>
+      <td class="gt_row gt_center">-3.47</td>
+      <td class="gt_row gt_center">&lt; .001</td>
     </tr>
     <tr>
       <td class="gt_row gt_left">BigDoms (Buddhist)</td>
-      <td class="gt_row gt_center">-0.32</td>
-      <td class="gt_row gt_center">0.66</td>
-      <td class="gt_row gt_center">(-1.60, 0.97)</td>
-      <td class="gt_row gt_center">-0.48</td>
-      <td class="gt_row gt_center">0.631 </td>
+      <td class="gt_row gt_center">-0.97</td>
+      <td class="gt_row gt_center">0.67</td>
+      <td class="gt_row gt_center">(-2.28, 0.34)</td>
+      <td class="gt_row gt_center">-1.45</td>
+      <td class="gt_row gt_center">0.147 </td>
     </tr>
     <tr>
       <td class="gt_row gt_left">BigDoms (Muslim)</td>
-      <td class="gt_row gt_center">-0.25</td>
-      <td class="gt_row gt_center">1.10</td>
-      <td class="gt_row gt_center">(-2.41, 1.91)</td>
-      <td class="gt_row gt_center">-0.23</td>
-      <td class="gt_row gt_center">0.820 </td>
+      <td class="gt_row gt_center">1.17</td>
+      <td class="gt_row gt_center">1.33</td>
+      <td class="gt_row gt_center">(-1.43, 3.78)</td>
+      <td class="gt_row gt_center">0.88</td>
+      <td class="gt_row gt_center">0.378 </td>
     </tr>
     <tr>
       <td class="gt_row gt_left">BigDoms (TheOthers)</td>
-      <td class="gt_row gt_center">0.82</td>
-      <td class="gt_row gt_center">0.35</td>
-      <td class="gt_row gt_center">(0.13, 1.51)</td>
-      <td class="gt_row gt_center">2.33</td>
-      <td class="gt_row gt_center">0.020 </td>
+      <td class="gt_row gt_center">0.18</td>
+      <td class="gt_row gt_center">0.36</td>
+      <td class="gt_row gt_center">(-0.53, 0.88)</td>
+      <td class="gt_row gt_center">0.49</td>
+      <td class="gt_row gt_center">0.621 </td>
     </tr>
   </tbody>
   <tfoot class="gt_sourcenotes"></tfoot>
@@ -2131,7 +2121,7 @@ $ Believe.Spirit &lt;fct&gt; Not Believe Spirit, Not Believe Spirit, Belie…</c
 <p>We can see the results better using a coefficient graph, which visualises the information presented in the table.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m0</span><span class='op'>)</span> <span class='op'>)</span> <span class='op'>+</span> <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Comparison of Religious groups to secular people"</span>, 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/plot.html'>plot</a></span><span class='op'>(</span><span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m0</span><span class='op'>)</span> <span class='op'>)</span> <span class='op'>+</span> <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Comparison of Religious groups to secular people"</span>, 
 subtitle <span class='op'>=</span> <span class='st'>"Christians are a little more chilled out, \n Other denoms are less chilled out"</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2154,9 +2144,9 @@ subtitle <span class='op'>=</span> <span class='st'>"Christians are a little mor
 </div>
 <pre><code>
      Low Distress Moderate Distress  Serious Distress 
-             2560              1372               172 
+             2510              1400               177 
              &lt;NA&gt; 
-               32 </code></pre>
+               39 </code></pre>
 </div>
 <h3 id="using-ifelse-to-create-factors">Using <code>ifelse</code> to create factors</h3>
 <p>I prefer to maintain control over how I am making the categories. For example, in the previous example, I didn’t remember whether <code>cut</code> includes a value to the left or to the right. I had to look this up. However, I can use <code>ifelse</code> function to explicitly create the relevant categories:</p>
@@ -2176,10 +2166,10 @@ subtitle <span class='op'>=</span> <span class='st'>"Christians are a little mor
 # Groups:   k6cats1 [4]
   k6cats1               n
   &lt;fct&gt;             &lt;int&gt;
-1 Low Distress       2560
-2 Moderate Distress  1372
-3 Serious Distress    172
-4 &lt;NA&gt;                 32</code></pre>
+1 Low Distress       2510
+2 Moderate Distress  1400
+3 Serious Distress    177
+4 &lt;NA&gt;                 39</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#check this is the same as the previous method</span>
 <span class='va'>nz</span> <span class='op'>%&gt;%</span>
@@ -2191,10 +2181,10 @@ subtitle <span class='op'>=</span> <span class='st'>"Christians are a little mor
 # Groups:   k6cats [4]
   k6cats                n
   &lt;fct&gt;             &lt;int&gt;
-1 Low Distress       2560
-2 Moderate Distress  1372
-3 Serious Distress    172
-4 &lt;NA&gt;                 32</code></pre>
+1 Low Distress       2510
+2 Moderate Distress  1400
+3 Serious Distress    177
+4 &lt;NA&gt;                 39</code></pre>
 </div>
 <p>We can see that this method returns the same values as the <code>cut</code> method above.</p>
 <h3 id="transformations-of-indicators-scaling-centering-and-logs">Transformations of indicators: scaling, centering, and logs</h3>
@@ -2211,12 +2201,12 @@ subtitle <span class='op'>=</span> <span class='st'>"Christians are a little mor
 <pre><code># A tibble: 6 x 2
   Relid religousid_s[,1]
   &lt;dbl&gt;            &lt;dbl&gt;
-1     0           -0.624
-2     0           -0.624
-3     6            1.71 
-4     6            1.71 
-5     3            0.545
-6     3            0.545</code></pre>
+1     0           -0.632
+2     0           -0.632
+3     0           -0.632
+4     0           -0.632
+5     0           -0.632
+6     0           -0.632</code></pre>
 </div>
 <p>What happened? The variable name for our standardised variable looks weird: <code>religious_s[ ,1]</code></p>
 <p>This isn’t a worry. We use the variable as we would any other and all is fine.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
@@ -2253,7 +2243,7 @@ p
 (Intercept)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.00
+0.00
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 -0.03 – 0.03
@@ -2267,7 +2257,7 @@ p
 Observations
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
-3993
+3963
 </td>
 </tr>
 <tr>
@@ -2298,28 +2288,28 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 </code></pre>
 </div>
 <pre><code>       V1         
- Min.   :-0.6237  
- 1st Qu.:-0.6237  
- Median :-0.6237  
+ Min.   :-0.6315  
+ 1st Qu.:-0.6315  
+ Median :-0.6315  
  Mean   : 0.0000  
- 3rd Qu.: 0.5453  
- Max.   : 2.1040  
- NA&#39;s   :143      </code></pre>
+ 3rd Qu.: 0.9223  
+ Max.   : 2.0877  
+ NA&#39;s   :163      </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># with</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>nzb</span><span class='op'>$</span><span class='va'>religousid_s</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>       V1        
- Min.   :-0.234  
- 1st Qu.: 0.935  
- Median : 1.325  
- Mean   : 1.298  
- 3rd Qu.: 2.104  
- Max.   : 2.104  
- NA&#39;s   :66      </code></pre>
+<pre><code>       V1         
+ Min.   :-0.2431  
+ 1st Qu.: 0.9223  
+ Median : 1.3107  
+ Mean   : 1.2819  
+ 3rd Qu.: 2.0877  
+ Max.   : 2.0877  
+ NA&#39;s   :69       </code></pre>
 </div>
-<p>When we filter last, the mean value in the dataset is 1.3 – everything has changed!</p>
+<p>When we filter last, the mean value in the dataset is 1.28 – everything has changed!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz1</span> <span class='op'>&lt;-</span> <span class='va'>nz1</span> <span class='op'>%&gt;%</span>
@@ -2331,12 +2321,12 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
 <pre><code># A tibble: 6 x 2
   Relid religousid_s[,1]
   &lt;dbl&gt;            &lt;dbl&gt;
-1     0           -0.624
-2     0           -0.624
-3     6            1.71 
-4     6            1.71 
-5     3            0.545
-6     3            0.545</code></pre>
+1     0           -0.632
+2     0           -0.632
+3     0           -0.632
+4     0           -0.632
+5     0           -0.632
+6     0           -0.632</code></pre>
 </div>
 <p>or simply:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2361,9 +2351,9 @@ R<sup>2</sup> / R<sup>2</sup> adjusted
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Rows: 4,136
+<pre><code>Rows: 4,126
 Columns: 2
-$ Relid        &lt;dbl&gt; 0, 0, 6, 6, 3, 3, NA, NA, 0, 0, 0, 0, 1, 1, 3, …
+$ Relid        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 7, 7, 2, 2, 0, 0, 0, 0, 0, 0,…
 $ religousid_c &lt;dbl[,1]&gt; &lt;matrix[23 x 1]&gt;</code></pre>
 </div>
 <p>We use the log transformation for extreme values. We can create a new indicator by combining <code>mutate</code> and <code>log</code> as follows:</p>
@@ -2378,10 +2368,10 @@ $ religousid_c &lt;dbl[,1]&gt; &lt;matrix[23 x 1]&gt;</code></pre>
     <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Rows: 4,136
+<pre><code>Rows: 4,126
 Columns: 2
-$ CharityDonate     &lt;dbl&gt; 1000, 0, 500, 500, 50, 20, 20, 100, 400, 3…
-$ charitydonate_log &lt;dbl&gt; 6.908755, 0.000000, 6.216606, 6.216606, 3.…</code></pre>
+$ CharityDonate     &lt;dbl&gt; 180, 80, 300, 100, 4200, 3500, 400, 350, 5…
+$ charitydonate_log &lt;dbl&gt; 5.198497, 4.394449, 5.707110, 4.615121, 8.…</code></pre>
 </div>
 <p>Note that we have to add <span class="math display">\[+1\]</span> to the log transformation, as you will recall that the log of zero is undefined. You cannot obtain zero by raising it to the power of another number.</p>
 <h3 id="create-and-work-with-dates-a-date">Create and work with dates a date</h3>
@@ -2401,12 +2391,12 @@ $ charitydonate_log &lt;dbl&gt; 6.908755, 0.000000, 6.216606, 6.216606, 3.…</c
 </code></pre>
 </div>
 <pre><code>      date           
- Min.   :2018-01-24  
- 1st Qu.:2018-08-08  
+ Min.   :2018-01-02  
+ 1st Qu.:2018-08-09  
  Median :2019-10-03  
- Mean   :2019-05-15  
- 3rd Qu.:2019-12-05  
- Max.   :2020-10-10  </code></pre>
+ Mean   :2019-05-18  
+ 3rd Qu.:2019-12-07  
+ Max.   :2020-10-06  </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>int</span><span class='op'>&lt;-</span><span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></span><span class='op'>(</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2018-01-02"</span><span class='op'>)</span>, <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='st'>"2020-10-06"</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -2460,20 +2450,20 @@ $ charitydonate_log &lt;dbl&gt; 6.908755, 0.000000, 6.216606, 6.216606, 3.…</c
   <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 623 x 3
+<pre><code># A tibble: 607 x 3
    day            n Year 
    &lt;date&gt;     &lt;int&gt; &lt;fct&gt;
- 1 2018-06-21   121 2018 
- 2 2018-06-22   104 2018 
- 3 2018-06-20    88 2018 
- 4 2018-06-24    80 2018 
- 5 2019-12-03    67 2019 
- 6 2018-06-23    65 2018 
- 7 2018-06-25    62 2018 
- 8 2019-12-05    46 2019 
- 9 2018-10-20    45 2018 
-10 2018-06-26    44 2018 
-# … with 613 more rows</code></pre>
+ 1 2018-06-21   112 2018 
+ 2 2018-06-22    93 2018 
+ 3 2018-06-24    80 2018 
+ 4 2018-06-20    67 2018 
+ 5 2018-06-23    59 2018 
+ 6 2018-06-26    58 2018 
+ 7 2019-12-03    54 2019 
+ 8 2018-06-25    52 2018 
+ 9 2019-10-04    47 2019 
+10 2019-12-02    46 2019 
+# … with 597 more rows</code></pre>
 </div>
 <p>Take not of that code, you might need it for your workbook.</p>
 <p>What might we do with dates? Well we might ask, were there any inherently stressful days?</p>
@@ -2491,11 +2481,11 @@ $ charitydonate_log &lt;dbl&gt; 6.908755, 0.000000, 6.216606, 6.216606, 3.…</c
   <span class='fu'>glimpse</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Rows: 623
+<pre><code>Rows: 607
 Columns: 3
-$ date        &lt;date&gt; 2020-05-10, 2020-05-23, 2020-04-22, 2020-04-26,…
-$ av_distress &lt;dbl&gt; 19.00000, 19.00000, 17.00000, 15.00000, 15.00000…
-$ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</code></pre>
+$ date        &lt;date&gt; 2018-12-16, 2020-07-06, 2018-11-13, 2019-01-05,…
+$ av_distress &lt;dbl&gt; 21.00000, 16.00000, 15.50000, 15.00000, 15.00000…
+$ n           &lt;int&gt; 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 1, …</code></pre>
 </div>
 <p>Graphing the densities reveals the following</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2593,10 +2583,10 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <pre><code># A tibble: 4 x 3
   day            n Year 
   &lt;date&gt;     &lt;int&gt; &lt;fct&gt;
-1 2018-06-21   121 2018 
-2 2018-06-22   104 2018 
-3 2018-06-20    88 2018 
-4 2018-06-24    80 2018 </code></pre>
+1 2018-06-21   112 2018 
+2 2018-06-22    93 2018 
+3 2018-06-24    80 2018 
+4 2018-06-20    67 2018 </code></pre>
 </div>
 <p>Say we only want the 1st row, the 3rd row, and the 20th row</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2609,9 +2599,9 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <pre><code># A tibble: 3 x 3
   day            n Year 
   &lt;date&gt;     &lt;int&gt; &lt;fct&gt;
-1 2018-06-21   121 2018 
-2 2018-06-20    88 2018 
-3 2019-12-12    36 2019 </code></pre>
+1 2018-06-21   112 2018 
+2 2018-06-24    80 2018 
+3 2020-03-18    38 2020 </code></pre>
 </div>
 <h3 id="lags-and-leads-using-timeseries-data">Lags and leads using timeseries data</h3>
 <p>Create a difference variable for change in Kessler 6</p>
@@ -2664,12 +2654,12 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <pre><code># A tibble: 6 x 7
      Id Wave  KESSLER6sum diff_k6 Emp.JobSecure Employed
   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;
-1  1713 2019            1      20             4        1
-2   564 2019            4      13            NA        0
-3  1001 2019            0      12             4        1
-4   517 2019            4      11            NA        0
-5   610 2019           14       9             7        1
-6   922 2019            5       9             7        1
+1   165 2019            0      20            NA        0
+2  1936 2019            3      15            NA        0
+3  1037 2019           10      14             4        1
+4   722 2019            2      12             7        1
+5  1568 2019            8      12            NA        0
+6  1606 2019            7      12             7        1
 # … with 1 more variable: employed_employsecurity &lt;dbl&gt;</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Graph</span>
@@ -2696,7 +2686,7 @@ $ n           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 3, 1, 1, 1, …</c
 <span class='co'># multi-level model </span>
 
 <span class='va'>m00a</span><span class='op'>&lt;-</span><span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span> <span class='op'>~</span>  <span class='va'>employsecurity_s</span> <span class='op'>*</span> <span class='va'>Wave</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>Id</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>dfnew2</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>m00a</span>, terms<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"employsecurity_s"</span>, <span class='st'>"Wave"</span><span class='op'>)</span><span class='op'>)</span>,
+<span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/plot.html'>plot</a></span><span class='op'>(</span><span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>m00a</span>, terms<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"employsecurity_s"</span>, <span class='st'>"Wave"</span><span class='op'>)</span><span class='op'>)</span>,
      add.data <span class='op'>=</span> <span class='cn'>TRUE</span>, jitter <span class='op'>=</span> <span class='fl'>0.2</span>, dot.alpha <span class='op'>=</span><span class='fl'>.05</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_hline</a></span><span class='op'>(</span>yintercept <span class='op'>=</span> <span class='fl'>5</span>,
              colour <span class='op'>=</span> <span class='st'>"red"</span>,
              linetype <span class='op'>=</span> <span class='st'>"dashed"</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2760,7 +2750,7 @@ Piped data
 Number of rows
 </td>
 <td style="text-align:left;">
-4136
+4126
 </td>
 </tr>
 <tr>
@@ -2861,16 +2851,16 @@ KESSLER6sum
 2018
 </td>
 <td style="text-align:right;">
-15
+28
 </td>
 <td style="text-align:right;">
 0.99
 </td>
 <td style="text-align:right;">
-5.07
+5.14
 </td>
 <td style="text-align:right;">
-3.93
+4.00
 </td>
 <td style="text-align:right;">
 0
@@ -2885,10 +2875,10 @@ KESSLER6sum
 7
 </td>
 <td style="text-align:right;">
-23
+24
 </td>
 <td style="text-align:left;">
-▇▅▂▁▁
+▇▆▂▁▁
 </td>
 </tr>
 <tr>
@@ -2899,16 +2889,16 @@ KESSLER6sum
 2019
 </td>
 <td style="text-align:right;">
-17
+11
 </td>
 <td style="text-align:right;">
 0.99
 </td>
 <td style="text-align:right;">
-5.20
+5.35
 </td>
 <td style="text-align:right;">
-4.01
+3.97
 </td>
 <td style="text-align:right;">
 0
@@ -2917,16 +2907,16 @@ KESSLER6sum
 2
 </td>
 <td style="text-align:right;">
-4
+5
 </td>
 <td style="text-align:right;">
 7
 </td>
 <td style="text-align:right;">
-22
+24
 </td>
 <td style="text-align:left;">
-▇▅▂▁▁
+▇▆▂▁▁
 </td>
 </tr>
 <tr>
@@ -2937,16 +2927,16 @@ HLTH.SleepHours
 2018
 </td>
 <td style="text-align:right;">
-97
+103
 </td>
 <td style="text-align:right;">
 0.95
 </td>
 <td style="text-align:right;">
-6.93
+6.92
 </td>
 <td style="text-align:right;">
-1.13
+1.07
 </td>
 <td style="text-align:right;">
 3
@@ -2961,10 +2951,10 @@ HLTH.SleepHours
 8
 </td>
 <td style="text-align:right;">
-12
+11
 </td>
 <td style="text-align:left;">
-▁▅▇▁▁
+▁▆▇▅▁
 </td>
 </tr>
 <tr>
@@ -2975,16 +2965,16 @@ HLTH.SleepHours
 2019
 </td>
 <td style="text-align:right;">
-69
+78
 </td>
 <td style="text-align:right;">
-0.97
+0.96
 </td>
 <td style="text-align:right;">
-6.96
+6.88
 </td>
 <td style="text-align:right;">
-1.14
+1.09
 </td>
 <td style="text-align:right;">
 2
@@ -3028,8 +3018,8 @@ HLTH.SleepHours
 <thead>
 <tr>
 <th class='rowlabel firstrow lastrow'></th>
-<th class='firstrow lastrow'><span class='stratlabel'>2018<br><span class='stratn'>(N=2068)</span></span></th>
-<th class='firstrow lastrow'><span class='stratlabel'>2019<br><span class='stratn'>(N=2068)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>2018<br><span class='stratn'>(N=2063)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>2019<br><span class='stratn'>(N=2063)</span></span></th>
 </tr>
 </thead>
 <tbody>
@@ -3040,13 +3030,13 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel'>Mean (SD)</td>
-<td>50.1 (13.5)</td>
-<td>51.8 (13.4)</td>
+<td>50.2 (13.4)</td>
+<td>50.9 (13.4)</td>
 </tr>
 <tr>
 <td class='rowlabel lastrow'>Median [Min, Max]</td>
-<td class='lastrow'>52.0 [18.0, 90.0]</td>
-<td class='lastrow'>54.1 [19.6, 91.1]</td>
+<td class='lastrow'>52.0 [18.0, 92.0]</td>
+<td class='lastrow'>53.0 [19.0, 92.0]</td>
 </tr>
 <tr>
 <td class='rowlabel firstrow'><span class='varlabel'>GenCohort</span></td>
@@ -3055,28 +3045,28 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel'>Gen Boombers: born >= 1946 & b.< 1961</td>
-<td>693 (33.5%)</td>
-<td>693 (33.5%)</td>
+<td>676 (32.8%)</td>
+<td>676 (32.8%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Gen_Silent: born< 1946</td>
-<td>50 (2.4%)</td>
-<td>50 (2.4%)</td>
+<td>51 (2.5%)</td>
+<td>51 (2.5%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>GenX: born >=1961 & b.< 1980</td>
-<td>886 (42.8%)</td>
-<td>886 (42.8%)</td>
+<td>915 (44.4%)</td>
+<td>915 (44.4%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>GenY: born >=1980 & b.< 1996</td>
-<td>387 (18.7%)</td>
-<td>387 (18.7%)</td>
+<td>368 (17.8%)</td>
+<td>368 (17.8%)</td>
 </tr>
 <tr>
 <td class='rowlabel lastrow'>GenZ: born >= 1996</td>
-<td class='lastrow'>52 (2.5%)</td>
-<td class='lastrow'>52 (2.5%)</td>
+<td class='lastrow'>53 (2.6%)</td>
+<td class='lastrow'>53 (2.6%)</td>
 </tr>
 <tr>
 <td class='rowlabel firstrow'><span class='varlabel'>Male</span></td>
@@ -3085,18 +3075,18 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel'>Male</td>
-<td>772 (37.3%)</td>
-<td>772 (37.3%)</td>
+<td>755 (36.6%)</td>
+<td>752 (36.5%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Not_Male</td>
-<td>1290 (62.4%)</td>
-<td>1289 (62.3%)</td>
+<td>1305 (63.3%)</td>
+<td>1305 (63.3%)</td>
 </tr>
 <tr>
 <td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>3 (0.1%)</td>
 <td class='lastrow'>6 (0.3%)</td>
-<td class='lastrow'>7 (0.3%)</td>
 </tr>
 <tr>
 <td class='rowlabel firstrow'><span class='varlabel'>Edu</span></td>
@@ -3105,18 +3095,18 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel'>Mean (SD)</td>
-<td>5.39 (2.78)</td>
-<td>5.64 (2.72)</td>
+<td>5.54 (2.73)</td>
+<td>5.71 (2.66)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Median [Min, Max]</td>
-<td>6.00 [0, 10.0]</td>
+<td>7.00 [0, 10.0]</td>
 <td>7.00 [0, 10.0]</td>
 </tr>
 <tr>
 <td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>80 (3.9%)</td>
-<td class='lastrow'>65 (3.1%)</td>
+<td class='lastrow'>77 (3.7%)</td>
+<td class='lastrow'>50 (2.4%)</td>
 </tr>
 <tr>
 <td class='rowlabel firstrow'><span class='varlabel'>Pol.Orient</span></td>
@@ -3125,8 +3115,8 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel'>Mean (SD)</td>
-<td>3.53 (1.39)</td>
-<td>3.57 (1.37)</td>
+<td>3.58 (1.40)</td>
+<td>3.58 (1.37)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Median [Min, Max]</td>
@@ -3135,8 +3125,8 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>116 (5.6%)</td>
-<td class='lastrow'>63 (3.0%)</td>
+<td class='lastrow'>119 (5.8%)</td>
+<td class='lastrow'>69 (3.3%)</td>
 </tr>
 <tr>
 <td class='rowlabel firstrow'><span class='varlabel'>Relid</span></td>
@@ -3145,8 +3135,8 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel'>Mean (SD)</td>
-<td>1.67 (2.57)</td>
-<td>1.53 (2.56)</td>
+<td>1.69 (2.58)</td>
+<td>1.56 (2.57)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Median [Min, Max]</td>
@@ -3155,8 +3145,8 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>44 (2.1%)</td>
-<td class='lastrow'>99 (4.8%)</td>
+<td class='lastrow'>51 (2.5%)</td>
+<td class='lastrow'>112 (5.4%)</td>
 </tr>
 <tr>
 <td class='rowlabel firstrow'><span class='varlabel'>BigDoms</span></td>
@@ -3165,33 +3155,33 @@ HLTH.SleepHours
 </tr>
 <tr>
 <td class='rowlabel'>Buddhist</td>
-<td>18 (0.9%)</td>
+<td>17 (0.8%)</td>
 <td>19 (0.9%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Christian</td>
-<td>619 (29.9%)</td>
-<td>557 (26.9%)</td>
+<td>624 (30.2%)</td>
+<td>580 (28.1%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Muslim</td>
-<td>7 (0.3%)</td>
-<td>6 (0.3%)</td>
+<td>4 (0.2%)</td>
+<td>5 (0.2%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Not_Rel</td>
-<td>1322 (63.9%)</td>
-<td>1375 (66.5%)</td>
+<td>1301 (63.1%)</td>
+<td>1354 (65.6%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>TheOthers</td>
-<td>70 (3.4%)</td>
-<td>66 (3.2%)</td>
+<td>75 (3.6%)</td>
+<td>53 (2.6%)</td>
 </tr>
 <tr>
 <td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>32 (1.5%)</td>
-<td class='lastrow'>45 (2.2%)</td>
+<td class='lastrow'>42 (2.0%)</td>
+<td class='lastrow'>52 (2.5%)</td>
 </tr>
 </tbody>
 </table>
@@ -3239,12 +3229,12 @@ HLTH.SleepHours
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-2018 (N=2068)
+2018 (N=2063)
 </div>
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-2019 (N=2068)
+2019 (N=2063)
 </div>
 </th>
 </tr>
@@ -3275,13 +3265,13 @@ Age
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-50.1
+50.2
 </td>
 <td style="text-align:left;">
-13.5
+13.4
 </td>
 <td style="text-align:left;">
-51.8
+50.9
 </td>
 <td style="text-align:left;">
 13.4
@@ -3294,13 +3284,13 @@ Edu
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-5.4
+5.5
 </td>
 <td style="text-align:left;">
-2.8
+2.7
 </td>
 <td style="text-align:left;">
-5.6
+5.7
 </td>
 <td style="text-align:left;">
 2.7
@@ -3319,7 +3309,7 @@ Relid
 2.6
 </td>
 <td style="text-align:left;">
-1.5
+1.6
 </td>
 <td style="text-align:left;">
 2.6
@@ -3332,7 +3322,7 @@ Pol.Orient
 <td style="text-align:left;box-shadow: 0px 1px">
 </td>
 <td style="text-align:left;box-shadow: 0px 1px">
-3.5
+3.6
 </td>
 <td style="text-align:left;box-shadow: 0px 1px">
 1.4
@@ -3370,16 +3360,16 @@ Male
 Male
 </td>
 <td style="text-align:left;">
-772
+755
 </td>
 <td style="text-align:left;">
-37.3
+36.6
 </td>
 <td style="text-align:left;">
-772
+752
 </td>
 <td style="text-align:left;">
-37.3
+36.5
 </td>
 </tr>
 <tr>
@@ -3389,16 +3379,16 @@ Male
 Not_Male
 </td>
 <td style="text-align:left;">
-1290
+1305
 </td>
 <td style="text-align:left;">
-62.4
+63.3
 </td>
 <td style="text-align:left;">
-1289
+1305
 </td>
 <td style="text-align:left;">
-62.3
+63.3
 </td>
 </tr>
 <tr>
@@ -3409,10 +3399,10 @@ BigDoms
 Buddhist
 </td>
 <td style="text-align:left;">
-18
+17
 </td>
 <td style="text-align:left;">
-0.9
+0.8
 </td>
 <td style="text-align:left;">
 19
@@ -3428,16 +3418,16 @@ Buddhist
 Christian
 </td>
 <td style="text-align:left;">
-619
+624
 </td>
 <td style="text-align:left;">
-29.9
+30.2
 </td>
 <td style="text-align:left;">
-557
+580
 </td>
 <td style="text-align:left;">
-26.9
+28.1
 </td>
 </tr>
 <tr>
@@ -3447,16 +3437,16 @@ Christian
 Muslim
 </td>
 <td style="text-align:left;">
-7
+4
 </td>
 <td style="text-align:left;">
-0.3
+0.2
 </td>
 <td style="text-align:left;">
-6
+5
 </td>
 <td style="text-align:left;">
-0.3
+0.2
 </td>
 </tr>
 <tr>
@@ -3466,16 +3456,16 @@ Muslim
 Not_Rel
 </td>
 <td style="text-align:left;">
-1322
+1301
 </td>
 <td style="text-align:left;">
-63.9
+63.1
 </td>
 <td style="text-align:left;">
-1375
+1354
 </td>
 <td style="text-align:left;">
-66.5
+65.6
 </td>
 </tr>
 <tr>
@@ -3485,16 +3475,16 @@ Not_Rel
 TheOthers
 </td>
 <td style="text-align:left;">
-70
+75
 </td>
 <td style="text-align:left;">
-3.4
+3.6
 </td>
 <td style="text-align:left;">
-66
+53
 </td>
 <td style="text-align:left;">
-3.2
+2.6
 </td>
 </tr>
 <tr>
@@ -3505,16 +3495,16 @@ GenCohort
 Gen Boombers: born &gt;= 1946 &amp; b.&lt; 1961
 </td>
 <td style="text-align:left;">
-693
+676
 </td>
 <td style="text-align:left;">
-33.5
+32.8
 </td>
 <td style="text-align:left;">
-693
+676
 </td>
 <td style="text-align:left;">
-33.5
+32.8
 </td>
 </tr>
 <tr>
@@ -3524,16 +3514,16 @@ Gen Boombers: born &gt;= 1946 &amp; b.&lt; 1961
 Gen_Silent: born&lt; 1946
 </td>
 <td style="text-align:left;">
-50
+51
 </td>
 <td style="text-align:left;">
-2.4
+2.5
 </td>
 <td style="text-align:left;">
-50
+51
 </td>
 <td style="text-align:left;">
-2.4
+2.5
 </td>
 </tr>
 <tr>
@@ -3543,16 +3533,16 @@ Gen_Silent: born&lt; 1946
 GenX: born &gt;=1961 &amp; b.&lt; 1980
 </td>
 <td style="text-align:left;">
-886
+915
 </td>
 <td style="text-align:left;">
-42.8
+44.4
 </td>
 <td style="text-align:left;">
-886
+915
 </td>
 <td style="text-align:left;">
-42.8
+44.4
 </td>
 </tr>
 <tr>
@@ -3562,16 +3552,16 @@ GenX: born &gt;=1961 &amp; b.&lt; 1980
 GenY: born &gt;=1980 &amp; b.&lt; 1996
 </td>
 <td style="text-align:left;">
-387
+368
 </td>
 <td style="text-align:left;">
-18.7
+17.8
 </td>
 <td style="text-align:left;">
-387
+368
 </td>
 <td style="text-align:left;">
-18.7
+17.8
 </td>
 </tr>
 <tr>
@@ -3581,16 +3571,16 @@ GenY: born &gt;=1980 &amp; b.&lt; 1996
 GenZ: born &gt;= 1996
 </td>
 <td style="text-align:left;">
-52
+53
 </td>
 <td style="text-align:left;">
-2.5
+2.6
 </td>
 <td style="text-align:left;">
-52
+53
 </td>
 <td style="text-align:left;">
-2.5
+2.6
 </td>
 </tr>
 </tbody>
@@ -3630,57 +3620,69 @@ n
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;vertical-align: middle !important;" rowspan="3">
+<td style="text-align:left;">
 2018
 </td>
 <td style="text-align:left;">
 Low Distress
 </td>
 <td style="text-align:right;">
-1296
+1272
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+2018
+</td>
 <td style="text-align:left;">
 Moderate Distress
 </td>
 <td style="text-align:right;">
-673
+675
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+2018
+</td>
+<td style="text-align:left;">
 Serious Distress
 </td>
 <td style="text-align:right;">
-84
+88
 </td>
 </tr>
 <tr>
-<td style="text-align:left;vertical-align: middle !important;" rowspan="3">
+<td style="text-align:left;">
 2019
 </td>
 <td style="text-align:left;">
 Low Distress
 </td>
 <td style="text-align:right;">
-1264
+1238
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+2019
+</td>
 <td style="text-align:left;">
 Moderate Distress
 </td>
 <td style="text-align:right;">
-699
+725
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+2019
+</td>
+<td style="text-align:left;">
 Serious Distress
 </td>
 <td style="text-align:right;">
-88
+89
 </td>
 </tr>
 </tbody>
@@ -3723,10 +3725,10 @@ k6cats
 Low Distress
 </td>
 <td style="text-align:right;">
-1296
+1272
 </td>
 <td style="text-align:right;">
-1264
+1238
 </td>
 </tr>
 <tr>
@@ -3734,10 +3736,10 @@ Low Distress
 Moderate Distress
 </td>
 <td style="text-align:right;">
-673
+675
 </td>
 <td style="text-align:right;">
-699
+725
 </td>
 </tr>
 <tr>
@@ -3745,10 +3747,10 @@ Moderate Distress
 Serious Distress
 </td>
 <td style="text-align:right;">
-84
+88
 </td>
 <td style="text-align:right;">
-88
+89
 </td>
 </tr>
 </tbody>
@@ -3765,7 +3767,7 @@ Serious Distress
 </div>
 <pre><code>
  Buddhist Christian    Muslim   Not_Rel TheOthers 
-       37      1176        13      2697       136 </code></pre>
+       36      1204         9      2655       128 </code></pre>
 </div>
 <p>Here’s the bar graph:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3883,7 +3885,7 @@ Serious Distress
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/correlation/'>correlation</a></span><span class='op'>)</span>
 <span class='va'>p1</span><span class='op'>&lt;-</span><span class='va'>bzsec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span>partial <span class='op'>=</span> <span class='cn'>FALSE</span>, multilevel <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/plot.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -3897,11 +3899,11 @@ Serious Distress
 </div>
 <pre><code>Parameter              | CharityDonate | Emp.JobSecure | NZ.Business.Conditions | NZ.Economic.Situation | Standard.Living
 -------------------------------------------------------------------------------------------------------------------------
-Your.Future.Security   |       0.10*** |       0.22*** |                0.47*** |               0.32*** |         0.38***
-Standard.Living        |       0.09*** |       0.16*** |                0.26*** |               0.30*** |                
-NZ.Economic.Situation  |       0.07*** |       0.10*** |                0.43*** |                       |                
-NZ.Business.Conditions |          0.04 |       0.13*** |                        |                       |                
-Emp.JobSecure          |          0.03 |               |                        |                       |                </code></pre>
+Your.Future.Security   |         0.05* |       0.24*** |                0.44*** |               0.31*** |         0.34***
+Standard.Living        |       0.09*** |       0.18*** |                0.22*** |               0.28*** |                
+NZ.Economic.Situation  |          0.03 |       0.11*** |                0.43*** |                       |                
+NZ.Business.Conditions |          0.03 |       0.14*** |                        |                       |                
+Emp.JobSecure          |         0.05* |               |                        |                       |                </code></pre>
 </div>
 <p>Let’s set multilevel to <code>FALSE</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3910,7 +3912,7 @@ Emp.JobSecure          |          0.03 |               |                        
 <span class='va'>p2</span><span class='op'>&lt;-</span><span class='va'>bzsec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Id</span><span class='op'>)</span><span class='op'>%&gt;%</span> <span class='co'># get rid of grouping variable</span>
   <span class='fu'><a href='https://easystats.github.io/correlation/reference/correlation.html'>correlation</a></span><span class='op'>(</span>partial <span class='op'>=</span> <span class='cn'>FALSE</span>, multilevel <span class='op'>=</span> <span class='cn'>FALSE</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/plot.html'>plot</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='co'>#print summary</span>
 <span class='va'>bzsec</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Id</span><span class='op'>)</span><span class='op'>%&gt;%</span> <span class='co'># get rid of grouping variable</span>
@@ -3922,11 +3924,11 @@ Emp.JobSecure          |          0.03 |               |                        
 
 Parameter              | CharityDonate | Emp.JobSecure | NZ.Business.Conditions | NZ.Economic.Situation | Standard.Living
 -------------------------------------------------------------------------------------------------------------------------
-Your.Future.Security   |       0.22*** |       0.31*** |                0.53*** |               0.42*** |         0.53***
-Standard.Living        |       0.25*** |       0.26*** |                0.32*** |               0.36*** |                
-NZ.Economic.Situation  |       0.12*** |       0.14*** |                0.52*** |                       |                
-NZ.Business.Conditions |       0.10*** |       0.20*** |                        |                       |                
-Emp.JobSecure          |       0.10*** |               |                        |                       |                
+Your.Future.Security   |       0.19*** |       0.35*** |                0.52*** |               0.41*** |         0.52***
+Standard.Living        |       0.22*** |       0.28*** |                0.31*** |               0.36*** |                
+NZ.Economic.Situation  |       0.07*** |       0.15*** |                0.52*** |                       |                
+NZ.Business.Conditions |       0.08*** |       0.21*** |                        |                       |                
+Emp.JobSecure          |       0.09*** |               |                        |                       |                
 
 p-value adjustment method: Holm (1979)</code></pre>
 </div>
@@ -3965,7 +3967,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   <span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] &quot;For the &#39;Wave - 2018&#39; group: Two Thousand, Sixty Eight participants (Mean age = 50.1, SD = 13.5, range: [18, 90]; 0.0% females; Mean education = 5.4, SD = 2.8, range: [0, 10]) and for the &#39;Wave - 2019&#39; group: Two Thousand, Sixty Eight participants (Mean age = 51.8, SD = 13.4, range: [19.6, 91.08]; 0.0% females; Mean education = 5.6, SD = 2.7, range: [0, 10]) were recruited in the study by through enticement by lollipops. Those who did not volunteer were coerced.&quot;</code></pre>
+<pre><code>[1] &quot;For the &#39;Wave - 2018&#39; group: Two Thousand, Sixty Three participants (Mean age = 50.2, SD = 13.4, range: [18, 92]; 0.0% females; Mean education = 5.5, SD = 2.7, range: [0, 10]) and for the &#39;Wave - 2019&#39; group: Two Thousand, Sixty Three participants (Mean age = 50.9, SD = 13.4, range: [19, 92]; 0.0% females; Mean education = 5.7, SD = 2.7, range: [0, 10]) were recruited in the study by through enticement by lollipops. Those who did not volunteer were coerced.&quot;</code></pre>
 </div>
 <p>The table function of <code>report</code> isn’t great yet. However it has some nice features. For example you should always report your session information, and doing so in tabluar form clarifies the elements</p>
 <p>Try running the following code on your own:</p>
@@ -4015,35 +4017,35 @@ p-value adjustment method: Holm (1979)</code></pre>
   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>The data contains 4136 observations, grouped by Wave, of the following variables:
+<pre><code>The data contains 4126 observations, grouped by Wave, of the following variables:
 
-- 2018 (n = 2068):
-  - Age: Mean = 50.07, SD = 13.49, range: [18, 90]
-  - Male: 2 levels, namely Male (n = 772), Not_Male (n = 1290) and missing (n = 6)
-  - Edu: Mean = 5.39, SD = 2.78, range: [0, 10], 3.87% missing
-  - Relid: Mean = 1.67, SD = 2.57, range: [0, 7], 2.13% missing
-  - Pol.Orient: Mean = 3.53, SD = 1.39, range: [1, 7], 5.61% missing
-  - KESSLER6sum: Mean = 5.07, SD = 3.93, range: [0, 23], 0.73% missing
-  - FeelHopeless: 5 levels, namely None Of The Time (n = 1046), A Little Of The Time (n = 600), Some Of The Time (n = 338), Most Of The Time (n = 54), All Of The Time (n = 4) and missing (n = 26)
-  - FeelDepressed: 5 levels, namely None Of The Time (n = 1469), A Little Of The Time (n = 361), Some Of The Time (n = 170), Most Of The Time (n = 43), All Of The Time (n = 5) and missing (n = 20)
-  - FeelRestless: 5 levels, namely None Of The Time (n = 535), A Little Of The Time (n = 763), Some Of The Time (n = 594), Most Of The Time (n = 138), All Of The Time (n = 16) and missing (n = 22)
-  - EverythingIsEffort: 5 levels, namely None Of The Time (n = 551), A Little Of The Time (n = 795), Some Of The Time (n = 501), Most Of The Time (n = 158), All Of The Time (n = 40) and missing (n = 23)
-  - FeelWorthless: 5 levels, namely None Of The Time (n = 1433), A Little Of The Time (n = 356), Some Of The Time (n = 186), Most Of The Time (n = 67), All Of The Time (n = 7) and missing (n = 19)
-  - FeelNervous: 5 levels, namely None Of The Time (n = 620), A Little Of The Time (n = 789), Some Of The Time (n = 482), Most Of The Time (n = 146), All Of The Time (n = 13) and missing (n = 18)
+- 2018 (n = 2063):
+  - Age: Mean = 50.19, SD = 13.38, range: [18, 92]
+  - Male: 2 levels, namely Male (n = 755), Not_Male (n = 1305) and missing (n = 3)
+  - Edu: Mean = 5.54, SD = 2.73, range: [0, 10], 3.73% missing
+  - Relid: Mean = 1.69, SD = 2.58, range: [0, 7], 2.47% missing
+  - Pol.Orient: Mean = 3.58, SD = 1.40, range: [1, 7], 5.77% missing
+  - KESSLER6sum: Mean = 5.14, SD = 4.00, range: [0, 24], 1.36% missing
+  - FeelHopeless: 5 levels, namely None Of The Time (n = 1012), A Little Of The Time (n = 627), Some Of The Time (n = 325), Most Of The Time (n = 58), All Of The Time (n = 11) and missing (n = 30)
+  - FeelDepressed: 5 levels, namely None Of The Time (n = 1481), A Little Of The Time (n = 345), Some Of The Time (n = 156), Most Of The Time (n = 35), All Of The Time (n = 12) and missing (n = 34)
+  - FeelRestless: 5 levels, namely None Of The Time (n = 520), A Little Of The Time (n = 751), Some Of The Time (n = 585), Most Of The Time (n = 143), All Of The Time (n = 29) and missing (n = 35)
+  - EverythingIsEffort: 5 levels, namely None Of The Time (n = 523), A Little Of The Time (n = 827), Some Of The Time (n = 490), Most Of The Time (n = 159), All Of The Time (n = 32) and missing (n = 32)
+  - FeelWorthless: 5 levels, namely None Of The Time (n = 1469), A Little Of The Time (n = 348), Some Of The Time (n = 147), Most Of The Time (n = 48), All Of The Time (n = 19) and missing (n = 32)
+  - FeelNervous: 5 levels, namely None Of The Time (n = 537), A Little Of The Time (n = 804), Some Of The Time (n = 509), Most Of The Time (n = 148), All Of The Time (n = 28) and missing (n = 37)
 
-- 2019 (n = 2068):
-  - Age: Mean = 51.83, SD = 13.45, range: [19.55, 91.08]
-  - Male: 2 levels, namely Male (n = 772), Not_Male (n = 1289) and missing (n = 7)
-  - Edu: Mean = 5.64, SD = 2.72, range: [0, 10], 3.14% missing
-  - Relid: Mean = 1.53, SD = 2.56, range: [0, 7], 4.79% missing
-  - Pol.Orient: Mean = 3.57, SD = 1.37, range: [1, 7], 3.05% missing
-  - KESSLER6sum: Mean = 5.20, SD = 4.01, range: [0, 22], 0.82% missing
-  - FeelHopeless: 5 levels, namely None Of The Time (n = 977), A Little Of The Time (n = 639), Some Of The Time (n = 349), Most Of The Time (n = 79), All Of The Time (n = 4) and missing (n = 20)
-  - FeelDepressed: 5 levels, namely None Of The Time (n = 1434), A Little Of The Time (n = 377), Some Of The Time (n = 193), Most Of The Time (n = 35), All Of The Time (n = 5) and missing (n = 24)
-  - FeelRestless: 5 levels, namely None Of The Time (n = 517), A Little Of The Time (n = 757), Some Of The Time (n = 608), Most Of The Time (n = 146), All Of The Time (n = 15) and missing (n = 25)
-  - EverythingIsEffort: 5 levels, namely None Of The Time (n = 544), A Little Of The Time (n = 804), Some Of The Time (n = 502), Most Of The Time (n = 156), All Of The Time (n = 35) and missing (n = 27)
-  - FeelWorthless: 5 levels, namely None Of The Time (n = 1407), A Little Of The Time (n = 375), Some Of The Time (n = 195), Most Of The Time (n = 60), All Of The Time (n = 9) and missing (n = 22)
-  - FeelNervous: 5 levels, namely None Of The Time (n = 568), A Little Of The Time (n = 850), Some Of The Time (n = 468), Most Of The Time (n = 133), All Of The Time (n = 24) and missing (n = 25)</code></pre>
+- 2019 (n = 2063):
+  - Age: Mean = 50.94, SD = 13.38, range: [19, 92]
+  - Male: 2 levels, namely Male (n = 752), Not_Male (n = 1305) and missing (n = 6)
+  - Edu: Mean = 5.71, SD = 2.66, range: [0, 10], 2.42% missing
+  - Relid: Mean = 1.56, SD = 2.57, range: [0, 7], 5.43% missing
+  - Pol.Orient: Mean = 3.58, SD = 1.37, range: [1, 7], 3.34% missing
+  - KESSLER6sum: Mean = 5.35, SD = 3.97, range: [0, 24], 0.53% missing
+  - FeelHopeless: 5 levels, namely None Of The Time (n = 961), A Little Of The Time (n = 660), Some Of The Time (n = 348), Most Of The Time (n = 67), All Of The Time (n = 8) and missing (n = 19)
+  - FeelDepressed: 5 levels, namely None Of The Time (n = 1399), A Little Of The Time (n = 403), Some Of The Time (n = 195), Most Of The Time (n = 47), All Of The Time (n = 7) and missing (n = 12)
+  - FeelRestless: 5 levels, namely None Of The Time (n = 501), A Little Of The Time (n = 794), Some Of The Time (n = 577), Most Of The Time (n = 158), All Of The Time (n = 17) and missing (n = 16)
+  - EverythingIsEffort: 5 levels, namely None Of The Time (n = 470), A Little Of The Time (n = 798), Some Of The Time (n = 572), Most Of The Time (n = 179), All Of The Time (n = 29) and missing (n = 15)
+  - FeelWorthless: 5 levels, namely None Of The Time (n = 1434), A Little Of The Time (n = 359), Some Of The Time (n = 193), Most Of The Time (n = 51), All Of The Time (n = 12) and missing (n = 14)
+  - FeelNervous: 5 levels, namely None Of The Time (n = 540), A Little Of The Time (n = 824), Some Of The Time (n = 539), Most Of The Time (n = 122), All Of The Time (n = 25) and missing (n = 13)</code></pre>
 </div>
 <p>Notes:</p>
 <p>More about the report package: <a href="https://easystats.github.io/report/index.html">here</a></p>
@@ -4084,7 +4086,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#myqyvvhdwo .gt_table {
+#lnshhtdjui .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4109,7 +4111,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_heading {
+#lnshhtdjui .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4121,7 +4123,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_title {
+#lnshhtdjui .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4131,7 +4133,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-bottom-width: 0;
 }
 
-#myqyvvhdwo .gt_subtitle {
+#lnshhtdjui .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4141,13 +4143,13 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-top-width: 0;
 }
 
-#myqyvvhdwo .gt_bottom_border {
+#lnshhtdjui .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_col_headings {
+#lnshhtdjui .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4162,7 +4164,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_col_heading {
+#lnshhtdjui .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4182,7 +4184,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   overflow-x: hidden;
 }
 
-#myqyvvhdwo .gt_column_spanner_outer {
+#lnshhtdjui .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4194,15 +4196,15 @@ p-value adjustment method: Holm (1979)</code></pre>
   padding-right: 4px;
 }
 
-#myqyvvhdwo .gt_column_spanner_outer:first-child {
+#lnshhtdjui .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#myqyvvhdwo .gt_column_spanner_outer:last-child {
+#lnshhtdjui .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#myqyvvhdwo .gt_column_spanner {
+#lnshhtdjui .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4214,7 +4216,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   width: 100%;
 }
 
-#myqyvvhdwo .gt_group_heading {
+#lnshhtdjui .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4236,7 +4238,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   vertical-align: middle;
 }
 
-#myqyvvhdwo .gt_empty_group_heading {
+#lnshhtdjui .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4251,15 +4253,15 @@ p-value adjustment method: Holm (1979)</code></pre>
   vertical-align: middle;
 }
 
-#myqyvvhdwo .gt_from_md > :first-child {
+#lnshhtdjui .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#myqyvvhdwo .gt_from_md > :last-child {
+#lnshhtdjui .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#myqyvvhdwo .gt_row {
+#lnshhtdjui .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4278,7 +4280,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   overflow-x: hidden;
 }
 
-#myqyvvhdwo .gt_stub {
+#lnshhtdjui .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4290,7 +4292,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   padding-left: 12px;
 }
 
-#myqyvvhdwo .gt_summary_row {
+#lnshhtdjui .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4300,7 +4302,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   padding-right: 5px;
 }
 
-#myqyvvhdwo .gt_first_summary_row {
+#lnshhtdjui .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4310,7 +4312,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_grand_summary_row {
+#lnshhtdjui .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4320,7 +4322,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   padding-right: 5px;
 }
 
-#myqyvvhdwo .gt_first_grand_summary_row {
+#lnshhtdjui .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4330,11 +4332,11 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_striped {
+#lnshhtdjui .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#myqyvvhdwo .gt_table_body {
+#lnshhtdjui .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4343,7 +4345,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_footnotes {
+#lnshhtdjui .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4357,13 +4359,13 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_footnote {
+#lnshhtdjui .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#myqyvvhdwo .gt_sourcenotes {
+#lnshhtdjui .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4377,64 +4379,64 @@ p-value adjustment method: Holm (1979)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#myqyvvhdwo .gt_sourcenote {
+#lnshhtdjui .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#myqyvvhdwo .gt_left {
+#lnshhtdjui .gt_left {
   text-align: left;
 }
 
-#myqyvvhdwo .gt_center {
+#lnshhtdjui .gt_center {
   text-align: center;
 }
 
-#myqyvvhdwo .gt_right {
+#lnshhtdjui .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#myqyvvhdwo .gt_font_normal {
+#lnshhtdjui .gt_font_normal {
   font-weight: normal;
 }
 
-#myqyvvhdwo .gt_font_bold {
+#lnshhtdjui .gt_font_bold {
   font-weight: bold;
 }
 
-#myqyvvhdwo .gt_font_italic {
+#lnshhtdjui .gt_font_italic {
   font-style: italic;
 }
 
-#myqyvvhdwo .gt_super {
+#lnshhtdjui .gt_super {
   font-size: 65%;
 }
 
-#myqyvvhdwo .gt_footnote_marks {
+#lnshhtdjui .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="myqyvvhdwo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="lnshhtdjui" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>2018</strong>, N = 2,068<sup class="gt_footnote_marks">1</sup></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>2019</strong>, N = 2,068<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>2018</strong>, N = 2,063<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>2019</strong>, N = 2,063<sup class="gt_footnote_marks">1</sup></th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">KESSLER6sum</td>
-      <td class="gt_row gt_center">5.07 (3.93)</td>
-      <td class="gt_row gt_center">5.20 (4.01)</td>
+      <td class="gt_row gt_center">5.14 (4.00)</td>
+      <td class="gt_row gt_center">5.35 (3.97)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">(Missing)</td>
-      <td class="gt_row gt_center">15</td>
-      <td class="gt_row gt_center">17</td>
+      <td class="gt_row gt_center">28</td>
+      <td class="gt_row gt_center">11</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">FeelHopeless</td>
@@ -4443,33 +4445,33 @@ p-value adjustment method: Holm (1979)</code></pre>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">None Of The Time</td>
-      <td class="gt_row gt_center">1,046 / 2,042 (51%)</td>
-      <td class="gt_row gt_center">977 / 2,048 (48%)</td>
+      <td class="gt_row gt_center">1,012 / 2,033 (50%)</td>
+      <td class="gt_row gt_center">961 / 2,044 (47%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">A Little Of The Time</td>
-      <td class="gt_row gt_center">600 / 2,042 (29%)</td>
-      <td class="gt_row gt_center">639 / 2,048 (31%)</td>
+      <td class="gt_row gt_center">627 / 2,033 (31%)</td>
+      <td class="gt_row gt_center">660 / 2,044 (32%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Some Of The Time</td>
-      <td class="gt_row gt_center">338 / 2,042 (17%)</td>
-      <td class="gt_row gt_center">349 / 2,048 (17%)</td>
+      <td class="gt_row gt_center">325 / 2,033 (16%)</td>
+      <td class="gt_row gt_center">348 / 2,044 (17%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Most Of The Time</td>
-      <td class="gt_row gt_center">54 / 2,042 (2.6%)</td>
-      <td class="gt_row gt_center">79 / 2,048 (3.9%)</td>
+      <td class="gt_row gt_center">58 / 2,033 (2.9%)</td>
+      <td class="gt_row gt_center">67 / 2,044 (3.3%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">All Of The Time</td>
-      <td class="gt_row gt_center">4 / 2,042 (0.2%)</td>
-      <td class="gt_row gt_center">4 / 2,048 (0.2%)</td>
+      <td class="gt_row gt_center">11 / 2,033 (0.5%)</td>
+      <td class="gt_row gt_center">8 / 2,044 (0.4%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">(Missing)</td>
-      <td class="gt_row gt_center">26</td>
-      <td class="gt_row gt_center">20</td>
+      <td class="gt_row gt_center">30</td>
+      <td class="gt_row gt_center">19</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">FeelDepressed</td>
@@ -4478,33 +4480,33 @@ p-value adjustment method: Holm (1979)</code></pre>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">None Of The Time</td>
-      <td class="gt_row gt_center">1,469 / 2,048 (72%)</td>
-      <td class="gt_row gt_center">1,434 / 2,044 (70%)</td>
+      <td class="gt_row gt_center">1,481 / 2,029 (73%)</td>
+      <td class="gt_row gt_center">1,399 / 2,051 (68%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">A Little Of The Time</td>
-      <td class="gt_row gt_center">361 / 2,048 (18%)</td>
-      <td class="gt_row gt_center">377 / 2,044 (18%)</td>
+      <td class="gt_row gt_center">345 / 2,029 (17%)</td>
+      <td class="gt_row gt_center">403 / 2,051 (20%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Some Of The Time</td>
-      <td class="gt_row gt_center">170 / 2,048 (8.3%)</td>
-      <td class="gt_row gt_center">193 / 2,044 (9.4%)</td>
+      <td class="gt_row gt_center">156 / 2,029 (7.7%)</td>
+      <td class="gt_row gt_center">195 / 2,051 (9.5%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Most Of The Time</td>
-      <td class="gt_row gt_center">43 / 2,048 (2.1%)</td>
-      <td class="gt_row gt_center">35 / 2,044 (1.7%)</td>
+      <td class="gt_row gt_center">35 / 2,029 (1.7%)</td>
+      <td class="gt_row gt_center">47 / 2,051 (2.3%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">All Of The Time</td>
-      <td class="gt_row gt_center">5 / 2,048 (0.2%)</td>
-      <td class="gt_row gt_center">5 / 2,044 (0.2%)</td>
+      <td class="gt_row gt_center">12 / 2,029 (0.6%)</td>
+      <td class="gt_row gt_center">7 / 2,051 (0.3%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">(Missing)</td>
-      <td class="gt_row gt_center">20</td>
-      <td class="gt_row gt_center">24</td>
+      <td class="gt_row gt_center">34</td>
+      <td class="gt_row gt_center">12</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">FeelRestless</td>
@@ -4513,33 +4515,33 @@ p-value adjustment method: Holm (1979)</code></pre>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">None Of The Time</td>
-      <td class="gt_row gt_center">535 / 2,046 (26%)</td>
-      <td class="gt_row gt_center">517 / 2,043 (25%)</td>
+      <td class="gt_row gt_center">520 / 2,028 (26%)</td>
+      <td class="gt_row gt_center">501 / 2,047 (24%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">A Little Of The Time</td>
-      <td class="gt_row gt_center">763 / 2,046 (37%)</td>
-      <td class="gt_row gt_center">757 / 2,043 (37%)</td>
+      <td class="gt_row gt_center">751 / 2,028 (37%)</td>
+      <td class="gt_row gt_center">794 / 2,047 (39%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Some Of The Time</td>
-      <td class="gt_row gt_center">594 / 2,046 (29%)</td>
-      <td class="gt_row gt_center">608 / 2,043 (30%)</td>
+      <td class="gt_row gt_center">585 / 2,028 (29%)</td>
+      <td class="gt_row gt_center">577 / 2,047 (28%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Most Of The Time</td>
-      <td class="gt_row gt_center">138 / 2,046 (6.7%)</td>
-      <td class="gt_row gt_center">146 / 2,043 (7.1%)</td>
+      <td class="gt_row gt_center">143 / 2,028 (7.1%)</td>
+      <td class="gt_row gt_center">158 / 2,047 (7.7%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">All Of The Time</td>
-      <td class="gt_row gt_center">16 / 2,046 (0.8%)</td>
-      <td class="gt_row gt_center">15 / 2,043 (0.7%)</td>
+      <td class="gt_row gt_center">29 / 2,028 (1.4%)</td>
+      <td class="gt_row gt_center">17 / 2,047 (0.8%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">(Missing)</td>
-      <td class="gt_row gt_center">22</td>
-      <td class="gt_row gt_center">25</td>
+      <td class="gt_row gt_center">35</td>
+      <td class="gt_row gt_center">16</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">EverythingIsEffort</td>
@@ -4548,33 +4550,33 @@ p-value adjustment method: Holm (1979)</code></pre>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">None Of The Time</td>
-      <td class="gt_row gt_center">551 / 2,045 (27%)</td>
-      <td class="gt_row gt_center">544 / 2,041 (27%)</td>
+      <td class="gt_row gt_center">523 / 2,031 (26%)</td>
+      <td class="gt_row gt_center">470 / 2,048 (23%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">A Little Of The Time</td>
-      <td class="gt_row gt_center">795 / 2,045 (39%)</td>
-      <td class="gt_row gt_center">804 / 2,041 (39%)</td>
+      <td class="gt_row gt_center">827 / 2,031 (41%)</td>
+      <td class="gt_row gt_center">798 / 2,048 (39%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Some Of The Time</td>
-      <td class="gt_row gt_center">501 / 2,045 (24%)</td>
-      <td class="gt_row gt_center">502 / 2,041 (25%)</td>
+      <td class="gt_row gt_center">490 / 2,031 (24%)</td>
+      <td class="gt_row gt_center">572 / 2,048 (28%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Most Of The Time</td>
-      <td class="gt_row gt_center">158 / 2,045 (7.7%)</td>
-      <td class="gt_row gt_center">156 / 2,041 (7.6%)</td>
+      <td class="gt_row gt_center">159 / 2,031 (7.8%)</td>
+      <td class="gt_row gt_center">179 / 2,048 (8.7%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">All Of The Time</td>
-      <td class="gt_row gt_center">40 / 2,045 (2.0%)</td>
-      <td class="gt_row gt_center">35 / 2,041 (1.7%)</td>
+      <td class="gt_row gt_center">32 / 2,031 (1.6%)</td>
+      <td class="gt_row gt_center">29 / 2,048 (1.4%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">(Missing)</td>
-      <td class="gt_row gt_center">23</td>
-      <td class="gt_row gt_center">27</td>
+      <td class="gt_row gt_center">32</td>
+      <td class="gt_row gt_center">15</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">FeelWorthless</td>
@@ -4583,33 +4585,33 @@ p-value adjustment method: Holm (1979)</code></pre>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">None Of The Time</td>
-      <td class="gt_row gt_center">1,433 / 2,049 (70%)</td>
-      <td class="gt_row gt_center">1,407 / 2,046 (69%)</td>
+      <td class="gt_row gt_center">1,469 / 2,031 (72%)</td>
+      <td class="gt_row gt_center">1,434 / 2,049 (70%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">A Little Of The Time</td>
-      <td class="gt_row gt_center">356 / 2,049 (17%)</td>
-      <td class="gt_row gt_center">375 / 2,046 (18%)</td>
+      <td class="gt_row gt_center">348 / 2,031 (17%)</td>
+      <td class="gt_row gt_center">359 / 2,049 (18%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Some Of The Time</td>
-      <td class="gt_row gt_center">186 / 2,049 (9.1%)</td>
-      <td class="gt_row gt_center">195 / 2,046 (9.5%)</td>
+      <td class="gt_row gt_center">147 / 2,031 (7.2%)</td>
+      <td class="gt_row gt_center">193 / 2,049 (9.4%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Most Of The Time</td>
-      <td class="gt_row gt_center">67 / 2,049 (3.3%)</td>
-      <td class="gt_row gt_center">60 / 2,046 (2.9%)</td>
+      <td class="gt_row gt_center">48 / 2,031 (2.4%)</td>
+      <td class="gt_row gt_center">51 / 2,049 (2.5%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">All Of The Time</td>
-      <td class="gt_row gt_center">7 / 2,049 (0.3%)</td>
-      <td class="gt_row gt_center">9 / 2,046 (0.4%)</td>
+      <td class="gt_row gt_center">19 / 2,031 (0.9%)</td>
+      <td class="gt_row gt_center">12 / 2,049 (0.6%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">(Missing)</td>
-      <td class="gt_row gt_center">19</td>
-      <td class="gt_row gt_center">22</td>
+      <td class="gt_row gt_center">32</td>
+      <td class="gt_row gt_center">14</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">FeelNervous</td>
@@ -4618,33 +4620,33 @@ p-value adjustment method: Holm (1979)</code></pre>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">None Of The Time</td>
-      <td class="gt_row gt_center">620 / 2,050 (30%)</td>
-      <td class="gt_row gt_center">568 / 2,043 (28%)</td>
+      <td class="gt_row gt_center">537 / 2,026 (27%)</td>
+      <td class="gt_row gt_center">540 / 2,050 (26%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">A Little Of The Time</td>
-      <td class="gt_row gt_center">789 / 2,050 (38%)</td>
-      <td class="gt_row gt_center">850 / 2,043 (42%)</td>
+      <td class="gt_row gt_center">804 / 2,026 (40%)</td>
+      <td class="gt_row gt_center">824 / 2,050 (40%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Some Of The Time</td>
-      <td class="gt_row gt_center">482 / 2,050 (24%)</td>
-      <td class="gt_row gt_center">468 / 2,043 (23%)</td>
+      <td class="gt_row gt_center">509 / 2,026 (25%)</td>
+      <td class="gt_row gt_center">539 / 2,050 (26%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Most Of The Time</td>
-      <td class="gt_row gt_center">146 / 2,050 (7.1%)</td>
-      <td class="gt_row gt_center">133 / 2,043 (6.5%)</td>
+      <td class="gt_row gt_center">148 / 2,026 (7.3%)</td>
+      <td class="gt_row gt_center">122 / 2,050 (6.0%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">All Of The Time</td>
-      <td class="gt_row gt_center">13 / 2,050 (0.6%)</td>
-      <td class="gt_row gt_center">24 / 2,043 (1.2%)</td>
+      <td class="gt_row gt_center">28 / 2,026 (1.4%)</td>
+      <td class="gt_row gt_center">25 / 2,050 (1.2%)</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">(Missing)</td>
-      <td class="gt_row gt_center">18</td>
-      <td class="gt_row gt_center">25</td>
+      <td class="gt_row gt_center">37</td>
+      <td class="gt_row gt_center">13</td>
     </tr>
   </tbody>
   
@@ -4664,7 +4666,7 @@ p-value adjustment method: Holm (1979)</code></pre>
   </tfoot>
 </table></div>
 </div>
-<p>Note that you can use the <code>gtsummary</code> package to create in-line referencing. For example: Average Kessler-6 distress in 2018 was 5.07 (3.93) and in 2019 was 5.20 (4.01).</p>
+<p>Note that you can use the <code>gtsummary</code> package to create in-line referencing. For example: Average Kessler-6 distress in 2018 was 5.14 (4.00) and in 2019 was 5.35 (3.97).</p>
 <h3 id="order-of-your-method-section">Order of your Method section</h3>
 <p>The following is a brief guide to describing your method. We’ll be returning to report writing in future weeks. For now, I just want to put this on the table for you. The advice is just a guide.</p>
 <table>
@@ -4720,7 +4722,7 @@ p-value adjustment method: Holm (1979)</code></pre>
 <p><a href="https://www.dropbox.com/s/bvdo6z55kgfr0ri/technology.Rmd?dl=0">Papaja R markdown template</a></p>
 <h2 id="appendix-3-style-advice-about-research-methods">Appendix 3 Style advice about research methods</h2>
 <p>APA style advice <a href="https://opentextbc.ca/researchmethods/chapter/american-psychological-association-apa-style/">here</a></p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Kessler2002-ex" class="csl-entry" role="doc-biblioentry">
 Kessler, R C, G Andrews, L J Colpe, E Hiripi, D K Mroczek, S L T Normand, E E Walters, and A M Zaslavsky. 2002. <span>“Short Screening Scales to Monitor Population Prevalences and Trends in Non-Specific Psychological Distress.”</span> <em>Psychol. Med.</em> 32 (6): 959–76.

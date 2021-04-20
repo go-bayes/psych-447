@@ -119,7 +119,7 @@ dplyr::glimpse(nz)
 
 ## Latent Profile Analysis
 
-```{r}
+```{r eval=FALSE}
 nzf<-nz %>%
   select( FeelHopeless, 
           FeelDepressed,

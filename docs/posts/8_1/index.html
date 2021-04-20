@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -133,7 +134,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["lecture_8_files/anchor-4.2.2/anchor.min.js","lecture_8_files/bowser-1.9.3/bowser.min.js","lecture_8_files/distill-2.2.21/template.v2.js","lecture_8_files/header-attrs-2.7.1/header-attrs.js","lecture_8_files/jquery-1.11.3/jquery.min.js","lecture_8_files/popper-2.6.0/popper.min.js","lecture_8_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_8_files/tippy-6.2.7/tippy-light-border.css","lecture_8_files/tippy-6.2.7/tippy.css","lecture_8_files/tippy-6.2.7/tippy.umd.min.js","lecture_8_files/webcomponents-2.0.0/webcomponents.js","op.png","op2.png"]}
+  {"type":"character","attributes":{},"value":["op.png","op2.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -1891,7 +1892,7 @@ d-appendix {
 
 html {
   /*-- Main font sizes --*/
-  --title-size:      32px;
+  /*  --title-size:      32px;
   --body-size:       1.06rem;
   --code-size:       14px;
   --aside-size:      12px;
@@ -1909,82 +1910,6 @@ html {
   --navbar-font:     "Roboto", sans-serif;  /* websites + blogs only */
 }
 
-/*-- ARTICLE METADATA --*/
-/* d-byline {
-  --heading-size:    0.6rem;
-  --heading-color:   rgba(0, 0, 0, 0.5);
-  --body-size:       0.8rem;
-  --body-color:      rgba(0, 0, 0, 0.8);
-}
-
-/*-- ARTICLE TABLE OF CONTENTS --*/
-/* .d-contents {
-  --heading-size:    18px;
-  --contents-size:   13px;
-}
-
-/*-- ARTICLE APPENDIX --*/
-/*d-appendix {
-  --heading-size:    15px;
-  --heading-color:   rgba(0, 0, 0, 0.65);
-  --text-size:       0.85em;
-  --text-color:      rgba(0, 0, 0, 0.6);
-}
-
-/*-- WEBSITE HEADER + FOOTER --*/
-/* These properties only apply to Distill sites and blogs  */
-
-/*.distill-site-header {
-  --title-size:       18px;
-  --text-color:       rgba(255, 255, 255, 0.8);
-  --text-size:        15px;
-  --hover-color:      #34A5DA;
-  --bkgd-color:       #222222;
-  border-bottom: 4px solid #34A5DA;
-  webkit-box-shadow: 1px 1px 18px #4d4d4d;
-  moz-box-shadow: 1px 1px 18px #4d4d4d;
-  box-shadow: 1px 1px 18px #4d4d4d;
-}
-*/
-
-/*
-.distill-site-footer {
-  --text-color:       rgba(255, 255, 255, 0.8);
-  --text-size:        15px;
-  --hover-color:      white;
-  --bkgd-color:       #0F2E3D;
-}
-
-
-/*-- Additional custom styles --*/
-
-/* Underline links with accent color */
-/* d-article a {
-  border-bottom: 1px solid #34A5DA;
-}
-d-article a:hover {
-  border-bottom: 2px solid #34A5DA;
-}
-.d-contents nav a:hover {
-    text-decoration: none;
-}
-.categories li > a:hover {
-    border-bottom: 2px solid #34A5DA;
-}
-*/
-/* Use accent color for decoration */
-/*d-article div.sourceCode pre {
-    border-left: 2px solid #34A5DA;
-}
-d-article blockquote {
-    border-left: 2px solid #34A5DA;
-}
-
-/* Adjust fonts */
-d-article h2 {
-  line-height: 1.15em;
-  font-size: 26px;
-}
 code {
   font-family: var(--mono-font);
   font-size: 14px;
@@ -2144,7 +2069,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   color: var(--hover-color, white);
 }</style>
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.7.1/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.7.10/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2199,7 +2124,7 @@ gtag('config', 'G-GQF269N0S4');
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Modelling binary, count data, and ordinal data</h1>
+<h1>Week 7 workbook and solutions</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -2216,6 +2141,8 @@ gtag('config', 'G-GQF269N0S4');
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#latent-profile-analysis">Latent Profile Analysis</a></li>
+<li><a href="#inference-and-sampling">Inference and sampling</a></li>
 <li><a href="#binary-data">Binary Data</a></li>
 <li><a href="#count-data">Count data</a></li>
 <li><a href="#zero-infalted-data">Zero infalted data</a></li>
@@ -2226,11 +2153,193 @@ gtag('config', 'G-GQF269N0S4');
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="op.png" width="500" /></p>
 </div>
+<p>Important the jittered NZAVS dataset:</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>### Libraries</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://patchwork.data-imaginist.com'>"patchwork"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://lubridate.tidyverse.org'>"lubridate"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://haozhu233.github.io/kableExtra/'>"kableExtra"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/ddsjoberg/gtsummary'>"gtsummary"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://lubridate.tidyverse.org'>"lubridate"</a></span><span class='op'>)</span>
+<span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"data-edu/tidyLPA"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://data-edu.github.io/tidyLPA/'>tidyLPA</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"tidyLPA"</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># read data</span>
+
+<span class='va'>nz_0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv"</span>
+  <span class='op'>)</span>
+<span class='op'>)</span><span class='op'>)</span>
+
+
+<span class='co'># to relevel kessler 6 variables</span>
+<span class='va'>f</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='st'>"None Of The Time"</span>,
+    <span class='st'>"A Little Of The Time"</span>,
+    <span class='st'>"Some Of The Time"</span>,
+    <span class='st'>"Most Of The Time"</span>,
+    <span class='st'>"All Of The Time"</span>
+  <span class='op'>)</span>
+
+<span class='co'># get data into shape</span>
+<span class='va'>nz</span> <span class='op'>&lt;-</span> <span class='va'>nz_0</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span><span class='op'>(</span><span class='va'>is.character</span>, <span class='va'>factor</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>
+    <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+      <span class='va'>SWB.Kessler01</span>,
+      <span class='va'>SWB.Kessler02</span>,
+      <span class='va'>SWB.Kessler03</span>,
+      <span class='va'>SWB.Kessler04</span>,
+      <span class='va'>SWB.Kessler05</span>,
+      <span class='va'>SWB.Kessler06</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelHopeless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelHopeless</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelDepressed <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelDepressed</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelRestless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelRestless</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>EverythingIsEffort <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>EverythingIsEffort</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelWorthless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelWorthless</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelNervous <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelNervous</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>male_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Male</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>date <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/make_datetime.html'>make_date</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='fl'>2009</span>, month <span class='op'>=</span> <span class='fl'>6</span>, day <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>TSCORE</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>nz</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Rows: 24,996
+Columns: 82
+$ Id                          &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1…
+$ Wave                        &lt;fct&gt; 2009, 2010, 2011, 2012…
+$ years                       &lt;dbl&gt; 0.08761123, 1.24024641…
+$ Age                         &lt;dbl&gt; 34.02053, 35.17317, 35…
+$ Male                        &lt;fct&gt; Not_Male, Not_Male, No…
+$ Gender                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0…
+$ w.GendAgeEthnic             &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Edu                         &lt;dbl&gt; 7, NA, NA, 7, 7, 7, 7,…
+$ Partner                     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1…
+$ BornNZ                      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1…
+$ Employed                    &lt;dbl&gt; 1, 0, NA, NA, 1, 1, 1,…
+$ BigDoms                     &lt;fct&gt; Not_Rel, Not_Rel, Not_…
+$ TSCORE                      &lt;dbl&gt; 93, 514, 803, 1257, 17…
+$ GenCohort                   &lt;fct&gt; GenX: born &gt;=1961 &amp; b.…
+$ Hours.Exercise              &lt;dbl&gt; 4.0, NA, NA, NA, 4.0, …
+$ Hours.Work                  &lt;dbl&gt; 12, NA, NA, NA, 0, 24,…
+$ Hours.News                  &lt;dbl&gt; NA, NA, NA, NA, 2, 1, …
+$ Hours.Internet              &lt;dbl&gt; NA, NA, NA, NA, 7, 2, …
+$ Hours.SocialMedia           &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ HoursCharity                &lt;dbl&gt; 0, NA, NA, NA, 0, 0, 4…
+$ Hours.CompGames             &lt;dbl&gt; 0, NA, NA, NA, 2, 0, 1…
+$ Hours.Family                &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Hours.Friends               &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Hours.Community             &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Hours.Religious             &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ CharityDonate               &lt;dbl&gt; 40, 50, NA, NA, 100, 1…
+$ Family.Money                &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Friends.Money               &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Community.Money             &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Family.Time                 &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Friends.Time                &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Community.Time              &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Household.INC               &lt;dbl&gt; 75000, 90000, 120000, …
+$ Issue.IncomeRedistribution  &lt;dbl&gt; NA, NA, NA, NA, NA, 6,…
+$ Religion.Church             &lt;dbl&gt; NA, 0, 0, NA, 0, 0, 0,…
+$ Religion.Believe.Cats       &lt;dbl&gt; NA, 1, NA, NA, NA, NA,…
+$ Relid                       &lt;dbl&gt; 0, 0, 0, NA, 0, 0, 0, …
+$ HLTH.Fatigue                &lt;dbl&gt; NA, NA, NA, NA, 1, 2, …
+$ HLTH.SleepHours             &lt;dbl&gt; NA, NA, NA, NA, 7.5, 8…
+$ HLTH.BMI                    &lt;dbl&gt; NA, 20.93664, 20.93664…
+$ HLTH.Weight                 &lt;dbl&gt; NA, 57.0, 57.0, 57.0, …
+$ HLTH.Height                 &lt;dbl&gt; NA, 1.65, 1.65, 1.65, …
+$ HomeOwner                   &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Pol.Orient                  &lt;dbl&gt; 6, 6, NA, NA, 4, 6, 6,…
+$ PATRIOT                     &lt;dbl&gt; 6.0, 6.0, 6.0, 6.5, 6.…
+$ Env.SatNZEnvironment        &lt;dbl&gt; 7.777778, 7.000000, 7.…
+$ Env.MotorwaySpend           &lt;dbl&gt; 4, NA, NA, 3, 5, NA, N…
+$ Env.PubTransSubs            &lt;dbl&gt; 7, NA, NA, 7, 6, NA, N…
+$ Env.ClimateChgConcern       &lt;dbl&gt; NA, NA, NA, NA, 6, 7, …
+$ LIFEMEANING                 &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Issue.GovtSurveillance      &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Issue.RegulateAI            &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ CONSCIENTIOUSNESS           &lt;dbl&gt; 6.75, 6.50, 7.00, 6.50…
+$ EXTRAVERSION                &lt;dbl&gt; 3.75, 2.50, 3.50, 4.00…
+$ AGREEABLENESS               &lt;dbl&gt; 6.50, 6.00, 5.75, 6.75…
+$ OPENNESS                    &lt;dbl&gt; 2.75, 3.25, 3.25, 2.00…
+$ Religious                   &lt;fct&gt; Not_Religious, Not_Rel…
+$ Spiritual.Identification    &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Believe.God                 &lt;fct&gt; NA, Believe God, NA, N…
+$ Believe.Spirit              &lt;fct&gt; NA, Believe Spirit, NA…
+$ Your.Personal.Relationships &lt;dbl&gt; 8.888889, 9.000000, 10…
+$ Your.Future.Security        &lt;dbl&gt; 7.777778, 7.000000, 8.…
+$ Standard.Living             &lt;dbl&gt; 7.777778, 8.000000, NA…
+$ NZ.Economic.Situation       &lt;dbl&gt; 4.444444, 6.000000, 7.…
+$ NZ.Social.Conditions        &lt;dbl&gt; 6.666667, 6.000000, 8.…
+$ NZ.Business.Conditions      &lt;dbl&gt; 5.555556, 6.000000, 7.…
+$ Emp.JobSecure               &lt;dbl&gt; 6, 7, NA, NA, 7, 7, 7,…
+$ Emp.JobSat                  &lt;dbl&gt; 6, 7, NA, NA, 6, 7, 7,…
+$ Emp.JobValued               &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ Issue.Food.GMO              &lt;dbl&gt; NA, NA, NA, NA, NA, 7,…
+$ Env.SacMade                 &lt;dbl&gt; 5, 7, 7, 7, 5, 7, NA, …
+$ KESSLER6sum                 &lt;dbl&gt; NA, 3, 3, 2, 4, 3, 2, …
+$ POLICE.ENGAGE               &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ POLICE.TRUST                &lt;dbl&gt; NA, NA, NA, NA, NA, NA…
+$ FeelHopeless                &lt;fct&gt; NA, A Little Of The Ti…
+$ FeelDepressed               &lt;fct&gt; NA, None Of The Time, …
+$ FeelRestless                &lt;fct&gt; NA, None Of The Time, …
+$ EverythingIsEffort          &lt;fct&gt; NA, A Little Of The Ti…
+$ FeelWorthless               &lt;fct&gt; NA, None Of The Time, …
+$ FeelNervous                 &lt;fct&gt; NA, A Little Of The Ti…
+$ male_id                     &lt;fct&gt; Not_Male, Not_Male, No…
+$ date                        &lt;date&gt; 2009-10-01, 2010-11-2…</code></pre>
+</div>
+<h2 id="latent-profile-analysis">Latent Profile Analysis</h2>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nzf</span><span class='op'>&lt;-</span><span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span> <span class='va'>FeelHopeless</span>, 
+          <span class='va'>FeelDepressed</span>,
+          <span class='va'>FeelRestless</span>, 
+          <span class='va'>EverythingIsEffort</span>,
+          <span class='va'>FeelWorthless</span>, 
+          <span class='va'>FeelNervous</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate_if</span><span class='op'>(</span><span class='va'>.</span>, <span class='va'>is.factor</span>, <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>out</span><span class='op'>&lt;-</span><span class='va'>nzf</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span> <span class='va'>FeelHopeless</span>, 
+          <span class='va'>FeelDepressed</span>,
+          <span class='va'>FeelRestless</span>, 
+          <span class='va'>EverythingIsEffort</span>,
+          <span class='va'>FeelWorthless</span>, 
+          <span class='va'>FeelNervous</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://data-edu.github.io/tidyLPA/reference/single_imputation.html'>single_imputation</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>tidyLPA</span><span class='fu'>::</span><span class='fu'><a href='https://data-edu.github.io/tidyLPA/reference/estimate_profiles.html'>estimate_profiles</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>out</span><span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://data-edu.github.io/tidyLPA/reference/plot_profiles.html'>plot_profiles</a></span><span class='op'>(</span>add_line <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="inference-and-sampling">Inference and sampling</h2>
 <h2 id="binary-data">Binary Data</h2>
 <h2 id="count-data">Count data</h2>
 <h2 id="zero-infalted-data">Zero infalted data</h2>
 <h2 id="ordinal-data">Ordinal data</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
