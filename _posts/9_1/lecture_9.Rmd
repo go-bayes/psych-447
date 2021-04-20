@@ -74,20 +74,15 @@ options(mc.cores=parallel::detectCores ())
 theme_set(theme_classic())
 ```
 
-
-
 ## Introduction
 
-Recall from lecture 7, 
+Recall from lecture 7,
 
 > the output of a statistical model is is **not** self evident. We must therefore **think** both before and after we write a statistical model. If we don't think, our statistical models will lead us astray.
 
 In the remainder of this lecture, I'm going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.
 
 To introduce multiple regression I'm going to follow Richard McElreath's **Statistical Rethinking**. We have an online version of this book in our library (see the link above.)
-
-
-
 
 ## What is causal confounding?
 
@@ -126,4 +121,3 @@ md<-lm(div ~ waffles + mar + south, data = df)
 summary(md)
 sjPlot::plot_model(md)
 ```
-
