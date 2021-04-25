@@ -360,6 +360,8 @@ p_mg2
 - do not interpret the signs of the coefficients. For example, `plogis(-3)`  is `r plogis(-3)`, which is a positive probability. 
 
 - here are is no error term ($\sigma^2$) in logistic regression. We only estimate the mean. The variances cannot be estimated:
+
+
 ```{r}
 sjPlot::tab_model(home2)
 ```
@@ -381,12 +383,9 @@ plot(ggeffects::ggpredict(home2,
 
 - center (and where it eases interpretation, also scale) your predictor variables. 
 
-<!-- ```{r} -->
-<!-- p_mg2 <-plot(ggeffects::ggpredict(mg2, terms = c( "Household.INC_s[c(-1,0,3)]", "GenCohort[all]"))) -->
-<!-- p_mg2 -->
-<!-- ``` -->
 
-Uncertainty arises because we only have 17 people in this dataset born after 1996
+
+Uncertainty arises because we only have 17 people in this jittered nz dataset born after 1996:
 
 ```{r}
 table(nz$GenCohort)
@@ -397,13 +396,12 @@ ggplot(nz, (aes(GenCohort, Household.INC))) + geom_jitter(alpha = .5)
 
 Which model should we prefer? 
 
-mg2 grealy improves on the BIC performance, indicating that we should prefer this model.
+The model `mg2` grealy improves on the BIC performance, indicating that we should prefer this model.
 
 ```{r}
 per_home <-performance::compare_performance(home2,mg1,mg2)
 per_home
 ```
-
 
 
 Here's a graph:
@@ -412,16 +410,11 @@ Here's a graph:
 plot(per_home)
 ```
 
-Note that we do not include that dataset with fewer cases because this is comparing apples with organges. 
-
-
-
+Note that we do not include the model that used fewer cases because, from the vantage point of information theory, this would be comparing apples with organges. 
 
 We can use the performance package to check the accuracy of the our models 
 
-
 Compare:
-
 
 ```{r}
 performance_accuracy(mg1)
@@ -432,6 +425,10 @@ With:
 ```{r}
 performance_accuracy(mg2)
 ```
+
+
+And this reveals little difference, indicating that with this many data, the outliers don't affect inference. 
+
 
 
 ## Count data
@@ -461,13 +458,22 @@ pois1 <- glm(y ~ x, data = fake, family = "poisson")
 model_parameters(pois1)
 ```
 
+
+Note that in a poisson model, it is the log of the expected values (not the log of the raw data) that the model estimates:
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(pois1,  use_coefs = TRUE)
+```
+
+
+
 We can put this on the data scale
 
 ```{r}
 p_pois1 <- plot(ggeffects::ggpredict(pois1, terms = "x"), add.data = TRUE)
 p_pois1
 ```
-
 
 
 
@@ -863,7 +869,10 @@ brms::pp_check(b2) + xlim(0, 5)
 
 
 
-## Ordinal data
+## Ordinal outcomes
+
+
+## Ordinal predictors (Monotonic effects)
 
 
 ## Bonus: Latent Profile Analysis
