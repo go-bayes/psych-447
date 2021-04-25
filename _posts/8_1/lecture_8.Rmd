@@ -14,30 +14,6 @@ output:
     toc: true
 ---
 
-
-
-```{r figopen, echo=F}
-knitr::include_graphics("op.png")
-```
----
-title: "Week 7 workbook and solutions"
-description: |
-author:
-  - name: Joseph Bulbulia
-    url: https://josephbulbulia.netlify.app
-    affiliation: Victoria University of Wellington
-    affiliation_url: https://www.wgtn.ac.nz
-    orcid_id: 0000-0002-5861-2056
-output:
-  distill::distill_article:
-    self_contained: false
-    toc: true
-    highlight: kate
----
-
-Important the jittered NZAVS dataset:
-
-
 ```{r setup, include=FALSE}
 # setup
 knitr::opts_chunk$set(
@@ -65,9 +41,25 @@ if (!require(tidyLPA)) {
 }
 
 
+# installed from previous lectures
+library("equatiomatic")
+library("tidyverse")
+library("ggdag")
+library("brms")
+library("rstan")
+library("rstanarm")
+# library("tidybayes")
+library("bayesplot")
+library("easystats")
+library("kableExtra")
+library("broom")
+# rstan options
+rstan_options(auto_write=TRUE)
+options(mc.cores=parallel::detectCores ())
+theme_set(theme_classic())
 ```
 
-```{r  nzdata, cache=TRUE}
+```{r  nzdata, cache=TRUE, include=FALSE}
 # read data
 
 nz_0 <- as.data.frame(readr::read_csv2(
@@ -75,7 +67,6 @@ nz_0 <- as.data.frame(readr::read_csv2(
     "https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv"
   )
 ))
-
 
 # to relevel kessler 6 variables
 f <-
@@ -109,13 +100,775 @@ nz <- nz_0 %>%
   mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
   dplyr::mutate(male_id = as.factor(Male)) %>%
-  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)%>%
+  dplyr::filter(Wave == 2018)  # Filter wave 10 of the NZAVS
 
+dplyr::glimpse(nz)
+```
+
+
+```{r figopen, echo=F}
+knitr::include_graphics("op.png")
+```
+
+## Objectives
+
+1. Understand why a linear model is a speciial case of a "generalised linear model." 
+2. Understand how to write and interpret three families of generalised linear models: 
+  - logistic regression models, which applies to many forms of binary data;
+  - Poisson regression models, which applies to parameters that are best considered as rates;
+  - Zero-inflated poisson models, in which parameters contain an over-abundance of zeros.
+  - Ordinal regression model, which applies to data that have multi-nomial outomes, for example survey responses (e.g. "little", "none", "more").
+
+## Introduction
+
+Recall that a regression model combines data from a sample with the tools of probability theory to infer features of some unobserved population. We have discussing how the mechanics of moving from a sample to a population carries uncertainty. In a nutshell, regression is guesswork. Our task is to not to remove uncertainty but rather to quantify it. Our workflows are build on two principles: to clarify our assumptions; to clarify our decisions. 
+
+It is fortunate that we live in an ordered universe. Although at the level of particle physics, the universe might be random, at the scale of "medium-sized dry goods"^[This is a paraphrase of J L Austen, I think from *Sense and Sensibilia*; I'll needd to look up the reference], the world is ordered.  So far, our models have assumed that outcome variables are being sampled from a population that is distributed, conditional on the predictors, from a normal distribution. There are two parameters that we need to estimate for a normal distribution, a mean, and a variance (recall that the standard deviation of the mean is the square root of the variance). However, although the normal distribution holds for many populations that scientists of middle-sized dry goods might want to study, it does not hold for all of them. The linear regression model is thereforea special case of the generalised linear regression model. 
+
+## Generalised linear model: logistic regression
+
+### Logistic regression with a single covariate. 
+
+
+First let's graph the home ownership
+
+```{r}
+hist(nz$HomeOwner)
+```
+
+From the graph, we can see response distribution is fully bimodal (excluding the NAs). 
+
+We therefore need a function that does two things (gelman and hill):
+
+  1. maps the range $(0, 1)$ to $-(\infty, -\infty)$.
+  2. maps these values back to the unit range
+
+The logistic function does 1:
+
+$logit(x) = log\frac{x}{(1-x)}$
+
+and the inverse logit function does 2:
+
+
+$logit^-1(x) = log\frac{e^x}{(1-e^x)}$
+
+In R these functions are written:
+
+```{r eval = FALSE}
+logit <- qlogis 
+invlogit <- plogis
+```
+
+
+We can write a generalised linear model that predict home ownership as follows:
+
+```{r}
+home <- glm(HomeOwner ~ 1, data = nz, 
+            family = "binomial")
+```
+
+$$
+\log\left[ \frac { P( \operatorname{HomeOwner} = \operatorname{1} ) }{ 1 - P( \operatorname{HomeOwner} = \operatorname{1} ) } \right] = \alpha
+$$
+Which gives us the following result
+
+```{r}
+parameters::model_parameters(home)
+```
+
+Or plugging this into the equation: 
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(home,  use_coefs = TRUE)
+```
+
+How do we interpret this result?  We use the `plogis` function to obtain the probability
+
+```{r}
+plogis(coef(home)[[1]])
+```
+
+The probability of an NZAVS participant owning their own home is pr = 81. 
+
+
+
+### Logistic regression with a covariate. 
+
+Let's predict home ownership by income.
+
+First center/scale our predictor:
+
+```{r}
+# center and scale household income 
+nz$Household.INC_s <- scale(nz$Household.INC)
+
+nz['Household.INC_s'] = as.data.frame(scale(nz$Household.INC))
+# how much is a standard deviation -- which will represent a 1 unit change for the regression coefficient? 
+sd( nz$Household.INC, na.rm = TRUE ) # 95,090
+```
+
+Model
+
+```{r}
+home2 <- glm(HomeOwner ~ Household.INC_s, data = nz, 
+            family = "binomial")
+```
+
+Results:
+
+```{r}
+rs2<-parameters::model_parameters(home2)
+rs2
+plot(rs2)
+```
+
+Which we can write:
+
+```{r eval = TRUE, include = TRUE}
+# this is how to quickly generate the equation
+equatiomatic::extract_eq(home2,  use_coefs = TRUE)
+```
+
+
+How do we interpret this model? 
+
+Let's use the report package
+
+```{r}
+report::report(home2)
+```
+
+There's lots of mention of p-values and power, but what does this mean? 
+
+We put our habit for graphing to virtuous use.
+
+```{r}
+plot(nz$Household.INC_s, nz$HomeOwner) 
+curve(invlogit(coef(home2)[1] + coef(home2)[2]*x), add=TRUE)
+```
+
+Although we graph home ownership, we forgot to graph Household income, we have an outlier. THere is one person who is 25 standard deviation units richer than the mean. 
+
+```{r}
+hist(nz$Household.INC, breaks = 1000)
+```
+
+The range of incomes is: `r range(nz$Household.INC, na.rm=TRUE)`; we have `r sum(nz$Household.INC < 10000 , na.rm=TRUE)` who report making less than 10000,
+
+
+
+## Sensitivity of the data to outliers? 
+
+
+Let's inspect the range of the data:
+
+```{r}
+range(nz$Household.INC_s, na.rm=TRUE)
+```
+
+
+Let's 98% of the data:
+
+```{r}
+# Select 99 % of the range
+nz2 <-  nz%>%
+  dplyr::filter(Household.INC_s < 4)
+##
+nrow(nz2)/nrow(nz)
+```
+
+
+```{r}
+home2.1 <- glm(HomeOwner ~ Household.INC_s, data = nz2, 
+            family = "binomial")
+parameters::model_parameters(home2.1)
+```
+
+
+Note that we need a sensible range. The lowest value is **not** 4 SD from the mean
+
+
+
+```{r}
+#range(nz$Household.INC_s, na.rm = T)
+
+mp2 <- plot(ggeffects::ggpredict(home2,
+                                 terms = "Household.INC_s[all]")) + scale_y_continuous(limits = c(0, 1)) +
+  scale_x_continuous(limits = c(-1.2, 4))
+mp2.1 <- plot(ggeffects::ggpredict(home2.1,
+                                   terms = "Household.INC_s[all]")) + scale_y_continuous(limits = c(0, 1)) +
+  scale_x_continuous(limits = c(-1.2, 4))
+
+library(patchwork)
+mp2 + mp2.1 + plot_annotation(title = "Comparison of logistic regression models with tranformations",
+                              tag_levels = 'a') +
+  plot_layout(guides = 'collect')
+```
+
+
+Check model performance: not much difference difference
+
+```{r}
+performance::check_model(home2)
 ```
 
 ```{r}
-dplyr::glimpse(nz)
+performance::check_model(home2.1)
 ```
+
+
+## Categorical predictor
+
+Let's use the `GenCohort` variable. 
+
+
+```{r}
+mg1 <- glm(HomeOwner ~ GenCohort, data = nz, family = "binomial")
+parameters::model_parameters(mg1)
+```
+
+What does this mean?  Let's graph the results
+
+```{r}
+p_mg1 <-plot(ggeffects::ggpredict(mg1, terms = "GenCohort[all]"))
+p_mg1
+```
+
+
+Lets stratify by income
+
+Household.INC_s
+
+```{r}
+mg2 <- glm(HomeOwner ~ GenCohort + Household.INC_s, data = nz, family = "binomial")
+parameters::model_parameters(mg2)
+```
+
+We really don't see income making a difference to home ownership for boomers.  A little sepearation happens among those in Gen X.
+
+```{r}
+p_mg2 <-plot(ggeffects::ggpredict(mg2, terms = c("GenCohort[all]", "Household.INC_s[c(-1,0,3)]")))
+p_mg2
+```
+
+#### Notes
+
+- linear change on in this additive scale is non-linear on the data scale (as in the previous graph)
+
+- do not interpret the signs of the coefficients. For example, `plogis(-3)`  is `r plogis(-3)`, which is a positive probability. 
+
+- here are is no error term ($\sigma^2$) in logistic regression. We only estimate the mean. The variances cannot be estimated:
+```{r}
+sjPlot::tab_model(home2)
+```
+
+- we can add points to our graph like this:
+
+```{r}
+plot(ggeffects::ggpredict(home2, 
+                     terms = "Household.INC_s[all]"), add.data = TRUE) + scale_x_continuous(limits= c(-1.2,4))
+```
+
+Or to limit our points to the meaningful range:
+
+```{r}
+plot(ggeffects::ggpredict(home2, 
+                     terms = "Household.INC_s[all]"), add.data = TRUE) + scale_x_continuous(limits= c(-1.2,4))
+```
+
+
+- center (and where it eases interpretation, also scale) your predictor variables. 
+
+<!-- ```{r} -->
+<!-- p_mg2 <-plot(ggeffects::ggpredict(mg2, terms = c( "Household.INC_s[c(-1,0,3)]", "GenCohort[all]"))) -->
+<!-- p_mg2 -->
+<!-- ``` -->
+
+Uncertainty arises because we only have 17 people in this dataset born after 1996
+
+```{r}
+table(nz$GenCohort)
+```
+```{r}
+ggplot(nz, (aes(GenCohort, Household.INC))) + geom_jitter(alpha = .5)
+```
+
+Which model should we prefer? 
+
+mg2 grealy improves on the BIC performance, indicating that we should prefer this model.
+
+```{r}
+per_home <-performance::compare_performance(home2,mg1,mg2)
+per_home
+```
+
+
+
+Here's a graph:
+
+```{r}
+plot(per_home)
+```
+
+Note that we do not include that dataset with fewer cases because this is comparing apples with organges. 
+
+
+
+
+We can use the performance package to check the accuracy of the our models 
+
+
+Compare:
+
+
+```{r}
+performance_accuracy(mg1)
+```
+
+With:
+
+```{r}
+performance_accuracy(mg2)
+```
+
+
+## Count data
+
+
+We use a poisson model cor count data. 
+
+Let's simulate (Gelman and Hill:
+
+```{r}
+n <- 50
+x <- runif(n, -2, 2)
+a <- 1
+b <- 2
+out <- a + b  * x
+set.seed(999)
+y <- rpois(n,  exp(out)) # mean of poisson is equal to its variance
+fake <- data.frame(x=x, y=y)
+hist(fake$y)
+```
+
+
+Model
+
+```{r}
+pois1 <- glm(y ~ x, data = fake, family = "poisson")
+model_parameters(pois1)
+```
+
+We can put this on the data scale
+
+```{r}
+p_pois1 <- plot(ggeffects::ggpredict(pois1, terms = "x"), add.data = TRUE)
+p_pois1
+```
+
+
+
+
+Let's compare this to a model in which we assume a normal distribution 
+
+
+```{r}
+pois2 <- glm(y ~ x, data = fake) # remove "family = `poisson`)
+model_parameters(pois2)
+```
+
+Quick plot:
+
+```{r}
+p_pois2 <- plot(ggeffects::ggpredict(pois2, terms = "x"), add.data = TRUE)
+p_pois2
+```
+
+
+# Check the models
+
+```{r}
+performance::check_model(pois1)
+```
+
+We can see the linearity assumption is violated:
+
+```{r}
+performance::check_model(pois2)
+```
+
+```{r}
+library(splines)
+
+pois3 <- glm(y ~ bs(x), data = fake) # remove "family = `poisson`)
+model_parameters(pois3)
+```
+
+```{r}
+p_pois3<- plot(ggeffects::ggpredict(pois3, terms = "x"), add.data = TRUE)
+p_pois3
+```
+
+```{r}
+library(patchwork)
+p_pois1 + p_pois2 + p_pois3 + plot_annotation(title = "comparison of three assumed distributions", tag_levels = 'a',
+                                              subtitle = "The Poisson model (a) fits \nThe gaussian model (b) underfitsthe \nThe spline model (c) overfits") +
+  plot_layout(guides = "collect")
+```
+
+
+The poisson fits best: this is no surprise: we simulated poisson outcomes. 
+
+```{r}
+per_pois <-performance::compare_performance(pois1,pois2,pois3)
+per_pois
+plot(per_pois)
+```
+
+
+## Overdispersion
+
+The expected value of a poisson and the variance of poisson variable are the same: lamda.  However often (typically) this assumption is violated, and the random variables in one's data set are over (and occassionally underdispersed)
+
+To see this, a poisson with lamnda = 10
+
+
+
+```{r}
+library(MASS)
+n <- 100
+x <- runif(n, -2, 2)
+a <- 1
+b <- 2
+out <- a + b  * x
+
+set.seed(999)
+
+y <- rnegbin(n,  mu =exp(out), theta = 2) # mean overdistribution parameter
+fake2 <- data.frame(x=x, y=y)
+hist(fake2$y, breaks = 50)
+
+```
+
+
+We fit a poisson model:
+
+```{r}
+nb1<- glm(y ~ x, family = poisson, fake2)
+summary(nb1)
+performance::check_overdispersion(nb1)
+```
+
+
+Try a negative binomial model
+
+```{r}
+nb2<- glm.nb(y ~ x,  data = fake2)
+```
+
+
+```{r}
+compare_models(nb1,nb2)
+```
+
+```{r}
+plot(ggeffects::ggpredict(nb1,terms="x"), add.data = TRUE)
+```
+
+
+```{r}
+plot(ggeffects::ggpredict(nb2,terms="x"), add.data = TRUE)
+```
+
+
+
+
+
+
+## Zero-inflated poisson regression
+
+
+In the nz dataset, volunteering (hours of charity) look to be zero-inflated, and also over-dispersed.
+
+```{r}
+hist(nz$HoursCharity, breaks = 100)
+```
+
+We can quickly check the proportion of people who report zero volunteering:
+
+```{r}
+sum(nz$HoursCharity ==0, na.rm=TRUE)/nrow(nz)
+```
+
+We can get a sense of overdispersion by looking at the ration of the sample variation to the sample mean? 
+
+```{r}
+sd(nz$HoursCharity, na.rm=TRUE)/mean(nz$HoursCharity, na.rm=TRUE)^2
+```
+
+There's about 1.68 more dispersion that a poisson model would expect
+
+Let's use the performance package to formally check both zero-inflation and overdispersed
+
+```{r}
+z1 <-glm(HoursCharity ~ 1, family = "poisson", data = nz)
+
+check_zeroinflation(z1)
+```
+
+
+Next over-dispersion
+
+```{r}
+check_overdispersion(z1)
+```
+
+
+I use the brms package to estimate zeroinflated negative binomial models
+
+```{r}
+library(brms)
+
+# Requires integer output 
+nz$HoursCharity <- as.integer(nz$HoursCharity)
+
+# 
+nz['Household.INC_s'] = as.data.frame(scale(nz$Household.INC))
+
+# Scale religion variabile
+nz['Relid_s'] = as.data.frame(scale(nz$Relid))
+
+b0<- brms::brm(HoursCharity ~ Relid_s + Household.INC_s, 
+                family = "zero_inflated_poisson",
+                file = here::here("models", "zeroinflated_poisson_volunteer"), 
+               data = nz)
+```
+
+```{r}
+summary(b0)
+```
+
+
+My preferred way of plotting
+
+
+Pedicted effects of religious identification:
+
+```{r}
+plot(
+  conditional_effects(
+    b0,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1
+  ),
+  points = TRUE,
+  ask = FALSE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+)[[1]] #  note this command controls which facet 
+
+```
+
+
+Predicted effects of income:
+
+```{r}
+plot(
+  conditional_effects(
+    b0,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1),
+  points = TRUE,
+  ask = FALSE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+)[[2]] # note this command controls which facet 
+```
+
+
+```{r}
+b1 <- brms::brm(HoursCharity ~ Relid_s + Household.INC_s, 
+                family = "zero_inflated_negbinomial",
+                file = here::here("models", "zeroinflated_neg_bin_volunteer"),
+                data = nz)
+```
+
+
+```{r}
+summary(b1)
+```
+
+Compare fit. Here, negative numbers are worse.
+
+```{r cache = TRUE}
+b0 <- add_criterion(b0, "loo")
+b1 <- add_criterion(b1, "loo")
+
+w <-loo_compare(b0, b1, criterion = "loo")
+w
+```
+
+Recall we'd been using and AIC/BIC convetion to estimate improvements in goodness of fit. 
+
+We can translate the `loo_compare` output into a `waic` convetion as: 
+
+```{r}
+cbind(waic_diff = w[, 1] * -2,
+      se        = w[, 2] * 2)
+```
+
+And we can see that the negative binomial model fits much better.
+
+### Predicting zeros
+
+The estimates in the graphs above are only for the positive (non-zero components of the model). Let's look at the results again:
+
+```{r}
+summary(b1)
+```
+
+The probability of non-volunteering in the preferred model for people who are at the mean Religious Identification and mean Household income in this population is `plogis(.35)` or `r plogis(.35)`.  More often than not, we should predict zeros in this population. What predicts the zero component of the model?  We can use this syntax:
+
+```{r}
+b2 <- brms::brm(
+  bf(HoursCharity ~ Relid_s + Household.INC_s, # note: use `bf` when you have more than one model, as we do here
+     zi ~ Relid_s + Household.INC_s),
+  family = "zero_inflated_negbinomial",
+  file = here::here("models", "zeroinflated_nb_2_volunteer"),
+  data = nz)
+```
+
+
+Let's look at the results:
+
+```{r}
+sjPlot::tab_model(b2)
+```
+
+
+We can plot the results using ggeffects::
+
+
+```{r}
+plot(ggeffects::ggpredict(b2, terms = c("Relid_s[meansd]","Household.INC_s[meansd]")), 
+   # add.data = TRUE,  # doesn't work
+   # dot.alpha = .2,  
+     facet = TRUE)
+```
+
+
+```{r cache = TRUE}
+sjPlot::tab_model(b2)
+```
+
+
+
+
+Or using my preferred method
+
+
+Pedicted effects of religious identification:
+
+```{r}
+plot(
+  conditional_effects(
+    b2,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1
+  ),
+  points = TRUE,
+  ask = FALSE,
+ point_args = list(alpha = 0.05,
+                    width = .02)
+)[[1]]  + # note this command controls which facet 
+  ylim(0,5)
+
+```
+
+
+Predicted effects of income:
+
+```{r}
+plot(
+  conditional_effects(
+    b2,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1 ),
+  points = TRUE,
+  ask = FALSE,
+  point_args = list(alpha = 0.1,
+                    width = .02) 
+)[[2]] + # note this command controls which facet 
+ xlim(0, 5) + ylim(0,5)
+```
+
+
+Note:
+
+> Models of class brmsfit always condition on the zero-inflation component, if the model has such a component. Hence, there is no type = "zero_inflated" nor type = "zi_random" for brmsfit-models, because predictions are based on draws of the posterior distribution, which already account for the zero-inflation part of the model.
+
+
+See [package description](https://strengejacke.github.io/ggeffects/reference/ggpredict.html)
+
+
+ 
+ 
+Comparing models we find that adding the prdictors improves the model 
+ 
+ 
+```{r cache = TRUE}
+b2 <- add_criterion(b2, "loo")
+
+w <-loo_compare(b0, b1, b2,  criterion = "loo")
+w
+```
+
+Again we can use an -2 * loglik analogue
+
+```{r}
+
+cbind(waic_diff = w[, 1] * -2,
+      se        = w[, 2] * 2)
+```
+
+
+Another way to see this is to look at the posterior predictive checks on the models
+
+
+Zero-inflated poisson
+
+
+```{r}
+brms::pp_check(b0) + xlim(0, 5)
+```
+
+Zero-inflated poisson
+
+```{r}
+brms::pp_check(b1) + xlim(0, 5)
+```
+
+Zero-inflated negative binomial + predictors for the zero-inflation part
+
+```{r}
+brms::pp_check(b2) + xlim(0, 5)
+```
+
+
+
+
+## Ordinal data
+
+
+## Bonus: Latent Profile Analysis
+
+
 
 ## Latent Profile Analysis
 
@@ -141,15 +894,4 @@ out<-nzf %>%
 out%>%
     plot_profiles(add_line = TRUE)
 ```
-
-## Inference and sampling 
-
-## Binary Data
-
-## Count data
-
-## Zero infalted data
-
-## Ordinal data
-
 
