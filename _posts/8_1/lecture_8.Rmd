@@ -126,9 +126,9 @@ knitr::include_graphics("op.png")
 
 Recall that a regression model combines data from a sample with the tools of probability theory to infer features of some unobserved population. We have discussing how the mechanics of moving from a sample to a population carries uncertainty. In a nutshell, regression is guesswork. Our task is to not to remove uncertainty but rather to quantify it. Our regression workflow is built on two imperatives: (1) to clarify our assumptions; (2) to clarify our decisions.
 
-It is fortunate that we live in an ordered universe. Although at the level of particle physics, the universe might be random, at the scale of "medium-sized dry goods"[^1], the world is ordered.
-
-[^1]: This is a paraphrase of J L Austen, I think from *Sense and Sensibilia*; I'll needd to look up the reference
+<aside>
+It is fortunate that we live in an ordered universe. Although at the level of particle physics, the universe might be random, at the scale of "medium-sized dry goods", to paraphrase of J L Austen (I think from *Sense and Sensibilia*?)
+</aside>
 
 So far, our models have assumed that response data in our models are sampling from a normal distribution. There are two parameters that we need to estimate for a normal distribution, the mean, and the variance. The linear regression model is a special case of the generalised linear regression model, in which responses may sample from distributions other than the normal distribution.
 
@@ -139,18 +139,31 @@ We can write our linear model in a different format, which makes its assumptions
 $$
 y_i \sim Normal ( \mu_i, \sigma)\\
 \mu_i \sim \alpha + \beta x_i \\
-\alpha \sim Normal(0,\sigma_{\alpha}) \\
-\sigma_{\alpha} \sim Normal(0,1) \\
-\beta \sim Normal(0,10) \\
 \sigma \sim Exponentional (1) \\
-x_i \sim Normal (0, 1)
 $$
 
-The previous examples describes a regression model that assumes we are sampling from a normal distribution. There is no link function required to transform the expectation for the model estimates. When we are not sampling from a normal we require a link function
+
+<aside>
+The exponential distribution has good properties for estimating the standard deviation of the mean:
+
+```{r}
+ep <- ( rexp(1000, 1) ) 
+hist(ep, breaks = 100)
+```
+</aside>
+
+<aside>
+In Bayesian estimation we often estimate the standard deviation of the mean $\sigma$ , however outside these circles people we describe the same parameter as the variance of the mean, or $\sigma^2$.
+
+It doesn't really matter the parameters don't care how we express them. We can say, "Johannes is 2 meters tall," or we can say "Johannes is the square root of 4 meters tall" and his height will remain indifferent to our convention. So too, the world is indifferent to whether we write \$\\sigma\$ o r \$\\sigma\^2\$ 
+
+</aside>
+
+The previous examples describes a regression model that assumes we are sampling from a normal distribution. There is no link function required to transform the expectation for the model estimates. If we are not sampling from a normal we require a link function. 
+
+How do we know which distribution we are sampling from?  This, too, is a matter of uncertainty. We must clarify, and explore, and criticise our assumptions.
 
 ## Logistic regression
-
-### Logistic regression with a single co-variate.
 
 First let's graph the home ownership
 
@@ -193,7 +206,6 @@ logit(p_i) = \alpha + \beta x_i \\
 $$
 
 We can write a generalised linear model that predict home ownership as follows:
-
 
 ```{r}
 home <- glm(HomeOwner ~ 1, data = nz, 
@@ -252,7 +264,7 @@ What is the mean household income in 2018?
 mean( nz$Household.INC, na.rm = TRUE )
 ```
 
-#### Model syntax
+### Model syntax
 
 We write the model as follows
 
@@ -401,7 +413,7 @@ check2 <- performance::check_model(home2.1)
 check2
 ```
 
-### Logistic regression model with a categorical covariate
+### Logistic regression with a categorical covariate
 
 Let's use the `GenCohort` variable.
 
@@ -504,13 +516,14 @@ performance_accuracy(mg2)
 
 And this reveals little difference, indicating that with this many data, the outliers don't affect inference.
 
-## Count reponses
+## Poisson regression (counts)
 
 We use a poisson model cor count data.
 
-Let's simulate (Gelman and Hill:
+Let's simulate some data (example from @gelman2020, for more on simulated poisson variables go [here](https://bookdown.org/rdpeng/rprogdatascience/simulation.html)
 
 ```{r}
+set.seed(999)
 n <- 50
 x <- runif(n, -2, 2)
 a <- 1
@@ -557,7 +570,7 @@ p_pois2 <- plot(ggeffects::ggpredict(pois2, terms = "x"), add.data = TRUE)
 p_pois2
 ```
 
-# Check the models
+### Model checks
 
 ```{r}
 performance::check_model(pois1)
@@ -596,7 +609,7 @@ per_pois
 plot(per_pois)
 ```
 
-## Over-dispersion
+## Negative binomial models (over-dispersed Poissons)
 
 The expected value of a poisson and the variance of poisson variable are the same: lamda. However often (typically) this assumption is violated, and the random variables in one's data set are over (and occassionally underdispersed)
 

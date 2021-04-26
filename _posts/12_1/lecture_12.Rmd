@@ -53,6 +53,15 @@ Pr_COVID_Positive \<- Pr_Positive_COVID \* Pr_COVID / Pr_Positive Pr_COVID_Posit
 
 ## Uncertainty 
 
+$$
+y_i \sim Normal ( \mu_i, \sigma)\\
+\mu_i \sim \alpha + \beta x_i \\
+\alpha \sim Normal(0,\sigma_{\alpha}) \\
+\sigma_{\alpha} \sim Normal(0,1) \\
+\beta \sim Normal(0,10) \\
+\sigma \sim Exponentional (1) \\
+x_i \sim Normal (0, 1)
+$$
 
 ## Future Horizons
 

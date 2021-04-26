@@ -23,7 +23,6 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -2164,6 +2163,15 @@ gtag('config', 'G-GQF269N0S4');
 <h1 id="now-calculated-your-probability-of-testing-positive">Now calculated your probability of testing positive</h1>
 <p>Pr_COVID_Positive &lt;- Pr_Positive_COVID * Pr_COVID / Pr_Positive Pr_COVID_Positive</p>
 <h2 id="uncertainty">Uncertainty</h2>
+<p><span class="math display">\[
+y_i \sim Normal ( \mu_i, \sigma)\\
+\mu_i \sim \alpha + \beta x_i \\
+\alpha \sim Normal(0,\sigma_{\alpha}) \\
+\sigma_{\alpha} \sim Normal(0,1) \\
+\beta \sim Normal(0,10) \\
+\sigma \sim Exponentional (1) \\
+x_i \sim Normal (0, 1)
+\]</span></p>
 <h2 id="future-horizons">Future Horizons</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
