@@ -1,6 +1,6 @@
 ---
-title: "Modelling binary, count data, and ordinal data"
-description: |
+title: "Generalised linear models"
+description: |"Estimating binary responses, counts, rates, overdispersion, and zero-inflation"
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
@@ -150,6 +150,7 @@ The exponential distribution has good properties for estimating the standard dev
 ep <- ( rexp(1000, 1) ) 
 hist(ep, breaks = 100)
 ```
+see [here](https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html#zero-inflated-models)
 </aside>
 
 <aside>
@@ -175,7 +176,7 @@ From the graph, we can see response distribution is fully bimodal (excluding the
 
 The model requires a binomial link function:
 
-$$Home \sim Binomial (Ownership, Pr)$$
+$$Home_i \sim Binomial (Ownership_i, Pr)$$
 
 The binomial link function does two things:
 
@@ -518,7 +519,17 @@ And this reveals little difference, indicating that with this many data, the out
 
 ## Poisson regression (counts)
 
-We use a poisson model cor count data.
+
+We use a poisson model for rates and counts
+
+### Link function for poisson regression
+
+
+$$
+y_i \sim Poisson(\lambda_i)\\  
+log(\lambda_i) = \alpha +\beta x_i\\
+E(\lambda|y_i) = exp(\alpha +\beta x_i)
+$$
 
 Let's simulate some data (example from @gelman2020, for more on simulated poisson variables go [here](https://bookdown.org/rdpeng/rprogdatascience/simulation.html)
 
@@ -611,9 +622,26 @@ plot(per_pois)
 
 ## Negative binomial models (over-dispersed Poissons)
 
-The expected value of a poisson and the variance of poisson variable are the same: lamda. However often (typically) this assumption is violated, and the random variables in one's data set are over (and occassionally underdispersed)
+### Link function for a negative binomial model 
 
-To see this, a poisson with lamnda = 10
+$$
+y_i \sim NegBinomial(\lambda_i,\phi)\\
+log(\lambda_i) = \alpha +\beta x_i\\
+\phi \sim gamma(.01,.01)
+$$
+
+Over dispersion in the rate parameter. 
+
+<aside>
+```{r}
+gamma_distribution<-rgamma(1000,.01,.01)
+hist(gamma_distribution, breaks = 100)
+```
+</aside>
+
+The expected value of a poisson and the variance of poisson variable are the same: lamda. However often (typically) this assumption is violated, and the random variables in one's data set are over-dispersed.
+
+To see this, lets simulate data with overdispersion
 
 ```{r}
 library(MASS)
@@ -659,7 +687,30 @@ plot(ggeffects::ggpredict(nb1,terms="x"), add.data = TRUE)
 plot(ggeffects::ggpredict(nb2,terms="x"), add.data = TRUE)
 ```
 
+It is clear both from the test statistics and the graphs, that the negative binomial model provides a better fit. 
+
+How would a normal linear model do here? 
+
+```{r}
+lmnb<- lm(y ~ x,  fake2)
+plot(ggeffects::ggpredict(lmnb,terms="x"), add.data = TRUE)
+```
+
+
+The answer is: not very well. 
+
+
+
 ## Zero-inflated poisson regression
+
+
+### Link function for zero-inflated poisson
+
+$$
+y_i \sim ZIPoisson(p_i, \lambda_i)\\
+logit(p_i) = \alpha_p + \beta_p x_i \\
+log(\lambda) = \alpha_\lambda + \beta\lambda x_i
+$$
 
 In the nz dataset, volunteering (hours of charity) look to be zero-inflated, and also over-dispersed.
 
@@ -906,48 +957,6 @@ Zero-inflated negative binomial + predictors for the zero-inflation part
 
 ```{r}
 brms::pp_check(b2) + xlim(0, 5)
-```
-
-## Ordinal outcomes
-
-## Ordinal predictors (Monotonic effects)
-
-\cite{Burkner2019-ie} and Liddell and Kruschke \cite{Liddell_undated-xr} in advising the use of ordinal models for non-metric data such as the Kessler-6 items. Here we employ a categorical model in which the observed variable y has a probability of being equal to response option + 1 latent thresholds. An ordinal model assumes that an observed ordinal indicator measures a latent continuous variable \cite{Burkner2019-ie,Hadfield2012-hi}. The Kessler-6 has five ordinal response options for indicating frequency of feeling distress during the past 30 days: "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time" hence six thresholds. The Kessler-6 distress indicators are: "Feeling Hopelessness;" "Feeling so Depressed Nothing Could Cheer You Up;" "Feeling Nervous or Fidgety;" "Feeling Everything is an Effort;" "Feeling Worthless;" "Feeling Nervous." We simultaneously modelled each of these six outcomes within a single model. Below, the superscript $k$ is denotes the $k = 1\dots6$ Kessler-6 outcomes. Residuals for cumulative categorical models are not identified, so are fixed to 1. $\alpha_{j0}^k$ denotes the $t = 1\dots 5$ intercepts estimated for the ordinal model, which assumed a cumulative logit distribution for the outcome, and where the lowest response level is modelled as zero, hence four intercepts are estimated for each Kessler- 6 response indicator. $$\mathbf{\beta}$$ denotes the individual-level predictors, in this case 'Employment'
-
-$$\begin{align}
-y^k \sim \text{Ordered}(\mu_t^k) \\
-\text{CumLogit}(\mu_t^k) = \alpha_t^k +\beta^k \\
-\alpha_t^k = \alpha_{t0}^k +\alpha^k_c \\
-\alpha_{t0}^k \sim \text{StudentT}(3,0,10)\\
-\alpha_c^k \sim \text{StudentT}^+(3,0,10)\\
-\boldsymbol{\beta^k}\sim \text{Normal}(0,1) 
-\end{align}$$
-
-## Bonus: Latent Profile Analysis
-
-## Latent Profile Analysis
-
-```{r eval=FALSE}
-nzf<-nz %>%
-  select( FeelHopeless, 
-          FeelDepressed,
-          FeelRestless, 
-          EverythingIsEffort,
-          FeelWorthless, 
-          FeelNervous) %>%
-  mutate_if(., is.factor, ~ as.numeric(as.integer(.x)))
-
-out<-nzf %>%
-  dplyr::select( FeelHopeless, 
-          FeelDepressed,
-          FeelRestless, 
-          EverythingIsEffort,
-          FeelWorthless, 
-          FeelNervous)%>%
-  single_imputation() %>%
-  tidyLPA::estimate_profiles(4)
-out%>%
-    plot_profiles(add_line = TRUE)
 ```
 
 ## Acknowledgments and References

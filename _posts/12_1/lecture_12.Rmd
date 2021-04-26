@@ -1,7 +1,6 @@
 ---
-title: "Probability and Bayesian inference"
+title: "Missing data, measurement error, and the future of probability"
 description: |
-  "With an excursion into the whens and when nots of mediation"
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
@@ -16,7 +15,19 @@ toc: true
 ---
 
 
-```{r figopen, echo=F}
+<!-- ```{r figopen, echo=F} -->
+<!-- knitr::include_graphics("op2.png") -->
+<!-- ``` -->
+
+# Remember: parameters are not observed
+
+## Measurement error
+
+## Missing data
+
+
+
+```{r figopen2, echo=F}
 knitr::include_graphics("op.png")
 ```
 

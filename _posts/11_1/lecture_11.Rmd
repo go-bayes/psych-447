@@ -1,30 +1,116 @@
 ---
-title: "Missing data and measurement error"
-description: |
-  "With an excursion into the whens and when nots of mediation"
+title: "Causal inference, confounding, and directed acylical graphs (DAGS) "
+description: 
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
-date: 2021-MAY-18
+date: 2021-MAY-18 
 output:
   distill::distill_article:
-  self_contained: false
-toc: true
+    self_contained: false
+    toc: true
+bibliography: references.bib
 ---
 
+```{r echo=F}
+knitr::include_graphics("op.png")
+```
+
+## Required readings
+
+Required readings are as follows:
+
+-   @rohrer2018 [link](https://journals.sagepub.com/doi/full/10.1177/2515245917745629)
+-   @barrett2021 [link](https://cran.r-project.org/package=ggdag)
+-   @mcelreath2020[link](https://tewaharoa.victoria.ac.nz/discovery/fulldisplay?docid=alma99179374299902386&context=L&vid=64VUW_INST:VUWNUI&search_scope=MyInst_and_CI&tab=all&lang=en)
+
+## Preamble
+
+Make sure that you install the `rethinking` package and the `ggdag` package. Note that the rethinking package is not on cran.
+
+```{r echo = TRUE, include = FALSE}
+# packages
+# ```{r install_rethinking}
+# function for installing dependencies
+ipak <- function(pkg){
+new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+if (length(new.pkg)) 
+    install.packages(new.pkg, dependencies = TRUE) 
+sapply(pkg, require, character.only = TRUE)
+}
+# usage
+packages <- c("coda", "plyr", "mvtnorm", "scales", "dagitty")
+ipak(packages)
+# next install rethinking
+if (!require(rethinking)) {
+  devtools::install_github("rmcelreath/rethinking")
+}
+#next install ggdag
+if (!require(rethinking)) {
+  devtools::install_github("malcolmbarrett/ggdag")
+}
+if (!require(rethinking)) {
+  devtools::install_github("larmarange/labelled")
+}
+# installed from previous lectures
+library("equatiomatic")
+library("tidyverse")
+library("ggdag")
+library("brms")
+library("rstan")
+library("rstanarm")
+# library("tidybayes")
+library("bayesplot")
+library("easystats")
+# rstan options
+rstan_options(auto_write=TRUE)
+options(mc.cores=parallel::detectCores ())
+theme_set(theme_classic())
+```
+
+## Introduction
+
+Recall from lecture 7,
+
+> the output of a statistical model is is **not** self evident. We must therefore **think** both before and after we write a statistical model. If we don't think, our statistical models will lead us astray.
+In the remainder of this lecture, I'm going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.
+
+To introduce multiple regression I'm going to follow Richard McElreath's **Statistical Rethinking**. We have an online version of this book in our library (see the link above.)
+
+## What is causal confounding?
 
 ```{r figopen, echo=F}
 knitr::include_graphics("op2.png")
 ```
 
-# Remember: parameters are not observed
+## The difference between prediction and explanation?
 
-## Measurement error
+## Examples of confounding
 
-## Missing eata
+```{r echo = FALSE, include = FALSE}
+N <-100
+age <- rnorm( N )# sim A
+mar <- rnorm( N , -age ) # sim A -> M
+div <- rnorm( N , age ) # sim A -> D
+df <- data.frame(age,mar,div)
+plot(age ~ mar)
+md<-lm(mar ~ age, data = df)
+summary(md)
+sjPlot::plot_model(md)
+```
 
-
-
+```{r echo = FALSE, include = FALSE}
+## Confound 
+south<-rnorm(N)
+waffles <-rnorm(N, south)
+age <- rnorm(N, south)
+mar <- rnorm( N, -age ) # sim A -> M
+div <- rnorm( N,  age ) # sim A -> D
+df <- data.frame(age,mar,div,south,waffles)
+md<-lm(div ~ waffles + mar + south, data = df)
+summary(md)
+sjPlot::plot_model(md)
+```
