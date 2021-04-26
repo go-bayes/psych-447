@@ -1,6 +1,6 @@
 ---
 title: "Generalised linear models"
-description: |"Estimating binary responses, counts, rates, overdispersion, and zero-inflation"
+description: "Estimating binary responses, counts, rates, overdispersion, and zero-inflation"
 author:
   - name: Joseph Bulbulia
     url: https://josephbulbulia.netlify.app
@@ -12,6 +12,7 @@ output:
   distill::distill_article:
     self_contained: false
     toc: true
+    highlight: kate
 bibliography: bib.bib
 ---
 
@@ -120,19 +121,18 @@ knitr::include_graphics("op.png")
 -   logistic regression models, which apply to *binary* responses;
 -   Poisson regression models, which apply to *rates*;
 -   Zero-inflated poisson models, in which rates data contain an over-abundance of zeros. Here, we will also discuss over-dispersed poisson models.
--   Ordinal regression model, which apply to data with multi-nomial outcomes, for example survey responses (e.g. "little", "none", "more"). Here we will also discuss monotonic predictors.
+<!-- -   Ordinal regression model, which apply to data with multi-nomial outcomes, for example survey responses (e.g. "little", "none", "more"). Here we will also discuss monotonic predictors. -->
 
 ## Introduction
 
 Recall that a regression model combines data from a sample with the tools of probability theory to infer features of some unobserved population. We have discussing how the mechanics of moving from a sample to a population carries uncertainty. In a nutshell, regression is guesswork. Our task is to not to remove uncertainty but rather to quantify it. Our regression workflow is built on two imperatives: (1) to clarify our assumptions; (2) to clarify our decisions.
 
-<aside>
-It is fortunate that we live in an ordered universe. Although at the level of particle physics, the universe might be random, at the scale of "medium-sized dry goods", to paraphrase of J L Austen (I think from *Sense and Sensibilia*?)
-</aside>
+
+It is fortunate that we live in an ordered universe. Although at the level of particle physics, the universe might be random, at the scale of "medium-sized dry goods", to paraphrase J L Austen^[I think in *Sense and Sensibilia*?].
 
 So far, our models have assumed that response data in our models are sampling from a normal distribution. There are two parameters that we need to estimate for a normal distribution, the mean, and the variance. The linear regression model is a special case of the generalised linear regression model, in which responses may sample from distributions other than the normal distribution.
 
-## Link function
+## Generalised linear model implies a 'link' function
 
 We can write our linear model in a different format, which makes its assumptions explicit (recall that we want to clarify our assumptions)"
 
@@ -147,24 +147,24 @@ $$
 The exponential distribution has good properties for estimating the standard deviation of the mean:
 
 ```{r}
-ep <- ( rexp(1000, 1) ) 
-hist(ep, breaks = 100)
+exponential_distribution <- ( rexp(1000, 1) ) 
+hist(exponential_distribution, breaks = 100)
 ```
 see [here](https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html#zero-inflated-models)
 </aside>
 
-<aside>
-In Bayesian estimation we often estimate the standard deviation of the mean $\sigma$ , however outside these circles people we describe the same parameter as the variance of the mean, or $\sigma^2$.
+Aside: In Bayesian estimation we often estimate the standard deviation of the mean $\sigma$ , however outside these circles people we describe the same parameter as the variance of the mean, or $\sigma^2$.
 
 It doesn't really matter the parameters don't care how we express them. We can say, "Johannes is 2 meters tall," or we can say "Johannes is the square root of 4 meters tall" and his height will remain indifferent to our convention. So too, the world is indifferent to whether we write \$\\sigma\$ o r \$\\sigma\^2\$ 
-
-</aside>
 
 The previous examples describes a regression model that assumes we are sampling from a normal distribution. There is no link function required to transform the expectation for the model estimates. If we are not sampling from a normal we require a link function. 
 
 How do we know which distribution we are sampling from?  This, too, is a matter of uncertainty. We must clarify, and explore, and criticise our assumptions.
 
 ## Logistic regression
+
+
+Let's begin an example. 
 
 First let's graph the home ownership
 
@@ -173,6 +173,10 @@ hist(nz$HomeOwner)
 ```
 
 From the graph, we can see response distribution is fully bimodal (excluding the NAs).
+
+
+### Link function for logistic regression
+
 
 The model requires a binomial link function:
 
@@ -206,6 +210,8 @@ logit(p_i) = \alpha + \beta x_i \\
 \Pr(y_i = 1) = logit^{-1}(\alpha + \beta x_i)
 $$
 
+### Extimating the probability of home ownership in the population 
+
 We can write a generalised linear model that predict home ownership as follows:
 
 ```{r}
@@ -213,9 +219,6 @@ home <- glm(HomeOwner ~ 1, data = nz,
             family = "binomial")
 ```
 
-$$
-\log\left[ \frac { P( \operatorname{HomeOwner} = \operatorname{1} ) }{ 1 - P( \operatorname{HomeOwner} = \operatorname{1} ) } \right] = \alpha
-$$
 
 Which gives us the following result
 
@@ -230,36 +233,65 @@ Or plugging this into the equation:
 equatiomatic::extract_eq(home,  use_coefs = TRUE)
 ```
 
+
+### Intepretation
+
 How do we interpret this result?
 
-We may use the `plogis` function to obtain the probability
+We can use the `plogis` function to obtain the probability
 
 ```{r}
 plogis(coef(home)[[1]])
 ```
 
-#### Interpretation of the result
+The probability of an NZAVS participant owning their own home is `r plogis(coef(home)[[1]])`
 
-The probability of an NZAVS participant owning their own home is pr = 81.
 
-### Logistic regression with a single co-variate.
+Notably, the logistic regression has estimated the sample mean to seven decimal places. 
 
-Let's predict home ownership by income.
 
-#### Workflow: center and scale predictors
-
-First center/scale our predictor:
 
 ```{r}
-# center and scale household income 
-nz$Household.INC_s <- scale(nz$Household.INC)
+mean(nz$HomeOwner, na.rm=TRUE)
+```
 
-nz['Household.INC_s'] = as.data.frame(scale(nz$Household.INC))
+This might tempt you to think "why all the fuss?" 
+
+What would a linear model return? 
+
+```{r}
+homeLM <- lm(HomeOwner ~ 1, data = nz)
+```
+
+And the estimate? 
+
+```{r}
+plogis(coef(homeLM)[[1]])
+```
+
+The linear model.  What is going on?  Let's consider a model with a covariate that predicts home ownership. 
+
+ 
+## Logistic regression with a single co-variate.
+
+### Workflow: center and scale continuous predictors
+
+We do this as follows. 
+
+```{r}
+# work around for compatibility issue between ggeffects and dplyr. 
+nz['Household.INC_s'] <- as.data.frame( scale(nz$Household.INC) )
+```
+
+
+To ge a reference point for a standard deviation of household income, let's find the standard deviation for the sample:
+
+```{r}
 # how much is a standard deviation -- which will represent a 1 unit change for the regression coefficient? 
 sd( nz$Household.INC, na.rm = TRUE ) # 95,090
 ```
 
-What is the mean household income in 2018?
+Let's ask about the mean household for income in 2018?
 
 ```{r}
 mean( nz$Household.INC, na.rm = TRUE )
@@ -267,7 +299,7 @@ mean( nz$Household.INC, na.rm = TRUE )
 
 ### Model syntax
 
-We write the model as follows
+We write a logistic regression model with a single covariate as follows:
 
 ```{r}
 home2 <- glm(HomeOwner ~ Household.INC_s, data = nz, 
@@ -282,12 +314,14 @@ rs2
 plot(rs2)
 ```
 
-Which we can write:
+
 
 ```{r eval = TRUE, include = TRUE}
 # this is how to quickly generate the equation
 equatiomatic::extract_eq(home2,  use_coefs = TRUE)
 ```
+
+### Interpretation
 
 How do we interpret this model?
 
@@ -299,7 +333,7 @@ report::report(home2)
 
 There's lots of mention of p-values and power claims in the automated report, but what do these words practically mean?
 
-#### Workflow: graph your results
+### Workflow: graph your results.
 
 We are cultivating a habit of graphing our results. Let's put this habit to virtuous use.
 
@@ -373,16 +407,16 @@ mp2.1 <- plot(ggeffects::ggpredict(home2.1,
   scale_x_continuous(limits = c(-1.2, 4))
 
 library(patchwork)
-mp2 + mp2.1 + plot_annotation(title = "Comparison of logistic regression models with tranformations",
-                              tag_levels = 'a') +
-  plot_layout(guides = 'collect')
+mp2 + mp2.1 + 
+  plot_annotation(title = "Comparison of logistic regression models with tranformations",
+                              tag_levels = 'a') 
 ```
 
-Note the trick I used here.
+Notice the trick that I used here:
 
 `scale_x_continuous(limits = c(-1.2, 4))`
 
-Allowed me to constrain both graphs to the same x-axis scale. If I left this out the graphs would have looked like this:
+This code allowed me to constrain both graphs to the same x-axis scale. If I left this out the graphs would have looked like this:
 
 ```{r}
 #range(nz$Household.INC_s, na.rm = T)
@@ -398,9 +432,7 @@ mp2 + mp2.1 + plot_annotation(title = "Comparison of logistic regression models 
   plot_layout(guides = 'collect')
 ```
 
-The models really are the practically identical, however figure plots all the data, however the outlier creates a visual impression of difference.
-
-Else:
+The models are for all intents and purposes identical.
 
 You can perform further checks using the following code, however, it should be apparent from the preceding graph that the models two models do not vary.
 
@@ -413,6 +445,38 @@ check1
 check2 <- performance::check_model(home2.1)
 check2
 ```
+
+Before leaving this example, what would an ordinary linear regression sampling from a normal distribution have returned? 
+
+```{r}
+home2LM <- lm(HomeOwner ~ Household.INC_s, data = nz)
+home2LM_r <-parameters::model_parameters(home2LM)
+home2LM_r
+plot(home2LM_r)
+```
+
+Let's graph the results and compare the
+
+```{r}
+home2LM_p <- plot(ggeffects::ggpredict(home2LM,
+                                   terms = "Household.INC_s[all]"),
+                  add.data = TRUE) + 
+  scale_y_continuous(limits = c(0, 2))  +
+  scale_x_continuous(limits = c(-1.2, 4))+ theme_classic()
+home2LM_p
+
+home2_p <- plot(ggeffects::ggpredict(home2,
+                                   terms = "Household.INC_s[all]"),
+                  add.data = TRUE) + 
+  scale_y_continuous(limits = c(0, 2))  +
+  scale_x_continuous(limits = c(-1.2, 4))
+
+home2LM_p + home2_p + plot_annotation(subtitle = "Comparison of ordinary least squares regression \n (a) with logistic regression (b) reveals n\ impossible predictions for OLS") +
+  plot_layout(guides = "collect")
+```
+
+
+
 
 ### Logistic regression with a categorical covariate
 
@@ -516,6 +580,9 @@ performance_accuracy(mg2)
 ```
 
 And this reveals little difference, indicating that with this many data, the outliers don't affect inference.
+
+
+
 
 ## Poisson regression (counts)
 
@@ -701,7 +768,7 @@ The answer is: not very well.
 
 
 
-## Zero-inflated poisson regression
+## Zero-inflated poisson/ neg binomial regression
 
 
 ### Link function for zero-inflated poisson
@@ -750,6 +817,9 @@ And indeed, we find both.
 
 I use the `brms` package to estimate zero-inflated and/or negative binomial models
 
+
+### Model syntax 
+
 ```{r}
 library(brms)
 
@@ -785,7 +855,6 @@ plot(
     select_points = 0.1
   ),
   points = TRUE,
-  ask = FALSE,
   point_args = list(alpha = 0.1,
                     width = .02)
 )[[1]] #  note this command controls which facet 
@@ -802,7 +871,6 @@ plot(
     nsamples = 100,
     select_points = 0.1),
   points = TRUE,
-  ask = FALSE,
   point_args = list(alpha = 0.1,
                     width = .02)
 )[[2]] # note this command controls which facet 
@@ -865,17 +933,26 @@ Let's look at the results:
 sjPlot::tab_model(b2)
 ```
 
-We can plot the results using ggeffects::
+###  Interpretation 
+
+We can graph the results using ggeffects::
+
+Religious identification:
 
 ```{r}
-plot(ggeffects::ggpredict(b2, terms = c("Relid_s[meansd]","Household.INC_s[meansd]")), 
-   # add.data = TRUE,  # doesn't work
-   # dot.alpha = .2,  
-     facet = TRUE)
+plot(ggeffects::ggpredict(b2, terms = c("Relid_s")), 
+    add.data = TRUE,  # doesn't work
+     dot.alpha = .2,  
+     facet = TRUE)  + ylim(0, 5)
 ```
 
-```{r cache = TRUE}
-sjPlot::tab_model(b2)
+Household income:
+
+```{r}
+plot(ggeffects::ggpredict(b2, terms = c("Household.INC_s")), 
+    add.data = TRUE,  # doesn't work
+     dot.alpha = .2,  
+     facet = TRUE)  + ylim(0, 5) +  xlim(0, 5)
 ```
 
 Or using my preferred method
@@ -891,29 +968,12 @@ plot(
     select_points = 0.1
   ),
   points = TRUE,
-  ask = FALSE,
  point_args = list(alpha = 0.05,
-                    width = .02)
-)[[1]]  + # note this command controls which facet 
+                    width = .02),
+ ask = FALSE
+)  + # note this command controls which facet 
   ylim(0,5)
 
-```
-
-Predicted effects of income:
-
-```{r}
-plot(
-  conditional_effects(
-    b2,
-    spaghetti = TRUE,
-    nsamples = 100,
-    select_points = 0.1 ),
-  points = TRUE,
-  ask = FALSE,
-  point_args = list(alpha = 0.1,
-                    width = .02) 
-)[[2]] + # note this command controls which facet 
- xlim(0, 5) + ylim(0,5)
 ```
 
 Note:
@@ -958,6 +1018,97 @@ Zero-inflated negative binomial + predictors for the zero-inflation part
 ```{r}
 brms::pp_check(b2) + xlim(0, 5)
 ```
+
+
+## Appendix{.appendix}
+
+If you want to graph each predictor separately emply the `[[1]]` or `[[2]` syntax as follows:]
+
+
+Predicted effects of religious identification
+
+```{r}
+plot(
+  conditional_effects(
+    b2,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1
+  ),
+  points = TRUE,
+  ask = TRUE,
+  point_args = list(alpha = 0.05,
+                    width = .02)
+)[[1]]  + # note this command controls which facet
+  ylim(0, 5)
+
+```
+
+Predicted effects of income:
+
+```{r}
+plot(
+  conditional_effects(
+    b2,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1
+  ),
+  points = TRUE,
+  ask = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+)[[2]] + # note this command controls which facet
+  xlim(0, 5) + ylim(0, 5)
+```
+
+
+Note that you can add additionally layers to these plots using the ggplot and patchwork syntax that we have been employing all along:
+
+```{r}
+b2_p1 <- plot(
+  conditional_effects(
+    b2,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1
+  ),
+  points = TRUE,
+  ask = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+)[[1]]  + # note this command controls which facet
+  ylim(0, 5) + labs(title = "Better title",
+                                 subtitle = "better subtitle") +
+  xlab("Religious Identification (SD units)") +
+  ylab("Hours volunteering in the last week (reported)")
+```
+
+
+```{r}
+b2_p2 <- plot(
+  conditional_effects(
+    b2,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1),
+  points = TRUE,
+  ask = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+)[[2]] + # note this command controls which facet
+  xlim(0, 5) + ylim(0, 5)
+```
+
+
+```{r}
+library("patchwork")
+b2_p1 + b2_p2
+```
+
+## Appendix 2{.appendix2}
+
+We have covered lots of ground today. The generalised linear models described here are the most commponplace. However there are many more. For those who are curious on how to estimated zero inflated binary data, I recommend Solomon Kurz's work [here](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/monsters-and-mixtures.html#zero-inflated-outcomes). 
 
 ## Acknowledgments and References
 
