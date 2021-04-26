@@ -153,13 +153,18 @@ hist(exponential_distribution, breaks = 100)
 see [here](https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html#zero-inflated-models)
 </aside>
 
-Aside: In Bayesian estimation we often estimate the standard deviation of the mean $\sigma$ , however outside these circles people we describe the same parameter as the variance of the mean, or $\sigma^2$.
-
-It doesn't really matter the parameters don't care how we express them. We can say, "Johannes is 2 meters tall," or we can say "Johannes is the square root of 4 meters tall" and his height will remain indifferent to our convention. So too, the world is indifferent to whether we write \$\\sigma\$ o r \$\\sigma\^2\$ 
-
 The previous examples describes a regression model that assumes we are sampling from a normal distribution. There is no link function required to transform the expectation for the model estimates. If we are not sampling from a normal we require a link function. 
 
 How do we know which distribution we are sampling from?  This, too, is a matter of uncertainty. We must clarify, and explore, and criticise our assumptions.
+
+A Generalised linear model implies a 'link' function
+
+
+$g(\cdot)$ = link function
+$h(\cdot) = g^-1(\cdot) $ = inverse link function
+
+Where $(\cdot)$ is the linear predictor: $\mathboldsymbol{\eta}$
+
 
 ## Logistic regression
 
@@ -249,27 +254,9 @@ The probability of an NZAVS participant owning their own home is `r plogis(coef(
 
 Notably, the logistic regression has estimated the sample mean to seven decimal places. 
 
-
-
 ```{r}
 mean(nz$HomeOwner, na.rm=TRUE)
 ```
-
-This might tempt you to think "why all the fuss?" 
-
-What would a linear model return? 
-
-```{r}
-homeLM <- lm(HomeOwner ~ 1, data = nz)
-```
-
-And the estimate? 
-
-```{r}
-plogis(coef(homeLM)[[1]])
-```
-
-The linear model.  What is going on?  Let's consider a model with a covariate that predicts home ownership. 
 
  
 ## Logistic regression with a single co-variate.
@@ -1020,52 +1007,15 @@ brms::pp_check(b2) + xlim(0, 5)
 ```
 
 
-## Appendix{.appendix}
+## Appendix 1 {.appendix1}
 
 If you want to graph each predictor separately emply the `[[1]]` or `[[2]` syntax as follows:]
 
 
 Predicted effects of religious identification
 
-```{r}
-plot(
-  conditional_effects(
-    b2,
-    spaghetti = TRUE,
-    nsamples = 100,
-    select_points = 0.1
-  ),
-  points = TRUE,
-  ask = TRUE,
-  point_args = list(alpha = 0.05,
-                    width = .02)
-)[[1]]  + # note this command controls which facet
-  ylim(0, 5)
 
-```
-
-Predicted effects of income:
-
-```{r}
-plot(
-  conditional_effects(
-    b2,
-    spaghetti = TRUE,
-    nsamples = 100,
-    select_points = 0.1
-  ),
-  points = TRUE,
-  ask = TRUE,
-  point_args = list(alpha = 0.1,
-                    width = .02)
-)[[2]] + # note this command controls which facet
-  xlim(0, 5) + ylim(0, 5)
-```
-
-
-Note that you can add additionally layers to these plots using the ggplot and patchwork syntax that we have been employing all along:
-
-```{r}
+```{r eval=FALSE}
 b2_p1 <- plot(
   conditional_effects(
     b2,
@@ -1084,8 +1034,41 @@ b2_p1 <- plot(
   ylab("Hours volunteering in the last week (reported)")
 ```
 
+Predicted effects of income:
 
-```{r}
+
+```{r eval = FALSE}
+b2_p2 <- plot(
+  conditional_effects(
+    b2,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1),
+  points = TRUE,
+  ask = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+)[[2]] + # note this command controls which facet
+  xlim(0, 5) + ylim(0, 5)
+```
+
+```{r include = FALSE}
+b2_p1 <- plot(
+  conditional_effects(
+    b2,
+    spaghetti = TRUE,
+    nsamples = 100,
+    select_points = 0.1
+  ),
+  points = TRUE,
+  ask = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+)[[1]]  + # note this command controls which facet
+  ylim(0, 5) + labs(title = "Better title",
+                                 subtitle = "better subtitle") +
+  xlab("Religious Identification (SD units)") +
+  ylab("Hours volunteering in the last week (reported)")
 b2_p2 <- plot(
   conditional_effects(
     b2,
@@ -1109,6 +1092,13 @@ b2_p1 + b2_p2
 ## Appendix 2{.appendix2}
 
 We have covered lots of ground today. The generalised linear models described here are the most commponplace. However there are many more. For those who are curious on how to estimated zero inflated binary data, I recommend Solomon Kurz's work [here](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/monsters-and-mixtures.html#zero-inflated-outcomes). 
+
+
+## Appendix 3{.appendix3}
+
+Aside: In Bayesian estimation we often estimate the standard deviation of the mean $\sigma$ , however outside these circles people we describe the same parameter as the variance of the mean, or $\sigma^2$.
+
+It doesn't really matter the parameters don't care how we express them. We can say, "Johannes is 2 meters tall," or we can say "Johannes is the square root of 4 meters tall" and his height will remain indifferent to our convention. So too, the world is indifferent to whether we write \$\\sigma\$ o r \$\\sigma\^2\$ 
 
 ## Acknowledgments and References
 
