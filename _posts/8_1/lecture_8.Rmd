@@ -835,7 +835,7 @@ z1 <-glm(HoursCharity ~ 1, family = "poisson", data = nz)
 check_zeroinflation(z1)
 ```
 
-Next check over-dispersion:
+Next check for over-dispersion:
 
 ```{r}
 check_overdispersion(z1)
@@ -870,9 +870,7 @@ b0<- brms::brm(HoursCharity ~ Relid_s + Household.INC_s,
 summary(b0)
 ```
 
-My preferred way of plotting
-
-Predicted effects of religious identification on volunteering:
+My preferred way of graphing the predicted effects of religious identification on volunteering is to generate prediction lines from the posterior samples. This captures uncertainty in an intuitive way. I'll explain the mechanics when we get to Bayesian estimation, which, by the way, we are already doing here.
 
 ```{r}
 plot(
@@ -885,24 +883,9 @@ plot(
   points = TRUE,
   point_args = list(alpha = 0.1,
                     width = .02)
-)[[1]] #  note this command controls which facet 
-
+) #  note this command controls which facet 
 ```
 
-Predicted effects of income:
-
-```{r}
-plot(
-  conditional_effects(
-    b0,
-    spaghetti = TRUE,
-    nsamples = 100,
-    select_points = 0.1),
-  points = TRUE,
-  point_args = list(alpha = 0.1,
-                    width = .02)
-)[[2]] # note this command controls which facet 
-```
 
 ```{r}
 b1 <- brms::brm(HoursCharity ~ Relid_s + Household.INC_s, 
@@ -915,7 +898,9 @@ b1 <- brms::brm(HoursCharity ~ Relid_s + Household.INC_s,
 summary(b1)
 ```
 
-Compare fit. Here, negative numbers are worse.
+Compare fits of the two models using leave one out cross-validation. 
+
+Note that on this index, negative numbers are worse (sorry to confuse...)
 
 ```{r cache = TRUE}
 b0 <- add_criterion(b0, "loo")
@@ -925,9 +910,7 @@ w <-loo_compare(b0, b1, criterion = "loo")
 w
 ```
 
-Recall we'd been using and AIC/BIC convention to estimate improvements in goodness of fit.
-
-We can translate the `loo_compare` output into a `waic` convention as:
+Recall we hadbeen using and AIC/BIC convention to estimate improvements in goodness of fit. We can generate an analous index as follows:
 
 ```{r}
 cbind(waic_diff = w[, 1] * -2,
@@ -1047,6 +1030,47 @@ Zero-inflated negative binomial + predictors for the zero-inflation part
 brms::pp_check(b2) + xlim(0, 5)
 ```
 
+```{r}
+summary(b2)
+```
+
+
+## Reporting 
+
+You can start with the `report` package to generate reports. However, be careful about reporting using boilerplate because it is up to you, as an applied scientist, to interpret your results  
+
+For example the `report` package describes the $R^2$ statistic. For reasons we can discuss in lab, this statistic is problematic, especially for observational studies.  
+
+A better option for expressing practical interest of a result is to describe the expected values of out an outcome across a range of predictors. We have been doing this all along with our graphical models. However, you might want to report the numbers for these expected values as well. For this purpose, the ggeffects package can be handy.  You merely leave out the `plot` component of your syntax: 
+
+```{r}
+ggeffects::ggpredict(b2, terms = "Relid_s")
+```
+
+Here, we have generated the predicted magnitudes of volunteering across the full range of the response variables (Religious Identification, as measured in standard deviation units). The expected volunteering rate of a secular person when other predictors are set to zero is: 1.23 hours [CI 95% 1.14, 1.46] and for a fully religiously identified person when all other predictors are set to zero it is 2.78 hours (CI 95% [2.35, 3.28]) 
+
+
+We might want to focus on different elements of the model. The expected volunteering among the secular population (when other predictors are set to zero) *who volunteers*is `exp(1.23)`: `r round(exp(1.23),3)` and for a religious person (when other predictors are set to zero) *who volunteers*  is: `exp(1.23 + .02 *  2.12)`:`r round(exp(1.23 + .02 *  2.12),3)`.  expected zero-rate among the secular population is `plogis(0.05)` `r round(plogis(0.05),3)`; for a fully identified religious person it is  `plogis(0.05 + -0.65 *  2.12)`: `r round(plogis(0.05 + -0.65 *  2.12),3)`. This suggests that religious people are less zero-inflated. However among those who volunteer, religion isn't predicting much of a difference in the number of hours one volunteers (in the baseline population).
+
+Is this interesting? Rather than averaging across both the zero-inflated and volunteering populations, it might be more informative to separately describe behaviour among each of these distinct populations. Remember, as applied scientists, we are not merely trying to be explicit about our assumptions and decisions. We're trying to improve our beliefs relating to some concrete question. Our reporting must reflect our scientific interests. It must clarify what we've learned about the world, as well as how we remain uncertain. 
+
+## Summary
+
+Today:
+
+- We have clarified that all linear regression models are "generalised linear model" because all linear regression models imply a link function. Prior to this week, we'd been working with the gaussian linear model, in which the link function is the identify function. However, the Gaussian linear model is a special case. 
+
+  - This has taken us a step further into understanding how confusing the term 'linear' can be. We've already shown that quadratic predictors and splines enable us to estimate non-linerity in the relationships between predictor and response parameters. However, now we can see that the entire edifice of regresion is built upon the link function. This is a non-linear mapping from expected responses to additive and multiplicative predictors. 
+
+ 
+- We have demonstrated how to write four classes of generalised linear models:
+  - Logistic regression models, which apply to *binary* responses;
+  - Poisson regression models, which apply to *rates*;
+  - Negative binomial models (over-dispersed poisson regression models)
+  - Zero-inflated poisson/negative binomial models, in which rates contain an over abundance of zeros.
+
+- We have clarified how to interpret and report the results of a generalised linear model using graphical strategies.  
+  
 
 ## Appendix 1 {.appendix1}
 
@@ -1072,26 +1096,10 @@ b2_p1 <- plot(
   ylim(0, 5) + labs(title = "Better title",
                                  subtitle = "better subtitle") +
   xlab("Religious Identification (SD units)") +
-  ylab("Hours volunteering in the last week (reported)")
+  ylab("Hours volunteering in the previous week")
 ```
 
 Predicted effects of income:
-
-
-```{r eval = FALSE}
-b2_p2 <- plot(
-  conditional_effects(
-    b2,
-    spaghetti = TRUE,
-    nsamples = 100,
-    select_points = 0.1),
-  points = TRUE,
-  ask = TRUE,
-  point_args = list(alpha = 0.1,
-                    width = .02)
-)[[2]] + # note this command controls which facet
-  xlim(0, 5) + ylim(0, 5)
-```
 
 ```{r include = FALSE}
 b2_p1 <- plot(
@@ -1121,7 +1129,8 @@ b2_p2 <- plot(
   point_args = list(alpha = 0.1,
                     width = .02)
 )[[2]] + # note this command controls which facet
-  xlim(0, 5) + ylim(0, 5)
+  xlim(0, 5) + ylim(0, 5) +
+  ylab("Hours volunteering in the previous week")
 ```
 
 
