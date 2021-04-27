@@ -1,5 +1,5 @@
 ---
-title: "Week 7 workbook and solutions"
+title: "Week 8 workbook and solutions"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -14,7 +14,7 @@ output:
     highlight: kate
 ---
 
-Import the jittered NZAVS dataset:
+Import the jittered NZAVS dataset, selecting the 2018 Wave 
 
 
 ```{r setup, include=FALSE}
@@ -89,7 +89,7 @@ nz <- nz_0 %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
   dplyr::mutate(male_id = as.factor(Male)) %>%
   dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)%>%
-  dplyr::filter(Wave == 2019)
+  dplyr::filter(Wave == 2018)
 
 ```
 
@@ -107,13 +107,9 @@ Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucv
  
 #### Task
 
-1. Select up to five variables from Wave 11 (2019) NZAVS jittered dataset.
+1. Write brief report that predicts belief in spirit or a life-force (`Believe.Spirit`) from no more than five covariates. Explain your model and results.
 
-2. Briefly describe your variables. Use graphs and tables as you deem helpful. 
-
-3. Write a single co-variate regression model with a continuous outcome. Interpret your results, using graphs and tables as you deem helpful.
-
-4. Write a multiple co-variate regression model and interpret your results, using graphs and tables as you deem helpful.
+2. Write report that predicts charitable donations (`CharityDonate`) wrom no more than five covariates. Explain your model and results. 
 
 
 #### Marking criteria
@@ -123,9 +119,4 @@ Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucv
 2. Clarity and organisation in description of your regression model.
 
 3. Accuracy and insight in the interpretation of your regression model.
-
-
-
-
-
 
