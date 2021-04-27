@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 ---
 title: "Generalised linear models"
 description: "Estimating binary responses, counts, rates, overdispersion, and zero-inflation"
@@ -134,54 +133,50 @@ Our focus has been on teaching workflows for estimation that are grounding in th
 
 
 So far, our models have assumed that response data in our models are sampling from a "normal" or "gaussian" distribution. This assumption is useful because we live i an ordered universe from which many of our observations are sampling from a normal distribution. However, although the gaussian distribution is sensible choice for estimating many parameters it is not a sensible choice for estimating all parameters. The linear regression model that we have been using is really a special case of the generalised linear regression model. Today we introduce the generalised linear model. 
-
 ## A regression model implies a 'link' function
 
+So far, we have written the gaussian linear model as:
 
-So far, we have written the gaussian linear model as: 
+$$ y_i  = \alpha + \beta x_i + e$$
 
-$$ y_i  = \alpha + \beta x_i + e$$ 
-
-Where y is the response for the i${^th}$ data point, $\alpha$ is the intercept, or the expected response for the population when all other regression coefficients are set to zero, $\beta$ is the adjustment in this expectation for the i$^{th}$ predictor $x$ associated with $y_i$, where both y and x are random variables.  
-
+Where y is the response for the i${^th}$ data point, $\alpha$ is the intercept, or the expected response for the population when all other regression coefficients are set to zero, $\beta$ is the adjustment in this expectation for the i$^{th}$ predictor $x$ associated with $y_i$, where both y and x are random variables.
 
 Often applied regression models were use compact matrix notation, where a bolded symbol is short hand for a matrix:
-
 
 $$\boldsymbol{\eta} =  \boldsymbol{\alpha} + \boldsymbol{X}\boldsymbol{\beta}\\$$
 
 For example here, $$\boldsymbol{X}\boldsymbol{\beta}\\$$ is shorthand for $$\beta_1X_i + \beta_2X_i + \beta_2X \dots$$
 
+We can write the gaussian linear model in way that makes our assumptions and decisions explicit about what we think/hope it is doing when combining data with probability theory to estimate unknown (and inherently uncertain) parameters.[^1]
 
-We can write the gaussian linear model in way that makes our assumptions and decisions explicit about what we think/hope it is doing when combining data with probability theory to estimate unknown (and inherently uncertain) parameters.^[It is worth cultivating this explicit habit because we will need it when clarifying our belielfs about the world prior to modelling the world (as we do in Bayesian modelling).]
-
+[^1]: It is worth cultivating this explicit habit because we will need it when clarifying our belielfs about the world prior to modelling the world (as we do in Bayesian modelling).
 
 Recall that there are two parameters that we need to estimate for gaussian linear model: the mean, and the variance.
 
-
 $$
 y_i \sim Normal ( \mu_i, \sigma)\\
-\mu_i \sim \alpha + \beta x_i \\
+\mu_i = \alpha + \beta x_i \\
 \sigma \sim Exponentional (1) \\
 $$
-
 
 We assume that our response variable is a random variable that is sampling from a normal distribution with that has a mean $\mu_i$ and a variance $\sigma^2$. For reasons that will become clear in the final lecture, we will write the variance parameter as the square root of the variance parameter, $\sigma$ which is a standard deviation (see Appendix 3 \ref@.appendix3)
 
 <aside>
+
 The exponential distribution has good properties for estimating the standard deviation of the mean:
+
 ```{r}
-exponential_distribution <- ( rexp(1000, 1) ) 
+exponential_distribution <- (rexp(1000, 1))
 hist(exponential_distribution, breaks = 100)
 ```
-see [here](https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html#zero-inflated-models)
-</aside>
 
+see [here](https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html#zero-inflated-models)
+
+</aside>
 
 Every linear model implies a 'link' function:
 
-
-$g(\cdot)$ = link function  as well as an an inverse link function:
+$g(\cdot)$ = link function as well as an an inverse link function:
 
 $h(\cdot) = g^-1(\cdot)$ = inverse link function
 
@@ -189,10 +184,45 @@ Where $(\cdot)$ is the linear predictor: $\boldsymbol{\eta}$
 
 In the gaussian linear model we assume
 
-$$g(\cdot) = h(\cdot)$$
-That is, the link function is an *identity* function. This is a special case. In the remainder of the lecture we will explore different mapping from the expected outcome of a model and its linear predictors. 
+$$g(\cdot) = h(\cdot)$$ That is, the link function is an *identity* function. This is a special case. In the remainder of the lecture we will explore different mapping from the expected outcome of a model and its linear predictors.
 
+## Logistic regression
 
+We begin with outcomes that are distributed as binary data. Consider home ownership in the `nz jitter dataset`:
+
+```{r}
+hist(nz$HomeOwner)
+```
+
+From the graph, we can see response distribution is fully bimodal (excluding the NAs).
+
+### Link function for logistic regression
+
+The binomial link function does two things:
+
+-   first, it maps the range $(0, 1)$ to $-(\infty, -\infty)$.
+-   second, it maps these values back to the unit range (see: @gelman2020 )
+
+The logistic function satisfies the first task:
+
+$$logit(\cdot) = log_e\frac{p}{(1-p)}$$
+
+The inverse logit functionsatisfies the second task:
+
+$$logit^-1(\cdot) = log\frac{e^\cdot}{(1-e^\cdot)}$$
+
+We can write this:
+
+$$
+\Pr(y_i = 1) = p_i \\
+logit(p_i) = \alpha + \beta x_i \\
+\Pr(y_i = 1) = logit^{-1}(\alpha + \beta x_i)
+$$ In R these functions are written:
+
+```{r eval = FALSE}
+logit <- qlogis
+invlogit <- plogis
+```
 
 ## Logistic regression
 
@@ -210,7 +240,7 @@ From the graph, we can see response distribution is fully bimodal (excluding the
 
 The binomial link function does two things:
 
--   first, it maps the range $(0, 1)$ to $-(\infty, -\infty)$.
+-   first, it maps the range $(0, 1)$ to $-(\infty, \infty)$.
 -   second, it maps these values back to the unit range (see: @gelman2020 )
 
 
@@ -247,10 +277,9 @@ $$
 
 Aside: later on we will express paramters for the linear predictors, so something like:
 
-$$Home_i \sim binomial (Ownership_i, Pr)\\
-Ownersip_i \sim mu_i \\
-mu_i = \alpha + \beta X_i \\
-\alpha ~ N(0,\sigma_{alpha})\\
+$$Ownership_i \sim binomial (n, Pr_i)\\
+Ownersip_i = \alpha + \beta X_i \\
+\alpha \sim N(0,\sigma_{alpha})\\
 \sigma_{alpha} \sim(0,10) \\
 \beta \sim lognormal(0,1) \\
 $$
@@ -436,9 +465,9 @@ mp2.1 <- plot(ggeffects::ggpredict(home2.1,
   scale_x_continuous(limits = c(-1.2, 4))
 
 library(patchwork)
-mp2 + mp2.1 + 
+mp2 + mp2.1 +
   plot_annotation(title = "Comparison of logistic regression models with tranformations",
-                              tag_levels = 'a') 
+                  tag_levels = 'a') 
 ```
 
 Notice the trick that I used here:
@@ -449,11 +478,10 @@ This code allowed me to constrain both graphs to the same x-axis scale. If I lef
 
 ```{r}
 #range(nz$Household.INC_s, na.rm = T)
-
 mp2 <- plot(ggeffects::ggpredict(home2,
-                                 terms = "Household.INC_s[all]")) + scale_y_continuous(limits = c(0, 1)) 
+                                 terms = "Household.INC_s[all]")) + scale_y_continuous(limits = c(0, 1))
 mp2.1 <- plot(ggeffects::ggpredict(home2.1,
-                                   terms = "Household.INC_s[all]")) + scale_y_continuous(limits = c(0, 1)) 
+                                   terms = "Household.INC_s[all]")) + scale_y_continuous(limits = c(0, 1))
 
 library(patchwork)
 mp2 + mp2.1 + plot_annotation(title = "Comparison of logistic regression models with tranformations",
@@ -479,7 +507,7 @@ Before leaving this example, what would an ordinary linear regression sampling f
 
 ```{r}
 home2LM <- lm(HomeOwner ~ Household.INC_s, data = nz)
-home2LM_r <-parameters::model_parameters(home2LM)
+home2LM_r <- parameters::model_parameters(home2LM)
 home2LM_r
 plot(home2LM_r)
 ```
@@ -488,17 +516,17 @@ Let's graph the results and compare the
 
 ```{r}
 home2LM_p <- plot(ggeffects::ggpredict(home2LM,
-                                   terms = "Household.INC_s[all]"),
-                  add.data = TRUE) + 
+                                       terms = "Household.INC_s[all]"),
+                  add.data = TRUE) +
   scale_y_continuous(limits = c(0, 1.5))  +
-  scale_x_continuous(limits = c(-1.2, 4))+ theme_classic()
+  scale_x_continuous(limits = c(-1.2, 4)) + theme_classic()
 home2LM_p
 
 home2_p <- plot(ggeffects::ggpredict(home2,
-                                   terms = "Household.INC_s[all]"),
-                  add.data = TRUE) + 
+                                     terms = "Household.INC_s[all]"),
+                add.data = TRUE) +
   scale_y_continuous(limits = c(0, 1.5))  +
-  scale_x_continuous(limits = c(-1.2, 4))
+  scale_x_continuous(limits = c(-1.2, 4)) + theme_classic()
 
 home2LM_p + home2_p + plot_annotation(subtitle = "Comparison of ordinary least squares regression \n (a) with logistic regression (b) reveals n\ impossible predictions for OLS") +
   plot_layout(guides = "collect")
@@ -844,10 +872,12 @@ check_overdispersion(z1)
 
 And indeed, we find both.
 
+### Introducing `brms` for estimating complex regression models
+
 I use the `brms` package to estimate zero-inflated and/or negative binomial models
 
 
-### Model syntax 
+### Zero_inflated_poisson model syntax 
 
 ```{r}
 library(brms)
@@ -886,7 +916,7 @@ plot(
                     width = .02)
 ) #  note this command controls which facet 
 ```
-
+### Zero_inflated_negbinomial model syntax
 
 ```{r}
 b1 <- brms::brm(HoursCharity ~ Relid_s + Household.INC_s, 
@@ -920,7 +950,7 @@ cbind(waic_diff = w[, 1] * -2,
 
 And we can see that the negative binomial model fits much better.
 
-### Predicting zeros
+### A model for your zeros
 
 The estimates in the graphs above are only for the positive (non-zero components of the model). Let's look at the results again:
 
@@ -1010,22 +1040,23 @@ Again we can use an -2 \* loglik analogue
 cbind(waic_diff = w[, 1] * -2,
       se        = w[, 2] * 2)
 ```
+### Posterior predictive checks
 
-Another way to see this is to look at the posterior predictive checks on the models
+These help to show the implications of our modelling decisions
 
-Zero-inflated poisson
+### Zero-inflated poisson PP check
 
 ```{r}
 brms::pp_check(b0) + xlim(0, 5)
 ```
 
-Zero-inflated negative binomial with no predictors for the zero-inflation part.
+### Zero-inflated negative binomial with no predictors for the zero-inflation PP check
 
 ```{r}
 brms::pp_check(b1) + xlim(0, 5)
 ```
 
-Zero-inflated negative binomial + predictors for the zero-inflation part
+### Zero-inflated negative binomial with zero-inflation predictors PP check
 
 ```{r}
 brms::pp_check(b2) + xlim(0, 5)
@@ -1159,4 +1190,4 @@ It doesn't really matter the parameters don't care how we express them. We can s
 
 @bürkner2019
 =======
->>>>>>> Stashed changes
+
