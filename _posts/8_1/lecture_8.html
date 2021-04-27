@@ -1490,7 +1490,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <ul>
 <li><a href="#objectives">Objectives</a></li>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#generalised-linear-model-implies-a-link-function">Generalised linear model implies a ‘link’ function</a></li>
+<li><a href="#a-regression-model-implies-a-link-function">A regression model implies a ‘link’ function</a></li>
 <li><a href="#logistic-regression">Logistic regression</a>
 <ul>
 <li><a href="#link-function-for-logistic-regression">Link function for logistic regression</a></li>
@@ -1530,65 +1530,52 @@ code span.wa { color: #bf0303; } /* Warning */
 </nav>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>### Libraries</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://patchwork.data-imaginist.com'>"patchwork"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://lubridate.tidyverse.org'>"lubridate"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://haozhu233.github.io/kableExtra/'>"kableExtra"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/ddsjoberg/gtsummary'>"gtsummary"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://lubridate.tidyverse.org'>"lubridate"</a></span><span class='op'>)</span>
-<span class='fu'>devtools</span><span class='fu'>::</span><span class='fu'><a href='https://devtools.r-lib.org//reference/remote-reexports.html'>install_github</a></span><span class='op'>(</span><span class='st'>"data-edu/tidyLPA"</span><span class='op'>)</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://data-edu.github.io/tidyLPA/'>tidyLPA</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"tidyLPA"</span><span class='op'>)</span>
-<span class='op'>}</span>
 
-
-<span class='co'># installed from previous lectures</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/datalorax/equatiomatic'>"equatiomatic"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/malcolmbarrett/ggdag'>"ggdag"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/paul-buerkner/brms'>"brms"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstan'>"rstan"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span>
-<span class='co'># library("tidybayes")</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/bayesplot/'>"bayesplot"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/easystats/easystats'>"easystats"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://haozhu233.github.io/kableExtra/'>"kableExtra"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://broom.tidymodels.org/'>"broom"</a></span><span class='op'>)</span>
-<span class='co'># rstan options</span>
-<span class='fu'><a href='https://mc-stan.org/rstan/reference/rstan_options.html'>rstan_options</a></span><span class='op'>(</span>auto_write<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores<span class='op'>=</span><span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span> <span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>theme_set</span><span class='op'>(</span><span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
-</div>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
 <p><img src="op.png" width="500" /></p>
 </div>
 <h2 id="objectives">Objectives</h2>
 <ol type="1">
-<li>Understand why a linear model is a special case of a “generalised linear model.”</li>
-<li>Understand how to write and interpret three families of generalised linear models:</li>
+<li>To understand the concept of a “generalised linear model,” and why the standard (gaussian) linear model is a special case.</li>
+<li>To undertand how to write four classes of generalised linear models:</li>
 </ol>
 <ul>
-<li>logistic regression models, which apply to <em>binary</em> responses;</li>
+<li>Logistic regression models, which apply to <em>binary</em> responses;</li>
 <li>Poisson regression models, which apply to <em>rates</em>;</li>
-<li>Zero-inflated poisson models, in which rates data contain an over-abundance of zeros. Here, we will also discuss over-dispersed poisson models. <!-- -   Ordinal regression model, which apply to data with multi-nomial outcomes, for example survey responses (e.g. "little", "none", "more"). Here we will also discuss monotonic predictors. --></li>
+<li>Negative binomial models (over-dispersed poisson regression models)</li>
+<li>Zero-inflated poisson/negative binomial models, in which rates contain an over abundance of zeros.</li>
 </ul>
+<ol start="3" type="1">
+<li>To understand how to interpret and report the results of a generalised linear model.</li>
+</ol>
+<!-- -   Ordinal regression model, which apply to data with multi-nomial outcomes, for example survey responses (e.g. "little", "none", "more"). Here we will also discuss monotonic predictors. -->
 <h2 id="introduction">Introduction</h2>
-<p>Recall that a regression model combines data from a sample with the tools of probability theory to infer features of some unobserved population. We have discussing how the mechanics of moving from a sample to a population carries uncertainty. In a nutshell, regression is guesswork. Our task is to not to remove uncertainty but rather to quantify it. Our regression workflow is built on two imperatives: (1) to clarify our assumptions; (2) to clarify our decisions.</p>
-<p>It is fortunate that we live in an ordered universe. Although at the level of particle physics, the universe might be random, at the scale of “medium-sized dry goods,” to paraphrase J L Austen<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p>So far, our models have assumed that response data in our models are sampling from a normal distribution. There are two parameters that we need to estimate for a normal distribution, the mean, and the variance. The linear regression model is a special case of the generalised linear regression model, in which responses may sample from distributions other than the normal distribution.</p>
-<h2 id="generalised-linear-model-implies-a-link-function">Generalised linear model implies a ‘link’ function</h2>
-<p>We can write our linear model in a different format, which makes its assumptions explicit (recall that we want to clarify our assumptions)"</p>
+<p>Recall that a regression model combines data from a sample, on the one hand, with the tools of probability theory, on the other hand, to infer features of an unobserved population. We call these unobserved features “parameters.” The task in regression is to estimate uncertainty in these parameters, and where possible, to narrow the bandwidth of such uncertainty. In a nutshell, regression is educated guesswork.</p>
+<p>Our focus has been on teaching workflows for estimation that are grounding in three imperatives:</p>
+<ol type="1">
+<li>to clarify our question: what do we want to infer?</li>
+<li>to clarify our assumptions: what do we believe about the world and our data before estimation gets going</li>
+<li>to clarify our decisions: inevitably applied regression modelers must make choices: what have we decided and why?</li>
+</ol>
+<p>So far, our models have assumed that response data in our models are sampling from a “normal” or “gaussian” distribution. This assumption is useful because we live i an ordered universe from which many of our observations are sampling from a normal distribution. However, although the gaussian distribution is sensible choice for estimating many parameters it is not a sensible choice for estimating all parameters. The linear regression model that we have been using is really a special case of the generalised linear regression model. Today we introduce the generalised linear model.</p>
+<h2 id="a-regression-model-implies-a-link-function">A regression model implies a ‘link’ function</h2>
+<p>So far, we have written the gaussian linear model as:</p>
+<p><span class="math display">\[ y_i  = \alpha + \beta x_i + e\]</span></p>
+<p>Where y is the response for the i<span class="math inline">\({^th}\)</span> data point, <span class="math inline">\(\alpha\)</span> is the intercept, or the expected response for the population when all other regression coefficients are set to zero, <span class="math inline">\(\beta\)</span> is the adjustment in this expectation for the i<span class="math inline">\(^{th}\)</span> predictor <span class="math inline">\(x\)</span> associated with <span class="math inline">\(y_i\)</span>, where both y and x are random variables.</p>
+<p>Often applied regression models were use compact matrix notation, where a bolded symbol is short hand for a matrix:</p>
+<p><span class="math display">\[\boldsymbol{\eta} =  \boldsymbol{\alpha} + \boldsymbol{X}\boldsymbol{\beta}\\\]</span></p>
+<p>For example here, <span class="math display">\[\boldsymbol{X}\boldsymbol{\beta}\\\]</span> is shorthand for <span class="math display">\[\beta_1X_i + \beta_2X_i + \beta_2X \dots\]</span></p>
+<p>We can write the gaussian linear model in way that makes our assumptions and decisions explicit about what we think/hope it is doing when combining data with probability theory to estimate unknown (and inherently uncertain) parameters.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Recall that there are two parameters that we need to estimate for gaussian linear model: the mean, and the variance.</p>
 <p><span class="math display">\[
 y_i \sim Normal ( \mu_i, \sigma)\\
 \mu_i \sim \alpha + \beta x_i \\
 \sigma \sim Exponentional (1) \\
 \]</span></p>
+<p>We assume that our response variable is a random variable that is sampling from a normal distribution with that has a mean <span class="math inline">\(\mu_i\)</span> and a variance <span class="math inline">\(\sigma^2\)</span>. For reasons that will become clear in the final lecture, we will write the variance parameter as the square root of the variance parameter, <span class="math inline">\(\sigma\)</span> which is a standard deviation (see Appendix 3 .appendix3)</p>
 <aside>
-<p>The exponential distribution has good properties for estimating the standard deviation of the mean:</p>
+The exponential distribution has good properties for estimating the standard deviation of the mean:
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>exponential_distribution</span> <span class='op'>&lt;-</span> <span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>)</span> 
@@ -1599,14 +1586,14 @@ y_i \sim Normal ( \mu_i, \sigma)\\
 </div>
 see <a href="https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html#zero-inflated-models">here</a>
 </aside>
-<p>The previous examples describes a regression model that assumes we are sampling from a normal distribution. There is no link function required to transform the expectation for the model estimates. If we are not sampling from a normal we require a link function.</p>
-<p>How do we know which distribution we are sampling from? This, too, is a matter of uncertainty. We must clarify, and explore, and criticise our assumptions.</p>
-<p>A Generalised linear model implies a ‘link’ function</p>
-<p><span class="math inline">\(g(\cdot)\)</span> = link function $h() = g^-1() $ = inverse link function</p>
-<p>Where <span class="math inline">\((\cdot)\)</span> is the linear predictor: <span class="math inline">\(\mathboldsymbol{\eta}\)</span></p>
+<p>Every linear model implies a ‘link’ function:</p>
+<p><span class="math inline">\(g(\cdot)\)</span> = link function as well as an an inverse link function:</p>
+<p><span class="math inline">\(h(\cdot) = g^-1(\cdot)\)</span> = inverse link function</p>
+<p>Where <span class="math inline">\((\cdot)\)</span> is the linear predictor: <span class="math inline">\(\boldsymbol{\eta}\)</span></p>
+<p>In the gaussian linear model we assume</p>
+<p><span class="math display">\[g(\cdot) = h(\cdot)\]</span> That is, the link function is an <em>identity</em> function. This is a special case. In the remainder of the lecture we will explore different mapping from the expected outcome of a model and its linear predictors.</p>
 <h2 id="logistic-regression">Logistic regression</h2>
-<p>Let’s begin an example.</p>
-<p>First let’s graph the home ownership</p>
+<p>We begin with outcomes that are distributed as binary data. Consider home ownership in the <code>nz jitter dataset</code>:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>nz</span><span class='op'>$</span><span class='va'>HomeOwner</span><span class='op'>)</span>
@@ -1616,18 +1603,21 @@ see <a href="https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg
 </div>
 <p>From the graph, we can see response distribution is fully bimodal (excluding the NAs).</p>
 <h3 id="link-function-for-logistic-regression">Link function for logistic regression</h3>
-<p>The model requires a binomial link function:</p>
-<p><span class="math display">\[Home_i \sim Binomial (Ownership_i, Pr)\]</span></p>
 <p>The binomial link function does two things:</p>
 <ul>
 <li>first, it maps the range <span class="math inline">\((0, 1)\)</span> to <span class="math inline">\(-(\infty, -\infty)\)</span>.</li>
 <li>second, it maps these values back to the unit range (see: <span class="citation" data-cites="gelman2020"><a href="#ref-gelman2020" role="doc-biblioref">Gelman, Hill, and Vehtari</a> (<a href="#ref-gelman2020" role="doc-biblioref">2020</a>)</span> )</li>
 </ul>
 <p>The logistic function satisfies the first task:</p>
-<p><span class="math inline">\(logit(x) = log\frac{x}{(1-x)}\)</span></p>
-<p>and the inverse logit function does 2:</p>
-<p><span class="math inline">\(logit^-1(x) = log\frac{e^x}{(1-e^x)}\)</span></p>
-<p>In R these functions are written:</p>
+<p><span class="math display">\[logit(\cdot) = log_e\frac{p}{(1-p)}\]</span></p>
+<p>The inverse logit functionsatisfies the second task:</p>
+<p><span class="math display">\[logit^-1(\cdot) = log\frac{e^\cdot}{(1-e^\cdot)}\]</span></p>
+<p>We can write this:</p>
+<p><span class="math display">\[
+\Pr(y_i = 1) = p_i \\
+logit(p_i) = \alpha + \beta x_i \\
+\Pr(y_i = 1) = logit^{-1}(\alpha + \beta x_i)
+\]</span> In R these functions are written:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>logit</span> <span class='op'>&lt;-</span> <span class='va'>qlogis</span> 
@@ -1641,6 +1631,15 @@ see <a href="https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg
 logit(p_i) = \alpha + \beta x_i \\
 \Pr(y_i = 1) = logit^{-1}(\alpha + \beta x_i)
 \]</span></p>
+<p>Aside: later on we will express paramters for the linear predictors, so something like:</p>
+<p><span class="math display">\[Home_i \sim binomial (Ownership_i, Pr)\\
+Ownersip_i \sim mu_i \\
+mu_i = \alpha + \beta X_i \\
+\alpha ~ N(0,\sigma_{alpha})\\
+\sigma_{alpha} \sim(0,10) \\
+\beta \sim lognormal(0,1) \\
+\]</span></p>
+<p>Where the values we assign correspond to a range of expectations bout how the world might be. Let’s not get distracted with these details for now, however, I include them to give you a sense of how notation can help us to clarify our assumptions and decisions – which recall are essential navigations points for applied scientists.</p>
 <h3 id="extimating-the-probability-of-home-ownership-in-the-population">Extimating the probability of home ownership in the population</h3>
 <p>We can write a generalised linear model that predict home ownership as follows:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
@@ -1774,7 +1773,7 @@ Standardized parameters were obtained by fitting the model on a standardized ver
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>nz</span><span class='op'>$</span><span class='va'>Household.INC_s</span>, <span class='va'>nz</span><span class='op'>$</span><span class='va'>HomeOwner</span><span class='op'>)</span> 
-<span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/logit.html'>invlogit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>home2</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>home2</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>*</span><span class='va'>x</span><span class='op'>)</span>, add<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span><span class='op'>(</span><span class='fu'>invlogit</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>home2</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>home2</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>*</span><span class='va'>x</span><span class='op'>)</span>, add<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="lecture_8_files/figure-html5/unnamed-chunk-16-1.png" width="1152" /></p>
@@ -1920,7 +1919,7 @@ Household.INC_s |        0.06 | 7.23e-03 | [0.04, 0.07] |    8.04 | &lt; .001</c
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>home2LM_p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>home2LM</span>,
                                    terms <span class='op'>=</span> <span class='st'>"Household.INC_s[all]"</span><span class='op'>)</span>,
                   add.data <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>+</span>
+  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1.5</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>+</span>
   <span class='fu'>scale_x_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1.2</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span> <span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>home2LM_p</span>
 </code></pre>
@@ -1931,7 +1930,7 @@ Household.INC_s |        0.06 | 7.23e-03 | [0.04, 0.07] |    8.04 | &lt; .001</c
 <span class='va'>home2_p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>home2</span>,
                                    terms <span class='op'>=</span> <span class='st'>"Household.INC_s[all]"</span><span class='op'>)</span>,
                   add.data <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>+</span>
+  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1.5</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>+</span>
   <span class='fu'>scale_x_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1.2</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>home2LM_p</span> <span class='op'>+</span> <span class='va'>home2_p</span> <span class='op'>+</span> <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_annotation.html'>plot_annotation</a></span><span class='op'>(</span>subtitle <span class='op'>=</span> <span class='st'>"Comparison of ordinary least squares regression \n (a) with logistic regression (b) reveals n\ impossible predictions for OLS"</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2405,7 +2404,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/loo.stanreg.html'>compare_models</a></span><span class='op'>(</span><span class='va'>nb1</span>,<span class='va'>nb2</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>compare_models</span><span class='op'>(</span><span class='va'>nb1</span>,<span class='va'>nb2</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Parameter    |               nb1 |               nb2
@@ -3004,7 +3003,7 @@ Kurz, A. Solomon. 2020. Zenodo. <a href="https://doi.org/10.5281/zenodo.4080013"
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>I think in <em>Sense and Sensibilia</em>?<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>It is worth cultivating this explicit habit because we will need it when clarifying our belielfs about the world prior to modelling the world (as we do in Bayesian modelling).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
