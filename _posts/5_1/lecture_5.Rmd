@@ -20,7 +20,6 @@ bibliography: references.bib
 knitr::include_graphics("op.png")
 ```
 
-
 ```{r echo = FALSE, message = FALSE}
 # libraries
 library("tidyverse")
@@ -97,7 +96,7 @@ A sample is a randomly realised sub-population from the larger abstract populati
 
 Think of selecting balls randomly from an urn. If pulled at random, the balls may inform us about the contents of the urn. For example, if we select one white ball and one black ball, we may infer that the balls in the urn are not all white or all black.
 
-#### What is "measurement"? 
+#### What is "measurement"?
 
 A measure is tool or method for obtaining numerical descriptions of a sample. We often call measures "scales." We can think of a bathroom weight scale as a tool and method for tracking body weight.
 
@@ -109,7 +108,7 @@ For now, it is important to keep in mind that, similar to bathroom scales, measu
 
 Also similar to bathroom scales, error prone scales may nevertheless be useful. We need to investigate the utility of error prone scales against the backdrop of specific interests and purposes.
 
-#### What is a parameter? 
+#### What is a parameter?
 
 In regression, we combine measurements on samples with probability theory to guess about the properties of a population we will never observe. We call these properties "parameters."
 
@@ -123,10 +122,9 @@ Inference is possible because the parameters of naturally occurring populations 
 
 [^1]: The relationship of probability distributions and data-generating processes is complex, intriguing, and both historically and philosophically rich $\dots$. Because our interests are applied, we will hardly touch up this richness in this course, alas.
 
-Today we will be talking about the "normal" or "Gaussian distribution." A very large number of data-generating processes in nature conform the normal distribution. 
+Today we will be talking about the "normal" or "Gaussian distribution." A very large number of data-generating processes in nature conform the normal distribution.
 
 Let's consider some examples of randomly generated samples, which we will obtain using R's `rnorm` function.
-
 
 #### 100-person sample of heights
 
@@ -209,7 +207,7 @@ Does mother height predict daughter height? It seems so. By what how close are i
 
 Francis Galton is credited with inventing regression. Galton observed that the height of offspring tends to fall between parental height and the population average, what Galton termed: "regression to the mean." Galton sought a method for educated guessing about heights, and this led to fitting a line of regression by a method called "least squares" (For a history see: [here](https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2011.00509.x)).
 
-This following dataset is from "The heredity of height", Karl Pearson and Alice Lee (1903)[@pearson1903]. I obtained the dataset from [@gelman2020]. Let's use this dataset to investigate the relationship between a mother's height and a daughter's height. 
+This following dataset is from "The heredity of height", Karl Pearson and Alice Lee (1903)[@pearson1903]. I obtained the dataset from [@gelman2020]. Let's use this dataset to investigate the relationship between a mother's height and a daughter's height.
 
 ```{r}
 md_df <- data.frame(read.table(url("https://raw.githubusercontent.com/avehtari/ROS-Examples/master/PearsonLee/data/MotherDaughterHeights.txt"), header=TRUE))
@@ -268,7 +266,7 @@ library("equatiomatic")
 extract_eq(m1,  use_coefs = FALSE)
 ```
 
-The math says that the expected daughter's height in a population is predicted by the average height of the population when mother's height is set to zero units (note, this is impossible - we'll come back to this) plus $\beta ~\times$ units of daughter's height (inches) for each additional unit of mother's height (inches) 
+The math says that the expected daughter's height in a population is predicted by the average height of the population when mother's height is set to zero units (note, this is impossible - we'll come back to this) plus $\beta ~\times$ units of daughter's height (inches) for each additional unit of mother's height (inches)
 
 We can plug the output of the model directly into the equation as follows:
 
@@ -334,7 +332,6 @@ nhp <- heightplot2 +  expand_limits(x = c(20,91), y = c(0,81) ) +  labs(title = 
 
 A simple method for obtaining the predicted values form your fitted model is to obtain the ggeffects output without producing a graph.
 
-
 ```{r code_folding = FALSE}
 
 library(ggeffects)
@@ -382,8 +379,6 @@ ot2.b <-lm(y ~ x + poly(x, 2), data  = dat1)
 plot(ggeffects::ggpredict(ot2.b, terms = "x"), add.data =TRUE, dot.alpha = .4)
 ```
 
-
-
 Non-linear relationship as modeled by a general additive model (spline)
 
 ```{r code_folding = FALSE}
@@ -397,8 +392,7 @@ plot(ggeffects::ggpredict(ot3, terms = "x"), add.data =TRUE, dot.alpha = .4)
 
 ### Centering
 
-Any linear transformation of a predictor is OK. Often we center (or center and scale) all indicators, which gives us an intercept that is meaninful (the expected population average when the other indicators are set their average). 
-
+Any linear transformation of a predictor is OK. Often we center (or center and scale) all indicators, which gives us an intercept that is meaninful (the expected population average when the other indicators are set their average).
 
 ```{r}
 library(ggeffects)
@@ -414,15 +408,13 @@ Graph model
 plot(ggeffects::ggpredict(mc, terms = "mother_height_c"), add.data =TRUE, dot.alpha = .4)
 ```
 
-
-Note: when fitting a polynomial or any interaction, it is important to center your indicators. We'll come back to this point in later lectures. 
+Note: when fitting a polynomial or any interaction, it is important to center your indicators. We'll come back to this point in later lectures.
 
 ### Model evaluation
 
-A simple way to assess your model fit is to compare a model with one covariate with a simple intercept-only model and to assess improvement in either the `AIC` statistic or the `BIC` statistic. The `BIC` is similar to the `AIC` but adds a penalty for extra predictors.  An absolute improvement in either statistic of n > 10 is considered to be a better model. 
+A simple way to assess your model fit is to compare a model with one covariate with a simple intercept-only model and to assess improvement in either the `AIC` statistic or the `BIC` statistic. The `BIC` is similar to the `AIC` but adds a penalty for extra predictors. An absolute improvement in either statistic of n \> 10 is considered to be a better model.
 
 We can use the `performance` package to generate a table that compares fits.
-
 
 ```{r code_foldign = FALSE, code_folding =FALSE}
 library(performance)
@@ -436,52 +428,63 @@ covadded <- lm(daughter_height ~ mother_height, data = md_df)
 performance::compare_performance(ionly, covadded)
 ```
 
-What was the model improvement? 
+What was the model improvement?
 
 ```{r}
 # improved fit
 BIC(ionly)- BIC(covadded)
 ```
 
-
 ### Generate a report
 
 This is easy with the `report` package
 
-For example: 
+For example:
+
 ```{r code_folding = FALSE,}
 report::report_statistics(covadded)
 ```
 
 Or if you want a longer report
+
 ```{r code_folding = FALSE, eval=FALSE}
 report::report(covadded)
 ```
 
-Though use `statistically significant` in place of `significant`. This will avoid misleading your audience into thinking your result is important, when what you intend to communicate is that it is reliable. 
+Though use `statistically significant` in place of `significant`. This will avoid misleading your audience into thinking your result is important, when what you intend to communicate is that it is reliable.
 
-
-
-
-### Assumptions of regression
+## Assumptions of regression
 
 From Gelman and Hill [@gelman2006]
 
 1.  Validity
 
-2.  Linearity\*
+    > The most important is that the data you are analyzing should map to the research question you are trying to answer [@gelman_regression_2020, p.152]
 
-3.  Independence of errors
+2.  Representativeness
 
-4.  Equal variance of errors
+    > A regression model is fit to data and is used to make inferences about a larger
+    > population, hence the implicit assumption in interpreting regression coefficients is that the sample is representative of the population. [@gelman_regression_2020, p.153]\
 
-  > unequal variance does not affect the most important aspect of a regression model, which is the   form of the predictors XB (p.46)
+3.  Linearity\*
+
+    > The most important mathematical assumption of the linear regression
+    > model is that its deterministic component is a linear function of the separate predictors: y = β0 + β1x1 + β2x2 +···. If additivity is violated, it might make sense to transform the data (for example, if y = abc, then log y = log a + log b + log c) or to add interactions. If linearity is violated, perhaps a predictor should be put in as 1/x or log(x) instead of simply linearly. Or a more complicated relationship could be expressed using a nonlinear function such as a spline or Gaussian process, [@gelman_regression_2020, p.153]
+
+4.  Independence of errors
+
+    > The simple regression model assumes that the errors from the prediction
+    > line are independent, an assumption that is violated in time series, spatial, and multilevel settings [@gelman_regression_2020, p.153]
+
+5.  Equal variance of errors
+
+> ...unequal variance does not affect the most important aspect of a regression model, which is the form of the predictors [@gelman_regression_2020, p.153]
 
 5.  Normality of errors (statistical independence)
 
-  > The regression assumption that is generally least important is that the errors are normally   distributed. In fact, for the purpose of estimating the regression line (as compared to predicting individual data points), the assumption of normality is barely important at all. Thus, in contrast to many regression textbooks, we do not recommend diagnostics of the normality of re-gression residuals. [@gelman2006] p. 46
+> The regression assumption that is generally least important is that the errors are normally distributed. In fact, for the purpose of estimating the regression line (as compared to predicting individual data points), the assumption of normality is barely important at all. Thus, in contrast to many regression textbooks, we do not recommend diagnostics of the normality of re-gression residuals. [@gelman2006, p. 46]
 
-> A good way to diagnose violations of some of the assumptions just considered (importantly, linearity) is to plot the residuals  versus fitted values or simply individual predictors.[@gelman2006]
+> A good way to diagnose violations of some of the assumptions just considered (importantly, linearity) is to plot the residuals versus fitted values or simply individual predictors.[@gelman2006 p. 46]
 
 ### Common confusions
 
@@ -499,10 +502,9 @@ This will be the main reason we do multi-level modelling: to condition on depend
 
 #### Levels (wrong population)
 
-We sample from undergraduates, but infer about the human population. 
+We sample from undergraduates, but infer about the human population.
 
-
-## Acknowledgements
+## Acknowledgments
 
 1.  Richard Mcelreath's Statistical Rethinking [@mcelreath2020]
 2.  Regression and other stories [@gelman2020]
