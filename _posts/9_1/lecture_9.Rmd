@@ -12,17 +12,110 @@ output:
   distill::distill_article:
     self_contained: false
     toc: true
+bibliography: bib.bib
 ---
 
 ```{r echo=F}
 knitr::include_graphics("op2.png")
 ```
 
+
+```{r setup, include=FALSE}
+# setup
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  layout = "l-body-outset",
+  fig.width= 12,
+  fig.height= 10,
+  collapse =TRUE,
+  R.options = list(width = 60)
+)
+```
+
+```{r  libraries, echo=FALSE}
+### Libraries
+library("tidyverse")
+library("patchwork")
+library("lubridate")
+library("kableExtra")
+library("gtsummary")
+library("lubridate")
+# installed from previous lectures
+library("equatiomatic")
+library("tidyverse")
+library("ggdag")
+library("brms")
+library("rstan")
+library("rstanarm")
+# library("tidybayes")
+library("bayesplot")
+library("easystats")
+library("kableExtra")
+library("broom")
+if (!require(tidyLPA)) {
+  install.packages("tidyLPA")
+}
+# rstan options
+rstan_options(auto_write=TRUE)
+options(mc.cores=parallel::detectCores ())
+theme_set(theme_classic())
+```
+
+```{r  nzdata, cache=TRUE, include=FALSE}
+# read data
+
+nz_0 <- as.data.frame(readr::read_csv2(
+  url(
+    "https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv"
+  )
+))
+
+# to relevel kessler 6 variables
+f <-
+  c(
+    "None Of The Time",
+    "A Little Of The Time",
+    "Some Of The Time",
+    "Most Of The Time",
+    "All Of The Time"
+  )
+
+# get data into shape
+nz <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(male_id = as.factor(Male)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)%>%
+  dplyr::filter(Wave == 2018)  # Filter wave 10 of the NZAVS
+
+dplyr::glimpse(nz)
+```
 ## Ordinal outcomes
 
-## Ordinal predictors (Monotonic effects)
 
-<!-- \cite{Burkner2019-ie} and Liddell and Kruschke \cite{Liddell_undated-xr} in advising the use of ordinal models for non-metric data such as the Kessler-6 items. Here we employ a categorical model in which the observed variable y has a probability of being equal to response option + 1 latent thresholds. An ordinal model assumes that an observed ordinal indicator measures a latent continuous variable \cite{Burkner2019-ie,Hadfield2012-hi}. The Kessler-6 has five ordinal response options for indicating frequency of feeling distress during the past 30 days: "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time" hence six thresholds. The Kessler-6 distress indicators are: "Feeling Hopelessness;" "Feeling so Depressed Nothing Could Cheer You Up;" "Feeling Nervous or Fidgety;" "Feeling Everything is an Effort;" "Feeling Worthless;" "Feeling Nervous." We simultaneously modelled each of these six outcomes within a single model. Below, the superscript $k$ is denotes the $k = 1\dots6$ Kessler-6 outcomes. Residuals for cumulative categorical models are not identified, so are fixed to 1. $\alpha_{j0}^k$ denotes the $t = 1\dots 5$ intercepts estimated for the ordinal model, which assumed a cumulative logit distribution for the outcome, and where the lowest response level is modelled as zero, hence four intercepts are estimated for each Kessler- 6 response indicator. $$\mathbf{\beta}$$ denotes the individual-level predictors, in this case 'Employment' -->
+
+## Example 
+
+The Kessler-6 items. Here we employ a categorical model in which the observed variable y has a probability of being equal to response option + 1 latent thresholds. An ordinal model assumes that an observed ordinal indicator measures a latent continuous variable \cite{Burkner2019-ie,Hadfield2012-hi}. The Kessler-6 has five ordinal response options for indicating frequency of feeling distress during the past 30 days: "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time" hence six thresholds. The Kessler-6 distress indicators are: "Feeling Hopelessness;" "Feeling so Depressed Nothing Could Cheer You Up;" "Feeling Nervous or Fidgety;" "Feeling Everything is an Effort;" "Feeling Worthless;" "Feeling Nervous." We simultaneously modelled each of these six outcomes within a single model. Below, the superscript $k$ is denotes the $k = 1\dots6$ Kessler-6 outcomes. Residuals for cumulative categorical models are not identified, so are fixed to 1. $\alpha_{j0}^k$ denotes the $t = 1\dots 5$ intercepts estimated for the ordinal model, which assumed a cumulative logit distribution for the outcome, and where the lowest response level is modelled as zero, hence four intercepts are estimated for each Kessler- 6 response indicator. $$\mathbf{\beta}$$ denotes the individual-level predictors, in this case 'Employment' -->
 
 $$\begin{align}
 y^k \sim \text{Ordered}(\mu_t^k) \\
@@ -33,29 +126,34 @@ y^k \sim \text{Ordered}(\mu_t^k) \\
 \boldsymbol{\beta^k}\sim \text{Normal}(0,1) 
 \end{align}$$
 
+## Ordinal predictors (Monotonic effects)
+
 ## Bonus: Latent Profile Analysis
 
 ## Latent Profile Analysis
 
-```{r eval=FALSE}
-nzf<-nz %>%
-  select( FeelHopeless, 
-          FeelDepressed,
-          FeelRestless, 
-          EverythingIsEffort,
-          FeelWorthless, 
-          FeelNervous) %>%
-  mutate_if(., is.factor, ~ as.numeric(as.integer(.x)))
+```{r  cache = TRUE}
+library(tidyLPA)
+# nzf<-nz %>%
+#   select( FeelHopeless, 
+#           FeelDepressed,
+#           FeelRestless, 
+#           EverythingIsEffort,
+#           FeelWorthless, 
+#           FeelNervous) %>%
+#   mutate_if(., is.factor, ~ as.numeric(as.integer(.x)))
 
-out<-nzf %>%
-  dplyr::select( FeelHopeless, 
-          FeelDepressed,
-          FeelRestless, 
-          EverythingIsEffort,
-          FeelWorthless, 
-          FeelNervous)%>%
-  single_imputation() %>%
-  tidyLPA::estimate_profiles(4)
+# convert to standard deviation units
+out<-nz %>%
+  dplyr::select(Hours.Internet, 
+          Hours.Exercise,
+       #   Hours.CompGames, 
+       #   Hours.News,
+          Hours.Work)%>%
+  dplyr::mutate_all(., scale)
+
 out%>%
+  single_imputation() %>%
+  tidyLPA::estimate_profiles(3) %>%
     plot_profiles(add_line = TRUE)
 ```

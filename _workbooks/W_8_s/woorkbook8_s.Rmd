@@ -38,7 +38,7 @@ library("lubridate")
 library("kableExtra")
 library("gtsummary")
 library("lubridate")
-devtools::install_github("data-edu/tidyLPA")
+#devtools::install_github("data-edu/tidyLPA")
 if (!require(tidyLPA)) {
   install.packages("tidyLPA")
 }
