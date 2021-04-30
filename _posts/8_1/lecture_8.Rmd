@@ -89,16 +89,39 @@ nz <- nz_0 %>%
     )
   ) %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
-  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
-  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
-  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
-  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
-  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
-  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  dplyr::mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  dplyr::mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  dplyr::mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  dplyr::mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  dplyr::mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  dplyr::mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  dplyr::mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  dplyr::mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  dplyr::mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  dplyr::mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
   dplyr::mutate(male_id = as.factor(Male)) %>%
-  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)%>%
-  dplyr::filter(Wave == 2018)  # Filter wave 10 of the NZAVS
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) %>%
+  dplyr::filter(Wave == 2018) %>%
+  dplyr::mutate(
+    FeelWorthless_int = as.integer(FeelWorthless),
+    FeelNervous_int =  as.integer(FeelNervous),
+    FeelHopeless_int =  as.integer(FeelHopeless),
+    EverythingIsEffort_int =  as.integer(EverythingIsEffort),
+    FeelRestless_int =  as.integer(FeelRestless),
+    FeelDepressed_int =  as.integer(FeelDepressed)
+  )
+    
+
+    
+# Filter wave 10 of the NZAVS
+
+
+## Convert the factors to integer: 
+
 
 dplyr::glimpse(nz)
 ```
