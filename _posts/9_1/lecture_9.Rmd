@@ -37,6 +37,7 @@ knitr::opts_chunk$set(
 ```{r  libraries, echo=FALSE}
 ### Libraries
 library("tidyverse")
+library("ggplot2")
 library("patchwork")
 library("lubridate")
 library("kableExtra")
@@ -54,6 +55,7 @@ library("bayesplot")
 library("easystats")
 library("kableExtra")
 library("broom")
+library("tidybayes")
 if (!require(tidyLPA)) {
   install.packages("tidyLPA")
 }
@@ -65,7 +67,6 @@ theme_set(theme_classic())
 
 ```{r  nzdata, cache=TRUE, include=FALSE}
 # read data
-
 
 nz_0 <- as.data.frame(readr::read_csv2(
   url(
@@ -81,10 +82,25 @@ f <-
     "Some Of The Time",
     "Most Of The Time",
     "All Of The Time"
-  )
+)
 
+# Relevel covid timeline longitudional
+# ord_dates_class <- c(
+#   "Baseline", 
+#   "PreCOVID", 
+#   "JanFeb", 
+#   "EarlyMarch", 
+#   "Lockdown",
+#   "PostLockdown")
+
+# Relevel covid timeline 2019
+ord_dates_class_2019_only <- c("PreCOVID",
+                               "JanFeb",
+                               "EarlyMarch",
+                               "Lockdown",
+                               "PostLockdown")
 # get data into shape
-nz <- nz_0 %>%
+nz_cr <- nz_0 %>%
   dplyr::mutate_if(is.character, factor) %>%
   select(
     -c(
@@ -106,22 +122,24 @@ nz <- nz_0 %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
   dplyr::mutate(male_id = as.factor(Male)) %>%
   dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) %>%
-  dplyr::filter(Wave == 2018) %>%
   dplyr::mutate(
     FeelWorthless_int = as.integer(FeelWorthless),
     FeelNervous_int =  as.integer(FeelNervous),
     FeelHopeless_int =  as.integer(FeelHopeless),
     EverythingIsEffort_int =  as.integer(EverythingIsEffort),
     FeelRestless_int =  as.integer(FeelRestless),
-    FeelDepressed_int =  as.integer(FeelDepressed)
+    FeelDepressed_int =  as.integer(FeelDepressed),
+    HLTH.Fatigue_int = as.integer(HLTH.Fatigue + 1)
   ) %>%
+  dplyr::mutate(KESSLER6sum = as.integer(KESSLER6sum))
+
+
+nz <- nz_cr %>%
   dplyr::filter(YearMeasured == 1) %>%
-  dplyr::filter(Wave == 2018 | Wave == 2019) %>%
+  dplyr::filter(Wave == 2019) %>%
   dplyr::group_by(Id) %>%
-  filter(n() > 1) %>%
-  dplyr::filter(n() != 0) %>%
   dplyr::ungroup(Id) %>%
-  dplyr::mutate(Covid_Timeline =
+  dplyr::mutate(Covid_Timeline_cr =
                   as.factor(ifelse(
                     TSCORE %in% 3896:3921,
                     # feb 29 - march 25th
@@ -134,33 +152,63 @@ nz <- nz_0 %>%
                         TSCORE > 3954,
                         # after april 27th 20202
                         "PostLockdown",
+                        ifelse(TSCORE %in% 3842:3895,
+                               # jan 6 to feb 28
+                               "JanFeb",
+                               "PreCOVID")
+                      )
+                    )
+                  ))) %>%
+  dplyr::mutate(
+    Covid_Timeline_cr = forcats::fct_relevel(Covid_Timeline_cr, ord_dates_class_2019_only)
+  )
+
+dplyr::glimpse(nz)
+table(nz$Covid_Timeline_cr)
+
+## Long data #####################
+ord_dates_class <- c(
+  "Baseline", 
+  "PreCOVID", 
+  "JanFeb", 
+  "EarlyMarch", 
+  "Lockdown",
+  "PostLockdown")
+
+
+nzl <- nz_cr %>%
+  dplyr::filter(YearMeasured == 1) %>%
+  dplyr::filter(Wave == 2018 | Wave == 2019) %>%
+  dplyr::group_by(Id) %>% 
+  dplyr::filter(n() > 1) %>%
+  dplyr::filter(n() != 0) %>%
+  dplyr::ungroup(Id) %>%
+  dplyr::mutate(Covid_Timeline =
+                    as.factor(ifelse(
+                      TSCORE %in% 3896:3921, # feb 29 - march 25th
+                      "EarlyMarch",
+                      ifelse(
+                        TSCORE %in% 3922:3954,
+                        "Lockdown", #march 26- Mon 27 April 2020
                         ifelse(
-                          TSCORE %in% 3842:3895,
-                          # jan 6 to feb 28
-                          "JanFeb",
-                          ifelse(TSCORE %in% 3665:3841 &
-                                   Wave == 2019,
-                                 "PreCOVID",
-                                 "Baseline"  # 3672 TSCORE or  20 July 2019)
+                          TSCORE > 3954, # after april 27th 20202
+                          "PostLockdown",
+                          ifelse(
+                            TSCORE %in% 3842:3895, # jan 6 to feb 28
+                            "JanFeb",
+                          ifelse(
+                            TSCORE %in% 3665:3841 &
+                              Wave == 2019,
+                            "PreCOVID",
+                            "Baseline"  # 3672 TSCORE or  20 July 2019
                           )
                         )
                       )
-                    ))) %>%
-                  dplyr::mutate(PrePostCovid =
-                                  ifelse(
-                                    TSCORE > 3895,
-                                    "PostLockdown",
-                                    ifelse(TSCORE < 3895 &
-                                             Wave == 2019,
-                                           "PreCOVID",
-                                           "Baseline")
-                                  )) %>%
-                  dplyr::group_by(PrePostCovid) %>%
-                  filter(n() > 1) %>%
-                  ungroup() %>%
-                  filter(Wave == 2019)
-
-dplyr::glimpse(nz)
+                    ) 
+                 ) ))%>%
+  dplyr::mutate(
+    Covid_Timeline = forcats::fct_relevel(Covid_Timeline, ord_dates_class))
+table(nzl$Covid_Timeline)
 ```
 
 
@@ -185,6 +233,142 @@ y^k \sim \text{Ordered}(\mu_t^k) \\
 Below, the superscript $k$ is denotes the $k = 1\dots6$ Kessler-6 outcomes. Residuals for cumulative categorical models are not identified, so are fixed to 1. $\alpha_{j0}^k$ denotes the $t = 1\dots 5$ intercepts estimated for the ordinal model, which assumed a cumulative logit distribution for the outcome, and where the lowest response level is modelled as zero, hence four intercepts are estimated for each Kessler- 6 response indicator. $$\mathbf{\beta}$$ denotes the individual-level predictors.
 
 ## Ordinal predictors (Monotonic effects)
+
+```{r}
+system.time(
+  m1 <- brm(
+    bf(HLTH.Fatigue_int  ~
+      Covid_Timeline_cr),
+    family = cumulative(link = "logit"),
+    data = nz,
+    file = here::here("models", "ordinal_fatigue"),
+    silent = FALSE
+  )
+)
+summary(m1)
+par_m1 <-parameters::model_parameters(m1)
+plot(par_m1)
+plot(
+  conditional_effects(
+    m1,
+    spaghetti = TRUE,
+    nsamples = 100,
+    categorical = F,
+    select_points = 0.1,
+    prob = 0.89,
+    re_formula = NA,
+  ),
+  points = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+) #  
+```
+
+
+## Random intercept
+
+```{r}
+system.time(
+  m1_l <- brm(
+    bf(HLTH.Fatigue_int  ~
+      Covid_Timeline + (1|Id),
+    family = cumulative(link = "logit"),
+    data = nzl,
+    file = here::here("models", "ordinal_fatigue_longitudinal"),
+    silent = FALSE
+  )
+)
+summary(m1_l)
+par_m1_l <-parameters::model_parameters(m1_l)
+plot(par_m1_l)
+
+plot(
+  conditional_effects(
+    m1_l,
+    spaghetti = TRUE,
+    nsamples = 100,
+    categorical = F,
+    prob = 0.89,
+    re_formula = NA,
+  ),
+  points = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+) #  note this command controls which facet 
+
+plot(ggeffects::ggpredict(m1_l), add.data= TRUE, dot.alpha = .1)
+
+system.time(
+  m_k6_s <- brm(
+    bf(KESSLER6sum  ~
+      Covid_Timeline + (1|Covid_Timeline/Id)),
+      data = nzl,
+    file = here::here("models", "k6_longitudinal"),
+    silent = FALSE
+  )
+)
+
+system.time(
+  m_k6_s0 <- brm(
+    bf(KESSLER6sum  ~
+      Covid_Timeline + (1|Id)),
+      data = nzl,
+    file = here::here("models", "k6_longitudinal_0"),
+    silent = FALSE
+  )
+)
+
+system.time(
+  m_k6_p <- brm(
+    bf(KESSLER6sum  ~
+      Covid_Timeline + (1|Id), family = "poisson"),
+      data = nzl,
+    file = here::here("models", "k6_longitudinal_p"),
+    silent = FALSE
+  )
+)
+summary(m_k6_s)
+summary(m_k6_s0)
+
+par_m_k6_s <-parameters::model_parameters(m_k6_s,dispersion = TRUE, effects = "random")
+plot(par_m_k6_s,  type = "re", sort = TRUE, horizontal = TRUE) 
+plot(par_m_k6_s,  type = "fe", sort = TRUE, horizontal = TRUE) 
+
+plot(
+  conditional_effects(
+    m_k6_p,
+    spaghetti = TRUE,
+    nsamples = 100,
+    categorical = F,
+    prob = 0.89,
+    re_formula = NA
+  ),
+  points = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+) # 
+
+
+
+plot(
+  conditional_effects(
+    m_k6_s0,
+    spaghetti = TRUE,
+    nsamples = 100,
+    categorical = F,
+    prob = 0.89,
+    re_formula = NA
+  ),
+  points = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+) # 
+
+plot(ggeffects::ggpredict(m_k6_p), add.data= TRUE, dot.alpha = .1)
+
+```
+
+
 
 ## Bonus: Latent Profile Analysis
 
