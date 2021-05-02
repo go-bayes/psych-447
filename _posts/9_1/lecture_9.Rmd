@@ -56,6 +56,7 @@ library("easystats")
 library("kableExtra")
 library("broom")
 library("tidybayes")
+library("bmlm")
 if (!require(tidyLPA)) {
   install.packages("tidyLPA")
 }
@@ -420,17 +421,26 @@ brms::pp_check(m_k6_p) + xlim(0, 5)
 ```
 
 
+## Multivariate Outcomes 
+
+
+```{r}
+fit1 <- brm(
+  mvbind(tarsus, back) ~ sex + hatchdate + (1|p|fosternest) + (1|q|dam),
+  data = BTdata, chains = 2, cores = 2
+)
+```
+
+
+
 
 ##  Mediation
-
-
-## Mediation Models
 
 -   Manipulate X, measure M and Y
 -   Regress M on X; Y on X and M
 
 ```{r, layout = "l-body-outset", cache =TRUE}
-mlm_path_plot(xlab = "Condition\n(X)",
+bmlm::mlm_path_plot(xlab = "Condition\n(X)",
               mlab = "Mediator\n(M)",
               ylab = "Distress\n(Y)")
 ```
@@ -521,6 +531,7 @@ h1 <- c(
 plot(
   hypothesis(f1, h1)
 )
+
 ```
 
 
