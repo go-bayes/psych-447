@@ -114,12 +114,12 @@ nz_cr <- nz_0 %>%
     )
   ) %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
-  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
-  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
-  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
-  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
-  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
-  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  dplyr::mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  dplyr::mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  dplyr::mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  dplyr::mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  dplyr:: mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
   dplyr::mutate(male_id = as.factor(Male)) %>%
   dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) %>%
@@ -132,7 +132,9 @@ nz_cr <- nz_0 %>%
     FeelDepressed_int =  as.integer(FeelDepressed),
     HLTH.Fatigue_int = as.integer(HLTH.Fatigue + 1)
   ) %>%
+  dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm=TRUE))%>%
   dplyr::mutate(KESSLER6sum = as.integer(KESSLER6sum))
+
 
 
 nz <- nz_cr %>%
@@ -165,7 +167,7 @@ nz <- nz_cr %>%
   )
 
 dplyr::glimpse(nz)
-table(nz$Covid_Timeline_cr)
+
 
 ## Long data #####################
 ord_dates_class <- c(
@@ -184,6 +186,7 @@ nzl <- nz_cr %>%
   dplyr::filter(n() > 1) %>%
   dplyr::filter(n() != 0) %>%
   dplyr::ungroup(Id) %>%
+  dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm=TRUE))%>%
   dplyr::mutate(Covid_Timeline =
                     as.factor(ifelse(
                       TSCORE %in% 3896:3921, # feb 29 - march 25th
@@ -210,6 +213,9 @@ nzl <- nz_cr %>%
   dplyr::mutate(
     Covid_Timeline = forcats::fct_relevel(Covid_Timeline, ord_dates_class))
 table(nzl$Covid_Timeline)
+
+
+
 ```
 
 
@@ -350,6 +356,13 @@ plot(par_m_k6_s,  sort = TRUE)
 ```
 
 
+## Random Intercept
+
+```{r}
+
+```
+
+
 
 ```{r}
 system.time(m_k6_p <- brm(
@@ -425,11 +438,51 @@ brms::pp_check(m_k6_p) + xlim(0, 5)
 
 
 ```{r}
-fit1 <- brm(
-  mvbind(tarsus, back) ~ sex + hatchdate + (1|p|fosternest) + (1|q|dam),
-  data = BTdata, chains = 2, cores = 2
+
+f_mv <- brm(
+  mvbind(Warm.Immigrants, Warm.Muslims) ~  Hours.News + s(yearS)  +  (1|p|Id),
+  data = nzl,
+  file = here::here("models", "multivariate_warmth"), 
 )
+
 ```
+
+
+A different formulation
+
+
+```{r}
+library(splines)
+
+bf_mus <- bf(Warm.Muslims ~ Hours.News + s(yearS)  + (1|p|Id))
+             
+bf_imm <- bf(Warm.Immigrants ~ Hours.News + s(yearS)  + (1|p|Id))
+
+
+f_mv2 <- brm(
+  bf_mus + bf_imm + set_rescor(FALSE), 
+  data = nzl,
+  file = here::here("models", "multivariate_warmth2"), 
+  control = list(adapt_delta = 0.95)
+)
+summary(f_mv2)
+```
+
+
+```{r}
+pp_check(f_mv, resp = "Warm.Immigrants")
+```
+
+```{r}
+pp_check(f_mv, resp = "Warm.Muslims")
+```
+
+
+
+```{r}
+conditional_effects(f_mv2, "Hours.News", resp = "WarmImmigrants")
+```
+
 
 
 
