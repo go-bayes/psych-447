@@ -1,5 +1,5 @@
 ---
-title: "Ordinal responses, monotonic predictors, and group-level intercepts"
+title: "Ordinal responses, monotonic predictors, mediation, and group-level intercepts"
 description: 
 author:
   - name: Joseph Bulbulia
@@ -218,7 +218,12 @@ table(nzl$Covid_Timeline)
 
 ### Example 
 
-The Kessler-6 items. Here we employ a categorical model in which the observed variable y has a probability of being equal to response option + 1 latent thresholds. An ordinal model assumes that an observed ordinal indicator measures a latent continuous variable \cite{Burkner2019-ie,Hadfield2012-hi}. The Kessler-6 has five ordinal response options for indicating frequency of feeling distress during the past 30 days: "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time" hence six thresholds. The Kessler-6 distress indicators are: "Feeling Hopelessness;" "Feeling so Depressed Nothing Could Cheer You Up;" "Feeling Nervous or Fidgety;" "Feeling Everything is an Effort;" "Feeling Worthless;" "Feeling Nervous." We simultaneously modelled each of these six outcomes within a single model. 
+An ordinal model assumes that an observed ordinal indicator measures a latent continuous out \cite{Burkner2019-ie,Hadfield2012-hi}. 
+
+
+In our NZ-jitter dataset, the Kessler-6 has five ordinal response options for indicating frequency of feeling distress during the past 30 days: "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time" hence six thresholds. 
+
+The Kessler-6 distress indicators are: "Feeling Hopelessness;" "Feeling so Depressed Nothing Could Cheer You Up;" "Feeling Nervous or Fidgety;" "Feeling Everything is an Effort;" "Feeling Worthless;" "Feeling Nervous." We simultaneously modelled each of these six outcomes within a single model. 
 
 
 $$\begin{align}
@@ -232,7 +237,7 @@ y^k \sim \text{Ordered}(\mu_t^k) \\
 
 Below, the superscript $k$ is denotes the $k = 1\dots6$ Kessler-6 outcomes. Residuals for cumulative categorical models are not identified, so are fixed to 1. $\alpha_{j0}^k$ denotes the $t = 1\dots 5$ intercepts estimated for the ordinal model, which assumed a cumulative logit distribution for the outcome, and where the lowest response level is modelled as zero, hence four intercepts are estimated for each Kessler- 6 response indicator. $$\mathbf{\beta}$$ denotes the individual-level predictors.
 
-## Ordinal predictors (Monotonic effects)
+## Ordinal outcomes
 
 ```{r}
 system.time(
@@ -244,25 +249,48 @@ system.time(
     file = here::here("models", "ordinal_fatigue"),
     silent = FALSE
   )
-)
-summary(m1)
+
 par_m1 <-parameters::model_parameters(m1)
+par_m1
 plot(par_m1)
+```
+
+Plot of the predicted effects, We can see changes in the response across the different time points, with reduction in higher level fatigue levels relative to lower fatigue levels during the New Zealand Covid Lockdown. 
+
+
+Here is  a graph of using the ggeffects package, revealing that the movements where subtle, but evident, across the range of responses:
+
+```{r}
+plot(ggeffects::ggpredict(
+  m1, 
+  effects = "Covid_Timeline_cr")
+  )
+```
+
+
+This is the graph using the BRMS package plotting features, setting "categorical" to FALSE. We only do this to show the average drop.
+
+
+```{r}
 plot(
   conditional_effects(
     m1,
-    spaghetti = TRUE,
-    nsamples = 100,
-    categorical = F,
-    select_points = 0.1,
+   # spaghetti = TRUE,
+   # nsamples = 100,
+    categorical = FALSE,
+   # select_points = 0.1,
     prob = 0.89,
     re_formula = NA,
   ),
   points = TRUE,
   point_args = list(alpha = 0.1,
-                    width = .02)
-) #  
+                    width = .1,
+                    size = .2)
+) #
 ```
+
+
+
 
 
 ## Random intercept
@@ -272,7 +300,7 @@ system.time(
   m1_l <- brm(
     bf(HLTH.Fatigue_int  ~
       Covid_Timeline + (1|Id),
-    family = cumulative(link = "logit"),
+    family = cumulative(link = "logit")),
     data = nzl,
     file = here::here("models", "ordinal_fatigue_longitudinal"),
     silent = FALSE
@@ -280,13 +308,14 @@ system.time(
 )
 summary(m1_l)
 par_m1_l <-parameters::model_parameters(m1_l)
+par_m1_l
 plot(par_m1_l)
 
 plot(
   conditional_effects(
     m1_l,
-    spaghetti = TRUE,
-    nsamples = 100,
+   # spaghetti = TRUE,
+  #  nsamples = 100,
     categorical = F,
     prob = 0.89,
     re_formula = NA,
@@ -296,42 +325,46 @@ plot(
                     width = .02)
 ) #  note this command controls which facet 
 
-plot(ggeffects::ggpredict(m1_l), add.data= TRUE, dot.alpha = .1)
+plot(ggeffects::ggpredict(m1_l), add.data= F, dot.alpha = .1)
+```
 
+
+## Dispersional model 
+
+```{r}
 system.time(
   m_k6_s <- brm(
     bf(KESSLER6sum  ~
-      Covid_Timeline + (1|Covid_Timeline/Id)),
-      data = nzl,
-    file = here::here("models", "k6_longitudinal"),
-    silent = FALSE
-  )
-)
-
-system.time(
-  m_k6_s0 <- brm(
-    bf(KESSLER6sum  ~
       Covid_Timeline + (1|Id)),
       data = nzl,
-    file = here::here("models", "k6_longitudinal_0"),
+    file = here::here("models", "k6_longitudinal_gaussian"),
     silent = FALSE
   )
 )
 
-system.time(
-  m_k6_p <- brm(
-    bf(KESSLER6sum  ~
-      Covid_Timeline + (1|Id), family = "poisson"),
-      data = nzl,
-    file = here::here("models", "k6_longitudinal_p"),
-    silent = FALSE
-  )
-)
-summary(m_k6_s)
+par_m_k6_s <-parameters::model_parameters(m_k6_s,dispersion = TRUE)
+par_m_k6_s
+plot(par_m_k6_s,  sort = TRUE) 
+
+```
+
+
+
+```{r}
+system.time(m_k6_p <- brm(
+  bf(KESSLER6sum  ~
+       Covid_Timeline + (1 | Id),
+     family = "poisson"),
+  data = nzl,
+  file = here::here("models", "k6_longitudinal_p"),
+  silent = FALSE
+))
+summary(m_k6_p)
 summary(m_k6_s0)
 
-par_m_k6_s <-parameters::model_parameters(m_k6_s,dispersion = TRUE, effects = "random")
-plot(par_m_k6_s,  type = "re", sort = TRUE, horizontal = TRUE) 
+par_m_k6_p <-parameters::model_parameters(m_k6_p,dispersion = TRUE)
+par_m_k6_p
+plot(par_m_k6_p, sort = TRUE) 
 plot(par_m_k6_s,  type = "fe", sort = TRUE, horizontal = TRUE) 
 
 plot(
@@ -367,6 +400,137 @@ plot(
 plot(ggeffects::ggpredict(m_k6_p), add.data= TRUE, dot.alpha = .1)
 
 ```
+
+```{r}
+wg <- add_criterion(m_k6_s, "loo")
+wp <- add_criterion(m_k6_p, "loo")
+
+w <-loo_compare(wg, wp, criterion = "loo")
+w
+```
+
+
+
+```{r}
+brms::pp_check(m_k6_s) + xlim(0, 5)
+```
+
+```{r}
+brms::pp_check(m_k6_p) + xlim(0, 5)
+```
+
+
+
+##  Mediation
+
+
+## Mediation Models
+
+-   Manipulate X, measure M and Y
+-   Regress M on X; Y on X and M
+
+```{r, layout = "l-body-outset", cache =TRUE}
+mlm_path_plot(xlab = "Condition\n(X)",
+              mlab = "Mediator\n(M)",
+              ylab = "Distress\n(Y)")
+```
+
+## Assumptions
+
+-   Y does not affect M
+-   No 3rd variable on M to Y relationship
+-   M is measured without error
+-   Y and M residuals are not correlated [@vuorre2020multilevel]
+
+
+## Set up
+
+```{r echo = TRUE, eval = FALSE}
+path_m <- bf(
+  mF ~ x + (1 | c | id)
+  )
+path_y <- bf(
+  y ~ x + mF_w + mF_b +
+               (1 | c | id)
+  )
+m1 <- brm(
+  path_m + path_y + set_rescor(FALSE),
+  data = datF,
+  file = here("models/mediation-k6-covid-fatigue")
+)
+```
+
+
+## Model form 
+```{r echo = FALSE}
+x <-nzl$Covid_Timeline
+mF <-nzl$HLTH.Fatigue_int
+y<- nzl$KESSLER6sum
+id <-nzl$Id
+datF <-data.frame(x,mF, y,id)
+```
+
+```{r echo = FALSE}
+path_m <- bf(
+  mF ~ x + (1 | c |  id)
+  )
+path_y <- bf(
+  y ~ x + mF +  (1 | c |  id)
+  )
+f1 <- brm(
+  path_m + path_y + set_rescor(FALSE),
+  data = datF,
+  file = here::here("models/mediation-k6-covid-fatigue")
+)
+
+summary(f1)
+```
+
+
+
+```{r echo=FALSE, cache = FALSE}
+post1F <- brms::posterior_samples(f1)
+post_marF <- post1F %>% 
+  transmute(
+    a = b_mF_xLockdown,
+    b = b_y_mF,
+    cp = b_y_xLockdown,
+    me = a * b,
+    c = cp + me#,
+   # pme = me / c
+  )
+# posterior_summary(post_marF)
+```
+```{r}
+mcmc_intervals(post_marF)
+```
+
+## Hypothesis 
+
+## Excercise: March vs. L4
+
+```{r}
+h1 <- c(
+  a = "mF_xLockdown  = 0",
+  b = "y_mF = 0",
+  cp = "y_xLockdown = 0",
+  me = "mF_xLockdown * y_xLockdown = 0",
+  c = "mF_xLockdown * y_mF + y_xLockdown = 0"
+)
+
+plot(
+  hypothesis(f1, h1)
+)
+```
+
+
+
+## Ordinal Predictor
+
+
+
+## Random Intercept 
+
 
 
 
