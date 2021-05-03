@@ -12,6 +12,8 @@ output:
   distill::distill_article:
     self_contained: false
     toc: true
+    code_folding: true
+    highlight: kate
 bibliography: bib.bib
 ---
 
@@ -178,7 +180,6 @@ ord_dates_class <- c(
   "Lockdown",
   "PostLockdown")
 
-
 nzl <- nz_cr %>%
   dplyr::filter(YearMeasured == 1) %>%
   dplyr::filter(Wave == 2018 | Wave == 2019) %>%
@@ -256,7 +257,7 @@ system.time(
     file = here::here("models", "ordinal_fatigue"),
     silent = FALSE
   )
-
+)
 par_m1 <-parameters::model_parameters(m1)
 par_m1
 plot(par_m1)
@@ -298,6 +299,117 @@ plot(
 
 
 
+## Ordinal Predictor
+
+
+Suppose we wanted to assess whether fatigue predicts psychological distress. 
+
+```{r}
+# Create small sample to improve computing time
+snzl <- nzl %>%
+  dplyr::filter(Wave == 2019) # Only one wave
+
+
+set.seed(123)
+nm <- sample(snzl$Id, size = 300) # randomly select a smaller sample of individuals. 
+sub_nzl<- snzl%>%
+ filter(Id %in% nm)
+```
+
+Let's compare models
+
+```{r}
+# ordinary predictor
+mo_0 <- brm(
+  bf(KESSLER6sum  ~ HLTH.Fatigue,
+     family = "poisson"),
+  data = sub_nzl,
+  file = here::here("models", "monotonic_0"),
+  silent = FALSE
+)
+
+# table
+par_mo_0 <-parameters::model_parameters(mo_0)
+par_mo_0
+
+# coefficient plot
+plot(par_mo_0) + labs(title = "Distress on Fatigue, no monotonic effects")
+```
+
+
+
+Graph 
+
+```{r}
+p_mo_0 <- plot(
+  conditional_effects(mo_0),
+  points = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .2)
+)[[1]] 
+
+p_mo_0 + labs(title = "Predicted Distress by Fatigue: Poisson model")
+
+```
+
+
+
+```{r}
+mo_1 <- brm(
+  bf(KESSLER6sum  ~ mo(HLTH.Fatigue),
+     family = "poisson"),
+  data = sub_nzl,
+  file = here::here("models", "monotonic_1"),
+  silent = FALSE
+)
+
+# table
+par_mo_1 <-parameters::model_parameters(mo_1)
+par_mo_1
+
+# coefficient plot
+plot(par_mo_1) + labs(title = "Distress on Fatigue, monotonic effects") 
+```
+
+
+
+Graph 
+
+```{r}
+p_mo_1 <- plot(
+  conditional_effects(mo_1),
+  points = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .2)
+)[[1]] + labs(title = "Predicted Distress by Fatigue: monotonic effects model")
+p_mo_1
+```
+
+Compare models, in this instance we do not need monotonic effects 
+
+```{r}
+compare_mo_0 <- add_criterion(mo_0, "loo")
+compare_mo_1 <- add_criterion(mo_1, "loo")
+
+compare_mo <-loo_compare(compare_mo_0, compare_mo_1, criterion = "loo")
+compare_mo
+```
+
+
+And the posterior predictive checks do not look too different 
+
+Without monotonic predictors
+
+```{r}
+brms::pp_check(mo_0)
+```
+
+
+With monotonic predictors 
+
+```{r}
+brms::pp_check(mo_1)
+```
 
 
 ## Random intercept
@@ -313,7 +425,6 @@ system.time(
     silent = FALSE
   )
 )
-summary(m1_l)
 par_m1_l <-parameters::model_parameters(m1_l)
 par_m1_l
 plot(par_m1_l)
@@ -460,7 +571,9 @@ summary(f_mv)
 ```
 
 ```{r}
-
+brms::stanplot(f_mv, 
+               type = "areas",
+               prob = .89)
 ```
 
 
@@ -604,9 +717,6 @@ plot(
 
 ```
 
-
-
-## Ordinal Predictor
 
 
 

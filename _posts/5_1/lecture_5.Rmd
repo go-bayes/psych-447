@@ -10,8 +10,8 @@ author:
 date: 2021-MAR-23
 output:
   distill::distill_article:
-   highlight_downlit: false
    code_folding: true
+   highlight: kate
 toc: true
 bibliography: references.bib
 ---
