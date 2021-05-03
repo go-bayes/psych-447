@@ -439,13 +439,30 @@ brms::pp_check(m_k6_p) + xlim(0, 5)
 
 ```{r}
 
+# Create smaller data frame
+snzl <- nzl %>%
+  dplyr::filter(Wave == 2019) # Only one wave
+
+set.seed(123)
+nm <- sample(snzl$Id, size = 300) # randomly select a smaller sample of individuals. 
+
+# create the data frame
+sub_nzl<- snzl%>%
+ filter(Id %in% nm)
+
+
 f_mv <- brm(
-  mvbind(Warm.Immigrants, Warm.Muslims) ~  Hours.News + s(yearS)  +  (1|p|Id),
-  data = nzl,
+  mvbind(Warm.Immigrants, Warm.Muslims) ~  log(Hours.News + 1),
+  data = sub_nzl,
   file = here::here("models", "multivariate_warmth"), 
 )
+summary(f_mv)
+```
+
+```{r}
 
 ```
+
 
 
 A different formulation
