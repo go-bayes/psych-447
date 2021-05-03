@@ -29,10 +29,11 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   layout = "l-body-outset",
-  fig.width= 12,
-  fig.height= 10,
-  collapse =TRUE,
-  R.options = list(width = 60)
+  fig.width = 12,
+  fig.height = 10,
+  collapse = TRUE,
+  R.options = list(width = 60
+  )
 )
 ```
 
@@ -45,14 +46,11 @@ library("lubridate")
 library("kableExtra")
 library("gtsummary")
 library("lubridate")
-# installed from previous lectures
 library("equatiomatic")
-library("tidyverse")
 library("ggdag")
 library("brms")
 library("rstan")
 library("rstanarm")
-# library("tidybayes")
 library("bayesplot")
 library("easystats")
 library("kableExtra")
@@ -63,13 +61,14 @@ if (!require(tidyLPA)) {
   install.packages("tidyLPA")
 }
 # rstan options
-rstan_options(auto_write=TRUE)
-options(mc.cores=parallel::detectCores ())
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores ())
 theme_set(theme_classic())
 ```
 
-```{r  nzdata, cache=TRUE, include=FALSE}
+```{r  nzdata, include=FALSE}
 # read data
+
 
 nz_0 <- as.data.frame(readr::read_csv2(
   url(
@@ -85,14 +84,14 @@ f <-
     "Some Of The Time",
     "Most Of The Time",
     "All Of The Time"
-)
+  )
 
 # Relevel covid timeline longitudional
 # ord_dates_class <- c(
-#   "Baseline", 
-#   "PreCOVID", 
-#   "JanFeb", 
-#   "EarlyMarch", 
+#   "Baseline",
+#   "PreCOVID",
+#   "JanFeb",
+#   "EarlyMarch",
 #   "Lockdown",
 #   "PostLockdown")
 
@@ -121,7 +120,7 @@ nz_cr <- nz_0 %>%
   dplyr::mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
   dplyr::mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
   dplyr::mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
-  dplyr:: mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
   dplyr::mutate(male_id = as.factor(Male)) %>%
   dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) %>%
@@ -134,7 +133,7 @@ nz_cr <- nz_0 %>%
     FeelDepressed_int =  as.integer(FeelDepressed),
     HLTH.Fatigue_int = as.integer(HLTH.Fatigue + 1)
   ) %>%
-  dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm=TRUE))%>%
+  dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm = TRUE)) %>%
   dplyr::mutate(KESSLER6sum = as.integer(KESSLER6sum))
 
 
@@ -164,58 +163,56 @@ nz <- nz_cr %>%
                       )
                     )
                   ))) %>%
-  dplyr::mutate(
-    Covid_Timeline_cr = forcats::fct_relevel(Covid_Timeline_cr, ord_dates_class_2019_only)
-  )
+  dplyr::mutate(Covid_Timeline_cr = forcats::fct_relevel(Covid_Timeline_cr, ord_dates_class_2019_only))
 
 dplyr::glimpse(nz)
 
 
 ## Long data #####################
-ord_dates_class <- c(
-  "Baseline", 
-  "PreCOVID", 
-  "JanFeb", 
-  "EarlyMarch", 
-  "Lockdown",
-  "PostLockdown")
+ord_dates_class <- c("Baseline",
+                     "PreCOVID",
+                     "JanFeb",
+                     "EarlyMarch",
+                     "Lockdown",
+                     "PostLockdown")
 
 nzl <- nz_cr %>%
   dplyr::filter(YearMeasured == 1) %>%
   dplyr::filter(Wave == 2018 | Wave == 2019) %>%
-  dplyr::group_by(Id) %>% 
+  dplyr::group_by(Id) %>%
   dplyr::filter(n() > 1) %>%
   dplyr::filter(n() != 0) %>%
   dplyr::ungroup(Id) %>%
-  dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm=TRUE))%>%
+  dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm = TRUE)) %>%
+  dplyr::mutate(WSCORE = as.factor(WSCORE)) %>%
   dplyr::mutate(Covid_Timeline =
-                    as.factor(ifelse(
-                      TSCORE %in% 3896:3921, # feb 29 - march 25th
-                      "EarlyMarch",
+                  as.factor(ifelse(
+                    TSCORE %in% 3896:3921,
+                    # feb 29 - march 25th
+                    "EarlyMarch",
+                    ifelse(
+                      TSCORE %in% 3922:3954,
+                      "Lockdown",
+                      #march 26- Mon 27 April 2020
                       ifelse(
-                        TSCORE %in% 3922:3954,
-                        "Lockdown", #march 26- Mon 27 April 2020
+                        TSCORE > 3954,
+                        # after april 27th 20202
+                        "PostLockdown",
                         ifelse(
-                          TSCORE > 3954, # after april 27th 20202
-                          "PostLockdown",
-                          ifelse(
-                            TSCORE %in% 3842:3895, # jan 6 to feb 28
-                            "JanFeb",
-                          ifelse(
-                            TSCORE %in% 3665:3841 &
-                              Wave == 2019,
-                            "PreCOVID",
-                            "Baseline"  # 3672 TSCORE or  20 July 2019
+                          TSCORE %in% 3842:3895,
+                          # jan 6 to feb 28
+                          "JanFeb",
+                          ifelse(TSCORE %in% 3665:3841 &
+                                   Wave == 2019,
+                                 "PreCOVID",
+                                 "Baseline"  # 3672 TSCORE or  20 July 2019))))))))
                           )
                         )
                       )
-                    ) 
-                 ) ))%>%
-  dplyr::mutate(
-    Covid_Timeline = forcats::fct_relevel(Covid_Timeline, ord_dates_class))
-table(nzl$Covid_Timeline)
-
-
+                    ))) %>%
+                  dplyr::mutate(Covid_Timeline = forcats::fct_relevel(Covid_Timeline, ord_dates_class))
+                
+                
 
 ```
 
@@ -226,28 +223,32 @@ table(nzl$Covid_Timeline)
 
 ### Example 
 
-An ordinal model assumes that an observed ordinal indicator measures a latent continuous out \cite{Burkner2019-ie,Hadfield2012-hi}. 
+An ordinal model assumes that an observed ordinal indicator measures a latent continuous outcome \cite{Burkner2019-ie,Hadfield2012-hi}. 
 
 
-In our NZ-jitter dataset, the Kessler-6 has five ordinal response options for indicating frequency of feeling distress during the past 30 days: "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time" hence six thresholds. 
+<!-- In our NZ-jitter dataset, the Kessler-6 has five ordinal response options for indicating frequency of feeling distress during the past 30 days: "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time" hence six thresholds.  -->
 
-The Kessler-6 distress indicators are: "Feeling Hopelessness;" "Feeling so Depressed Nothing Could Cheer You Up;" "Feeling Nervous or Fidgety;" "Feeling Everything is an Effort;" "Feeling Worthless;" "Feeling Nervous." We simultaneously modelled each of these six outcomes within a single model. 
+<!-- The Kessler-6 distress indicators are: "Feeling Hopelessness;" "Feeling so Depressed Nothing Could Cheer You Up;" "Feeling Nervous or Fidgety;" "Feeling Everything is an Effort;" "Feeling Worthless;" "Feeling Nervous." We simultaneously modelled each of these six outcomes within a single model.  -->
 
+During the past 30 datys do you feel Fatigue... "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time." 
+
+## Model 
 
 $$\begin{align}
-y^k \sim \text{Ordered}(\mu_t^k) \\
-\text{CumLogit}(\mu_t^k) = \alpha_t^k +\beta^k \\
-\alpha_t^k = \alpha_{t0}^k +\alpha^k_c \\
-\alpha_{t0}^k \sim \text{StudentT}(3,0,10)\\
-\alpha_c^k \sim \text{StudentT}^+(3,0,10)\\
-\boldsymbol{\beta^k}\sim \text{Normal}(0,1) 
+y_{i}^k \sim \text{Ordered}(\mu_{i}^k) \\
+\text{CumLogit}(\mu_{i}^k) = \alpha^k +\beta X_i \\
+\alpha^k \sim \text{StudentT}(3,0,10)\\
+\boldsymbol{\beta}\sim \text{Normal}(0,1) 
 \end{align}$$
 
-Below, the superscript $k$ is denotes the $k = 1\dots6$ Kessler-6 outcomes. Residuals for cumulative categorical models are not identified, so are fixed to 1. $\alpha_{j0}^k$ denotes the $t = 1\dots 5$ intercepts estimated for the ordinal model, which assumed a cumulative logit distribution for the outcome, and where the lowest response level is modelled as zero, hence four intercepts are estimated for each Kessler- 6 response indicator. $$\mathbf{\beta}$$ denotes the individual-level predictors.
+
+
+Below, the superscript $k$ is denotes the $k = 1\dots5$ outcomes (five thresholds). Residuals for cumulative categorical models are not identified, so are fixed to 1. $\alpha_{0}^k$ denotes the $t = 1\dots 5$ intercepts estimated for the ordinal model, which assumed a cumulative logit distribution for the outcome, and where the lowest response level is modelled as zero, hence four intercepts are estimated. $$\mathbf{\beta}$$ denotes the individual-level predictors in this case the time categories of the `Covid_Timeline` indicator.
+
 
 ## Ordinal outcomes
 
-```{r}
+```{r cache = TRUE}
 system.time(
   m1 <- brm(
     bf(HLTH.Fatigue_int  ~
@@ -263,17 +264,9 @@ par_m1
 plot(par_m1)
 ```
 
-Plot of the predicted effects, We can see changes in the response across the different time points, with reduction in higher level fatigue levels relative to lower fatigue levels during the New Zealand Covid Lockdown. 
+Plot of the predicted effects, We can see changes in the response across the different time points, with reductio fatigue levels during Lockdown 
 
-
-Here is  a graph of using the ggeffects package, revealing that the movements where subtle, but evident, across the range of responses:
-
-```{r}
-plot(ggeffects::ggpredict(
-  m1, 
-  effects = "Covid_Timeline_cr")
-  )
-```
+Here is a graph of using the ggeffects package, revealing that the movements where subtle, but evident, across the range of responses:
 
 
 This is the graph using the BRMS package plotting features, setting "categorical" to FALSE. We only do this to show the average drop.
@@ -283,42 +276,75 @@ This is the graph using the BRMS package plotting features, setting "categorical
 plot(
   conditional_effects(
     m1,
-   # spaghetti = TRUE,
-   # nsamples = 100,
     categorical = FALSE,
-   # select_points = 0.1,
     prob = 0.89,
     re_formula = NA,
   ),
   points = TRUE,
-  point_args = list(alpha = 0.1,
-                    width = .1,
-                    size = .2)
-) #
+  point_args = list(
+    alpha = 0.1,
+    width = .1,
+    size = .2
+  )
+) 
 ```
 
 
+We can plot all the individual intercepts this way:
 
-## Ordinal Predictor
-
-
-Suppose we wanted to assess whether fatigue predicts psychological distress. 
 
 ```{r}
+plot(
+  conditional_effects(
+    m1,
+    categorical = TRUE,
+    prob = 0.89,
+    re_formula = NA,
+  ),   # WE cannot graph points when the points arg = TRUE
+  points = TRUE,
+  point_args = list(
+    alpha = 0.1,
+    width = .1,
+    size = .2
+  )
+) 
+```
+
+This is another method for graphing, where the individual facits denote our expected response thresholds
+
+```{r}
+table(nzl$HLTH.Fatigue_int)
+```
+
+
+```{r eval = FALSE}
+plot(ggeffects::ggpredict(
+  m1, 
+  effects = "Covid_Timeline_cr")
+  )
+```
+
+
+## Ordinal Predictors
+
+Suppose we wanted to assess whether fatigue predicts psychological distress. We'll use a smaller subsample to speed up computing time:
+
+```{r cache = TRUE}
 # Create small sample to improve computing time
 snzl <- nzl %>%
   dplyr::filter(Wave == 2019) # Only one wave
 
 
 set.seed(123)
-nm <- sample(snzl$Id, size = 300) # randomly select a smaller sample of individuals. 
-sub_nzl<- snzl%>%
- filter(Id %in% nm)
+nm <-
+  sample(snzl$Id, size = 300) # randomly select a smaller sample of individuals.
+sub_nzl <- snzl %>%
+  filter(Id %in% nm)
 ```
 
 Let's compare models
 
-```{r}
+```{r cacht = TRUE}
 # ordinary predictor
 mo_0 <- brm(
   bf(KESSLER6sum  ~ HLTH.Fatigue,
@@ -337,8 +363,17 @@ plot(par_mo_0) + labs(title = "Distress on Fatigue, no monotonic effects")
 ```
 
 
+The expected increase in distress from a one unit increase in Fatige is .45 units of Kessler 6 distress on the log scale. 
 
-Graph 
+We exponentiate this to obtain expected changes on the data scale, recalling that we should include the intercept:
+
+A one unit change in fatigue leads to an expected change in distress of:
+
+```{r}
+exp(.75 + .45)
+```
+
+We can plot the entire range of the response scale: 
 
 ```{r}
 p_mo_0 <- plot(
@@ -349,12 +384,12 @@ p_mo_0 <- plot(
 )[[1]] 
 
 p_mo_0 + labs(title = "Predicted Distress by Fatigue: Poisson model")
-
 ```
 
 
+We model the relationship of Fatigue on Distress by thinking of Fatigue as as a monotonic predictor, using the `mo` command, as follows:
 
-```{r}
+```{r cache = TRUE}
 mo_1 <- brm(
   bf(KESSLER6sum  ~ mo(HLTH.Fatigue),
      family = "poisson"),
@@ -371,11 +406,11 @@ par_mo_1
 plot(par_mo_1) + labs(title = "Distress on Fatigue, monotonic effects") 
 ```
 
+Note that we have 4 x Betas for Fatigue, which each level of Fatigue receiving its own beta. 
 
+Graphing the results:
 
-Graph 
-
-```{r}
+```{r cache = TRUE}
 p_mo_1 <- plot(
   conditional_effects(mo_1),
   points = TRUE,
@@ -385,18 +420,19 @@ p_mo_1 <- plot(
 p_mo_1
 ```
 
-Compare models, in this instance we do not need monotonic effects 
+Compare our models, in this instance it appears that we do not require predicting Distress by Fatigue using monotonic effects:
 
-```{r}
+```{r cache = TRUE}
 compare_mo_0 <- add_criterion(mo_0, "loo")
 compare_mo_1 <- add_criterion(mo_1, "loo")
 
-compare_mo <-loo_compare(compare_mo_0, compare_mo_1, criterion = "loo")
+compare_mo <-
+  loo_compare(compare_mo_0, compare_mo_1, criterion = "loo")
 compare_mo
 ```
 
 
-And the posterior predictive checks do not look too different 
+We can visually inspect the posterior predictions, and they not look too different: 
 
 Without monotonic predictors
 
@@ -412,7 +448,135 @@ brms::pp_check(mo_1)
 ```
 
 
-## Random intercept
+
+## Distributional model
+
+Paul Bruckner, the author of the BRMS package, offers the following distributional model (see the explanation {here](https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html))
+
+
+```{r}
+group <- rep(c("treat", "placebo"), each = 30)
+symptom_post <- c(rnorm(30, mean = 1, sd = 2), rnorm(30, mean = 0, sd = 1))
+dat1 <- data.frame(group, symptom_post)
+head(dat1)
+```
+
+Note that you can fit a model in which the variation in reponse, and not merely the average response, is estimated. Paul does so as follows:
+
+```{r cache = TRUE}
+fit1 <- brm(bf(symptom_post ~ group,
+               sigma ~ group),
+            data = dat1,
+            family = gaussian())
+```
+
+
+Paul's workflow includes visualing the chains of the bayesian model, a point to which we'll return next week: 
+
+```{r}
+summary(fit1)
+plot(fit1, N = 2, ask = FALSE)
+```
+
+Here we have the prediction plot
+
+```{r}
+plot(conditional_effects(fit1), points = TRUE)
+```
+
+BRMS allows us to estemate whether both parameters (the mean) and the standard deviations of the mean, differ:
+
+```{r}
+hyp <- c("exp(sigma_Intercept) = 0",
+         "exp(sigma_Intercept + sigma_grouptreat) = 0")
+hypothesis(fit1, hyp)
+```
+
+Both the mens, and the variances, differ. 
+
+We can graph these differences:
+
+```{r}
+hyp <- "exp(sigma_Intercept + sigma_grouptreat) > exp(sigma_Intercept)"
+(hyp <- hypothesis(fit1, hyp))
+plot(hyp)
+```
+
+When might this model apply? 
+
+> Suppose we have two groups of patients: One group receives a treatment (e.g., an antidepressive drug) and another group receives placebo. Since the treatment may not work equally well for all patients, the symptom variance of the treatment group may be larger than the symptom variance of the placebo group after some weeks of treatment. (Paul Bruckner, BRMS vignette)
+
+
+
+## Random intercept: CLUSTERING
+
+
+Let's consider distress responses by week in our NZAVS jitter dataset for 2018-2020. 
+
+```{r}
+# 506 weekss betwen 530 June 2009 and 15 March 2019
+ri_weeeks <- brm(
+  bf(Warm.Muslims  ~
+       (1 | WSCORE)),
+  data = nzl,
+  file = here::here("models", "random_intercept_"),
+  silent = FALSE
+)
+
+glimpse(nzl)
+```
+
+Graph of week variances. 
+
+```{r}
+par_ri_weeeks <-parameters::model_parameters(ri_weeeks,
+                                             dispersion = TRUE, 
+                                             effects = "random")
+
+## CONTEXT
+# 556 weeks 3 days
+# 30 June 2009 – 28 February 2020
+plot(par_ri_weeeks, sort = FALSE, type = "re")
+```
+
+
+```{r}
+plot(par_ri_weeeks,   sort = TRUE) 
+
+plot(
+  conditional_effects(
+    m_k6_p,
+    spaghetti = TRUE,
+    nsamples = 100,
+    categorical = F,
+    prob = 0.89,
+    re_formula = NA
+  ),
+  points = TRUE,
+  point_args = list(alpha = 0.1,
+                    width = .02)
+) # 
+```
+
+
+
+
+
+
+
+
+## Random intercept: Fatigue
+
+$$\begin{align}
+y_{ij}^k \sim \text{Ordered}(\mu_{ij}^k) \\
+\text{CumLogit}(\mu_{ij}^k) = \alpha_{ij}^k +\beta X_i \\
+\alpha_{ij}^k = \alpha_{0}^k +\alpha_j\\
+\alpha_{0}^k \sim \text{StudentT}(3,0,10)\\
+\alpha_j \sim \text{StudentT}^+(3,0,10)\\
+\boldsymbol{\beta}\sim \text{Normal}(0,1) 
+\end{align}$$
+
+Below, the superscript $k$ is denotes the $k = 1\dots6$ outcomes (five thresholds). Residuals for cumulative categorical models are not identified, so are fixed to 1. $\alpha_{0}^k$ denotes the $t = 1\dots 5$ intercepts estimated for the ordinal model, which assumed a cumulative logit distribution for the outcome, and where the lowest response level is modelled as zero, hence four intercepts are estimated. $$\mathbf{\beta}$$ denotes the individual-level predictors in this case the time categories of the `Covid_Timeline` indicator.
 
 ```{r}
 system.time(
@@ -447,7 +611,7 @@ plot(ggeffects::ggpredict(m1_l), add.data= F, dot.alpha = .1)
 ```
 
 
-## Dispersional model 
+
 
 ```{r}
 system.time(
@@ -468,10 +632,6 @@ plot(par_m_k6_s,  sort = TRUE)
 
 
 ## Random Intercept
-
-```{r}
-
-```
 
 
 
@@ -720,9 +880,6 @@ plot(
 
 
 
-## Random Intercept 
-
-
 
 
 ## Bonus: Latent Profile Analysis
@@ -741,7 +898,8 @@ library(tidyLPA)
 #   mutate_if(., is.factor, ~ as.numeric(as.integer(.x)))
 
 # convert to standard deviation units
-out<-nz %>%
+
+out<-nzl_2019 %>%
   dplyr::select(Hours.Internet, 
           Hours.Exercise,
        #   Hours.CompGames, 
