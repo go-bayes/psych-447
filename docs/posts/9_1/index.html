@@ -2147,6 +2147,7 @@ gtag('config', 'G-GQF269N0S4');
 <li><a href="#objectives">Objectives</a></li>
 <li><a href="#ordinal-responses">Ordinal responses</a>
 <ul>
+<li><a href="#model-equation-for-an-ordinal-response-model">Model equation for an ordinal response model</a></li>
 <li><a href="#interpreting-results-of-an-ordinal-model-using-graphical-methods">Interpreting results of an ordinal model using graphical methods</a></li>
 </ul></li>
 <li><a href="#ordinal-or-monotonic-predictors">Ordinal (or monotonic) predictors</a>
@@ -2168,7 +2169,6 @@ gtag('config', 'G-GQF269N0S4');
 <li><a href="#set-up">Set up</a></li>
 <li><a href="#model-form">Model form</a></li>
 <li><a href="#hypothesis">Hypothesis</a></li>
-<li><a href="#excercise-march-vs.-l4">Excercise: March vs. L4</a></li>
 <li><a href="#bonus-latent-profile-analysis">Bonus: Latent Profile Analysis</a></li>
 <li><a href="#latent-profile-analysis">Latent Profile Analysis</a></li>
 </ul>
@@ -2213,13 +2213,13 @@ Show code
 <h2 id="objectives">Objectives</h2>
 <p>To develop the following skills:</p>
 <ul>
-<li>modelling ordinal reponses</li>
-<li>modelling monotonic predictors</li>
-<li>estimating predictors of the variance as well as of the mean response.</li>
-<li>estimating group-level (aka “random”) intercepts.</li>
-<li>estimating multivariate outcomes (i.e. two or more)</li>
-<li>estimating a mediation model</li>
-<li>interpret and report the results of these models using graphical methods.</li>
+<li>modelling ordinal (cumulative logit) responses</li>
+<li>modelling ordinal (monotonic) predictors</li>
+<li>distributional models in which we estimate predictors for the variance as well as for the mean response.</li>
+<li>group-level intercept models (aka “random” intercept models).</li>
+<li>multiple response models estimating multivariate outcomes (i.e. two or more)</li>
+<li>mediation models</li>
+<li>interpret and report the results for these models using graphical methods.</li>
 </ul>
 <h2 id="ordinal-responses">Ordinal responses</h2>
 <p>An ordinal model is a cumulative logistic model. Instead of binary outcomes, we assume there are n &gt; 2 outcomes .</p>
@@ -2229,7 +2229,7 @@ Show code
 <blockquote>
 <p>“During the past 30 days have you felt fatigue…”</p>
 </blockquote>
-<p>and the repsonses are:</p>
+<p>and the responses are:</p>
 <blockquote>
 <p>“None Of The Time,”</p>
 </blockquote>
@@ -2258,14 +2258,15 @@ Show code
 </details>
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-2-1.png" width="1152" /></p>
 </div>
+<h3 id="model-equation-for-an-ordinal-response-model">Model equation for an ordinal response model</h3>
 <p>We can write the model equation for an ordinal (or cumulative logistic) model of Fatigue s follows</p>
 <p><span class="math display">\[\begin{align}
 y_{i}^c \sim \text{Ordered}(p_i) \\
 \text{CumLogit}(\boldsymbol{p_i}) = \alpha^c +\beta X_i \\
-\alpha^c \sim \text{StudentT}(3,0,10)\\
+\alpha^c \sim Normal(0,10)\\
 \boldsymbol{\beta}\sim \text{Normal}(0,1) 
 \end{align}\]</span></p>
-<p>For an ordinal response model, where there are <span class="math inline">\(R\)</span> responses for our outcome indiator, there are <span class="math inline">\(C = R-1, c = 1\dots C\)</span> thresholds.</p>
+<p>For an ordinal response model, where there are <span class="math inline">\(R\)</span> responses for our outcome indicator, there are <span class="math inline">\(C = R-1, c = 1\dots C\)</span> thresholds or “cutpoints.”</p>
 <p>As with binary logistic regression, residuals for cumulative logistic models are not identified, so are fixed to 1. <span class="math inline">\(\alpha^c\)</span> denotes the <span class="math inline">\(c^{th}\)</span> intercept estimated in the model. Where the lowest response level is modeled as zero, hence four intercepts are estimated. <span class="math inline">\(\mathbf{\beta}\)</span> is the esitmate for the<span class="math inline">\(X\)</span> parameter measured on <span class="math inline">\(i...N\)</span> individuals. In this case the time categories of the <code>Covid_Timeline</code> indicator.</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2273,27 +2274,16 @@ y_{i}^c \sim \text{Ordered}(p_i) \\
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
-  <span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>HLTH.Fatigue_int</span>  <span class='op'>~</span>
-      <span class='va'>Covid_Timeline_cr</span><span class='op'>)</span>,
-    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsfamily.html'>cumulative</a></span><span class='op'>(</span>link <span class='op'>=</span> <span class='st'>"logit"</span><span class='op'>)</span>,
-    data <span class='op'>=</span> <span class='va'>nz</span>,
-    file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"models"</span>, <span class='st'>"ordinal_fatigue"</span><span class='op'>)</span>,
-    silent <span class='op'>=</span> <span class='cn'>FALSE</span>
-  <span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>HLTH.Fatigue_int</span>  <span class='op'>~</span>
+       <span class='va'>Covid_Timeline_cr</span><span class='op'>)</span>,
+  family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsfamily.html'>cumulative</a></span><span class='op'>(</span>link <span class='op'>=</span> <span class='st'>"logit"</span><span class='op'>)</span>,
+  data <span class='op'>=</span> <span class='va'>nz</span>,
+  file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"models"</span>, <span class='st'>"ordinal_fatigue"</span><span class='op'>)</span>,
+  silent <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span>
-</code></pre>
-</div>
-</details>
-<pre><code>   user  system elapsed 
-  0.676   0.043   0.722 </code></pre>
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>par_m1</span> <span class='op'>&lt;-</span><span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
+
+<span class='va'>par_m1</span> <span class='op'>&lt;-</span> <span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
 <span class='va'>par_m1</span>
 </code></pre>
 </div>
@@ -2321,8 +2311,8 @@ Show code
 </details>
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-3-1.png" width="1152" /></p>
 </div>
-<p>Hre we can see that the log-odds of Fatigue dropped during Lockdown. But how did Fatigue drop?</p>
-<p>As with logistic regression, the coefficients are <em>not</em> obvious. We need to graph the predicted outcomes at specific values.</p>
+<p>Hre we can see that the log-odds of Fatigue dropped during Lockdown. But how exactly did Fatigue drop?</p>
+<p>As with logistic regression, the coefficients here are not obvious. To interpret results, we should graph the predicted outcomes at specific values.</p>
 <h3 id="interpreting-results-of-an-ordinal-model-using-graphical-methods">Interpreting results of an ordinal model using graphical methods</h3>
 <p>To understand what is happening, we plot all the individual intercepts by setting <code>categorical = TRUE</code>. Following McElreath’s Statistical Rethinking, we will predict outcomes using the .89 probability credible interval:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
@@ -2350,7 +2340,7 @@ Show code
 </details>
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-4-1.png" width="1152" /></p>
 </div>
-<p>Here we see the separation occuring during <code>Lockdown</code> as compared with the baseline <code>PreCOVID</code></p>
+<p>Here we see the separation occurring during <code>Lockdown</code> as compared with the baseline <code>PreCOVID</code></p>
 <p>This is another method for graphing, where the individual facets denote our expected response thresholds:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2365,6 +2355,8 @@ Show code
 </code></pre>
 </div>
 </details>
+<pre><code>$Covid_Timeline_cr</code></pre>
+<p><img src="lecture_9_files/figure-html5/unnamed-chunk-5-1.png" width="1152" /></p>
 </div>
 <p>Finally, for the purposes of exploration, we can obtain an average response using the BRMS <code>conditional_effects</code> function, with the setting <code>categorical = FALSE</code></p>
 <div class="layout-chunk" data-layout="l-body-outset">
@@ -2425,10 +2417,6 @@ Show code
 </div>
 <p>First we estimate a model without a monotonic effect:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># ordinary predictor</span>
 <span class='va'>mo_0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
@@ -2444,28 +2432,22 @@ Show code
 <span class='va'>par_mo_0</span>
 </code></pre>
 </div>
-</details>
 <pre><code># Fixed effects
 
 Parameter    | Median |       89% CI |   pd | % in ROPE |  Rhat |     ESS
 -------------------------------------------------------------------------
 (Intercept)  |   0.76 | [0.67, 0.86] | 100% |        0% | 1.001 | 1640.00
 HLTH.Fatigue |   0.45 | [0.42, 0.49] | 100% |        0% | 1.000 | 1895.00</code></pre>
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class='co'># coefficient plot</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>par_mo_0</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Distress on Fatigue, no monotonic effects"</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-8-1.png" width="1152" /></p>
 </div>
-<p>The expected increase in distress from a one unit increase in Fatige is .45 units of Kessler 6 distress on the log scale.</p>
-<p>To translate this expectation to the datascale recall that we must exponentiate our result</p>
+<p>The expected increase in distress from a one unit increase in Fatigue is .45 units of Kessler 6 distress on the log scale.</p>
+<p>To translate this expectation to the data scale recall that we must exponentiate our result.</p>
 <p>A one unit change in fatigue at the intercept leads to an expected change in distress of:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2500,10 +2482,6 @@ Show code
 </div>
 <p>We next model the relationship of Fatigue on Distress by thinking of Fatigue as as a monotonic predictor, using the <code>mo</code> command, as follows:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mo_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
   <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span>  <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mo.html'>mo</a></span><span class='op'>(</span><span class='va'>HLTH.Fatigue</span><span class='op'>)</span>,
@@ -2517,7 +2495,6 @@ Show code
 <span class='va'>par_mo_1</span>
 </code></pre>
 </div>
-</details>
 <pre><code># Fixed effects
 
 Parameter      | Median |       89% CI |   pd | % in ROPE |  Rhat |     ESS
@@ -2533,20 +2510,15 @@ HLTH.Fatigue1[1] |   0.19 | [0.09, 0.28] | 100% |     7.90% | 1.003 | 1248.00
 HLTH.Fatigue1[2] |   0.29 | [0.21, 0.36] | 100% |        0% | 1.002 | 1691.00
 HLTH.Fatigue1[3] |   0.24 | [0.17, 0.31] | 100% |     0.03% | 1.000 | 2338.00
 HLTH.Fatigue1[4] |   0.28 | [0.20, 0.35] | 100% |        0% | 1.001 | 2441.00</code></pre>
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class='co'># coefficient plot</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>par_mo_1</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Distress on Fatigue, monotonic effects"</span><span class='op'>)</span> 
 </code></pre>
 </div>
-</details>
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-11-1.png" width="1152" /></p>
 </div>
-<p>Note that we have 4 x betas for Fatigue, which each threshold of Fatigue receiving its own beta.</p>
+<p>Note that we have 4 x betas for Fatigue. What do these mean?</p>
 <p>Graphing the results:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2559,23 +2531,14 @@ Show code
   points <span class='op'>=</span> <span class='cn'>TRUE</span>,
   point_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.1</span>,
                     width <span class='op'>=</span> <span class='fl'>.2</span><span class='op'>)</span>
-<span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Predicted Distress by Fatigue: monotonic effects model"</span><span class='op'>)</span>
+<span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> 
 </code></pre>
 </div>
 </details>
-<img src="lecture_9_files/figure-html5/unnamed-chunk-12-1.png" width="1152" />
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p_mo_1</span>
-</code></pre>
+<p><img src="lecture_9_files/figure-html5/unnamed-chunk-12-1.png" width="1152" /></p>
 </div>
-</details>
-<p><img src="lecture_9_files/figure-html5/unnamed-chunk-12-2.png" width="1152" /></p>
-</div>
-<p>Compare our models, in this instance it appears that we do not require predicting Distress by Fatigue using monotonic effects:</p>
+<p>The monotonic predictor, here, doesn’t look to make all that much a difference.</p>
+<p>We can formally compare the two models:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
 <summary>
@@ -2595,7 +2558,8 @@ Show code
 compare_mo_0  0.0       0.0   
 compare_mo_1 -4.1       1.7   </code></pre>
 </div>
-<p>We can visually inspect the posterior predictions, and they not look too different:</p>
+<p>No real difference.</p>
+<p>And can visually inspect the posterior predictions, and they not look too different:</p>
 <p>Without monotonic predictors</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2622,16 +2586,12 @@ Show code
 </details>
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-15-1.png" width="1152" /></p>
 </div>
-<p>The reason that we can get away without a monotonic predictor here is that for a poisson model, we are exponentiating the predictions of our regression coefficients.</p>
-<p>However in other instances a monotonic predictor might be preferred. There are no defaults.</p>
-<p>Modelling requires a combination of reasoning and art. A modern data scientist knows there are no back-of-the-book answers instructing us what to do. Rather, we must be explicit about our decisions.</p>
+<p>Again, no real difference. However, our model isn’t fitting well. What would you do to improve the model fit?</p>
+<p>There are no default strategies. Modelling requires a combination of reasoning and art.</p>
 <h2 id="distributional-model">Distributional model</h2>
-<p>Paul Bruckner, the author of the BRMS package, offers the following distributional model (see the explanation {here](<a href="https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html" class="uri">https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html</a>))</p>
+<p>A distributional model predicts the variance as well as the mean of a response.</p>
+<p>Paul Bruckner, the author of the BRMS package, offers the following simulated data for a distributional model (see the explanation {here](<a href="https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html" class="uri">https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html</a>))</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>group</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"treat"</span>, <span class='st'>"placebo"</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span>
 <span class='va'>symptom_post</span> <span class='op'>&lt;-</span>
@@ -2640,7 +2600,6 @@ Show code
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat1</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <pre><code>  group symptom_post
 1 treat    -5.621357
 2 treat     2.076932
@@ -2649,12 +2608,8 @@ Show code
 5 treat    -1.392703
 6 treat     1.925476</code></pre>
 </div>
-<p>Note that you can fit a model in which the variation in reponse, and not merely the average response, is estimated. Paul does so as follows:</p>
+<p>Fitting the model we have:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>symptom_post</span> <span class='op'>~</span> <span class='va'>group</span>,
                <span class='va'>sigma</span> <span class='op'>~</span> <span class='va'>group</span><span class='op'>)</span>,
@@ -2666,7 +2621,6 @@ Show code
 <span class='va'>par_fit1</span>
 </code></pre>
 </div>
-</details>
 <pre><code># Fixed effects
 
 Parameter        | Median |         89% CI |     pd | % in ROPE |  Rhat |     ESS
@@ -2682,17 +2636,12 @@ Parameter        | Median |         89% CI |   pd | % in ROPE |  Rhat |     ESS
 -------------------------------------------------------------------------------
 sigma_Intercept  |  -0.51 | [-0.72, -0.31] | 100% |     0.73% | 1.000 | 2927.00
 sigma_grouptreat |   1.21 | [ 0.91,  1.49] | 100% |        0% | 1.000 | 2844.00</code></pre>
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class='co'># coefficient plot</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>par_fit1</span><span class='op'>)</span> 
 </code></pre>
 </div>
-</details>
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-17-1.png" width="1152" /></p>
 </div>
 <p>Here we have the prediction plot</p>
@@ -2727,13 +2676,13 @@ Show code
 <p>Suppose we have two groups of patients: One group receives a treatment (e.g., an antidepressive drug) and another group receives placebo. Since the treatment may not work equally well for all patients, the symptom variance of the treatment group may be larger than the symptom variance of the placebo group after some weeks of treatment. (Paul Bruckner, BRMS vignette)</p>
 </blockquote>
 <h2 id="random-intercept-model-clustering">Random intercept model (clustering)</h2>
-<p>See: <a href="https://m-clark.github.io/mixed-models-with-R/" class="uri">https://m-clark.github.io/mixed-models-with-R/</a></p>
+<p>Typically our model has clustering. Often this clustering arises from dependencies owning to unmeasured grouping factors, students within schools, or repeated measures within students.</p>
+<p>However, recall a fundamental assumption of regression:</p>
+<blockquote>
+<p>The simple regression model assumes that the errors from the prediction line are independent, an assumption that is violated in time series, spatial, and multilevel settings <span class="citation" data-cites="gelman_regression_2020">(<a href="#ref-gelman_regression_2020" role="doc-biblioref"><strong>gelman_regression_2020?</strong></a>)</span></p>
+</blockquote>
 <p>Let’s look at environmental concern as predicted by religious group membership:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># 506 weekss betwen 530 June 2009 and 15 March 2019</span>
 <span class='va'>nzl_11</span> <span class='op'>&lt;-</span> <span class='va'>nzl</span> <span class='op'>%&gt;%</span>
@@ -2750,7 +2699,6 @@ Show code
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>ri_relgroups</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
 Formula: Env.ClimateChgConcern ~ (1 | Religious_Group) 
@@ -2793,15 +2741,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>We can calculate the intraclass correlation coefficient for religious groups, which is the ration of group variance devited by the total variance or in this case:</p>
 <p><span class="math display">\[\frac{\sigma^2_{religious groups}}{\sigma^2_{religious groups} + \sigma^2_{indiviuals}}\]</span></p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/icc.html'>icc</a></span><span class='op'>(</span><span class='va'>ri_relgroups</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <pre><code># Intraclass Correlation Coefficient
 
      Adjusted ICC: 0.143
@@ -2826,6 +2769,7 @@ Show code
 </details>
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-21-1.png" width="1152" /></p>
 </div>
+<p>References: See: <a href="https://m-clark.github.io/mixed-models-with-R/" class="uri">https://m-clark.github.io/mixed-models-with-R/</a></p>
 <h2 id="random-intercept-fatigue">Random intercept: Fatigue</h2>
 <p>With longitudinal data, we have repeated measures within individuals. This leads to clustering. We can adjust for this clustering by including group-level intercept for individuals.</p>
 <p>Let’s return to the Fatigue ~ Covid_Timeline model.</p>
@@ -2839,13 +2783,8 @@ y_{ij}^c \sim \text{Ordered}(\mu_{ij}^c) \\
 \boldsymbol{\beta}\sim \text{Normal}(0,1) \\
 \end{align}\]</span></p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
-  <span class='va'>m1_l</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
+<pre class="sourceCode r"><code class="sourceCode r">  <span class='va'>m1_l</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
     <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>HLTH.Fatigue_int</span>  <span class='op'>~</span>
       <span class='va'>Covid_Timeline</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>Id</span><span class='op'>)</span>,
     family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsfamily.html'>cumulative</a></span><span class='op'>(</span>link <span class='op'>=</span> <span class='st'>"logit"</span><span class='op'>)</span><span class='op'>)</span>,
@@ -2853,21 +2792,9 @@ Show code
     file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"models"</span>, <span class='st'>"ordinal_fatigue_longitudinal"</span><span class='op'>)</span>,
     silent <span class='op'>=</span> <span class='cn'>FALSE</span>
   <span class='op'>)</span>
-<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m1_l</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
-<pre><code>   user  system elapsed 
-  4.676   0.131   4.809 </code></pre>
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m1_l</span><span class='op'>)</span>
-</code></pre>
-</div>
-</details>
 <pre><code> Family: cumulative 
   Links: mu = logit; disc = identity 
 Formula: HLTH.Fatigue_int ~ Covid_Timeline + (1 | Id) 
@@ -2914,75 +2841,30 @@ Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
+<p>We graph the results</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
 <summary>
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>par_m1_l</span> <span class='op'>&lt;-</span><span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m1_l</span><span class='op'>)</span>
-<span class='va'>par_m1_l</span>
-</code></pre>
-</div>
-</details>
-<pre><code># Fixed effects
-
-Parameter                  | Median |         89% CI |     pd | % in ROPE |  Rhat |     ESS
--------------------------------------------------------------------------------------------
-Intercept[1]               |  -3.07 | [-3.16, -2.96] |   100% |        0% | 1.002 | 2142.00
-Intercept[2]               |  -0.02 | [-0.09,  0.05] | 66.92% |      100% | 1.001 | 2674.00
-Intercept[3]               |   2.65 | [ 2.56,  2.74] |   100% |        0% | 1.002 | 2124.00
-Intercept[4]               |   5.32 | [ 5.17,  5.46] |   100% |        0% | 1.002 | 1988.00
-Covid_TimelinePreCOVID     |   0.23 | [ 0.16,  0.30] |   100% |    10.93% | 0.999 | 6996.00
-Covid_TimelineJanFeb       |   0.27 | [ 0.10,  0.46] | 99.08% |    21.27% | 0.999 | 4723.00
-Covid_TimelineEarlyMarch   |   0.20 | [ 0.00,  0.38] | 94.83% |    45.35% | 0.999 | 4368.00
-Covid_TimelineLockdown     |  -0.38 | [-0.63, -0.13] | 99.33% |    10.27% | 1.001 | 4448.00
-Covid_TimelinePostLockdown |  -0.06 | [-0.21,  0.10] | 72.05% |    89.20% | 1.000 | 4652.00</code></pre>
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>par_m1_l</span><span class='op'>)</span>
-</code></pre>
-</div>
-</details>
-<img src="lecture_9_files/figure-html5/unnamed-chunk-23-1.png" width="1152" />
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r">
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
   <span class='fu'><a href='https://rdrr.io/pkg/brms/man/conditional_effects.brmsfit.html'>conditional_effects</a></span><span class='op'>(</span>
     <span class='va'>m1_l</span>,
    <span class='co'># spaghetti = TRUE,</span>
   <span class='co'>#  nsamples = 100,</span>
-    categorical <span class='op'>=</span> <span class='cn'>F</span>,
+    categorical <span class='op'>=</span> <span class='cn'>T</span>,
     prob <span class='op'>=</span> <span class='fl'>0.89</span>,
     re_formula <span class='op'>=</span> <span class='cn'>NA</span>,
   <span class='op'>)</span>,
   points <span class='op'>=</span> <span class='cn'>TRUE</span>,
   point_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.1</span>,
                     width <span class='op'>=</span> <span class='fl'>.02</span><span class='op'>)</span>
-<span class='op'>)</span> <span class='co'>#  note this command controls which facet </span>
+<span class='op'>)</span> <span class='co'>#  note this command controls which facet</span>
 </code></pre>
 </div>
 </details>
-<img src="lecture_9_files/figure-html5/unnamed-chunk-23-2.png" width="1152" />
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r">
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ggeffects</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/ggpredict.html'>ggpredict</a></span><span class='op'>(</span><span class='va'>m1_l</span><span class='op'>)</span>, add.data<span class='op'>=</span> <span class='cn'>F</span>, dot.alpha <span class='op'>=</span> <span class='fl'>.1</span><span class='op'>)</span>
-</code></pre>
-</div>
-</details>
-<pre><code>$Covid_Timeline</code></pre>
-<p><img src="lecture_9_files/figure-html5/unnamed-chunk-23-3.png" width="1152" /></p>
+<p><img src="lecture_9_files/figure-html5/unnamed-chunk-23-1.png" width="1152" /></p>
 </div>
 <h2 id="multiple-response-models">Multiple response models</h2>
 <h3 id="model-equation">Model equation</h3>
@@ -2996,7 +2878,7 @@ Show code
  \sigma^{n_2}\sim exp(1) \\
 \begin{bmatrix}
 \sigma^{n_1} \\
-\sigma^n_2 
+\sigma^{n_2} 
 \end{bmatrix}
 \sim 
 \boldsymbol{RESCOR} \begin{pmatrix}
@@ -3011,8 +2893,7 @@ Show code
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r">
-<span class='co'># Create smaller data frame</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Create smaller data frame</span>
 <span class='va'>snzl</span> <span class='op'>&lt;-</span> <span class='va'>nzl</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Wave</span> <span class='op'>==</span> <span class='fl'>2019</span><span class='op'>)</span> <span class='co'># Only one wave</span>
 
@@ -3022,9 +2903,13 @@ Show code
 <span class='co'># create the data frame</span>
 <span class='va'>sub_nzl</span><span class='op'>&lt;-</span> <span class='va'>snzl</span><span class='op'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Id</span> <span class='op'>%in%</span> <span class='va'>nm</span><span class='op'>)</span>
-
-
-<span class='va'>f_mv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
+</code></pre>
+</div>
+</details>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>f_mv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
   <span class='fu'><a href='https://rdrr.io/pkg/brms/man/mvbind.html'>mvbind</a></span><span class='op'>(</span><span class='va'>Warm.Immigrants</span>, <span class='va'>Warm.Muslims</span><span class='op'>)</span> <span class='op'>~</span>  <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>Hours.News</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span>,
   data <span class='op'>=</span> <span class='va'>sub_nzl</span>,
   file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"models"</span>, <span class='st'>"multivariate_warmth"</span><span class='op'>)</span>, 
@@ -3032,7 +2917,6 @@ Show code
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>f_mv</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <pre><code> Family: MV(gaussian, gaussian) 
   Links: mu = identity; sigma = identity
          mu = identity; sigma = identity 
@@ -3081,18 +2965,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>Coefficient plot</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/mcmc_plot.brmsfit.html'>mcmc_plot</a></span><span class='op'>(</span><span class='va'>f_mv</span>, 
                type <span class='op'>=</span> <span class='st'>"areas"</span>,
                prob <span class='op'>=</span> <span class='fl'>.89</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
-<p><img src="lecture_9_files/figure-html5/unnamed-chunk-25-1.png" width="1152" /></p>
+<p><img src="lecture_9_files/figure-html5/unnamed-chunk-26-1.png" width="1152" /></p>
 </div>
 <h2 id="mediation">Mediation</h2>
 <ul>
@@ -3111,7 +2990,7 @@ Show code
 </code></pre>
 </div>
 </details>
-<p><img src="lecture_9_files/figure-html5/unnamed-chunk-26-1.png" width="1152" /></p>
+<p><img src="lecture_9_files/figure-html5/unnamed-chunk-27-1.png" width="1152" /></p>
 </div>
 <h2 id="assumptions">Assumptions</h2>
 <ul>
@@ -3122,10 +3001,6 @@ Show code
 </ul>
 <h2 id="set-up">Set up</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>path_m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span>
   <span class='va'>mF</span> <span class='op'>~</span> <span class='va'>x</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>c</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>
@@ -3141,14 +3016,9 @@ Show code
 <span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 </div>
 <h2 id="model-form">Model form</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span> <span class='op'>&lt;-</span><span class='va'>nzl</span><span class='op'>$</span><span class='va'>Covid_Timeline</span>
 <span class='va'>mF</span> <span class='op'>&lt;-</span><span class='va'>nzl</span><span class='op'>$</span><span class='va'>HLTH.Fatigue_int</span>
@@ -3157,13 +3027,8 @@ Show code
 <span class='va'>datF</span> <span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>mF</span>, <span class='va'>y</span>,<span class='va'>id</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>path_m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span>
   <span class='va'>mF</span> <span class='op'>~</span> <span class='va'>x</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>c</span> <span class='op'>|</span>  <span class='va'>id</span><span class='op'>)</span>
@@ -3180,7 +3045,6 @@ Show code
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 <pre><code> Family: MV(gaussian, gaussian) 
   Links: mu = identity; sigma = identity
          mu = identity; sigma = identity 
@@ -3242,10 +3106,6 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>post1F</span> <span class='op'>&lt;-</span> <span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/posterior_samples.brmsfit.html'>posterior_samples</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
 <span class='va'>post_marF</span> <span class='op'>&lt;-</span> <span class='va'>post1F</span> <span class='op'>%&gt;%</span> 
@@ -3260,7 +3120,6 @@ Show code
 <span class='co'># posterior_summary(post_marF)</span>
 </code></pre>
 </div>
-</details>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -3272,15 +3131,10 @@ Show code
 </code></pre>
 </div>
 </details>
-<p><img src="lecture_9_files/figure-html5/unnamed-chunk-31-1.png" width="1152" /></p>
+<p><img src="lecture_9_files/figure-html5/unnamed-chunk-32-1.png" width="1152" /></p>
 </div>
 <h2 id="hypothesis">Hypothesis</h2>
-<h2 id="excercise-march-vs.-l4">Excercise: March vs. L4</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>h1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
   a <span class='op'>=</span> <span class='st'>"mF_xLockdown  = 0"</span>,
@@ -3295,34 +3149,28 @@ Show code
 <span class='op'>)</span>
 </code></pre>
 </div>
-</details>
-<p><img src="lecture_9_files/figure-html5/unnamed-chunk-32-1.png" width="1152" /></p>
+<p><img src="lecture_9_files/figure-html5/unnamed-chunk-33-1.png" width="1152" /></p>
 </div>
 <h2 id="bonus-latent-profile-analysis">Bonus: Latent Profile Analysis</h2>
 <h2 id="latent-profile-analysis">Latent Profile Analysis</h2>
+<p>Distinct profiles or clusters… tbc…</p>
+<!-- # nzf<-nz %>% -->
+<!-- #   select( FeelHopeless,  -->
+<!-- #           FeelDepressed, -->
+<!-- #           FeelRestless,  -->
+<!-- #           EverythingIsEffort, -->
+<!-- #           FeelWorthless,  -->
+<!-- #           FeelNervous) %>% -->
+<!-- #   mutate_if(., is.factor, ~ as.numeric(as.integer(.x))) -->
+<!-- # convert to standard deviation units -->
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://data-edu.github.io/tidyLPA/'>tidyLPA</a></span><span class='op'>)</span>
-<span class='co'># nzf&lt;-nz %&gt;%</span>
-<span class='co'>#   select( FeelHopeless, </span>
-<span class='co'>#           FeelDepressed,</span>
-<span class='co'>#           FeelRestless, </span>
-<span class='co'>#           EverythingIsEffort,</span>
-<span class='co'>#           FeelWorthless, </span>
-<span class='co'>#           FeelNervous) %&gt;%</span>
-<span class='co'>#   mutate_if(., is.factor, ~ as.numeric(as.integer(.x)))</span>
 
-<span class='co'># convert to standard deviation units</span>
 
 <span class='va'>out</span><span class='op'>&lt;-</span><span class='va'>nzl</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Hours.Internet</span>, 
           <span class='va'>Hours.Exercise</span>,
-       <span class='co'>#   Hours.CompGames, </span>
-       <span class='co'>#   Hours.News,</span>
           <span class='va'>Hours.Work</span><span class='op'>)</span><span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_all</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='va'>scale</span><span class='op'>)</span>
 
@@ -3332,10 +3180,9 @@ Show code
     <span class='fu'><a href='https://data-edu.github.io/tidyLPA/reference/plot_profiles.html'>plot_profiles</a></span><span class='op'>(</span>add_line <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
-</details>
-<p><img src="lecture_9_files/figure-html5/unnamed-chunk-33-1.png" width="1152" /></p>
+<p><img src="lecture_9_files/figure-html5/unnamed-chunk-34-1.png" width="1152" /></p>
 </div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

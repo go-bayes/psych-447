@@ -21,7 +21,6 @@ bibliography: bib.bib
 knitr::include_graphics("op2.png")
 ```
 
-
 ```{r setup, include=FALSE}
 # setup
 knitr::opts_chunk$set(
@@ -215,46 +214,41 @@ nzl <- nz_cr %>%
 glimpse(nzl)
 ```
 
-
 ## Objectives
 
 To develop the following skills:
 
-  - modelling ordinal reponses
-  - modelling monotonic predictors
-  - estimating predictors of the variance as well as of the mean response.
-  - estimating group-level (aka "random") intercepts. 
-  - estimating multivariate outcomes (i.e. two or more)
-  - estimating a mediation model 
-  - interpret and report the results of these models using graphical methods.
+-   modelling ordinal (cumulative logit) responses
+-   modelling ordinal (monotonic) predictors
+-   distributional models in which we estimate predictors for the variance as well as for the mean response.
+-   group-level intercept models (aka "random" intercept models).
+-   multiple response models estimating multivariate outcomes (i.e. two or more)
+-   mediation models
+-   interpret and report the results for these models using graphical methods.
 
+## Ordinal responses
 
-## Ordinal responses 
-
-An ordinal model is a cumulative logistic model. Instead of binary outcomes, we assume there are n > 2 outcomes \cite{Burkner2019-ie,Hadfield2012-hi}. 
-
+An ordinal model is a cumulative logistic model. Instead of binary outcomes, we assume there are n \> 2 outcomes \cite{Burkner2019-ie,Hadfield2012-hi}.
 
 <!-- In our NZ-jitter dataset, the Kessler-6 has five ordinal response options for indicating frequency of feeling distress during the past 30 days: "None Of The Time", "A Little Of The Time", "Some Of The Time", "Most Of The Time", "All Of The Time" hence six thresholds.  -->
 
 <!-- The Kessler-6 distress indicators are: "Feeling Hopelessness;" "Feeling so Depressed Nothing Could Cheer You Up;" "Feeling Nervous or Fidgety;" "Feeling Everything is an Effort;" "Feeling Worthless;" "Feeling Nervous." We simultaneously modelled each of these six outcomes within a single model.  -->
 
-Consider the `HLTH.Fatigue` indicator from the NZAVS jitter dataset.  The item reads:
-
+Consider the `HLTH.Fatigue` indicator from the NZAVS jitter dataset. The item reads:
 
 > "During the past 30 days have you felt fatigue... "
 
-and the repsonses are:
+and the responses are:
 
-  > "None Of The Time", 
+> "None Of The Time",
 
-  > "A Little Of The Time", 
+> "A Little Of The Time",
 
-  > "Some Of The Time",
+> "Some Of The Time",
 
-  > "Most Of The Time", 
-  
-  > "All Of The Time." 
+> "Most Of The Time",
 
+> "All Of The Time."
 
 A priori, we might think that Fatigue is better approached as an ordered categorical indicator rather than as a continuous indicator:
 
@@ -262,49 +256,43 @@ A priori, we might think that Fatigue is better approached as an ordered categor
 hist(nzl$HLTH.Fatigue)
 ```
 
-
+### Model equation for an ordinal response model
 
 We can write the model equation for an ordinal (or cumulative logistic) model of Fatigue s follows
 
 $$\begin{align}
 y_{i}^c \sim \text{Ordered}(p_i) \\
 \text{CumLogit}(\boldsymbol{p_i}) = \alpha^c +\beta X_i \\
-\alpha^c \sim \text{StudentT}(3,0,10)\\
+\alpha^c \sim Normal(0,10)\\
 \boldsymbol{\beta}\sim \text{Normal}(0,1) 
 \end{align}$$
 
+For an ordinal response model, where there are $R$ responses for our outcome indicator, there are $C = R-1, c = 1\dots C$ thresholds or "cutpoints."
 
-
-For an ordinal response model, where there are $R$ responses for our outcome indiator, there are $C = R-1, c = 1\dots C$  thresholds. 
-
-As with binary logistic regression, residuals for cumulative logistic models are not identified, so are fixed to 1. $\alpha^c$ denotes the $c^{th}$ intercept estimated in the model. Where the lowest response level is modeled as zero, hence four intercepts are estimated. $\mathbf{\beta}$ is the esitmate for the$X$ parameter measured on $i...N$ individuals.  In this case the time categories of the `Covid_Timeline` indicator.
-
+As with binary logistic regression, residuals for cumulative logistic models are not identified, so are fixed to 1. $\alpha^c$ denotes the $c^{th}$ intercept estimated in the model. Where the lowest response level is modeled as zero, hence four intercepts are estimated. $\mathbf{\beta}$ is the esitmate for the$X$ parameter measured on $i...N$ individuals. In this case the time categories of the `Covid_Timeline` indicator.
 
 ```{r cache = TRUE}
-system.time(
-  m1 <- brm(
-    bf(HLTH.Fatigue_int  ~
-      Covid_Timeline_cr),
-    family = cumulative(link = "logit"),
-    data = nz,
-    file = here::here("models", "ordinal_fatigue"),
-    silent = FALSE
-  )
+m1 <- brm(
+  bf(HLTH.Fatigue_int  ~
+       Covid_Timeline_cr),
+  family = cumulative(link = "logit"),
+  data = nz,
+  file = here::here("models", "ordinal_fatigue"),
+  silent = FALSE
 )
-par_m1 <-parameters::model_parameters(m1)
+
+par_m1 <- parameters::model_parameters(m1)
 par_m1
 plot(par_m1)
 ```
 
-Hre we can see that the log-odds of Fatigue dropped during Lockdown.  But how did Fatigue drop? 
+Hre we can see that the log-odds of Fatigue dropped during Lockdown. But how exactly did Fatigue drop?
 
-As with logistic regression, the coefficients are *not* obvious. We need to graph the predicted outcomes at specific values. 
-
+As with logistic regression, the coefficients here are not obvious. To interpret results, we should graph the predicted outcomes at specific values.
 
 ### Interpreting results of an ordinal model using graphical methods
 
 To understand what is happening, we plot all the individual intercepts by setting `categorical = TRUE`. Following McElreath's Statistical Rethinking, we will predict outcomes using the .89 probability credible interval:
-
 
 ```{r}
 plot(
@@ -323,22 +311,18 @@ plot(
 ) 
 ```
 
-Here we see the separation occuring during `Lockdown` as compared with the baseline `PreCOVID`
-
+Here we see the separation occurring during `Lockdown` as compared with the baseline `PreCOVID`
 
 This is another method for graphing, where the individual facets denote our expected response thresholds:
 
-
-```{r eval = FALSE}
+```{r}
 plot(ggeffects::ggpredict(
   m1, 
   effects = "Covid_Timeline_cr")
   )
 ```
 
-
 Finally, for the purposes of exploration, we can obtain an average response using the BRMS `conditional_effects` function, with the setting `categorical = FALSE`
-
 
 ```{r}
 plot(
@@ -357,29 +341,22 @@ plot(
 ) 
 ```
 
-
 ## Ordinal (or monotonic) predictors
 
-Reference, here (https://psyarxiv.com/9qkhj/)  also the BRMS documentation [here]( https://cran.r-project.org/web/packages/brms/vignettes/brms_monotonic.html)
+Reference, here (<https://psyarxiv.com/9qkhj/>) also the BRMS documentation [here](https://cran.r-project.org/web/packages/brms/vignettes/brms_monotonic.html)
 
 > A predictor, which we want to model as monotonic (i.e., having a monotonically increasing or decreasing relationship with the response), must either be integer valued or an ordered factor. As opposed to a continuous predictor, predictor categories (or integers) are not assumed to be equidistant with respect to their effect on the response variable. Instead, the distance between adjacent predictor categories (or integers) is estimated from the data and may vary across categories.
 
-
 ### Model equation for a monotonic predictor model:
-
 
 For an ordinal predictor model, where there are $R$ indicator responses, there are $C = R-1, c = 1\dots C$ thresholds to estimate for the the ordered reponses predictors
 
-- $b^c$ locates the direction and size of effect, as with an ordinary regression solution. We consider  $b^c$ as the expected average difference between two adjacent categories of the ordinal predictor.
-- $\zeta^c$ locates the normalized distances between consecutive predictor categories, producing the shape of the monotonic effect
+-   $b^c$ locates the direction and size of effect, as with an ordinary regression solution. We consider $b^c$ as the expected average difference between two adjacent categories of the ordinal predictor.
+-   $\zeta^c$ locates the normalized distances between consecutive predictor categories, producing the shape of the monotonic effect
 
-
-
-$$g(y_i) = \alpha + b^c \zeta^c $$ 
-
+$$g(y_i) = \alpha + b^c \zeta^c $$
 
 Suppose we wanted to assess whether fatigue predicts psychological distress. We'll use a smaller sub-sample of the NZAVS jitter dataset to speed up computing time:
-
 
 ```{r cache = TRUE}
 # Create small sample to improve computing time
@@ -392,10 +369,9 @@ sub_nzl <- snzl %>%
   filter(Id %in% nm)
 ```
 
+First we estimate a model without a monotonic effect:
 
-First we estimate a model without a monotonic effect: 
-
-```{r cacht = TRUE}
+```{r cacht = TRUE, code_folding=FALSE}
 # ordinary predictor
 mo_0 <- brm(
   bf(KESSLER6sum  ~ HLTH.Fatigue,
@@ -413,10 +389,9 @@ par_mo_0
 plot(par_mo_0) + labs(title = "Distress on Fatigue, no monotonic effects")
 ```
 
+The expected increase in distress from a one unit increase in Fatigue is .45 units of Kessler 6 distress on the log scale.
 
-The expected increase in distress from a one unit increase in Fatige is .45 units of Kessler 6 distress on the log scale. 
-
-To translate this expectation to the datascale recall that we must exponentiate our result
+To translate this expectation to the data scale recall that we must exponentiate our result.
 
 A one unit change in fatigue at the intercept leads to an expected change in distress of:
 
@@ -424,7 +399,7 @@ A one unit change in fatigue at the intercept leads to an expected change in dis
 exp(.75 + .45)
 ```
 
-We plot the entire range of the response scale: 
+We plot the entire range of the response scale:
 
 ```{r}
 p_mo_0 <- plot(
@@ -436,10 +411,9 @@ p_mo_0 <- plot(
 )[[1]]
 ```
 
-
 We next model the relationship of Fatigue on Distress by thinking of Fatigue as as a monotonic predictor, using the `mo` command, as follows:
 
-```{r cache = TRUE}
+```{r cache = TRUE, code_folding=FALSE}
 mo_1 <- brm(
   bf(KESSLER6sum  ~ mo(HLTH.Fatigue),
      family = "poisson"),
@@ -455,7 +429,7 @@ par_mo_1
 plot(par_mo_1) + labs(title = "Distress on Fatigue, monotonic effects") 
 ```
 
-Note that we have 4 x betas for Fatigue, which each threshold of Fatigue receiving its own beta. 
+Note that we have 4 x betas for Fatigue. What do these mean?
 
 Graphing the results:
 
@@ -465,11 +439,12 @@ p_mo_1 <- plot(
   points = TRUE,
   point_args = list(alpha = 0.1,
                     width = .2)
-)[[1]] + labs(title = "Predicted Distress by Fatigue: monotonic effects model")
-p_mo_1
+)[[1]] 
 ```
 
-Compare our models, in this instance it appears that we do not require predicting Distress by Fatigue using monotonic effects:
+The monotonic predictor, here, doesn't look to make all that much a difference.
+
+We can formally compare the two models:
 
 ```{r cache = TRUE}
 compare_mo_0 <- add_criterion(mo_0, "loo")
@@ -480,7 +455,9 @@ compare_mo <-
 compare_mo
 ```
 
-We can visually inspect the posterior predictions, and they not look too different: 
+No real difference.
+
+And can visually inspect the posterior predictions, and they not look too different:
 
 Without monotonic predictors
 
@@ -488,26 +465,23 @@ Without monotonic predictors
 brms::pp_check(mo_0)
 ```
 
-
-With monotonic predictors 
+With monotonic predictors
 
 ```{r}
 brms::pp_check(mo_1)
 ```
 
-The reason that we can get away without a monotonic predictor here is that for a poisson model, we are exponentiating the predictions of our regression coefficients. 
+Again, no real difference. However, our model isn't fitting well. What would you do to improve the model fit?
 
-However in other instances a monotonic predictor might be preferred. There are no defaults.
-
-Modelling requires a combination of reasoning and art. A modern data scientist knows there are no back-of-the-book answers instructing us what to do. Rather, we must be explicit about our decisions. 
-
+There are no default strategies. Modelling requires a combination of reasoning and art.
 
 ## Distributional model
 
-Paul Bruckner, the author of the BRMS package, offers the following distributional model (see the explanation {here](https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html))
+A distributional model predicts the variance as well as the mean of a response.
 
+Paul Bruckner, the author of the BRMS package, offers the following simulated data for a distributional model (see the explanation {here](<https://cran.r-project.org/web/packages/brms/vignettes/brms_distreg.html>))
 
-```{r}
+```{r code_folding=FALSE}
 group <- rep(c("treat", "placebo"), each = 30)
 symptom_post <-
   c(rnorm(30, mean = 1, sd = 2), rnorm(30, mean = 0, sd = 1))
@@ -515,9 +489,9 @@ dat1 <- data.frame(group, symptom_post)
 head(dat1)
 ```
 
-Note that you can fit a model in which the variation in reponse, and not merely the average response, is estimated. Paul does so as follows:
+Fitting the model we have:
 
-```{r cache = TRUE, message = FALSE, warnings = FALSE}
+```{r cache = TRUE, message = FALSE, warnings = FALSE, code_folding=FALSE}
 fit1 <- brm(bf(symptom_post ~ group,
                sigma ~ group),
             data = dat1,
@@ -531,8 +505,6 @@ par_fit1
 plot(par_fit1) 
 ```
 
-
-
 Here we have the prediction plot
 
 ```{r}
@@ -544,9 +516,13 @@ We can see the variance in the treatment group:
 <!-- BRMS allows us to estemate whether both parameters (the mean) and the standard deviations of the mean, differ: -->
 
 <!-- ```{r} -->
+
 <!-- hyp <- c("exp(sigma_Intercept) = 0", -->
+
 <!--          "exp(sigma_Intercept + sigma_grouptreat) = 0") -->
+
 <!-- hypothesis(fit1, hyp) -->
+
 <!-- ``` -->
 
 <!-- Both the mens, and the variances, differ.  -->
@@ -554,25 +530,30 @@ We can see the variance in the treatment group:
 <!-- We can graph these differences: -->
 
 <!-- ```{r} -->
+
 <!-- hyp <- "exp(sigma_Intercept + sigma_grouptreat) > exp(sigma_Intercept)" -->
+
 <!-- (hyp <- hypothesis(fit1, hyp)) -->
+
 <!-- plot(hyp) -->
+
 <!-- ``` -->
 
-When might this model apply? 
+When might this model apply?
 
 > Suppose we have two groups of patients: One group receives a treatment (e.g., an antidepressive drug) and another group receives placebo. Since the treatment may not work equally well for all patients, the symptom variance of the treatment group may be larger than the symptom variance of the placebo group after some weeks of treatment. (Paul Bruckner, BRMS vignette)
 
-
-
 ## Random intercept model (clustering)
 
-See: https://m-clark.github.io/mixed-models-with-R/
+Typically our model has clustering. Often this clustering arises from dependencies owning to unmeasured grouping factors, students within schools, or repeated measures within students.
 
+However, recall a fundamental assumption of regression:
+
+> The simple regression model assumes that the errors from the prediction line are independent, an assumption that is violated in time series, spatial, and multilevel settings [@gelman_regression_2020, p.153]
 
 Let's look at environmental concern as predicted by religious group membership:
 
-```{r}
+```{r code_folding=FALSE}
 # 506 weekss betwen 530 June 2009 and 15 March 2019
 nzl_11 <- nzl %>%
   dplyr::filter(Wave == 2019)
@@ -590,7 +571,6 @@ summary(ri_relgroups)
 
 ### Model equation for a random intercept model
 
-
 $$ g(y_{ig}) \sim N(\mu_{ig}, \sigma)\\
 \mu_i = \boldsymbol{\alpha} + \beta x_{ig}\\
  \boldsymbol{\alpha} = \alpha_o + \alpha_g\\
@@ -600,21 +580,17 @@ $$ g(y_{ig}) \sim N(\mu_{ig}, \sigma)\\
   \sigma \sim Exp(1)
 $$
 
-
-
-
 We can calculate the intraclass correlation coefficient for religious groups, which is the ration of group variance devited by the total variance or in this case:
 
 $$\frac{\sigma^2_{religious groups}}{\sigma^2_{religious groups} + \sigma^2_{indiviuals}}$$
 
-```{r}
+```{r code_folding=FALSE}
 performance::icc(ri_relgroups)
 ```
 
 The authors of the performance package write (performance package documentation)
 
-> While the adjusted ICC only relates to the random effects, the conditional ICC also takes the fixed effects variances into account (see Nakagawa et al. 2017). Typically, the adjusted ICC is of interest when the analysis of random effects is of interest. 
-
+> While the adjusted ICC only relates to the random effects, the conditional ICC also takes the fixed effects variances into account (see Nakagawa et al. 2017). Typically, the adjusted ICC is of interest when the analysis of random effects is of interest.
 
 We can plot the group-level variances:
 
@@ -622,15 +598,15 @@ We can plot the group-level variances:
 par_ri_relgroups <-parameters::model_parameters(ri_relgroups,
                                              effects = "random")
 plot(par_ri_relgroups,   sort = TRUE) 
-````
+```
 
+References: See: <https://m-clark.github.io/mixed-models-with-R/>
 
 ## Random intercept: Fatigue
 
-With longitudinal data, we have repeated measures within individuals. This leads to clustering. We can adjust for this clustering by including group-level intercept for individuals. 
+With longitudinal data, we have repeated measures within individuals. This leads to clustering. We can adjust for this clustering by including group-level intercept for individuals.
 
-Let's return to the Fatigue ~ Covid_Timeline model. 
-
+Let's return to the Fatigue \~ Covid_Timeline model.
 
 $$\begin{align}
 y_{ij}^c \sim \text{Ordered}(\mu_{ij}^c) \\
@@ -642,11 +618,7 @@ y_{ij}^c \sim \text{Ordered}(\mu_{ij}^c) \\
 \boldsymbol{\beta}\sim \text{Normal}(0,1) \\
 \end{align}$$
 
-
-
-
-```{r}
-system.time(
+```{r code_folding=FALSE}
   m1_l <- brm(
     bf(HLTH.Fatigue_int  ~
       Covid_Timeline + (1|Id),
@@ -655,41 +627,28 @@ system.time(
     file = here::here("models", "ordinal_fatigue_longitudinal"),
     silent = FALSE
   )
-)
 summary(m1_l)
 ```
 
+We graph the results
 
 ```{r cache = TRUE}
-par_m1_l <-parameters::model_parameters(m1_l)
-par_m1_l
-plot(par_m1_l)
-
 plot(
   conditional_effects(
     m1_l,
    # spaghetti = TRUE,
   #  nsamples = 100,
-    categorical = F,
+    categorical = T,
     prob = 0.89,
     re_formula = NA,
   ),
   points = TRUE,
   point_args = list(alpha = 0.1,
                     width = .02)
-) #  note this command controls which facet 
-
-plot(ggeffects::ggpredict(m1_l), add.data= F, dot.alpha = .1)
+) #  note this command controls which facet
 ```
 
-
-
-
-
-## Multiple response models 
-
-
-
+## Multiple response models
 
 ### Model equation
 
@@ -703,7 +662,7 @@ $$ g(y^n_{ig}) \sim N(\mu^n_{ig}, \sigma^n)\\
  \sigma^{n_2}\sim exp(1) \\
 \begin{bmatrix}
 \sigma^{n_1} \\
-\sigma^n_2 
+\sigma^{n_2} 
 \end{bmatrix}
 \sim 
 \boldsymbol{RESCOR} \begin{pmatrix}
@@ -713,9 +672,7 @@ $$ g(y^n_{ig}) \sim N(\mu^n_{ig}, \sigma^n)\\
 \boldsymbol{RESCOR}\sim \text{LKJcorr}(2)
 $$
 
-
 ```{r}
-
 # Create smaller data frame
 snzl <- nzl %>%
   dplyr::filter(Wave == 2019) # Only one wave
@@ -726,8 +683,9 @@ nm <- sample(snzl$Id, size = 300) # randomly select a smaller sample of individu
 # create the data frame
 sub_nzl<- snzl%>%
  filter(Id %in% nm)
+```
 
-
+```{r code_folding=FALSE}
 f_mv <- brm(
   mvbind(Warm.Immigrants, Warm.Muslims) ~  log(Hours.News + 1),
   data = sub_nzl,
@@ -738,17 +696,13 @@ summary(f_mv)
 
 Coefficient plot
 
-
-```{r}
+```{r code_folding=FALSE}
 brms::mcmc_plot(f_mv, 
                type = "areas",
                prob = .89)
 ```
 
-
-
-
-##  Mediation
+## Mediation
 
 -   Manipulate X, measure M and Y
 -   Regress M on X; Y on X and M
@@ -766,10 +720,9 @@ bmlm::mlm_path_plot(xlab = "Condition\n(X)",
 -   M is measured without error
 -   Y and M residuals are not correlated [@vuorre2020multilevel]
 
-
 ## Set up
 
-```{r echo = TRUE, eval = FALSE}
+```{r echo = TRUE, eval = FALSE, code_folding=FALSE}
 path_m <- bf(
   mF ~ x + (1 | c | id)
   )
@@ -784,10 +737,9 @@ m1 <- brm(
 )
 ```
 
+## Model form
 
-## Model form 
-
-```{r echo = FALSE}
+```{r echo = FALSE, code_folding=FALSE}
 x <-nzl$Covid_Timeline
 mF <-nzl$HLTH.Fatigue_int
 y<- nzl$KESSLER6sum
@@ -795,7 +747,7 @@ id <-nzl$Id
 datF <-data.frame(x,mF, y,id)
 ```
 
-```{r echo = FALSE}
+```{r echo = FALSE, code_folding=FALSE}
 path_m <- bf(
   mF ~ x + (1 | c |  id)
   )
@@ -811,9 +763,7 @@ f1 <- brm(
 summary(f1)
 ```
 
-
-
-```{r echo=FALSE, cache = FALSE}
+```{r echo=FALSE, cache = FALSE, code_folding=FALSE}
 post1F <- brms::posterior_samples(f1)
 post_marF <- post1F %>% 
   transmute(
@@ -827,16 +777,13 @@ post_marF <- post1F %>%
 # posterior_summary(post_marF)
 ```
 
-
 ```{r}
 mcmc_intervals(post_marF)
 ```
 
-## Hypothesis 
+## Hypothesis
 
-## Excercise: March vs. L4
-
-```{r}
+```{r, code_folding=FALSE}
 h1 <- c(
   a = "mF_xLockdown  = 0",
   b = "y_mF = 0",
@@ -855,24 +802,33 @@ plot(
 
 ## Latent Profile Analysis
 
-```{r  cache = TRUE}
-library(tidyLPA)
-# nzf<-nz %>%
-#   select( FeelHopeless, 
-#           FeelDepressed,
-#           FeelRestless, 
-#           EverythingIsEffort,
-#           FeelWorthless, 
-#           FeelNervous) %>%
-#   mutate_if(., is.factor, ~ as.numeric(as.integer(.x)))
+Distinct profiles or clusters... tbc...
 
-# convert to standard deviation units
+<!-- # nzf<-nz %>% -->
+
+<!-- #   select( FeelHopeless,  -->
+
+<!-- #           FeelDepressed, -->
+
+<!-- #           FeelRestless,  -->
+
+<!-- #           EverythingIsEffort, -->
+
+<!-- #           FeelWorthless,  -->
+
+<!-- #           FeelNervous) %>% -->
+
+<!-- #   mutate_if(., is.factor, ~ as.numeric(as.integer(.x))) -->
+
+<!-- # convert to standard deviation units -->
+
+```{r  cache = TRUE, code_folding=FALSE}
+library(tidyLPA)
+
 
 out<-nzl %>%
   dplyr::select(Hours.Internet, 
           Hours.Exercise,
-       #   Hours.CompGames, 
-       #   Hours.News,
           Hours.Work)%>%
   dplyr::mutate_all(., scale)
 
