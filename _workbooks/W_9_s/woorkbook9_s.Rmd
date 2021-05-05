@@ -228,7 +228,7 @@ Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucv
 <!-- ``` -->
 
 
-2. Write a brief report explaining the predictors of stability and change in employment security from 2018-2020 (Waves 10/11 of the the NZAVS) 
+2. Write a brief report explaining the predictors of stability and change in employment security  (`Emp.JobSecure`) from 2018-2020 (Waves 10/11 of the the NZAVS Jitter dataset). 
 
 <!-- ```{r} -->
 <!-- library(splines) -->
