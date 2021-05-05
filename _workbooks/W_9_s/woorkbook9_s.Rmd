@@ -219,13 +219,21 @@ Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucv
 1. Write brief report that in which you estimating demographic and ideological  predictors of attitudes to government surveillance `Issue.GovtSurveillance` and attitudes to `Issue.RegulateAI` in New Zealand in 2018
 
 
-<!-- ```{r} -->
-<!-- nz$Issue.RegulateAI -->
-<!-- gv <- bf(Issue.GovtSurveillance ~ yearS +  (1|p|Id)) -->
-<!-- ai <- bf(Issue.RegulateAI ~ yearS + (1|p|Id)) -->
-<!-- fit2 <- brm(gv + ai, data = nz2018) -->
-<!-- summary(fit2) -->
-<!-- ``` -->
+```{r}
+nz2018['Household.INC_s'] <- as.data.frame( scale(nz2018$Household.INC) )
+nz2018['Age_s'] <- as.data.frame( scale(nz2018$Age) )
+nz2018['Hours.Internet_log'] <- as.data.frame( log(nz2018$Hours.Internet + 1) )
+nz2018['Issue.GovtSurveillance_s'] <- as.data.frame( log(nz2018$Issue.GovtSurveillance + 1) )
+nz2018['Issue.RegulateAI_s'] <- as.data.frame( log(nz2018$Issue.RegulateAI + 1) )
+nz2018['Pol.Orient_s'] <- as.data.frame( scale(nz2018$Pol.Orient) )
+nz2018['Edu_s'] <- as.data.frame( scale(nz2018$Edu) )
+
+gv <- bf(Issue.GovtSurveillance ~ Age_s + Male + Edu_s + Household.INC_s +  Pol.Orient_s)
+ai <- bf(Issue.RegulateAI ~ Age_s + Male + Edu_s + Household.INC_s +  Pol.Orient_s)
+fit2 <- brm(gv + ai, data = nz2018, 
+            file = here::here("models","workbook9_govsec_ai"))
+summary(fit2)
+```
 
 
 2. Write a brief report explaining the predictors of stability and change in employment security  (`Emp.JobSecure`) from 2018-2020 (Waves 10/11 of the the NZAVS Jitter dataset). 

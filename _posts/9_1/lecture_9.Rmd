@@ -261,8 +261,8 @@ hist(nzl$HLTH.Fatigue)
 We can write the model equation for an ordinal (or cumulative logistic) model of Fatigue s follows
 
 $$\begin{align}
-y_{i}^c \sim \text{Ordered}(p_i) \\
-\text{CumLogit}(\boldsymbol{p_i}) = \alpha^c +\beta X_i \\
+y_{i}\sim \text{Ordered}(p_i) \\
+\text{CumLogit}(\boldsymbol{p_i}) = \alpha^c +\beta x_i \\
 \alpha^c \sim Normal(0,10)\\
 \boldsymbol{\beta}\sim \text{Normal}(0,1) 
 \end{align}$$
@@ -354,7 +354,7 @@ For an ordinal predictor model, where there are $R$ indicator responses, there a
 -   $b^c$ locates the direction and size of effect, as with an ordinary regression solution. We consider $b^c$ as the expected average difference between two adjacent categories of the ordinal predictor.
 -   $\zeta^c$ locates the normalized distances between consecutive predictor categories, producing the shape of the monotonic effect
 
-$$g(y_i) = \alpha + b^c \zeta^c $$
+$$g(y_i) = \alpha + b^c \zeta^c x_i$$
 
 Suppose we wanted to assess whether fatigue predicts psychological distress. We'll use a smaller sub-sample of the NZAVS jitter dataset to speed up computing time:
 
@@ -572,7 +572,7 @@ summary(ri_relgroups)
 ### Model equation for a random intercept model
 
 $$ g(y_{ig}) \sim N(\mu_{ig}, \sigma)\\
-\mu_i = \boldsymbol{\alpha} + \beta x_{ig}\\
+\mu_{ig} = \boldsymbol{\alpha} + \beta x_{i}\\
  \boldsymbol{\alpha} = \alpha_o + \alpha_g\\
  \alpha_o \sim N(3.5,10)\\
  \alpha_g \sim N(0,\sigma_g)\\
@@ -609,8 +609,8 @@ With longitudinal data, we have repeated measures within individuals. This leads
 Let's return to the Fatigue \~ Covid_Timeline model.
 
 $$\begin{align}
-y_{ij}^c \sim \text{Ordered}(\mu_{ij}^c) \\
-\text{CumLogit}(\mu_{ij}^c) = \boldsymbol{\alpha}^c +\beta X_i \\
+y_{ij} \sim \text{Ordered}(\mu_{ij}) \\
+\text{CumLogit}(\mu_{ij}) = \boldsymbol{\alpha}^c +\beta X_i \\
 \boldsymbol{\alpha}^c  = \alpha_{0}^c +\alpha_j\\
 \alpha_{0}^c \sim N(0,10)\\
 \alpha_j \sim N(0,\sigma_j)\\
@@ -650,26 +650,27 @@ plot(
 
 ## Multiple response models
 
-### Model equation
+### Model equation (imagining a random intercept multiple response model)
 
-$$ g(y^n_{ig}) \sim N(\mu^n_{ig}, \sigma^n)\\
-\mu^n_i = \boldsymbol{\alpha^n} + \beta^n x_{ig}\\
+$$ g(y^n_{ij}) \sim N(\mu_{ij}^n, \sigma^n)\\
+\mu_{ij}^n = \boldsymbol{\alpha^n} + \beta^n x_{i}\\
  \boldsymbol{\alpha} = \alpha_o + \alpha_g\\
  \alpha^n_o \sim N(3.5,10)\\
  \alpha^n_g \sim N(0,\sigma_g^n)\\
  \sigma_g^n \sim exp(1)\\
  \sigma^{n_1} \sim exp(1)\\
  \sigma^{n_2}\sim exp(1) \\
+\sigma\sim exp(1) \\
 \begin{bmatrix}
 \sigma^{n_1} \\
 \sigma^{n_2} 
 \end{bmatrix}
 \sim 
-\boldsymbol{RESCOR} \begin{pmatrix}
+\boldsymbol{R} \begin{pmatrix}
 1 &  \sigma^{n_1}\sigma^{n_2} \rho    \\
 \sigma^{n_1}\sigma^{n_2}\rho   &  1
 \end{pmatrix}\\
-\boldsymbol{RESCOR}\sim \text{LKJcorr}(2)
+\boldsymbol{R}\sim \text{LKJcorr}(2)
 $$
 
 ```{r}
