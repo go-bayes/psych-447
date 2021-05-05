@@ -69,6 +69,8 @@ nz_0 <- as.data.frame(readr::read_csv2(
   )
 ))
 
+
+
 # to relevel kessler 6 variables
 f <-
   c(
