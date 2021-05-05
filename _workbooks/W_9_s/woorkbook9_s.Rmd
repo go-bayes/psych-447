@@ -1,0 +1,252 @@
+---
+title: "Week 9 workbook and solutions"
+description: |
+author:
+  - name: Joseph Bulbulia
+    url: https://josephbulbulia.netlify.app
+    affiliation: Victoria University of Wellington
+    affiliation_url: https://www.wgtn.ac.nz
+    orcid_id: 0000-0002-5861-2056
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    highlight: kate
+    code_folding: true
+---
+
+Import the jittered NZAVS dataset
+
+
+```{r setup, include=FALSE}
+# setup
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  layout = "l-body-outset",
+  fig.width= 12,
+  fig.height= 10,
+  collapse =TRUE,
+  R.options = list(width = 60)
+)
+```
+```{r  libraries}
+### Libraries
+library("tidyverse")
+library("patchwork")
+library("lubridate")
+library("kableExtra")
+library("gtsummary")
+library("lubridate")
+library("equatiomatic")
+library("ggdag")
+library("brms")
+library("rstan")
+library("rstanarm")
+library("bayesplot")
+library("easystats")
+library("kableExtra")
+library("broom")
+library("tidybayes")
+library("bmlm")
+# if (!require(tidyLPA)) {
+#   install.packages("tidyLPA")
+# }
+# rstan options
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores ())
+theme_set(theme_classic())
+
+```{r  nzdata, cache=TRUE}
+# read data
+# read data
+
+
+nz_0 <- as.data.frame(readr::read_csv2(
+  url(
+    "https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv"
+  )
+))
+
+# to relevel kessler 6 variables
+f <-
+  c(
+    "None Of The Time",
+    "A Little Of The Time",
+    "Some Of The Time",
+    "Most Of The Time",
+    "All Of The Time"
+  )
+
+
+
+# get data into shape
+nz_cr <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  dplyr::mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  dplyr::mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  dplyr::mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  dplyr::mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  dplyr::mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(male_id = as.factor(Male)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) %>%
+  dplyr::mutate(
+    FeelWorthless_int = as.integer(FeelWorthless),
+    FeelNervous_int =  as.integer(FeelNervous),
+    FeelHopeless_int =  as.integer(FeelHopeless),
+    EverythingIsEffort_int =  as.integer(EverythingIsEffort),
+    FeelRestless_int =  as.integer(FeelRestless),
+    FeelDepressed_int =  as.integer(FeelDepressed),
+    HLTH.Fatigue_int = as.integer(HLTH.Fatigue + 1)
+  ) %>%
+  dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm = TRUE)) %>%
+  dplyr::mutate(KESSLER6sum = as.integer(KESSLER6sum))
+
+## 2018 only data
+nz2018 <- nz_cr %>%
+  dplyr::filter(Wave == 2018)
+
+## 2019 only timeline
+# Relevel covid timeline 2019
+ord_dates_class_2019_only <- c("PreCOVID",
+                               "JanFeb",
+                               "EarlyMarch",
+                               "Lockdown",
+                               "PostLockdown")
+
+nz2019 <- nz_cr %>%
+  dplyr::filter(YearMeasured == 1) %>%
+  dplyr::filter(Wave == 2019) %>%
+  dplyr::group_by(Id) %>%
+  dplyr::ungroup(Id) %>%
+  dplyr::mutate(Covid_Timeline_cr =
+                  as.factor(ifelse(
+                    TSCORE %in% 3896:3921,
+                    # feb 29 - march 25th
+                    "EarlyMarch",
+                    ifelse(
+                      TSCORE %in% 3922:3954,
+                      "Lockdown",
+                      #march 26- Mon 27 April 2020
+                      ifelse(
+                        TSCORE > 3954,
+                        # after april 27th 20202
+                        "PostLockdown",
+                        ifelse(TSCORE %in% 3842:3895,
+                               # jan 6 to feb 28
+                               "JanFeb",
+                               "PreCOVID")
+                      )
+                    )
+                  ))) %>%
+  dplyr::mutate(Covid_Timeline_cr = forcats::fct_relevel(Covid_Timeline_cr, ord_dates_class_2019_only))
+
+
+
+## 2018/2019 data set  
+ord_dates_class <- c("Baseline",
+                     "PreCOVID",
+                     "JanFeb",
+                     "EarlyMarch",
+                     "Lockdown",
+                     "PostLockdown")
+
+nzl <- nz_cr %>%
+  dplyr::filter(YearMeasured == 1) %>%
+  dplyr::filter(Wave == 2018 | Wave == 2019) %>%
+  dplyr::group_by(Id) %>%
+  dplyr::filter(n() > 1) %>%
+  dplyr::filter(n() != 0) %>%
+  dplyr::ungroup(Id) %>%
+  dplyr::mutate(yearS = (TSCORE - min(TSCORE)/365)) %>%
+  dplyr::mutate(WSCORE = as.factor(WSCORE)) %>%
+  dplyr::mutate(Covid_Timeline =
+                  as.factor(ifelse(
+                    TSCORE %in% 3896:3921,
+                    # feb 29 - march 25th
+                    "EarlyMarch",
+                    ifelse(
+                      TSCORE %in% 3922:3954,
+                      "Lockdown",
+                      #march 26- Mon 27 April 2020
+                      ifelse(
+                        TSCORE > 3954,
+                        # after april 27th 20202
+                        "PostLockdown",
+                        ifelse(
+                          TSCORE %in% 3842:3895,
+                          # jan 6 to feb 28
+                          "JanFeb",
+                          ifelse(TSCORE %in% 3665:3841 &
+                                   Wave == 2019,
+                                 "PreCOVID",
+                                 "Baseline"  # 3672 TSCORE or  20 July 2019))))))))
+                          )
+                        )
+                      )
+                    ))))%>%
+  dplyr::mutate(Covid_Timeline = forcats::fct_relevel(Covid_Timeline, ord_dates_class))
+```
+
+```{r}
+dplyr::glimpse(nzl)
+```
+
+### Assessment
+
+#### Information
+Link to the NZAVS data dictionary is 
+[here](https://dl.dropboxusercontent.com/s/but0pz9h4jdpy6f/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+ 
+Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucvo/nzavs-data-dictionary.htm?dl=0)
+ 
+#### Select any one of the following three tasks
+
+1. Write brief report that in which you estimating demographic and ideological  predictors of attitudes to government surveillance `Issue.GovtSurveillance` and attitudes to `Issue.RegulateAI` in New Zealand in 2018
+
+
+<!-- ```{r} -->
+<!-- nz$Issue.RegulateAI -->
+<!-- gv <- bf(Issue.GovtSurveillance ~ yearS +  (1|p|Id)) -->
+<!-- ai <- bf(Issue.RegulateAI ~ yearS + (1|p|Id)) -->
+<!-- fit2 <- brm(gv + ai, data = nz2018) -->
+<!-- summary(fit2) -->
+<!-- ``` -->
+
+
+2. Write a brief report explaining the predictors of stability and change in employment security from 2018-2020 (Waves 10/11 of the the NZAVS) 
+
+<!-- ```{r} -->
+<!-- library(splines) -->
+<!-- ho<- lme4::lmer(Emp.JobSecure  ~ yearS + (1|Id), data = nzl) -->
+<!-- plot(ggeffects::ggpredict(ho), add.data = TRUE) -->
+
+<!-- ho2<- lme4::lmer(Emp.JobSecure  ~ yearS + Covid_Timeline + (1|Id), data = nzl) -->
+<!-- plot(ggeffects::ggpredict(ho2), add.data = TRUE) -->
+<!-- ``` -->
+
+
+3. Did people gain weight during New Zealand's Covid Lockdown? 
+
+#### Marking criteria
+
+1. Clarity and organisation in the descriptive component of your work. 
+
+2. Clarity and organisation in description of your regression model.
+
+3. Accuracy and insight in the interpretation of your regression model.
+
