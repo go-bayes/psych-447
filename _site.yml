@@ -28,6 +28,8 @@ navbar:
       href: assessments.html
     - text: "Workbooks"
       href: index_workbooks.html
+    - text: "Contact"
+      href: joseph.html
 output:
   distill::distill_article:
     toc: yes
