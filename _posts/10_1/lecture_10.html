@@ -116,7 +116,7 @@ code span.wa { color: #bf0303; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["bib.bib","lecture_10_files/anchor-4.2.2/anchor.min.js","lecture_10_files/bowser-1.9.3/bowser.min.js","lecture_10_files/distill-2.2.21/template.v2.js","lecture_10_files/figure-html5/unnamed-chunk-11-1.png","lecture_10_files/figure-html5/unnamed-chunk-12-1.png","lecture_10_files/figure-html5/unnamed-chunk-13-1.png","lecture_10_files/figure-html5/unnamed-chunk-17-1.png","lecture_10_files/figure-html5/unnamed-chunk-20-1.png","lecture_10_files/figure-html5/unnamed-chunk-5-1.png","lecture_10_files/figure-html5/unnamed-chunk-9-1.png","lecture_10_files/header-attrs-2.7.1/header-attrs.js","lecture_10_files/header-attrs-2.7.8/header-attrs.js","lecture_10_files/header-attrs-2.8.1/header-attrs.js","lecture_10_files/jquery-1.11.3/jquery.min.js","lecture_10_files/popper-2.6.0/popper.min.js","lecture_10_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_10_files/tippy-6.2.7/tippy-light-border.css","lecture_10_files/tippy-6.2.7/tippy.css","lecture_10_files/tippy-6.2.7/tippy.umd.min.js","lecture_10_files/webcomponents-2.0.0/webcomponents.js","op.png","op2.png"]}
+  {"type":"character","attributes":{},"value":["bib.bib","lecture_10_files/anchor-4.2.2/anchor.min.js","lecture_10_files/bowser-1.9.3/bowser.min.js","lecture_10_files/distill-2.2.21/template.v2.js","lecture_10_files/figure-html5/unnamed-chunk-11-1.png","lecture_10_files/figure-html5/unnamed-chunk-12-1.png","lecture_10_files/figure-html5/unnamed-chunk-13-1.png","lecture_10_files/figure-html5/unnamed-chunk-14-1.png","lecture_10_files/figure-html5/unnamed-chunk-15-1.png","lecture_10_files/figure-html5/unnamed-chunk-16-1.png","lecture_10_files/figure-html5/unnamed-chunk-17-1.png","lecture_10_files/figure-html5/unnamed-chunk-20-1.png","lecture_10_files/figure-html5/unnamed-chunk-23-1.png","lecture_10_files/figure-html5/unnamed-chunk-25-1.png","lecture_10_files/figure-html5/unnamed-chunk-26-1.png","lecture_10_files/figure-html5/unnamed-chunk-30-1.png","lecture_10_files/figure-html5/unnamed-chunk-31-1.png","lecture_10_files/figure-html5/unnamed-chunk-34-1.png","lecture_10_files/figure-html5/unnamed-chunk-35-1.png","lecture_10_files/figure-html5/unnamed-chunk-5-1.png","lecture_10_files/figure-html5/unnamed-chunk-9-1.png","lecture_10_files/header-attrs-2.7.1/header-attrs.js","lecture_10_files/header-attrs-2.7.8/header-attrs.js","lecture_10_files/header-attrs-2.8.1/header-attrs.js","lecture_10_files/jquery-1.11.3/jquery.min.js","lecture_10_files/popper-2.6.0/popper.min.js","lecture_10_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_10_files/tippy-6.2.7/tippy-light-border.css","lecture_10_files/tippy-6.2.7/tippy.css","lecture_10_files/tippy-6.2.7/tippy.umd.min.js","lecture_10_files/webcomponents-2.0.0/webcomponents.js","op.png","op2.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1491,6 +1491,7 @@ code span.wa { color: #bf0303; } /* Warning */
 </ul></li>
 <li><a href="#varying-slopes">Varying slopes</a>
 <ul>
+<li><a href="#just-the-syntax-please">Just the syntax please</a></li>
 <li><a href="#within-and-between-group-estimation">Within and between group estimation</a></li>
 </ul></li>
 </ul>
@@ -2003,10 +2004,6 @@ Show code
 </div>
 <p>We can estimate the model (at last)</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m_vslopes</span>  <span class='op'>&lt;-</span>
   <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
@@ -2024,7 +2021,6 @@ Show code
   <span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2208,10 +2204,6 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </div>
 <p>Compare to a model with no prior:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m_vslopes_np</span>  <span class='op'>&lt;-</span>
   <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
@@ -2222,7 +2214,6 @@ Show code
   <span class='op'>)</span>
 </code></pre>
 </div>
-</details>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2297,8 +2288,401 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <!--                     width = .02) -->
 <!-- ) #  note this command controls which facet -->
 <!-- ``` -->
+<h3 id="just-the-syntax-please">Just the syntax please</h3>
+<p>See: <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html">glmmFAQ</a></p>
+<p>E.g. intercept varying among crossed grouping effects (e.g. site, year)</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>intercept</span> <span class='op'>+</span> <span class='va'>beta1</span> <span class='op'>+</span> <span class='va'>beta2</span>  <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>group</span><span class='op'>)</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>group</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+</div>
+<p>Correlated intercepts and slopes varying between crossed grouping effects</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>intercept</span> <span class='op'>+</span> <span class='va'>beta1</span> <span class='op'>+</span> <span class='va'>beta2</span>  <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>group</span><span class='op'>)</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>|</span><span class='va'>group</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+</div>
+<p>Recall that we have the equatiomatic package:</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lme4/lme4/'>lme4</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/datalorax/equatiomatic'>equatiomatic</a></span><span class='op'>)</span>
+<span class='va'>fm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Reaction</span> <span class='op'>~</span> <span class='va'>Days</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>Days</span><span class='op'>|</span><span class='va'>Subject</span><span class='op'>)</span>, <span class='va'>sleepstudy</span><span class='op'>)</span>
+<span class='fu'>equatiomatic</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/equatiomatic/man/extract_eq.html'>extract_eq</a></span><span class='op'>(</span><span class='va'>fm1</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><span class="math display">\[
+\begin{aligned}
+  \operatorname{Reaction}_{i}  &amp;\sim N \left(\alpha_{j[i]} + \beta_{1j[i]}(\operatorname{Days}), \sigma^2 \right) \\    
+\left(
+  \begin{array}{c} 
+    \begin{aligned}
+      &amp;\alpha_{j} \\
+      &amp;\beta_{1j}
+    \end{aligned}
+  \end{array}
+\right)
+  &amp;\sim N \left(
+\left(
+  \begin{array}{c} 
+    \begin{aligned}
+      &amp;\mu_{\alpha_{j}} \\
+      &amp;\mu_{\beta_{1j}}
+    \end{aligned}
+  \end{array}
+\right)
+, 
+\left(
+  \begin{array}{cc}
+     \sigma^2_{\alpha_{j}} &amp; \rho_{\alpha_{j}\beta_{1j}} \\ 
+     \rho_{\beta_{1j}\alpha_{j}} &amp; \sigma^2_{\beta_{1j}}
+  \end{array}
+\right)
+ \right)
+    \text{, for Subject j = 1,} \dots \text{,J}
+\end{aligned}
+\]</span></p>
+</div>
 <h3 id="within-and-between-group-estimation">Within and between group estimation</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Example from the parameters package {here](<a href="https://easystats.github.io/parameters/articles/demean.html" class="uri">https://easystats.github.io/parameters/articles/demean.html</a>)</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/see/'>see</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>5</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1.5</span>, length.out <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='va'>n</span>, <span class='fl'>2</span><span class='op'>)</span>
+
+<span class='va'>di</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind</span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>n</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+    x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='va'>n</span>, by <span class='op'>=</span> <span class='fl'>.2</span><span class='op'>)</span>,
+    y <span class='op'>=</span> <span class='fl'>2</span> <span class='op'>*</span> <span class='va'>x</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>+</span> <span class='va'>b</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='va'>n</span>, by <span class='op'>=</span> <span class='fl'>.2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>21</span><span class='op'>)</span>,
+    grp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fl'>2</span> <span class='op'>*</span> <span class='va'>i</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>dp</span> <span class='op'>&lt;-</span> <span class='va'>di</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>grp</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span><span class='op'>(</span><span class='fl'>15</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1.5</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>grp</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>labs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"very slow"</span>, <span class='st'>"slow"</span>, <span class='st'>"average"</span>, <span class='st'>"fast"</span>, <span class='st'>"very fast"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dp</span><span class='op'>$</span><span class='va'>grp</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span><span class='op'>(</span><span class='va'>labs</span><span class='op'>)</span>
+
+<span class='va'>dp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>dp</span>, 
+           <span class='fu'>demean</span><span class='op'>(</span><span class='va'>dp</span>, 
+                  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"x"</span>, <span class='st'>"y"</span><span class='op'>)</span>,
+                  group <span class='op'>=</span> <span class='st'>"grp"</span><span class='op'>)</span>
+           <span class='op'>)</span>
+
+<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='va'>dp</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>x_c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>x</span>, center <span class='op'>=</span> <span class='cn'>TRUE</span>, scale <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>x_between_c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>x_between</span>, center <span class='op'>=</span> <span class='cn'>TRUE</span>, scale <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>  
+</code></pre>
+</div>
+</details>
+</div>
+<p>Graph data</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>d</span>,
+                <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>,
+                    y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"speed"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span><span class='op'>(</span><span class='st'>"errors"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_10_files/figure-html5/unnamed-chunk-25-1.png" width="1152" /></p>
+</div>
+<p>When we assess the relationship within a group</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>d</span>,
+                <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>,
+                    y <span class='op'>=</span> <span class='va'>y</span>,
+                    colour <span class='op'>=</span> <span class='va'>grp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_10_files/figure-html5/unnamed-chunk-26-1.png" width="1152" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    x        y       grp x_between y_between x_within
+1 8.5 4.439524 very fast      10.5  7.084031     -2.0
+2 8.7 4.969823 very fast      10.5  7.084031     -1.8
+3 8.9 6.958708 very fast      10.5  7.084031     -1.6
+4 9.1 5.670508 very fast      10.5  7.084031     -1.4
+5 9.3 5.929288 very fast      10.5  7.084031     -1.2
+6 9.5 7.715065 very fast      10.5  7.084031     -1.0
+    y_within x_c x_between_c
+1 -2.6445067 1.0           3
+2 -2.1142086 1.2           3
+3 -0.1253227 1.4           3
+4 -1.4135227 1.6           3
+5 -1.1547433 1.8           3
+6  0.6310339 2.0           3</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m0</span> <span class='op'>&lt;-</span> <span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x_between_c</span> <span class='op'>+</span> <span class='va'>x_within</span> <span class='op'>+</span>  <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x_within</span><span class='op'>|</span> <span class='va'>grp</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>d</span><span class='op'>)</span>
+
+<span class='fu'>model_parameters</span><span class='op'>(</span><span class='va'>m0</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># Fixed Effects
+
+Parameter   | Coefficient |   SE |         95% CI |  t(98) |      p
+-------------------------------------------------------------------
+(Intercept) |       15.82 | 0.10 | [15.63, 16.01] | 164.38 | &lt; .001
+x_between_c |       -2.95 | 0.04 | [-3.04, -2.87] | -67.57 | &lt; .001
+x_within    |        1.20 | 0.10 | [ 1.01,  1.40] |  12.16 | &lt; .001
+
+# Random Effects
+
+Parameter           | Coefficient
+---------------------------------
+SD (Intercept: grp) |        0.09
+SD (x_within: grp)  |        0.15
+Cor (Intercept~grp) |       -1.00
+SD (Residual)       |        0.95</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#equatiomatic::extract_eq(m1)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    x        y       grp x_between y_between x_within
+1 8.5 4.439524 very fast      10.5  7.084031     -2.0
+2 8.7 4.969823 very fast      10.5  7.084031     -1.8
+3 8.9 6.958708 very fast      10.5  7.084031     -1.6
+4 9.1 5.670508 very fast      10.5  7.084031     -1.4
+5 9.3 5.929288 very fast      10.5  7.084031     -1.2
+6 9.5 7.715065 very fast      10.5  7.084031     -1.0
+    y_within x_c x_between_c
+1 -2.6445067 1.0           3
+2 -2.1142086 1.2           3
+3 -0.1253227 1.4           3
+4 -1.4135227 1.6           3
+5 -1.1547433 1.8           3
+6  0.6310339 2.0           3</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x_between_c</span> <span class='op'>+</span> <span class='va'>x_within</span> <span class='op'>+</span>  <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x_within</span><span class='op'>|</span> <span class='va'>grp</span><span class='op'>)</span>, 
+                data <span class='op'>=</span> <span class='va'>d</span>,
+                file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"models"</span>,<span class='st'>"ml_within"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>120</span><span class='op'>)</span>
+<span class='co'># Shows the prior</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m1</span>, prior <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: y ~ x_between_c + x_within + (1 + x_within | grp) 
+   Data: d (Number of observations: 105) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Priors: 
+Intercept ~ student_t(3, 15.7, 8.8)
+L ~ lkj_corr_cholesky(1)
+sd ~ student_t(3, 0, 8.8)
+sigma ~ student_t(3, 0, 8.8)
+
+Group-Level Effects: 
+~grp (Number of levels: 5) 
+                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)               0.32      0.46     0.01     1.93 1.03      143       37
+sd(x_within)                0.25      0.19     0.01     0.75 1.01      494      431
+cor(Intercept,x_within)    -0.13      0.59    -0.98     0.93 1.00      779     1056
+
+Population-Level Effects: 
+            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept      15.81      0.15    15.52    16.12 1.02      829      807
+x_between_c    -2.95      0.11    -3.29    -2.76 1.03      137       54
+x_within        1.21      0.15     0.88     1.54 1.01      652      534
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     0.92      0.07     0.81     1.07 1.01      767     2326
+
+Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/bayesplot/reference/bayesplot-colors.html'>color_scheme_set</a></span><span class='op'>(</span><span class='st'>"red"</span><span class='op'>)</span>
+<span class='va'>p_m1</span> <span class='op'>&lt;-</span> <span class='fu'>bayesplot</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/bayesplot/reference/MCMC-intervals.html'>mcmc_intervals</a></span><span class='op'>(</span><span class='va'>m1</span>, 
+              regex_pars  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b_x_between"</span>,<span class='st'>"b_x_within"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p_m1</span>
+</code></pre>
+</div>
+<p><img src="lecture_10_files/figure-html5/unnamed-chunk-30-1.png" width="1152" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/bayesplot/reference/bayesplot-colors.html'>color_scheme_set</a></span><span class='op'>(</span><span class='st'>"red"</span><span class='op'>)</span>
+<span class='va'>p_m1</span> <span class='op'>&lt;-</span> <span class='fu'>bayesplot</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/bayesplot/reference/MCMC-intervals.html'>mcmc_intervals</a></span><span class='op'>(</span><span class='va'>m1</span>, 
+              regex_pars  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"r_"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p_m1</span>
+</code></pre>
+</div>
+<p><img src="lecture_10_files/figure-html5/unnamed-chunk-31-1.png" width="1152" /></p>
+</div>
+<p>What if we were to ignored between and within indicators?</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x_c</span> <span class='op'>+</span>  <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x_c</span><span class='op'>|</span> <span class='va'>grp</span><span class='op'>)</span>, 
+                data <span class='op'>=</span> <span class='va'>d</span>,
+                file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"models"</span>,<span class='st'>"ml_no_within"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>120</span><span class='op'>)</span>
+<span class='co'># Shows the prior</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m2</span>, prior <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: y ~ x_c + (1 + x_c | grp) 
+   Data: d (Number of observations: 105) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Priors: 
+Intercept ~ student_t(3, 15.7, 8)
+L ~ lkj_corr_cholesky(1)
+sd ~ student_t(3, 0, 8)
+sigma ~ student_t(3, 0, 8)
+
+Group-Level Effects: 
+~grp (Number of levels: 5) 
+                   Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)         10.53      3.51     5.87    19.21 1.00     1500     1796
+sd(x_c)                0.34      0.25     0.05     0.91 1.00      900      959
+cor(Intercept,x_c)     0.56      0.37    -0.37     0.99 1.00     2075     2251
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept    15.91      4.05     7.95    24.08 1.00     1212     1704
+x_c           1.19      0.20     0.82     1.54 1.00     1714     1519
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     1.01      0.07     0.87     1.16 1.00     3706     2300
+
+Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<p>Greater speed = greater errors, faster groups = fewer errors:</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/bayesplot/reference/bayesplot-colors.html'>color_scheme_set</a></span><span class='op'>(</span><span class='st'>"red"</span><span class='op'>)</span>
+<span class='va'>p_m2</span> <span class='op'>&lt;-</span> <span class='fu'>bayesplot</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/bayesplot/reference/MCMC-intervals.html'>mcmc_intervals</a></span><span class='op'>(</span><span class='va'>m2</span>, 
+              regex_pars  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"r_"</span>,<span class='st'>"b_"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p_m2</span>
+</code></pre>
+</div>
+<p><img src="lecture_10_files/figure-html5/unnamed-chunk-34-1.png" width="1152" /></p>
+</div>
+<p>Spag. Plot</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>out_f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/conditional_effects.brmsfit.html'>conditional_effects</a></span><span class='op'>(</span>
+  <span class='va'>m2</span>,
+  <span class='st'>"x_c"</span>
+  <span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='va'>out_r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/conditional_effects.brmsfit.html'>conditional_effects</a></span><span class='op'>(</span>
+  <span class='va'>m2</span>,
+  <span class='st'>"x_c"</span>, 
+  conditions <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>grp</span><span class='op'>)</span>,
+  re_formula <span class='op'>=</span> <span class='cn'>NULL</span>
+  <span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='va'>out_r</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x_c</span>, <span class='va'>estimate__</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_ribbon.html'>geom_ribbon</a></span><span class='op'>(</span>
+    data <span class='op'>=</span> <span class='va'>out_f</span>,
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>lower__</span>, ymax <span class='op'>=</span> <span class='va'>upper__</span><span class='op'>)</span>,
+    alpha <span class='op'>=</span> <span class='fl'>.33</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>out_f</span>, size <span class='op'>=</span> <span class='fl'>2</span>, jitter <span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>grp</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_10_files/figure-html5/unnamed-chunk-35-1.png" width="1152" /></p>
+</div>
+<!-- ```{r} -->
+<!-- mcmc_dens_overlay(m2,  -->
+<!--                   regex_pars  = "r_", -->
+<!--                   facet_args = list(ncol = 1), -->
+<!--                   strip.position = "left") -->
+<!-- ``` -->
+<div class="sourceCode" id="cb13"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

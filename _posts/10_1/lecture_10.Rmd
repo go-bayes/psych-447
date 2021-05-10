@@ -559,7 +559,7 @@ dens( R[,1,2] , xlab= "correlation" )
 
 We can estimate the model (at last)
 
-```{r}
+```{r code_folding = FALSE}
 m_vslopes  <-
   brm(
     wait ~ 1 + afternoon + (1 + afternoon | cafe),
@@ -599,7 +599,7 @@ p1
 
 Compare to a model with no prior:
 
-```{r}
+```{r code_folding = FALSE}
 m_vslopes_np  <-
   brm(
     wait ~ 1 + afternoon + (1 + afternoon | cafe),
@@ -647,9 +647,202 @@ p1 + p2 + plot_annotation(title = "Priors (a) vs Default Priors (b)", tag_levels
 
 
 
+### Just the syntax please
+
+See: [glmmFAQ](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html)
+
+
+E.g. intercept varying among crossed grouping effects (e.g. site, year)
+
+```{r eval = FALSE}
+lme4::lmer(y ~ intercept + beta1 + beta2  + (1|group) + (1|group))
+```
+
+Correlated intercepts and slopes varying between crossed grouping effects
+
+```{r eval = FALSE}
+lme4::lmer(y ~ intercept + beta1 + beta2  + (1|group) + (1|group))
+```
+
+Recall that we have the equatiomatic package:
+
+```{r}
+library(lme4)
+library(equatiomatic)
+fm1 <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy)
+equatiomatic::extract_eq(fm1)
+```
+
+
+
+
 
 
 ### Within and between group estimation
 
 
+Example from the parameters package {here](https://easystats.github.io/parameters/articles/demean.html)
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(see)
+
+set.seed(123)
+n <- 5
+b <- seq(1, 1.5, length.out = 5)
+x <- seq(2, 2 * n, 2)
+
+di <- do.call(rbind, lapply(1:n, function(i) {
+  data.frame(
+    x = seq(1, n, by = .2),
+    y = 2 * x[i] + b[i] * seq(1, n, by = .2) + rnorm(21),
+    grp = as.factor(2 * i)
+  )
+}))
+
+dp <- di %>%
+  group_by(grp) %>%
+  mutate(x = rev(15 - (x + 1.5 * as.numeric(grp)))) %>%
+  ungroup()
+
+labs <- c("very slow", "slow", "average", "fast", "very fast")
+levels(dp$grp) <- rev(labs)
+
+dp <- cbind(dp, 
+           demean(dp, 
+                  c("x", "y"),
+                  group = "grp")
+           )
+
+d <- dp %>%
+  dplyr::mutate(x_c = scale(x, center = TRUE, scale = FALSE))%>%
+  dplyr::mutate(x_between_c = scale(x_between, center = TRUE, scale = FALSE))  
+```
+
+
+Graph data
+
+
+
+```{r}
+ggplot2::ggplot(data = d,
+                aes(x = x,
+                    y = y)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + xlab("speed") + ylab("errors")
+```
+
+
+When we assess the relationship within a group
+
+```{r}
+ggplot2::ggplot(data = d,
+                aes(x = x,
+                    y = y,
+                    colour = grp)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+
+```{r code_folding = FALSE}
+head(d)
+m0 <- lme4::lmer(y ~ x_between_c + x_within +  (1 + x_within| grp), data = d)
+
+model_parameters(m0)
+#equatiomatic::extract_eq(m1)
+```
+
+
+
+```{r code_folding = FALSE}
+head(d)
+m1 <- brms::brm(y ~ x_between_c + x_within +  (1 + x_within| grp), 
+                data = d,
+                file = here::here("models","ml_within"))
+```
+
+
+```{r}
+options(width = 120)
+# Shows the prior
+summary(m1, prior = TRUE)
+```
+
+```{r code_folding=FALSE}
+color_scheme_set("red")
+p_m1 <- bayesplot::mcmc_intervals(m1, 
+              regex_pars  = c("b_x_between","b_x_within"))
+p_m1
+```
+
+```{r code_folding=FALSE}
+color_scheme_set("red")
+p_m1 <- bayesplot::mcmc_intervals(m1, 
+              regex_pars  = c("r_"))
+p_m1
+```
+
+
+What if we were to ignored between and within indicators? 
+
+
+```{r code_folding = FALSE}
+
+m2 <- brms::brm(y ~ x_c +  (1 + x_c| grp), 
+                data = d,
+                file = here::here("models","ml_no_within"))
+
+```
+
+
+```{r}
+options(width = 120)
+# Shows the prior
+summary(m2, prior = TRUE)
+```
+
+Greater speed = greater errors, faster groups = fewer errors:
+
+```{r code_folding=FALSE}
+color_scheme_set("red")
+p_m2 <- bayesplot::mcmc_intervals(m2, 
+              regex_pars  = c("r_","b_"))
+p_m2
+```
+
+
+Spag. Plot
+
+```{r}
+out_f <- conditional_effects(
+  m2,
+  "x_c"
+  )[[1]]
+out_r <- conditional_effects(
+  m2,
+  "x_c", 
+  conditions = distinct(d, grp),
+  re_formula = NULL
+  )[[1]]
+out_r %>% 
+  ggplot(aes(x_c, estimate__)) +
+  geom_ribbon(
+    data = out_f,
+    aes(ymin = lower__, ymax = upper__),
+    alpha = .33
+  ) +
+  geom_line(data = out_f, size = 2, jitter =.1) +
+  geom_line(aes(group = grp))
+```
+
+
+<!-- ```{r} -->
+<!-- mcmc_dens_overlay(m2,  -->
+<!--                   regex_pars  = "r_", -->
+<!--                   facet_args = list(ncol = 1), -->
+<!--                   strip.position = "left") -->
+<!-- ``` -->
 
