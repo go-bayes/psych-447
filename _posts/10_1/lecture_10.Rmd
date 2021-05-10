@@ -673,11 +673,6 @@ fm1 <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy)
 equatiomatic::extract_eq(fm1)
 ```
 
-
-
-
-
-
 ### Within and between group estimation
 
 
