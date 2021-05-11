@@ -764,6 +764,16 @@ parameters::model_parameters(m0)
 ```
 
 
+```{r}
+plot(
+  ggeffects::ggpredict(m0,
+                       terms = c("grp"),
+                       type = "random"), 
+  add.data = TRUE
+)
+```
+
+
 We can estimate whether the within-group speedslopes vary by groups:
 
 ```{r code_folding = FALSE}
