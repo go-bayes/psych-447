@@ -894,6 +894,7 @@ Although the "average" response falls around 15 errors at the centered speed, th
 We can generate expectation plots for the groups and this tells the story:
 
 ```{r code_folding=TRUE}
+library(brms)
 out_f <- conditional_effects(
   m2,
   "x_c",
@@ -925,34 +926,36 @@ out_r %>%
 Another approach to graphing;
 
 ```{r}
+# uncertainty of the posterior distribution
+pp <- posterior_predict(m2)
+
+# graph
 plot(
   ggeffects::ggpredict(m2, , 
                        terms = c("x_c","grp"),
                        type = "random"), 
-  add.data = TRUE
+  add.data = pp
 )
 
+# this also
+sl <- ggeffects::ggpredict(
+  m2,
+  ,
+  terms = c("x_c", "grp"),
+  type = "random",
+  add.data = pp
+)
+
+plot(sl, add.data = TRUE, ci = TRUE)
 ```
 
 
+### Comment on group mean centering: use with caution.
 
-Here we see shrinkage at work. The predicted points are closer to the average response because the model is a little skeptical of grouping structure.
 
+I'm not sure I'm sold yet on within and between group "demeaning" because it would appear to lose the benefits of pooling and shrinkage that we get from multi-level models (the benefits of "regularisation").  I imagine there will be increasing discussion of this approach in the years ahead. For this reason I thought you should know about it. 
 
-```{r}
-plot(
-  ggeffects::ggpredict(m2,
-                       terms = c("grp"),
-                       type = "random"), 
-  add.data = TRUE
-)
-```
-
-I'm not sure I'm sold yet on within and between group "demeaning" because it would appear to lose the benefits of pooling and shrinkage that we get from multilevel models (sometimes called "regularisation").  I imagine there will be increasing discussion about this approach during the next few years.  For this reason I thought you should know about it. 
-
-## Comment on centering
-
-It's almost never a good idea to center your indicators within groups. 
+Meantime, some quotations about group-mean centering: 
 
 > Unfortunately, group mean centering changes the meaning of the entire regression model in a complicated way. If we use grand mean centering, we get different regression slopes for variables that are involved in an interaction, and different variance components, but we have an equivalent model, with identical deviance and residual errors. Another way to describe this situation is to state that we have specified a different parameterization for our model, meaning that we have essentially the same model, but transformed in a way that makes it easier to interpret. Using straightforward algebra, we can transform the grand mean centered estimates back to the values we would have found by analyzing the raw scores. Group mean centering, on the contrary, is not a simple reparameterization of a model, but a completely different model. We will find a different deviance, and transforming the estimated parameters back to the corresponding raw score estimates is not possible. The reason is that we have subtracted not one single value, but a collection of different values from the raw scores.
 
