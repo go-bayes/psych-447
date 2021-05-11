@@ -1,5 +1,22 @@
 [
   {
+    "path": "workbooks/W_10_s/",
+    "title": "Week 10 workbook and solutions",
+    "description": {},
+    "author": [
+      {
+        "name": "Joseph Bulbulia",
+        "url": "https://josephbulbulia.netlify.app"
+      }
+    ],
+    "date": "2021-05-11",
+    "categories": [],
+    "contents": "\n\nContents\nAssessment\nInformation\n\nCreate a distill website\nCreate a distill report\nMarking criteria\nReports I’ve been doing FYI\n\n\nImport the jittered NZAVS dataset\n\n\nShow code\n\n### Libraries\nlibrary(\"tidyverse\")\nlibrary(\"patchwork\")\nlibrary(\"lubridate\")\nlibrary(\"kableExtra\")\nlibrary(\"gtsummary\")\nlibrary(\"lubridate\")\nlibrary(\"equatiomatic\")\nlibrary(\"ggdag\")\nlibrary(\"brms\")\nlibrary(\"rstan\")\nlibrary(\"rstanarm\")\nlibrary(\"bayesplot\")\nlibrary(\"easystats\")\nlibrary(\"kableExtra\")\nlibrary(\"broom\")\nlibrary(\"tidybayes\")\nlibrary(\"bmlm\")\n# if (!require(tidyLPA)) {\n#   install.packages(\"tidyLPA\")\n# }\n# rstan options\nrstan_options(auto_write = TRUE)\noptions(mc.cores = parallel::detectCores ())\ntheme_set(theme_classic())\n\n\n\nAssessment\nInformation\nLink to the NZAVS data dictionary is here\nLink to questions only here\nCreate a distill website\nCreate a distill website see\nCreate a postcard for yourself [see](https://alison.rbind.io/post/2020-12-22-postcards-distill/\nSet up your distill webpage with your postcard on github: see\nPublish your postcard\nNote you do not need to publish a personal website if you don’t wish to do so. We can assess you on the basis of a publishable website. Please see us for help.\nCreate a distill report\nTBA multi-level model\nTBA\nTBA\nMarking criteria\nClarity and organisation in the descriptive component of your work.\nClarity and organisation in description of your regression model.\nAccuracy and insight in the interpretation of your regression model.\nReports I’ve been doing FYI\nhttps://go-bayes.github.io/reports/\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-05-11T14:30:12+12:00",
+    "input_file": {}
+  },
+  {
     "path": "workbooks/W_8_s/",
     "title": "Week 8 workbook and solutions",
     "description": {},
