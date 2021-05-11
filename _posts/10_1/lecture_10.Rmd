@@ -1,5 +1,5 @@
 ---
-title: "Mixed-effects/Multi-level models (continued), with excursion into Metanalysis"
+title: "Mixed-effects/Multi-level models (continued), with excursion into metanalysis"
 description: |
 author:
   - name: Joseph Bulbulia
@@ -18,7 +18,7 @@ bibliography: bib.bib
 ---
 
 ```{r figopen, echo=F}
-knitr::include_graphics("op.png")
+knitr::include_graphics("ml.png")
 ```
 
 ```{r setup, include=FALSE}
@@ -224,15 +224,15 @@ nzl <- nz_cr %>%
 -   To understand how to interpret results.
 
 
-## Aside 
+## Terminological confusions 
 
-There is much debate about terminology in multi-level modelling. In the circles I travel, the term "mixed-effects model" is preferred. There's some discussion about the terminological issues on the GLMMFAQ page [here](<https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html>).  In part, this is because there are many different multi-level models. In part, the confusion owes to the evolution of nomenclature among different groups. And in part, the confusion owes to people being genuinely confused. Our task here is to walk you through the steps of relatively simple multi-level models, which will be a powerful asset to your work. We want to do more than teach you how to write and interpret these models; we want to foster the intuitions that will help you to understand what they are doing under the hood. 
+There is much debate about terminology in multi-level modelling. In the circles I travel, the term "mixed-effects model" is preferred. There's some discussion about the terminological issues on the GLMMFAQ page [here](<https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html>).  In part, this is because there are many different multi-level models. In part, the confusion owes to the evolution of nomenclature among different groups. And in part, the confusion owes to people being genuinely confused. Our task here is to walk you through the steps of relatively simple multi-level models; these will be powerful assets to your work. Howeer, we want to do more than to teach you how to write and interpret multilevel models; we want to foster basic intuitions that will help you to understand what these models are doing under the hood. 
 
-Regarding nomenclature, we will generally prefer the terms "group-varying intercept" and "group-varying slope" to the terms "random effect" and "random slope." The term "random" tense to invite confusion. However, when we use the terms "group-varying" it will be important to remember that a "group" can include an individual who has been repeatedly measured over time. 
+Regarding nomenclature, we prefer the terms "group-varying intercept" and "group-varying slope" to the terms "random effect" and "random slope." The term "random" tends to invite confusion -- sampling theory requires "random" draws from various populations, etc. However, when we use the terms "group-varying" it will be important to remember that a "group" can include an individual who has been repeatedly measured over time. 
 
 ## Meta-analysis
 
-Matti Vuorre provides and explanation for how to do metanalysis using the BRMS package [here](https://mvuorre.github.io/posts/2016-09-29-bayesian-meta-analysis/). See also, Matti's brmstools package [here](https://github.com/mvuorre/brmstools). We will follow his approach.
+Matti Vuorre provides an explanation for how to do metanalysis using the BRMS package [here](https://mvuorre.github.io/posts/2016-09-29-bayesian-meta-analysis/). See also, Matti's brmstools package [here](https://github.com/mvuorre/brmstools). We will follow Matti's approach.
 
 The `metafor` package has data prepared for meta-analysis. We import the data:
 
@@ -269,7 +269,10 @@ dat[5,] <- dat[4,]
 dat[4,] <- tmp
 ```
 
-Here, `yi` is the observed outcome in effect size units, and `sei` is the observed sampling variances ($\sigma_i^2$). (You can read more about the metafor package [here](https://wviechtb.github.io/metafor/)).
+
+Here, `yi` is the observed outcome in effect size units, and `sei` is the observed sampling standard deviation ($\sigma_i$). (You can read more about the metafor package [here](https://wviechtb.github.io/metafor/)).
+
+### Model
 
 In metanalysis we assume:
 
@@ -279,16 +282,16 @@ In metanalysis, we assume that there is an underlying parameter which identifies
 
 $$\theta_i \sim N(\mu, \tau^2)$$
 
-Where $\mu$ is the population average effect size, and $\tau$ is the population standard devaition (or if you prefer: $\tau^2$, the population variance, or between study heterogeneity.)
+Where $\mu$ is the population average effect size, and $\tau^2$, the population variance, or between-study heterogeneity.
 
-We can write the metanalytic model as a random intercept model:
+We can write the meta-analytic model as a random intercept model:
 
 $$y_i \sim N(\mu + \theta_i, \sigma_i^2)\\
 \sigma_i \sim N(0,\tau^2)$$
 
-### Model
+### Code for meta-analytic model
 
-The code for a simple meta-analytic model in BRMS is:
+The code for a simple meta-analytic model in BRMS is as follows:
 
 ```{r code_folding = FALSE}
 m_meta <- brm(
@@ -306,7 +309,7 @@ options(width = 120)
 summary(m_meta, prior = TRUE)
 ```
 
-### Hypothesis
+### Test hypothesis of a greater than .2 effect size:
 
 Probably that the effect size is great than .2 is .08 (or 8%)
 
@@ -367,7 +370,7 @@ out_all %>%
 
 ## Group varying slopes
 
-Last week, we considered how group-level intercepts allow us to more pool information across clusters. We have just considered how modelling a group-level intercept is the engine behind meta-analysis. Nex we consider how to effectively variability in the slope of an effect across clusters. This requires estimation of a multivariate distribution for both the intercepts of the cluster and slope of an effect between the the clusters. In a vary-ing intercept/varying slope multilevel model we must estimate the *covariance* of group-level intercepts and slopes.
+Last week, we considered how intercepts may vary between groups, and how modelling this variation enables a model to efficiently pool information within and between clusters. In line with this approach, we have just demonstrated how meta-analysis turns on the princible of modelling group-level intercepts. Next we consider how to model variability in slopes of regression coefficients across groups. This model group-varying slopes and intercepts together requires estimating both the slopes and intercepts as drawing from a multivariate distribution in which the two paramters (intercepts and slopes) may be correlated. In a varying intercept/varying slope multi-level model, then, we estimate the *covariance* of group-level intercepts and group-level slopes in the same model in which we estimate the other parameters (including, of course, the group-level intercept variances and group-level slope variances, else what would there be to co-vary).
 
 $$\begin{pmatrix}
 \text{variances of the intercepts} &  \text{co-variances of the intercepts and slopes}   \\
@@ -527,7 +530,7 @@ $$\boldsymbol{R}  =
 \rho  &  1
 \end{pmatrix}$$
 
-Here are some correlations distributions
+Here are some correlations the LKJ distributions
 
 LJK = 1
 
@@ -550,7 +553,10 @@ R <- rlkjcorr( 1e4 , K=2 , eta=3)
 dens( R[,1,2] , xlab= "correlation" )
 ```
 
-We can estimate the model (at last)
+
+### Code for varying intercept/slope model 
+
+We can estimate the model (at last):
 
 ```{r code_folding = FALSE}
 m_vslopes  <-
@@ -652,13 +658,13 @@ See: [glmmFAQ](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html)
 E.g. intercept varying among crossed grouping effects (e.g. site, year)
 
 ```{r eval = FALSE, code_folding = FALSE}
-lme4::lmer(y ~ intercept + beta1 + beta2  + (1|group) + (1|group))
+lme4::lmer(y ~ intercept + beta1 + beta2  + (1|groupA) + (1|groupB))
 ```
 
 Correlated intercepts and slopes varying between crossed grouping effects
 
 ```{r eval = FALSE, code_folding = FALSE}
-lme4::lmer(y ~ intercept + beta1 + beta2  + (beta1|group) + (beta2|group))
+lme4::lmer(y ~ intercept + beta1 + beta2  + (beta1|groupA) + (beta2|groupB))
 ```
 
 Recall that we have the equatiomatic package:
@@ -683,6 +689,7 @@ Btw, this is an interesting method for simulation, which differs frm the approac
 
 ```{r}
 library(ggplot2)
+library(parameters)
 library(dplyr)
 library(see)
 
@@ -709,7 +716,7 @@ levels(dp$grp) <- rev(labs)
 
 # Within and between group demeaning. 
 dp <- cbind(dp, 
-           demean(dp, 
+           parameters::demean(dp, 
                   c("x", "y"),
                   group = "grp")
            )
@@ -748,8 +755,33 @@ ggplot2::ggplot(data = d,
                     y = y,
                     colour = grp)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") 
 ```
+
+
+We can combine the graphs:
+
+
+
+```{r}
+ggplot2::ggplot(data = d,
+                aes(x = x,
+                    y = y)) +
+  geom_smooth(method = "lm") +
+  geom_smooth(aes(x = x,
+                  y = y,
+                  colour = grp),
+              method = "lm")  +
+  geom_point(aes(x = x,
+                 y = y,
+                 colour = grp)) + 
+  xlab("speed")  + 
+  ylab("accuracy") + 
+  scale_colour_viridis_d(option="magma") + theme_classic()
+```
+
+
+
 
 
 
