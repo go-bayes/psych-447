@@ -18,7 +18,7 @@ output:
 Import the jittered NZAVS dataset
 
 
-```{r setup}
+```{r setup, include = FALSE}
 # setup
 knitr::opts_chunk$set(
   echo = TRUE,
@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
   R.options = list(width = 60)
 )
 ```
-```{r  libraries}
+```{r}
 ### Libraries
 library("tidyverse")
 library("patchwork")
@@ -59,7 +59,7 @@ options(mc.cores = parallel::detectCores ())
 theme_set(theme_classic())
 ```
 
-```{r  nzdata, include = FALSE}
+```{r  nzdata, include = TRUE}
 # read data
 # read data
 
@@ -120,48 +120,8 @@ nz_cr <- nz_0 %>%
   dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm = TRUE)) %>%
   dplyr::mutate(KESSLER6sum = as.integer(KESSLER6sum))
 
-## 2018 only data
-nz2018 <- nz_cr %>%
-  dplyr::filter(Wave == 2018)
+## if you do anything with covid (warning, such a model would be tricky)
 
-## 2019 only timeline
-# Relevel covid timeline 2019
-ord_dates_class_2019_only <- c("PreCOVID",
-                               "JanFeb",
-                               "EarlyMarch",
-                               "Lockdown",
-                               "PostLockdown")
-
-nz2019 <- nz_cr %>%
-  dplyr::filter(YearMeasured == 1) %>%
-  dplyr::filter(Wave == 2019) %>%
-  dplyr::group_by(Id) %>%
-  dplyr::ungroup(Id) %>%
-  dplyr::mutate(Covid_Timeline_cr =
-                  as.factor(ifelse(
-                    TSCORE %in% 3896:3921,
-                    # feb 29 - march 25th
-                    "EarlyMarch",
-                    ifelse(
-                      TSCORE %in% 3922:3954,
-                      "Lockdown",
-                      #march 26- Mon 27 April 2020
-                      ifelse(
-                        TSCORE > 3954,
-                        # after april 27th 20202
-                        "PostLockdown",
-                        ifelse(TSCORE %in% 3842:3895,
-                               # jan 6 to feb 28
-                               "JanFeb",
-                               "PreCOVID")
-                      )
-                    )
-                  ))) %>%
-  dplyr::mutate(Covid_Timeline_cr = forcats::fct_relevel(Covid_Timeline_cr, ord_dates_class_2019_only))
-
-
-
-## 2018/2019 data set  
 ord_dates_class <- c("Baseline",
                      "PreCOVID",
                      "JanFeb",

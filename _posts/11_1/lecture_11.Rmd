@@ -7,11 +7,13 @@ author:
     affiliation: Victoria University of Wellington
     affiliation_url: https://www.wgtn.ac.nz
     orcid_id: 0000-0002-5861-2056
-date: 2021-MAY-18 
+date: 2021-MAY-11 
 output:
   distill::distill_article:
     self_contained: false
     toc: true
+    code_folding: true
+    highlight: kate
 bibliography: references.bib
 ---
 
@@ -27,13 +29,10 @@ Required readings are as follows:
 -   @barrett2021 [link](https://cran.r-project.org/package=ggdag)
 -   @mcelreath2020[link](https://tewaharoa.victoria.ac.nz/discovery/fulldisplay?docid=alma99179374299902386&context=L&vid=64VUW_INST:VUWNUI&search_scope=MyInst_and_CI&tab=all&lang=en)
 
-## Preamble
-
-Make sure that you install the `rethinking` package and the `ggdag` package. Note that the rethinking package is not on cran.
 
 ```{r echo = TRUE, include = FALSE}
 # packages
-# ```{r install_rethinking}
+# install_rethinking
 # function for installing dependencies
 ipak <- function(pkg){
 new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
@@ -62,7 +61,7 @@ library("ggdag")
 library("brms")
 library("rstan")
 library("rstanarm")
-# library("tidybayes")
+library("tidybayes")
 library("bayesplot")
 library("easystats")
 # rstan options
@@ -71,22 +70,44 @@ options(mc.cores=parallel::detectCores ())
 theme_set(theme_classic())
 ```
 
-## Introduction
+## Objectives 
 
-Recall from lecture 7,
+- To clarify the concepts of causal inference and causal confounding
+- To use these concepts, in combination with the `ggdag` package, to develop a workflow for causal inference that mitigates the risks of causal confounding. 
+- To introduce tools for multiple-imputation, which addresses missing data problems that may lead to causal confounding. 
 
-> the output of a statistical model is is **not** self evident. We must therefore **think** both before and after we write a statistical model. If we don't think, our statistical models will lead us astray.
-In the remainder of this lecture, I'm going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.
 
-To introduce multiple regression I'm going to follow Richard McElreath's **Statistical Rethinking**. We have an online version of this book in our library (see the link above.)
+
+## What is causal inference? 
+
+Up to this point in the course, we have been using regression for prediction, asking: 
+
+> what is the expected change in why conditional on different levels or increments of x
+
+Prediction is useful for many practical questions:
+
+- "Which candidate is more likely to win the election?"
+- "How many babies will be born in New Zealand during the next decade?"
+- "Are people getting happier as they get older?"
+
+However, often in science we seek causal explanations: 
+
+- Why did people who in 2012 voted for Barack Obama switch party vote in 2016 to support Donald Trump? To address this question we need a theory of political motivation.
+
+- Does marriage cause people to become happier? eObserving that people who are married are happier does not settle this question because happiness might cause marriage. 
+
+- Does appearing more ethnic cause people to experience greater levels of prejudice? 
+
+
+Most of the theories in psychological science are causal explanations: they make claims about how people think and why they act.  Regression enables use to examine the correlations outcome varables and predictor variables. As such, it is an exquisite crystal ball into the future. However, to use regression to answer "Why"  causal inference we need to proceed with caution. 
+
+### The difference between prediction and explanation?
 
 ## What is causal confounding?
 
 ```{r figopen, echo=F}
 knitr::include_graphics("op2.png")
 ```
-
-## The difference between prediction and explanation?
 
 ## Examples of confounding
 
@@ -114,3 +135,22 @@ md<-lm(div ~ waffles + mar + south, data = df)
 summary(md)
 sjPlot::plot_model(md)
 ```
+
+
+## NZ example
+
+The New Zealand Attitudes and Values Study that is relevant to evaluating the theory of whether prototypicality of Māori group membership "moderates" the effect of perceived discrimination on ethnic identity in Māori.^[I place "moderates" in shutter quotations because it is not clear what this means: moderates as in predicts or moderates as in causes.] 
+
+The variables are from *Wave 4* of the NZAVS jitter2 data set are:
+
+- T4.MAORI.GME  (Māori Group membership and evaluation)
+- T4.MAORI.VEM (Māori Perceived Appearance)
+- Perc.Discrim.T04 (Perceived discrimination - ethnicity)
+  * I Feel that I am often discriminated against because of my ethnicity.
+  * I feel that I am often discriminated against because of my ethnicity.
+
+
+```{r}
+# importa data:
+```
+
