@@ -18,7 +18,7 @@ output:
 Import the jittered NZAVS dataset
 
 
-```{r setup, include=FALSE}
+```{r setup}
 # setup
 knitr::opts_chunk$set(
   echo = TRUE,
@@ -57,6 +57,7 @@ library("bmlm")
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores ())
 theme_set(theme_classic())
+```
 
 ```{r  nzdata, include = FALSE}
 # read data
@@ -170,7 +171,7 @@ ord_dates_class <- c("Baseline",
 
 nzl <- nz_cr %>%
   dplyr::filter(YearMeasured == 1) %>%
-  dplyr::filter(Wave == 2018 | Wave == 2019) %>%
+ # dplyr::filter(Wave == 2018 | Wave == 2019) %>%
   dplyr::group_by(Id) %>%
   dplyr::filter(n() > 1) %>%
   dplyr::filter(n() != 0) %>%
@@ -207,12 +208,14 @@ nzl <- nz_cr %>%
 ```
 
 ```{r include = FALSE}
-#dplyr::glimpse(nzl)
+dplyr::glimpse(nzl)
+
 ```
 
 ## Assessment
 
 ### Information
+
 Link to the NZAVS data dictionary is 
 [here](https://dl.dropboxusercontent.com/s/but0pz9h4jdpy6f/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
  
@@ -234,44 +237,10 @@ Note you do not need to publish a personal website if you don't wish to do so. W
 
 ## Create a distill report 
 
-1. TBA multi-level model
+1. Using the `nzl` dataset or another dataset of your choice, write a varying intercept/varying slope model. 
 
-<!-- ```{r} -->
-<!-- nz2018['Household.INC_s'] <- as.data.frame( scale(nz2018$Household.INC) ) -->
-<!-- nz2018['Age_s'] <- as.data.frame( scale(nz2018$Age) ) -->
-<!-- nz2018['Hours.Internet_log'] <- as.data.frame( log(nz2018$Hours.Internet + 1) ) -->
-<!-- nz2018['Issue.GovtSurveillance_s'] <- as.data.frame( log(nz2018$Issue.GovtSurveillance + 1) ) -->
-<!-- nz2018['Issue.RegulateAI_s'] <- as.data.frame( log(nz2018$Issue.RegulateAI + 1) ) -->
-<!-- nz2018['Pol.Orient_s'] <- as.data.frame( scale(nz2018$Pol.Orient) ) -->
-<!-- nz2018['Edu_s'] <- as.data.frame( scale(nz2018$Edu) ) -->
+Note the `nzl` dataset now includes 2845 individuals who have responded to at least five waves of the NZAVS.  The dataset now includes relationship satisfaction `Your.Personal.Relationships` and employment security `Emp.JobSecure`
 
-<!-- gv <- bf(Issue.GovtSurveillance ~ Age_s + Male + Edu_s + Household.INC_s +  Pol.Orient_s) -->
-<!-- ai <- bf(Issue.RegulateAI ~ Age_s + Male + Edu_s + Household.INC_s +  Pol.Orient_s) -->
-<!-- fit2 <- brm(gv + ai, data = nz2018,  -->
-<!--             file = here::here("models","workbook9_govsec_ai")) -->
-<!-- sjPlot::tab_model(fit2) -->
-<!-- ``` -->
-
-<!-- ```{r code_folding=FALSE} -->
-<!-- brms::mcmc_plot(fit2,  -->
-<!--                type = "areas", -->
-<!--                prob = .89)x -->
-
-<!-- ``` -->
-
-2. TBA
-
-<!-- ```{r} -->
-<!-- library(splines) -->
-<!-- ho<- lme4::lmer(Emp.JobSecure  ~ yearS + (1|Id), data = nzl) -->
-<!-- plot(ggeffects::ggpredict(ho), add.data = TRUE) -->
-
-<!-- ho2<- lme4::lmer(Emp.JobSecure  ~ yearS + Covid_Timeline + (1|Id), data = nzl) -->
-<!-- plot(ggeffects::ggpredict(ho2), add.data = TRUE) -->
-<!-- ``` -->
-
-
-3. TBA
 
 ## Marking criteria
 
