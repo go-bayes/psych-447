@@ -50,9 +50,6 @@ library("kableExtra")
 library("broom")
 library("tidybayes")
 library("bmlm")
-# if (!require(tidyLPA)) {
-#   install.packages("tidyLPA")
-# }
 # rstan options
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores ())
@@ -132,10 +129,10 @@ ord_dates_class <- c("Baseline",
 nzl <- nz_cr %>%
   dplyr::filter(YearMeasured == 1) %>%
  # dplyr::filter(Wave == 2018 | Wave == 2019) %>%
-  dplyr::group_by(Id) %>%
-  dplyr::filter(n() > 1) %>%
-  dplyr::filter(n() != 0) %>%
-  dplyr::ungroup(Id) %>%
+#  dplyr::group_by(Id) %>%
+ # dplyr::filter(n() > 1) %>%
+ # dplyr::filter(n() != 0) %>%
+#  dplyr::ungroup(Id) %>%
   dplyr::mutate(yearS = (TSCORE - min(TSCORE)/365)) %>%
   dplyr::mutate(WSCORE = as.factor(WSCORE)) %>%
   dplyr::mutate(Covid_Timeline =
@@ -169,7 +166,6 @@ nzl <- nz_cr %>%
 
 ```{r include = FALSE}
 dplyr::glimpse(nzl)
-
 ```
 
 ## Assessment

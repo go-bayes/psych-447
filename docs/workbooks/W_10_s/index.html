@@ -2152,27 +2152,6 @@ gtag('config', 'G-GQF269N0S4');
 </nav>
 </div>
 <p>Import the jittered NZAVS dataset</p>
-<div class="layout-chunk" data-layout="l-body">
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># setup</span>
-<span class='fu'>knitr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/knitr/man/opts_chunk.html'>opts_chunk</a></span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span>
-  echo <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  warning <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  message <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  layout <span class='op'>=</span> <span class='st'>"l-body-outset"</span>,
-  fig.width<span class='op'>=</span> <span class='fl'>12</span>,
-  fig.height<span class='op'>=</span> <span class='fl'>10</span>,
-  collapse <span class='op'>=</span><span class='cn'>TRUE</span>,
-  R.options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>60</span><span class='op'>)</span>
-<span class='op'>)</span>
-</code></pre>
-</div>
-</details>
-</div>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
 <summary>
@@ -2197,13 +2176,124 @@ Show code
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://broom.tidymodels.org/'>"broom"</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://mjskay.github.io/tidybayes/'>"tidybayes"</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/mvuorre/bmlm/'>"bmlm"</a></span><span class='op'>)</span>
-<span class='co'># if (!require(tidyLPA)) {</span>
-<span class='co'>#   install.packages("tidyLPA")</span>
-<span class='co'># }</span>
 <span class='co'># rstan options</span>
 <span class='fu'><a href='https://mc-stan.org/rstan/reference/rstan_options.html'>rstan_options</a></span><span class='op'>(</span>auto_write <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span> <span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>theme_set</span><span class='op'>(</span><span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># read data</span>
+<span class='co'># read data</span>
+
+
+<span class='va'>nz_0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nzj.csv"</span>
+  <span class='op'>)</span>
+<span class='op'>)</span><span class='op'>)</span>
+
+
+
+<span class='co'># to relevel kessler 6 variables</span>
+<span class='va'>f</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='st'>"None Of The Time"</span>,
+    <span class='st'>"A Little Of The Time"</span>,
+    <span class='st'>"Some Of The Time"</span>,
+    <span class='st'>"Most Of The Time"</span>,
+    <span class='st'>"All Of The Time"</span>
+  <span class='op'>)</span>
+
+
+
+
+<span class='co'># get data into shape</span>
+<span class='va'>nz_cr</span> <span class='op'>&lt;-</span> <span class='va'>nz_0</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span><span class='op'>(</span><span class='va'>is.character</span>, <span class='va'>factor</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>
+    <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+      <span class='va'>SWB.Kessler01</span>,
+      <span class='va'>SWB.Kessler02</span>,
+      <span class='va'>SWB.Kessler03</span>,
+      <span class='va'>SWB.Kessler04</span>,
+      <span class='va'>SWB.Kessler05</span>,
+      <span class='va'>SWB.Kessler06</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelHopeless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelHopeless</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelDepressed <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelDepressed</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelRestless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelRestless</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>EverythingIsEffort <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>EverythingIsEffort</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelWorthless <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelWorthless</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FeelNervous <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>FeelNervous</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Wave <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Wave</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>male_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Male</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>date <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/make_datetime.html'>make_date</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='fl'>2009</span>, month <span class='op'>=</span> <span class='fl'>6</span>, day <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>TSCORE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
+    FeelWorthless_int <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>FeelWorthless</span><span class='op'>)</span>,
+    FeelNervous_int <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>FeelNervous</span><span class='op'>)</span>,
+    FeelHopeless_int <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>FeelHopeless</span><span class='op'>)</span>,
+    EverythingIsEffort_int <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>EverythingIsEffort</span><span class='op'>)</span>,
+    FeelRestless_int <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>FeelRestless</span><span class='op'>)</span>,
+    FeelDepressed_int <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>FeelDepressed</span><span class='op'>)</span>,
+    HLTH.Fatigue_int <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>HLTH.Fatigue</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>yearS <span class='op'>=</span> <span class='va'>TSCORE</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>TSCORE</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>KESSLER6sum <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>KESSLER6sum</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>## if you do anything with covid (warning, such a model would be tricky)</span>
+
+<span class='va'>ord_dates_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Baseline"</span>,
+                     <span class='st'>"PreCOVID"</span>,
+                     <span class='st'>"JanFeb"</span>,
+                     <span class='st'>"EarlyMarch"</span>,
+                     <span class='st'>"Lockdown"</span>,
+                     <span class='st'>"PostLockdown"</span><span class='op'>)</span>
+
+<span class='va'>nzl</span> <span class='op'>&lt;-</span> <span class='va'>nz_cr</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>YearMeasured</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='co'># dplyr::filter(Wave == 2018 | Wave == 2019) %&gt;%</span>
+<span class='co'>#  dplyr::group_by(Id) %&gt;%</span>
+ <span class='co'># dplyr::filter(n() &gt; 1) %&gt;%</span>
+ <span class='co'># dplyr::filter(n() != 0) %&gt;%</span>
+<span class='co'>#  dplyr::ungroup(Id) %&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>yearS <span class='op'>=</span> <span class='op'>(</span><span class='va'>TSCORE</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>TSCORE</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>365</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>WSCORE <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>WSCORE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Covid_Timeline <span class='op'>=</span>
+                  <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+                    <span class='va'>TSCORE</span> <span class='op'>%in%</span> <span class='fl'>3896</span><span class='op'>:</span><span class='fl'>3921</span>,
+                    <span class='co'># feb 29 - march 25th</span>
+                    <span class='st'>"EarlyMarch"</span>,
+                    <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+                      <span class='va'>TSCORE</span> <span class='op'>%in%</span> <span class='fl'>3922</span><span class='op'>:</span><span class='fl'>3954</span>,
+                      <span class='st'>"Lockdown"</span>,
+                      <span class='co'>#march 26- Mon 27 April 2020</span>
+                      <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+                        <span class='va'>TSCORE</span> <span class='op'>&gt;</span> <span class='fl'>3954</span>,
+                        <span class='co'># after april 27th 20202</span>
+                        <span class='st'>"PostLockdown"</span>,
+                        <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>
+                          <span class='va'>TSCORE</span> <span class='op'>%in%</span> <span class='fl'>3842</span><span class='op'>:</span><span class='fl'>3895</span>,
+                          <span class='co'># jan 6 to feb 28</span>
+                          <span class='st'>"JanFeb"</span>,
+                          <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>TSCORE</span> <span class='op'>%in%</span> <span class='fl'>3665</span><span class='op'>:</span><span class='fl'>3841</span> <span class='op'>&amp;</span>
+                                   <span class='va'>Wave</span> <span class='op'>==</span> <span class='fl'>2019</span>,
+                                 <span class='st'>"PreCOVID"</span>,
+                                 <span class='st'>"Baseline"</span>  <span class='co'># 3672 TSCORE or  20 July 2019))))))))</span>
+                          <span class='op'>)</span>
+                        <span class='op'>)</span>
+                      <span class='op'>)</span>
+                    <span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Covid_Timeline <span class='op'>=</span> <span class='fu'>forcats</span><span class='fu'>::</span><span class='fu'><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>fct_relevel</a></span><span class='op'>(</span><span class='va'>Covid_Timeline</span>, <span class='va'>ord_dates_class</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </details>
