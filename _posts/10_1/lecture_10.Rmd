@@ -497,17 +497,22 @@ $$wait_i \sim N(\mu_i, \sigma) \\
 \sim 
 \text{MVNormal} \begin{pmatrix}
 \begin{bmatrix}
-\alpha_{\text{cafe}} \\
-\beta_{\text{cafe}} 
+\alpha \\
+\beta 
 \end{bmatrix}
 \boldsymbol{S},
 \end{pmatrix} \\
 \boldsymbol{S} = \begin{pmatrix}
-\sigma_{\text{cafe}} & 0  \\
-0  &  \sigma_{\text{cafe}}\end{pmatrix} \boldsymbol{R} \begin{pmatrix}
-\sigma_{\text{cafe}} & 0  \\
-0  &  \sigma_{\text{cafe}}
-\end{pmatrix}\\$$
+\sigma_{\alpha} & 0  \\
+0  &  \sigma_{\beta}\end{pmatrix} \boldsymbol{R} \begin{pmatrix}
+\sigma_{\alpha} & 0  \\
+0  &  \sigma_{\beta}
+\end{pmatrix}\\
+\boldsymbol{R} = 
+\begin{pmatrix}
+1 & \rho  \\
+\rho &  1
+\end{pmatrix}$$
 
 Each cafe has an intercept $\alpha_i$ and a slope $\beta_i$ that samples from a two dimensional Gaussian distribution with means $\alpha$ and $\beta$ and a covariance matrix $\boldsymbol{S}$. The $\boldsymbol{S}$ matrix factors into the a matrix for the separate standard deviations of $\alpha$ and $\beta$, $\sigma_{alpha}$ and $\sigma_{beta}$ and the correlation matrix $\boldsymbol{R}$
 
@@ -549,7 +554,8 @@ dens( R[,1,2] , xlab= "correlation" )
 LJK = 4
 
 ```{r}
-R <- rlkjcorr( 1e4 , K=2 , eta=3)
+library(rethinking)
+R <- rlkjcorr( 1e4 , K=2 , eta=4)
 dens( R[,1,2] , xlab= "correlation" )
 ```
 

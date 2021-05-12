@@ -31,6 +31,25 @@ toc: true
 knitr::include_graphics("op.png")
 ```
 
+```{r}
+library(tidyverse)
+# column of n randomly sampled responses
+likert_col <- function(n = 10) {
+  sample(7, size = 10, replace = TRUE)
+}
+
+# toy data
+dat <- tibble(
+  cat_1 = likert_col(),
+  cat_2 = likert_col(),
+  cat_3 = likert_col(),
+  dog_1 = likert_col(),
+  dog_2 = likert_col()
+)
+
+dat %>% transmute(cat = rowSums(across(starts_with("cat"))), dog = rowSums(across(starts_with("dog"))))
+```
+
 
 ## Probability
 
