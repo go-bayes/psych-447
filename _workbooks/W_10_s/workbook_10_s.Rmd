@@ -58,8 +58,6 @@ theme_set(theme_classic())
 
 ```{r  nzdata, include = TRUE}
 # read data
-# read data
-
 
 nz_0 <- as.data.frame(readr::read_csv2(
   url(
@@ -67,9 +65,7 @@ nz_0 <- as.data.frame(readr::read_csv2(
   )
 ))
 
-
-
-# to relevel kessler 6 variables
+# to re-level kessler 6 variables
 f <-
   c(
     "None Of The Time",
@@ -78,9 +74,6 @@ f <-
     "Most Of The Time",
     "All Of The Time"
   )
-
-
-
 
 # get data into shape
 nz_cr <- nz_0 %>%
@@ -128,11 +121,6 @@ ord_dates_class <- c("Baseline",
 
 nzl <- nz_cr %>%
   dplyr::filter(YearMeasured == 1) %>%
- # dplyr::filter(Wave == 2018 | Wave == 2019) %>%
-#  dplyr::group_by(Id) %>%
- # dplyr::filter(n() > 1) %>%
- # dplyr::filter(n() != 0) %>%
-#  dplyr::ungroup(Id) %>%
   dplyr::mutate(yearS = (TSCORE - min(TSCORE)/365)) %>%
   dplyr::mutate(WSCORE = as.factor(WSCORE)) %>%
   dplyr::mutate(Covid_Timeline =
@@ -165,6 +153,7 @@ nzl <- nz_cr %>%
 ```
 
 ```{r include = FALSE}
+# inspect data
 dplyr::glimpse(nzl)
 ```
 
