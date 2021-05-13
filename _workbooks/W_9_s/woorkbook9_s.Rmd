@@ -236,6 +236,8 @@ fit2 <- brm(gv + ai, data = nz2018,
             file = here::here("models","workbook9_govsec_ai"))
 parameters::model_parameters(fit2, effects = "all", component = "all",
                              test = c("pd"))
+
+nzl$Id <- as.factor(nzl$Id)
 ```
 
 ```{r code_folding=FALSE}
@@ -255,13 +257,12 @@ plot(ggeffects::ggpredict(ho2), add.data = TRUE, jitter =.5)
 
 3. Did people gain weight during New Zealand's Covid Lockdown? 
 
-Not a lot of evidence for it with this small sub-sample... better model?
+Not a lot of evidence for it with this small sub-sample. However, this subsample might be too small. 
 
 
 ```{r}
 weight<- lme4::lmer(HLTH.BMI  ~  Covid_Timeline + (1|Id), data = nzl)
 plot(ggeffects::ggpredict(weight), add.data = TRUE, dot.alpha = .1)[[1]]
-
 ```
 
 

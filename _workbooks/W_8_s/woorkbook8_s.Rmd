@@ -14,8 +14,7 @@ output:
     highlight: kate
 ---
 
-Import the jittered NZAVS dataset, selecting the 2018 Wave 
-
+Import the jittered NZAVS dataset, selecting the 2018 Wave
 
 ```{r setup, include=FALSE}
 # setup
@@ -30,6 +29,7 @@ knitr::opts_chunk$set(
   R.options = list(width = 60)
 )
 ```
+
 ```{r  libraries}
 ### Libraries
 library("tidyverse")
@@ -100,23 +100,96 @@ dplyr::glimpse(nz)
 ### Assessment
 
 #### Information
-Link to the NZAVS data dictionary is 
-[here](https://dl.dropboxusercontent.com/s/but0pz9h4jdpy6f/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
- 
+
+Link to the NZAVS data dictionary is [here](https://dl.dropboxusercontent.com/s/but0pz9h4jdpy6f/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+
 Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucvo/nzavs-data-dictionary.htm?dl=0)
- 
+
 #### Task
 
-1. Write brief report that predicts belief in spirit or a life-force (`Believe.Spirit`) from no more than five covariates. Explain your model and results.
+1.  Write brief report that predicts belief in spirit or a life-force (`Believe.Spirit`) from no more than five covariates. Explain your model and results.
 
-2. Write report that predicts charitable donations (`CharityDonate`) wrom no more than five covariates. Explain your model and results. 
+### Approach to the solutions
+
+Note that you'll need to relevel your key factor.
+
+Also, for a Poisson outcome, the indicator needs to be an integer.
+
+```{r}
+# Relevel factor
+library(ggplot2)
+nz1 <- nz %>%  
+  filter(Wave == 2018) %>%
+  mutate(Believe.Spirit = forcats::fct_relevel(Believe.Spirit, c("Not Believe Spirit",'Believe Spirit'))) %>%
+   mutate(Believe.God = forcats::fct_relevel(Believe.God, c("Not Believe God",'Believe God'))) %>%
+  mutate(CharityDonate = as.integer(CharityDonate))
+```
+
+Because religion is often a non-linear predictor, I'd attempt a spline model:
+
+```{r}
+library("splines")
+m1<-glm(Believe.Spirit ~ bs(Relid), data = nz1, family = binomial())
+
+p <- plot(
+  ggeffects::ggpredict(m1)[[1]],
+)
+p + scale_y_continuous(limits = c(0,1)) + 
+  xlab("Religious Identification 1-7") + 
+  theme_classic()
+
+```
+
+Perhaps highly religious people are less credulous. Why?
 
 
-#### Marking criteria
+2.  Write report that predicts charitable donations (`CharityDonate`) using no more than five co-variates. Explain your model and results.
 
-1. Clarity and organisation in the descriptive component of your work. 
+Inspect data:
 
-2. Clarity and organisation in description of your regression model.
+```{r}
+hist(nz1$CharityDonate,breaks=1000)
+```
 
-3. Accuracy and insight in the interpretation of your regression model.
+For this model, I would again use a spline:
 
+```{r}
+library(splines)
+
+m2<-glm(CharityDonate ~ bs(Relid), data = nz1, family = gaussian())
+
+p2 <- plot(
+  ggeffects::ggpredict(m2, effects = "Relid[all]")[[1]],
+  add.data = TRUE,
+  dot.alpha = .2
+)
+p2 +
+  xlab("Religious Identification 1-7") + 
+  #scale_y_log10() + 
+  theme_classic()
+```
+
+
+Consider whether the following graph tells a better story (why, why not?)
+
+```{r}
+p3 <- plot(
+  ggeffects::ggpredict(m2)[[1]],
+)
+p3 +
+  xlab("Religious Identification 1-7") +
+  theme_classic()
+```
+
+
+
+Compare different families. Compare a model without splines. Polish the graphs... tell the story.
+
+
+### Marking criteria
+
+1.  Clarity and organisation in the descriptive component of your work.
+
+2.  Clarity and organisation in description of your regression model.
+
+3.  Accuracy and insight in the interpretation of your regression model.
