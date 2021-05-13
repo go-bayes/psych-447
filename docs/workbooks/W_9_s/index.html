@@ -103,7 +103,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <meta property="og:title" content="Psych 447: Week 9 workbook and solutions"/>
 <meta property="og:type" content="article"/>
 <meta property="og:url" content="https://vuw-psych-447.netlify.app/workbooks/W_9_s/"/>
-<meta property="og:image" content="https://vuw-psych-447.netlify.app/workbooks/W_9_s/woorkbook9_s_files/figure-html5/unnamed-chunk-3-1.png"/>
+<meta property="og:image" content="https://vuw-psych-447.netlify.app/workbooks/W_9_s/woorkbook9_s_files/figure-html5/unnamed-chunk-4-1.png"/>
 <meta property="og:image:width" content="2304"/>
 <meta property="og:image:height" content="1920"/>
 <meta property="og:locale" content="en_US"/>
@@ -113,7 +113,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <meta property="twitter:card" content="summary_large_image"/>
 <meta property="twitter:title" content="Psych 447: Week 9 workbook and solutions"/>
 <meta property="twitter:url" content="https://vuw-psych-447.netlify.app/workbooks/W_9_s/"/>
-<meta property="twitter:image" content="https://vuw-psych-447.netlify.app/workbooks/W_9_s/woorkbook9_s_files/figure-html5/unnamed-chunk-3-1.png"/>
+<meta property="twitter:image" content="https://vuw-psych-447.netlify.app/workbooks/W_9_s/woorkbook9_s_files/figure-html5/unnamed-chunk-4-1.png"/>
 <meta property="twitter:image:width" content="2304"/>
 <meta property="twitter:image:height" content="1920"/>
 <meta property="twitter:site" content="@go_bayes"/>
@@ -2180,17 +2180,8 @@ Show code
 <span class='fu'><a href='https://mc-stan.org/rstan/reference/rstan_options.html'>rstan_options</a></span><span class='op'>(</span>auto_write <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span> <span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>theme_set</span><span class='op'>(</span><span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
-</div>
-</details>
-</div>
-<div class="layout-chunk" data-layout="l-body-outset">
-<details>
-<summary>
-Show code
-</summary>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># read data</span>
+
+<span class='co'># read data</span>
 <span class='co'># read data</span>
 
 
@@ -2363,54 +2354,66 @@ Show code
 <span class='va'>ai</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>Issue.RegulateAI</span> <span class='op'>~</span> <span class='va'>Age_s</span> <span class='op'>+</span> <span class='va'>Male</span> <span class='op'>+</span> <span class='va'>Edu_s</span> <span class='op'>+</span> <span class='va'>Household.INC_s</span> <span class='op'>+</span>  <span class='va'>Pol.Orient_s</span><span class='op'>)</span>
 <span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>gv</span> <span class='op'>+</span> <span class='va'>ai</span>, data <span class='op'>=</span> <span class='va'>nz2018</span>,
             file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"models"</span>,<span class='st'>"workbook9_govsec_ai"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>fit2</span>, effects <span class='op'>=</span> <span class='st'>"all"</span>, component <span class='op'>=</span> <span class='st'>"all"</span>,
-                             test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pd"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </details>
-<pre><code># Fixed effects IssueGovtSurveillance
-
-Parameter       | Median |         89% CI |     pd |  Rhat |      ESS
----------------------------------------------------------------------
-(Intercept)     |   4.48 | [ 4.39,  4.58] |   100% | 1.000 |  8211.00
-Age_s           |   0.08 | [ 0.02,  0.14] | 98.35% | 1.000 |  8115.00
-MaleNot_Male    |   0.08 | [-0.04,  0.20] | 84.95% | 1.000 |  9492.00
-Edu_s           |  -0.11 | [-0.18, -0.05] | 99.62% | 0.999 |  8626.00
-Household.INC_s |   0.15 | [ 0.10,  0.21] |   100% | 0.999 |  9200.00
-Pol.Orient_s    |   0.32 | [ 0.26,  0.38] |   100% | 0.999 | 10392.00
-
-# Fixed effects sigma IssueGovtSurveillance
-
-Parameter | Median |       89% CI |   pd |  Rhat |     ESS
-----------------------------------------------------------
-sigma     |   1.68 | [1.64, 1.72] | 100% | 0.999 | 9569.00
-
-# Fixed effects IssueRegulateAI
-
-Parameter       | Median |         89% CI |     pd |  Rhat |     ESS
---------------------------------------------------------------------
-(Intercept)     |   4.10 | [ 4.01,  4.18] |   100% | 1.000 | 8180.00
-Age_s           |   0.11 | [ 0.06,  0.17] | 99.85% | 1.000 | 8856.00
-MaleNot_Male    |   0.53 | [ 0.42,  0.64] |   100% | 0.999 | 8550.00
-Edu_s           |  -0.08 | [-0.14, -0.03] | 99.08% | 1.000 | 8507.00
-Household.INC_s |  -0.07 | [-0.12, -0.01] | 97.62% | 1.000 | 8284.00
-Pol.Orient_s    |   0.02 | [-0.03,  0.07] | 72.15% | 1.000 | 9359.00
-
-# Fixed effects sigma IssueRegulateAI
-
-Parameter | Median |       89% CI |   pd |  Rhat |      ESS
------------------------------------------------------------
-sigma     |   1.53 | [1.49, 1.57] | 100% | 0.999 | 11778.00</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
 <details>
 <summary>
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r">
-<span class='va'>nzl</span><span class='op'>$</span><span class='va'>Id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>nzl</span><span class='op'>$</span><span class='va'>Id</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>120</span><span class='op'>)</span>
+
+<span class='co'># Shows the prior</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit2</span>, prior <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 </details>
+<pre><code> Family: MV(gaussian, gaussian) 
+  Links: mu = identity; sigma = identity
+         mu = identity; sigma = identity 
+Formula: Issue.GovtSurveillance ~ Age_s + Male + Edu_s + Household.INC_s + Pol.Orient_s 
+         Issue.RegulateAI ~ Age_s + Male + Edu_s + Household.INC_s + Pol.Orient_s 
+   Data: nz2018 (Number of observations: 2210) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Priors: 
+Intercept_IssueGovtSurveillance ~ student_t(3, 5, 2.5)
+Intercept_IssueRegulateAI ~ student_t(3, 4, 2.5)
+Lrescor ~ lkj_corr_cholesky(1)
+sigma_IssueGovtSurveillance ~ student_t(3, 0, 2.5)
+sigma_IssueRegulateAI ~ student_t(3, 0, 2.5)
+
+Population-Level Effects: 
+                                      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+IssueGovtSurveillance_Intercept           4.48      0.06     4.36     4.60 1.00     8488     2776
+IssueRegulateAI_Intercept                 4.10      0.05     3.99     4.20 1.00     8363     2442
+IssueGovtSurveillance_Age_s               0.08      0.04     0.01     0.16 1.00     7462     3171
+IssueGovtSurveillance_MaleNot_Male        0.08      0.08    -0.07     0.23 1.00     9034     2606
+IssueGovtSurveillance_Edu_s              -0.11      0.04    -0.19    -0.03 1.00     7979     3196
+IssueGovtSurveillance_Household.INC_s     0.15      0.04     0.08     0.22 1.00     9364     3264
+IssueGovtSurveillance_Pol.Orient_s        0.32      0.04     0.25     0.39 1.00    10387     3186
+IssueRegulateAI_Age_s                     0.11      0.03     0.04     0.18 1.00     9069     3237
+IssueRegulateAI_MaleNot_Male              0.53      0.07     0.40     0.67 1.00     8698     3023
+IssueRegulateAI_Edu_s                    -0.08      0.03    -0.15    -0.01 1.00     8614     3102
+IssueRegulateAI_Household.INC_s          -0.07      0.03    -0.13    -0.00 1.00     8357     3282
+IssueRegulateAI_Pol.Orient_s              0.02      0.03    -0.05     0.09 1.00     9002     3038
+
+Family Specific Parameters: 
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma_IssueGovtSurveillance     1.68      0.03     1.64     1.73 1.00     9831     3244
+sigma_IssueRegulateAI           1.53      0.02     1.49     1.58 1.00    11920     2859
+
+Residual Correlations: 
+                                              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+rescor(IssueGovtSurveillance,IssueRegulateAI)    -0.03      0.02    -0.07     0.01 1.00     9862     3196
+
+Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
@@ -2419,8 +2422,12 @@ Show code
                prob <span class='op'>=</span> <span class='fl'>.89</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="woorkbook9_s_files/figure-html5/unnamed-chunk-3-1.png" width="1152" /></p>
+<p><img src="woorkbook9_s_files/figure-html5/unnamed-chunk-4-1.png" width="1152" /></p>
 </div>
+<p>Note the two outcome variables are not correlated (conditiaonl on the model):</p>
+<blockquote>
+<p><code>rescor(IssueGovtSurveillance,IssueRegulateAI)    -0.03</code></p>
+</blockquote>
 <ol start="2" type="1">
 <li>Write a brief report explaining the predictors of stability and change in employment security (<code>Emp.JobSecure</code>) from 2018-2020 (Waves 10/11 of the the NZAVS Jitter dataset).</li>
 </ol>
@@ -2436,7 +2443,7 @@ Show code
 </div>
 </details>
 <pre><code>$Covid_Timeline</code></pre>
-<p><img src="woorkbook9_s_files/figure-html5/unnamed-chunk-4-1.png" width="1152" /></p>
+<p><img src="woorkbook9_s_files/figure-html5/unnamed-chunk-5-1.png" width="1152" /></p>
 </div>
 <ol start="3" type="1">
 <li>Did people gain weight during New Zealand’s Covid Lockdown?</li>
@@ -2453,7 +2460,7 @@ Show code
 </code></pre>
 </div>
 </details>
-<p><img src="woorkbook9_s_files/figure-html5/unnamed-chunk-5-1.png" width="1152" /></p>
+<p><img src="woorkbook9_s_files/figure-html5/unnamed-chunk-6-1.png" width="1152" /></p>
 </div>
 <h4 id="marking-criteria">Marking criteria</h4>
 <ol type="1">
