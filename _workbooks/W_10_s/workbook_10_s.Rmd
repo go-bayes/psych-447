@@ -107,7 +107,7 @@ nz_cr <- nz_0 %>%
     FeelDepressed_int =  as.integer(FeelDepressed),
     HLTH.Fatigue_int = as.integer(HLTH.Fatigue + 1)
   ) %>%
-  dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm = TRUE)) %>%
+  dplyr::mutate( yearS = (TSCORE - min(TSCORE)/365) ) %>%
   dplyr::mutate(KESSLER6sum = as.integer(KESSLER6sum))
 
 ## if you do anything with covid (warning, such a model would be tricky)
@@ -148,7 +148,8 @@ nzl <- nz_cr %>%
                         )
                       )
                     ))))%>%
-  dplyr::mutate(Covid_Timeline = forcats::fct_relevel(Covid_Timeline, ord_dates_class))
+  dplyr::mutate(Covid_Timeline = forcats::fct_relevel(Covid_Timeline, ord_dates_class))%>%
+  dplyr::mutate(Id = factor(Id))
 
 ```
 
@@ -185,6 +186,31 @@ Note you do not need to publish a personal website if you don't wish to do so. W
 1. Using the `nzl` dataset or another dataset of your choice, write a varying intercept/varying slope model. 
 
 Note the `nzl` dataset now includes 2845 individuals who have responded to at least five waves of the NZAVS.  The dataset now includes relationship satisfaction `Your.Personal.Relationships` and employment security `Emp.JobSecure`
+
+
+```{r}
+# center religion
+nzl1 <- nzl %>%
+  dplyr::mutate( Relid_c = scale(Relid, scale = FALSE))%>%
+  dplyr::mutate(CharityDonate = as.integer(CharityDonate))
+
+str(nzl1)
+
+# test dataset
+m1 <- brms::brm(CharityDonate ~ yearS + Relid_c  + (1 + Relid_c|Id),  
+                family = "negbinomial",
+                file = here::here("models", "workbook_10_ex1"),
+                data = nzl1)
+
+# results
+model_parameters(m1, effects = "all")
+
+# graph
+p_m1 <- conditional_effects(m1,
+                            "Relid_c",
+                            point_args = list(alpha = 0.1))[[1]]
+p_m1
+```
 
 
 ## Marking criteria
