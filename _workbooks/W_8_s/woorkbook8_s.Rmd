@@ -140,7 +140,7 @@ p + scale_y_continuous(limits = c(0,1)) +
 
 ```
 
-Perhaps highly religious people are less credulous. Why?
+Tapering of credulity among the highly religious. Why? 
 
 
 2.  Write report that predicts charitable donations (`CharityDonate`) using no more than five co-variates. Explain your model and results.
@@ -170,7 +170,7 @@ p2 +
 ```
 
 
-Consider whether the following graph tells a better story (why, why not?)
+Consider following graph tells a better story (why, why not?)
 
 ```{r}
 p3 <- plot(
