@@ -90,16 +90,18 @@ Prediction is useful for many practical questions:
 - "How many babies will be born in New Zealand during the next decade?"
 - "Are people getting happier as they get older?"
 
-However, often in science we seek causal explanations: 
+However, scientists seek causal explanations: 
 
-- Why did people who in 2012 voted for Barack Obama switch party vote in 2016 to support Donald Trump? To address this question we need a theory of political motivation.
+- Why did people who in 2012 voted for Barack Obama switch party vote in 2016 to support Donald Trump? (If the pattern of variation of stability and change is not random what causes the pattern?)
 
-- Does marriage cause people to become happier? eObserving that people who are married are happier does not settle this question because happiness might cause marriage. 
+To address the question of stability and change in political allegiance we need a theory of political motivation.
+
+- Does marriage cause people to become happier? Observing that people who are married are happier does not settle this question because happiness might cause marriage. 
 
 - Does appearing more ethnic cause people to experience greater levels of prejudice? 
 
 
-Most of the theories in psychological science are causal explanations: they make claims about how people think and why they act.  Regression enables use to examine the correlations outcome varables and predictor variables. As such, it is an exquisite crystal ball into the future. However, to use regression to answer "Why"  causal inference we need to proceed with caution. 
+Most of the theories in psychological science are causal explanations: they make claims about how people think and why they act.  Regression enables use to examine the correlations outcome variables and predictor variables. As such, it is an exquisite crystal ball into the future. However, to use regression to answer "Why"  causal inference we need to proceed with caution. 
 
 ### The difference between prediction and explanation?
 
