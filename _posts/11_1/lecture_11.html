@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -119,7 +120,7 @@ code span.wa { color: #bf0303; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["distill-preview.png","lecture_11_files/anchor-4.2.2/anchor.min.js","lecture_11_files/bowser-1.9.3/bowser.min.js","lecture_11_files/distill-2.2.21/template.v2.js","lecture_11_files/figure-html5/unnamed-chunk-3-1.png","lecture_11_files/figure-html5/unnamed-chunk-3-2.png","lecture_11_files/figure-html5/unnamed-chunk-4-1.png","lecture_11_files/header-attrs-2.7.8/header-attrs.js","lecture_11_files/jquery-1.11.3/jquery.min.js","lecture_11_files/popper-2.6.0/popper.min.js","lecture_11_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_11_files/tippy-6.2.7/tippy-light-border.css","lecture_11_files/tippy-6.2.7/tippy.css","lecture_11_files/tippy-6.2.7/tippy.umd.min.js","lecture_11_files/webcomponents-2.0.0/webcomponents.js","op.png","op2.png","references.bib"]}
+  {"type":"character","attributes":{},"value":["distill-preview.png","lecture_11_files/anchor-4.2.2/anchor.min.js","lecture_11_files/bowser-1.9.3/bowser.min.js","lecture_11_files/distill-2.2.21/template.v2.js","lecture_11_files/figure-html5/unnamed-chunk-10-1.png","lecture_11_files/figure-html5/unnamed-chunk-14-1.png","lecture_11_files/figure-html5/unnamed-chunk-18-1.png","lecture_11_files/figure-html5/unnamed-chunk-19-1.png","lecture_11_files/figure-html5/unnamed-chunk-19-2.png","lecture_11_files/figure-html5/unnamed-chunk-20-1.png","lecture_11_files/figure-html5/unnamed-chunk-3-1.png","lecture_11_files/figure-html5/unnamed-chunk-4-1.png","lecture_11_files/figure-html5/unnamed-chunk-4-2.png","lecture_11_files/figure-html5/unnamed-chunk-5-1.png","lecture_11_files/figure-html5/unnamed-chunk-7-1.png","lecture_11_files/figure-html5/unnamed-chunk-8-1.png","lecture_11_files/figure-html5/unnamed-chunk-9-1.png","lecture_11_files/header-attrs-2.7.10/header-attrs.js","lecture_11_files/jquery-1.11.3/jquery.min.js","lecture_11_files/popper-2.6.0/popper.min.js","lecture_11_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_11_files/tippy-6.2.7/tippy-light-border.css","lecture_11_files/tippy-6.2.7/tippy.css","lecture_11_files/tippy-6.2.7/tippy.umd.min.js","lecture_11_files/webcomponents-2.0.0/webcomponents.js","op.png","op2.png","references.bib"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1437,7 +1438,7 @@ code span.wa { color: #bf0303; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="lecture_11_files/header-attrs-2.8.1/header-attrs.js"></script>
+  <script src="lecture_11_files/header-attrs-2.7.10/header-attrs.js"></script>
   <script src="lecture_11_files/jquery-1.11.3/jquery.min.js"></script>
   <script src="lecture_11_files/popper-2.6.0/popper.min.js"></script>
   <link href="lecture_11_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1486,11 +1487,15 @@ code span.wa { color: #bf0303; } /* Warning */
 <h3>Contents</h3>
 <ul>
 <li><a href="#required-readings">Required readings</a></li>
-<li><a href="#preamble">Preamble</a></li>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#what-is-causal-confounding">What is causal confounding?</a></li>
+<li><a href="#objectives">Objectives</a></li>
+<li><a href="#what-is-causal-inference">What is causal inference?</a>
+<ul>
 <li><a href="#the-difference-between-prediction-and-explanation">The difference between prediction and explanation?</a></li>
+</ul></li>
+<li><a href="#what-is-causal-confounding">What is causal confounding?</a></li>
 <li><a href="#examples-of-confounding">Examples of confounding</a></li>
+<li><a href="#mediation">Mediation</a></li>
+<li><a href="#nz-example">NZ example</a></li>
 </ul>
 </nav>
 </div>
@@ -1513,14 +1518,34 @@ Show code
 <li><span class="citation" data-cites="barrett2021"><a href="#ref-barrett2021" role="doc-biblioref">Barrett</a> (<a href="#ref-barrett2021" role="doc-biblioref">2021</a>)</span> <a href="https://cran.r-project.org/package=ggdag">link</a></li>
 <li><span class="citation" data-cites="mcelreath2020"><a href="#ref-mcelreath2020" role="doc-biblioref">McElreath</a> (<a href="#ref-mcelreath2020" role="doc-biblioref">2020</a>)</span><a href="https://tewaharoa.victoria.ac.nz/discovery/fulldisplay?docid=alma99179374299902386&amp;context=L&amp;vid=64VUW_INST:VUWNUI&amp;search_scope=MyInst_and_CI&amp;tab=all&amp;lang=en">link</a></li>
 </ul>
-<h2 id="preamble">Preamble</h2>
-<p>Make sure that you install the <code>rethinking</code> package and the <code>ggdag</code> package. Note that the rethinking package is not on cran.</p>
-<h2 id="introduction">Introduction</h2>
-<p>Recall from lecture 7,</p>
+<h2 id="objectives">Objectives</h2>
+<ul>
+<li>To clarify the concepts of causal inference and causal confounding</li>
+<li>To use these concepts, in combination with the <code>ggdag</code> package, to develop a workflow for causal inference that mitigates the risks of causal confounding.</li>
+<li>To introduce tools for multiple-imputation, which addresses missing data problems that may lead to causal confounding.</li>
+</ul>
+<h2 id="what-is-causal-inference">What is causal inference?</h2>
+<p>Up to this point in the course, we have been using regression for prediction, asking:</p>
 <blockquote>
-<p>the output of a statistical model is is <strong>not</strong> self evident. We must therefore <strong>think</strong> both before and after we write a statistical model. If we don’t think, our statistical models will lead us astray. In the remainder of this lecture, I’m going to introduce a tool the concept of regression with multiple predictors. I used to think that multiple regression was easy. As we see, however, multiple regression can very easily lead us to the wrong inference if we do not think about our research question, our data, and what a statistical model is doing (or not doing) to clarify the relationship between our data and our research question.</p>
+<p>what is the expected change in why conditional on different levels or increments of x</p>
 </blockquote>
-<p>To introduce multiple regression I’m going to follow Richard McElreath’s <strong>Statistical Rethinking</strong>. We have an online version of this book in our library (see the link above.)</p>
+<p>Prediction is useful for many practical questions:</p>
+<ul>
+<li>“Which candidate is more likely to win the election?”</li>
+<li>“Are people getting happier as they get older?”</li>
+<li>"Does having meaning and purpose in life predict lower psychological distress.</li>
+</ul>
+<p>However, scientists seek causal explanations:</p>
+<ul>
+<li>Why did people who in 2012 voted for Barack Obama switch party vote in 2016 to support Donald Trump? (If the pattern of variation of stability and change is not random what causes the pattern?)</li>
+</ul>
+<p>To address the question of stability and change in political allegiance we need a theory of political motivation, and we must test its predictions.</p>
+<ul>
+<li><p>Observing that people who are older are happier does not settle clarify why older people are happier. Similarly we need a theory to test.</p></li>
+<li><p>Observing that meaning of life is associated with lower distress does not clarify the direction of causation.</p></li>
+</ul>
+<p>Most of the theories in psychological science are causal explanations: they make claims about how people think and why they act. Regression enables use to examine the correlations outcome variables and predictor variables. As such, it is an exquisite crystal ball into the future. However, to use regression to answer “Why” causal inference we need to undertand how regression enables us to test causal theories, and we need to address the pitfalls.</p>
+<h3 id="the-difference-between-prediction-and-explanation">The difference between prediction and explanation?</h3>
 <h2 id="what-is-causal-confounding">What is causal confounding?</h2>
 <div class="layout-chunk" data-layout="l-body">
 <details>
@@ -1534,9 +1559,257 @@ Show code
 </details>
 <p><img src="op2.png" width="600" /></p>
 </div>
-<h2 id="the-difference-between-prediction-and-explanation">The difference between prediction and explanation?</h2>
 <h2 id="examples-of-confounding">Examples of confounding</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Familiar case</p>
+<ul>
+<li>m<span class="math inline">\(\to\)</span>x</li>
+<li>m<span class="math inline">\(\to\)</span>y</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/malcolmbarrett/ggdag'>ggdag</a></span><span class='op'>)</span>
+<span class='fu'>theme_set</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/theme_dag_blank.html'>theme_dag</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/quick_plot.html'>confounder_triangle</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/d_relationship.html'>ggdag_dconnected</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_11_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<p>Simulate the DAG</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m0</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m0</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code>Parameter   | Coefficient |   SE |         95% CI | t(98) |      p
+------------------------------------------------------------------
+(Intercept) |        0.13 | 0.11 | [-0.09,  0.35] |  1.18 | 0.241 
+x           |       -0.40 | 0.08 | [-0.56, -0.23] | -4.85 | &lt; .001</code></pre>
+</div>
+<p>We are familiar with this need to “control for” z.</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>z</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code>Parameter   | Coefficient |   SE |        95% CI | t(97) |      p
+-----------------------------------------------------------------
+(Intercept) |        0.14 | 0.10 | [-0.06, 0.33] |  1.40 | 0.163 
+x           |        0.02 | 0.10 | [-0.17, 0.22] |  0.24 | 0.810 
+z           |        0.89 | 0.15 | [ 0.60, 1.18] |  6.03 | &lt; .001</code></pre>
+</div>
+<p>By adding the “control” in the model, we remove the spurious relationship between x and z.</p>
+<p>We can use the following code in ggdag to test the familiar case:</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ggdag_0</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/dagify.html'>dagify</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>z</span>,
+       <span class='va'>x</span> <span class='op'>~</span> <span class='va'>z</span>,
+       exposure <span class='op'>=</span> <span class='st'>"x"</span>,
+       outcome <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/tidy_dagitty.html'>tidy_dagitty</a></span><span class='op'>(</span>layout <span class='op'>=</span> <span class='st'>"tree"</span><span class='op'>)</span>
+<span class='fu'>ggdag</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/adjustment_sets.html'>ggdag_adjustment_set</a></span><span class='op'>(</span><span class='va'>ggdag_0</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_11_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<p>The graph tells us to obtain an unbiased estimate of y on x we must condition on z.</p>
+<h2 id="mediation">Mediation</h2>
+<p>What do we do if we are have this model:</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dag_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/dagify.html'>dagify</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>m</span>,
+       <span class='va'>m</span> <span class='op'>~</span> <span class='va'>x</span>,
+       exposure <span class='op'>=</span> <span class='st'>"x"</span>,
+       outcome <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/tidy_dagitty.html'>tidy_dagitty</a></span><span class='op'>(</span>layout <span class='op'>=</span> <span class='st'>"tree"</span><span class='op'>)</span>
+
+<span class='va'>dag_1</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/ggdag.html'>ggdag</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_11_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<p>This is the code for assessing adjustment sets:</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggdag</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/adjustment_sets.html'>ggdag_adjustment_set</a></span><span class='op'>(</span><span class='va'>dag_1</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_11_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+</div>
+<p>The answer is we just regress y on x. Why? x is already and unbiased predictor of z.</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggdag</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/d_relationship.html'>ggdag_dconnected</a></span><span class='op'>(</span><span class='va'>dag_1</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_11_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<p>To test this, we can simulate the DAG</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x_s</span>, data <span class='op'>=</span> <span class='va'>df2</span><span class='op'>)</span>
+<span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m2</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code>Parameter   | Coefficient |   SE |        95% CI | t(98) |      p
+-----------------------------------------------------------------
+(Intercept) |        0.19 | 0.14 | [-0.08, 0.47] |  1.41 | 0.161 
+x_s         |        1.66 | 0.14 | [ 1.38, 1.93] | 12.00 | &lt; .001</code></pre>
+</div>
+<p>And if we include both, we recover both effects:</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>m2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x_s</span> <span class='op'>+</span> <span class='va'>m_s</span>, data <span class='op'>=</span> <span class='va'>df2</span><span class='op'>)</span>
+<span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m2</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code>Parameter   | Coefficient |   SE |       95% CI | t(97) |      p
+----------------------------------------------------------------
+(Intercept) |        0.19 | 0.10 | [0.00, 0.38] |  2.04 | 0.044 
+x_s         |        0.77 | 0.13 | [0.51, 1.02] |  6.00 | &lt; .001
+m_s         |        1.33 | 0.13 | [1.07, 1.58] | 10.34 | &lt; .001</code></pre>
+</div>
+<p>However, note that we didn’t need to condition on m to estimate the <em>causal</em> effect of x.</p>
+<p>Consider another form of mediation:</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/quick_plot.html'>mediation_triangle</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='cn'>NULL</span>, y <span class='op'>=</span> <span class='cn'>NULL</span>, m <span class='op'>=</span> <span class='cn'>NULL</span>, x_y_associated <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggdag/man/ggdag.html'>ggdag</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<p><img src="lecture_11_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<p>We are interested in the effect of x on y. What do we condition on?</p>
+<p>Imagine it is an experiment. A ritual activity (x) influences charity towards others a way that that is fully mediated by social cohesion.</p>
+<p>ritual <span class="math inline">\(\to\)</span> social cohesion <span class="math inline">\(\to\)</span> charity</p>
+<p>Lets simulate:</p>
+<p>Does the ritual increase charity?</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>c1</span> <span class='op'>~</span>  <span class='va'>c0</span> <span class='op'>+</span> <span class='va'>ritual</span>, data <span class='op'>=</span> <span class='va'>d</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code>Parameter   | Coefficient |       SE |         95% CI |  t(97) |      p
+-----------------------------------------------------------------------
+(Intercept) |       -0.19 |     0.06 | [-0.30, -0.08] |  -3.35 | 0.001 
+c0          |        1.02 | 5.54e-03 | [ 1.01,  1.03] | 184.02 | &lt; .001
+ritual      |        0.47 |     0.02 | [ 0.43,  0.52] |  20.36 | &lt; .001</code></pre>
+</div>
+<p>Does the ritual increase charity adjusting for social cohesion?</p>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>c1</span> <span class='op'>~</span>  <span class='va'>c0</span> <span class='op'>+</span> <span class='va'>ritual</span> <span class='op'>+</span> <span class='va'>cohesion</span>, data <span class='op'>=</span> <span class='va'>d</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code>Parameter   | Coefficient |       SE |        95% CI |    t(96) |      p
+------------------------------------------------------------------------
+(Intercept) |    1.42e-15 | 6.46e-16 | [ 0.00, 0.00] |     2.20 | 0.030 
+c0          |        1.00 | 6.47e-17 | [ 1.00, 1.00] | 1.55e+16 | &lt; .001
+ritual      |    1.80e-16 | 5.85e-16 | [ 0.00, 0.00] |     0.31 | 0.759 
+cohesion    |        1.00 | 1.12e-15 | [ 1.00, 1.00] | 8.96e+14 | &lt; .001</code></pre>
+</div>
+<h2 id="nz-example">NZ example</h2>
+<p>The New Zealand Attitudes and Values Study that is relevant to evaluating the theory of whether prototypicality of Māori group membership “moderates” the effect of perceived discrimination on ethnic identity in Māori.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The variables are from <em>Wave 4</em> of the NZAVS jitter2 data set are:</p>
+<ul>
+<li>T4.MAORI.GME (Māori Group membership and evaluation)</li>
+<li>T4.MAORI.VEM (Māori Perceived Appearance)</li>
+<li>Perc.Discrim.T04 (Perceived discrimination - ethnicity)
+<ul>
+<li>I Feel that I am often discriminated against because of my ethnicity.</li>
+<li>I feel that I am often discriminated against because of my ethnicity.</li>
+</ul></li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># importa data:</span>
+</code></pre>
+</div>
+</details>
+</div>
+<!-- <- rnorm( N ) # sim x -->
+<!-- o <- rnorm( N , x ) # sim A -> M -->
+<!-- y <- rnorm( N , m ) # sim A -> D -->
+<!-- df3 <- data.frame(x,m,y) -->
+<!-- df3<- df3 %>% -->
+<!--   dplyr::mutate(x_s = scale(x), -->
+<!--          m_s = scale(m)) -->
+<!-- ```{r} -->
+<!-- m3<-lm(y ~ x_s + m_s, data = df3) -->
+<!-- parameters::model_parameters(m3) -->
+<!-- ``` -->
+<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-barrett2021" class="csl-entry" role="doc-biblioentry">
 Barrett, Malcolm. 2021. <em>Ggdag: Analyze and Create Elegant Directed Acyclic Graphs</em>. <a href="https://CRAN.R-project.org/package=ggdag">https://CRAN.R-project.org/package=ggdag</a>.
@@ -1548,6 +1821,12 @@ McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Exa
 Rohrer, Julia M. 2018. <span>“Thinking Clearly about Correlations and Causation: Graphical Causal Models for Observational Data.”</span> <em>Advances in Methods and Practices in Psychological Science</em> 1 (1): 27–42.
 </div>
 </div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>I place “moderates” in shutter quotations because it is not clear what this means: moderates as in predicts or moderates as in causes.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -1555,6 +1834,15 @@ Rohrer, Julia M. 2018. <span>“Thinking Clearly about Correlations and Causatio
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
