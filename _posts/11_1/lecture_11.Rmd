@@ -284,6 +284,177 @@ parameters::model_parameters(
   )
 ```
 
+## Masked relationships
+
+Two variables affect an outcome. Both are correlated with each other. One affects the outcome positively and the other affects the outcome negatively
+
+Consider two correlated variables that jointly predict Kessler 6 (K), religion (R) and political conservativism but one positively and one negatively. 
+
+First consider this relationship, where conservativism causes religion
+
+
+```{r}
+dag_m1 <- dagify(K ~ C + R,
+                 R ~ C,
+                 exposure = "C",
+                 outcome = "K") %>%
+  tidy_dagitty(layout = "tree")
+
+dag_m1%>%
+  ggdag()
+```
+We can simulate the data:
+
+```{r}
+# C -> K <- R
+# C -> R
+set.seed(123)
+n <- 100
+C <- rnorm( n )
+R <- rnorm( n , C )
+K <- rnorm( n , R - C )
+
+d_sim <- data.frame(K=K,R=R,M=C)
+```
+
+
+First we only condition on conservativism 
+
+```{r}
+ms1 <- parameters::model_parameters(
+  lm(K  ~ C, data = d_sim)
+)
+plot(ms1)
+ms1
+```
+
+Next only religion:
+
+```{r}
+ms2<- parameters::model_parameters(
+  lm(K  ~ R, data = d_sim)
+)
+plot(ms2)
+```
+
+We we add both, we see them "pop," as is typical of masking:
+
+```{r}
+ms3<- parameters::model_parameters(
+  lm(K  ~ C + R, data = d_sim)
+)
+plot(ms3)
+```
+
+What if religion were to cause conservativism?
+
+```{r}
+# C -> K <- R
+# R -> C
+set.seed(123)
+n <- 100
+R <- rnorm( n )
+C <- rnorm( n , R )
+K <- rnorm( n , R - C )
+d_sim2 <- data.frame(K=K,R=R,C=C)
+```
+
+```{r}
+dag_m2 <- dagify(K ~ C + R,
+       C ~ R,
+       exposure = "C",
+       outcome = "K") %>% 
+  tidy_dagitty(layout = "tree")
+
+dag_m2%>%
+  ggdag()
+```
+
+```{r}
+ms21 <- parameters::model_parameters(
+  lm(K ~ C, data = d_sim2)
+)
+plot(ms21)
+ms21
+```
+
+```{r}
+ms22 <- parameters::model_parameters(
+  lm(K ~ R, data = d_sim2)
+)
+plot(ms22)
+ms22
+```
+
+
+
+```{r}
+ms23 <- parameters::model_parameters(
+  lm(K  ~ C + R, data = d_sim2)
+)
+plot(ms23)
+ms23
+```
+
+
+
+Unmeasured cause of R and C
+
+```{r}
+# C -> K <- R
+# C <- U -> R
+n <- 100
+U <- rnorm( n )
+R <- rnorm( n , U )
+C <- rnorm( n , U )
+K <- rnorm( n , R - C )
+d_sim3 <- data.frame(K = K, R = R, U = U, M = M )
+```
+
+
+```{r}
+dag_m3 <- dagify(K ~ C + R,
+       C ~ U,
+       R ~ U,
+       exposure = "C",
+       outcome = "K",
+       latent = "U") %>% 
+  tidy_dagitty(layout = "tree")
+
+dag_m3%>%
+  ggdag()
+
+ggdag::ggdag_adjustment_set(dag_m1)
+```
+
+
+```{r}
+ms31 <- parameters::model_parameters(
+  lm(K  ~ C, data = d_sim3)
+)
+plot(ms31)
+ms31
+```
+
+```{r}
+ms32 <- parameters::model_parameters(
+  lm(K  ~ R, data = d_sim3)
+)
+plot(ms32)
+ms32
+```
+
+
+
+```{r}
+ms33 <- parameters::model_parameters(
+  lm(K  ~ C + R, data = d_sim3)
+)
+plot(ms33)
+ms33
+```
+
+
 ## NZ example
 
 
