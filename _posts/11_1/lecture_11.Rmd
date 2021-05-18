@@ -1162,7 +1162,7 @@ ggdag_adjustment_set(dag_sel)
 8. Graph and interpret your results
 9. Return to your question and assess what you have learned. 
 
-(Often there are many interations between these steps.)
+(Often there are many interations between these steps. Keep track of your decisions.)
 
 
 ## Summary
