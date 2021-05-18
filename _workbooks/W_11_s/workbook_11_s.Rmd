@@ -160,14 +160,21 @@ dplyr::glimpse(nzl)
 
 ## Assessment
 
+1. What is the difference between prediction and causal inference: give an example for how regression is useful for each task. 
 
-## NZ example
+2. Explain "collider confounding" (or "collider bias"), and give an example of how collider bias might spoil inference.
 
-The New Zealand Attitudes and Values Study that is relevant to evaluating the theory of whether prototypicality of Māori group membership "moderates" the effect of perceived discrimination on ethnic identity in Māori.[^1]
+3. Using the `nz` data, select at least five demongraphic/ideological variables that might be related to an exposure variable and outcome variable. Create a DAG and identify which variables we should condition on to obtain an unbiased estimate of the causal effect of the exposure variable on the outcome variable. 
 
-[^1]: I place "moderates" in shutter quotations because it is not clear what this means: moderates as in predicts or moderates as in causes.
+4. Write a DAG for one of your previous workbook regression analyses; explain your DAG, and use it to clarify which variables you should conditioning on to obtain an unbiased causal inference (conditional on your DAG) . Compare the results of your current model with your previous model and note any differences. 
 
-The variables are from *Wave 4* of the NZAVS jitter2 data set are:
+5. Explain `masking` relationships and using the methods in lecture and/or the readings, simulate data and interpret the results of a regression model in which you causally assess the effect of X on Y in a setting where X also affects Y through and effect on Z. 
+
+6.  Import this dataset: 
+
+According to a psychological theory that one of you is working on, "prototypicality of Māori group membership moderates the effect of perceived discrimination on ethnic identity in Māori."
+
+Using at least the following three variables are from *Wave 4* from the dataset address the causal claims in this theory, noting ways in which the theory might be improved up.  Make sure to include a DAG and make sure to clarify the DAGs assumptions (no need to draw on previous psychological theories.)
 
 -   T4.MAORI.GME (Māori Group membership and evaluation)
 
@@ -178,167 +185,13 @@ The variables are from *Wave 4* of the NZAVS jitter2 data set are:
     -   I Feel that I am often discriminated against because of my ethnicity.
     -   I feel that I am often discriminated against because of my ethnicity.
 
-<!-- <- rnorm( N ) # sim x -->
 
-<!-- o <- rnorm( N , x ) # sim A -> M -->
-
-<!-- y <- rnorm( N , m ) # sim A -> D -->
-
-<!-- df3 <- data.frame(x,m,y) -->
-
-<!-- df3<- df3 %>% -->
-
-<!--   dplyr::mutate(x_s = scale(x), -->
-
-<!--          m_s = scale(m)) -->
-
-<!-- ```{r} -->
-
-<!-- m3<-lm(y ~ x_s + m_s, data = df3) -->
-
-<!-- parameters::model_parameters(m3) -->
-
-<!-- ``` -->
-
-
-### Information
+### Additional information: 
 
 Link to the NZAVS data dictionary is [here](https://dl.dropboxusercontent.com/s/but0pz9h4jdpy6f/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
 
 Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucvo/nzavs-data-dictionary.htm?dl=0)
 
-## Create a distill website
-
-1.  Create a distill website [see](https://rstudio.github.io/distill/website.html)
-
-2.  Create a postcard for yourself [see](<https://alison.rbind.io/post/2020-12-22-postcards-distill/>
-
-3.  Set up your distill webpage with your postcard on github: [see]((https://rstudio.github.io/distill/website.html#creating-a-website))
-
-4.  Publish your postcard
-
-Note you do not need to publish a personal website if you don't wish to do so. We can assess you on the basis of a publishable website. Please see us for help.
-
-## Create a distill report
-
-1.  Using the `nzl` dataset or another dataset of your choice, write a varying intercept/varying slope model.
-
-Note the `nzl` dataset now includes 2845 individuals who have responded to at least five waves of the NZAVS. The dataset now includes relationship satisfaction `Your.Personal.Relationships` and employment security `Emp.JobSecure`
-
-```{r}
-# center religion
-nzl1 <- nzl %>%
-  dplyr::mutate( Relid_c = scale(Relid, scale = FALSE))%>%
-  dplyr::mutate(CharityDonate = as.integer(CharityDonate))%>%
-  dplyr::mutate(CharityDonate_log = log(CharityDonate + 1))
-
-str(nzl1)
-
-# demean
-nzl1 <- cbind(nzl1, 
-           parameters::demean(nzl1, 
-                  c("Relid"),
-                  group = "Id")
-           )
-
-nzl1 <- nzl1 %>%
-  dplyr::mutate(Relid_between_c = scale(Relid_between, center = TRUE, scale = FALSE))  
-# test dataset
-m1 <- brms::brm(CharityDonate ~ yearS + Relid_c  + (1 + Relid_c|Id),  
-                family = "negbinomial",
-                file = here::here("models", "workbook_10_ex1"),
-                data = nzl1)
-
-summary(m1)
-```
-
-Note poor mixing. This is a sign of a problem:
-
-```{r cache=TRUE}
-# results
-parameters::model_parameters(
-  m1,
-  dispersion = FALSE,
-  test = "pd",
-  priors = TRUE,
-  effects = "all"
-)%>% print_md()
-```
-
-```{r cache=TRUE}
-# graph
-p_m1 <- plot(conditional_effects(m1,
-                            "Relid_c",
-                            spaghetti = TRUE,
-                            nsamples = 100)
-             )[[1]]
-p_m1
-```
-
-## Attempt model with demeaned data
-
-
-
-```{r}
-library(lme4)
-m2 <-
-  brms::brm(
-    CharityDonate ~ yearS + Relid_within + Relid_between_c  + 
-      (1 + Relid_within | Id),
-    family = "negbinomial",
-    file = here::here("models", "workbook_10_ex2"),
-    data = nzl1
-  )
-```
-
-We can see that people are rounding in their estimates:
-
-```{r}
-summary(m2, prior = TRUE)\
-brms::pp_check(m2) + scale_x_continuous(limits = c(0,10000))
-```
-
-```{r cache=TRUE}
-# graph
-p_m2a <- plot(conditional_effects(m2,
-                            c("Relid_within"),
-                            spaghetti = TRUE,
-                            re_formula = NULL,
-                            nsamples = 100)
-             )
-p_m2a
-```
-```{r}
-p_m2b <- plot(conditional_effects(m2,
-                            c("Relid_between_c"),
-                            spaghetti = TRUE,
-                            re_formula = NULL, # all group-level effects
-                            nsamples = 100)
-             )
-p_m2b
-```
-# Log transform outcomes
-
-
-```{r}
-# Response distributions in brms
-#https://cran.r-project.org/web/packages/brms/vignettes/brms_families.html
-
-# What is this? 
-hist(nzl1$CharityDonate_log)
-
-m3 <-
-  brms::brm(
-    CharityDonate_log ~  yearS + Relid_within + Relid_between_c  +
-      (1 + Relid_within | Id),
-    family = "hurdle_lognormal",
-    file = here::here("models", "workbook_10_ex3"),
-    data = nzl1
-  )
-```
-
-
-```
 
 ## Marking criteria
 

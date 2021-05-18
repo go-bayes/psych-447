@@ -137,7 +137,7 @@ nz12 <- nz_cr %>%
   dplyr::mutate(yearS = TSCORE - min(TSCORE, na.rm = TRUE))
 
 # View data
-dplyr::glimpse(nz12)
+#dplyr::glimpse(nz12)
 ```
 
 ```{r figopen2, echo=F}
@@ -249,7 +249,58 @@ prep2 <- Amelia::amelia(
   # not imputing outcomes
   polytime = 3
 ) #https://stackoverflow.com/questions/56218702/missing-data-warning-r
+
+
+# Impute again but do not impute the outcome
+
+
+# this is the key code
+prep2.1 <- Amelia::amelia(
+  prep,
+  #dataset to impute
+  m = 10,
+  # number of imputations
+  cs = c("Id"),
+  # the cross sectional variable
+  ts = c("yearS"),
+  # Time series, allowing polynomials
+  #ords =  none in this dataset, but use this command for ordinal data
+  #logs = ,  # big numbers better to use the natural log
+  sqrt = c("KESSLER6sum"),
+  # skewed positive data such as K6
+  noms = c("Male",  # nominal vars
+           "Employed"),
+  idvars = c("Wave","CharityDonate"), # We do not impute the outcome this time
+  # not imputing outcomes
+  polytime = 3
+) #https://stackoverflow.com/questions/56218702/missing-data-warning-r
+
+
 ```
+
+
+We can center and scale our variables using the following code head(df)
+
+```{r  imputation_make_data}
+prep3.1 <- Amelia::transform.amelia(
+  prep2.1,
+  Id = as.factor(Id),
+  # redundant
+  Age.10yrs = (Age / 10),
+  years_s = scale(yearS, center = TRUE, scale = TRUE),
+  years = yearS,
+  KESSLER6sum_S = scale(KESSLER6sum, center = TRUE, scale =TRUE),
+  Employed = factor(Employed),
+  Relid = scale(Relid, scale = TRUE, center = TRUE),
+  Male = as.factor(Male),
+  Emp.JobSecure_S = scale(Emp.JobSecure, center = TRUE, scale = FALSE),
+  CharityDonate = as.integer(CharityDonate)
+)
+
+# center an d scale age
+out.1 <- Amelia::transform.amelia(prep3.1, Age_in_Decades_C = scale(Age.10yrs,scale =FALSE, center=TRUE))
+```
+
 
 We can use trace plots to examine how Amelia imputed and with how much uncertainty:
 
@@ -275,28 +326,6 @@ Amelia::tscsPlot(
   var = "CharityDonate",
   ylim = c(0, 10000)
 )
-```
-
-We can center and scale our variables using the following code head(df)
-
-```{r  imputation_make_data}
-prep3 <- Amelia::transform.amelia(
-  prep2,
-  Id = as.factor(Id),
-  # redundant
-  Age.10yrs = (Age / 10),
-  years_s = scale(yearS, center = TRUE, scale = TRUE),
-  years = yearS,
-  KESSLER6sum_S = scale(KESSLER6sum, center = TRUE, scale =TRUE),
-  Employed = factor(Employed),
-  Relid = scale(Relid, scale = TRUE, center = TRUE),
-  Male = as.factor(Male),
-  Emp.JobSecure_S = scale(Emp.JobSecure, center = TRUE, scale = FALSE),
-  CharityDonate = as.integer(CharityDonate)
-)
-
-# center an d scale age
-out <- Amelia::transform.amelia(prep3, Age_in_Decades_C = scale(Age.10yrs,scale =FALSE, center=TRUE))
 ```
 
 Which variables do we need to include to estimate the causal effect of job security on charity?
@@ -351,6 +380,10 @@ loop_glmer_model <-
   }
 
 m_list <- loop_glmer_model(mod_eq, out)
+
+# try with out the outcome imputed
+
+m_list1 <- loop_glmer_model(mod_eq, out.1)
 ```
 
 Here is a function for obtaining the results:
@@ -359,17 +392,16 @@ Here is a function for obtaining the results:
 # table of effects
 loop_lmer_model_tab <- function(x) {
   mp <- lapply(x, model_parameters)
-  out <- parameters::pool_parameters(mp, effects = "all")
+  out <- parameters::pool_parameters(mp)
   return(out)
 }
-
 
 # create table
 tab_impute <- loop_lmer_model_tab(m_list)
 tab_impute
 
 # create graph
-plot_impute <- plot(tab)
+plot_impute <- plot(tab_impute)
 plot_impute
 ```
 
@@ -400,16 +432,40 @@ graph_predictions_imputed <- function(x, y) {
 graph_predictions_imputed(m_list,"Effect of Jobsecurity on Charity (not reliable")
 ```
 
+
+
+```{r cache =TRUE}
+loop_lmer_model_tab <- function(x) {
+  mp <- lapply(x, model_parameters)
+  out <- parameters::pool_parameters(mp)
+  return(out)
+}
+
+# create table
+tab_impute1 <- loop_lmer_model_tab(m_list1)
+tab_impute1
+
+# create graph
+plot_impute1 <- plot(tab_impute1)
+
+library(patchwork)
+
+plot_impute + plot_impute1 + plot_annotation()
+```
+
+
+
 If you want a LaTeX table, you can use this code:
 
-```{r huxtable_latextable, include = FALSE}
+```{r huxtable_latextable, eval = FALSE}
 library(huxtable)
-huxtable::as_hux(m_list)%>%
-    select("Parameter", "Coefficient", "CI_low","CI_high", "p") %>%
-    set_number_format(3)%>%
-    set_left_padding(20)%>%
-    set_bold(1,everywhere)%>%
-    quick_latex()
+
+huxtable::as_hux( your_model_here ) %>%
+  select("Parameter", "Coefficient", "CI_low", "CI_high", "p") %>%
+  set_number_format(3) %>%
+  set_left_padding(20) %>%
+  set_bold(1, everywhere) %>%
+  quick_latex()
 
 ```
 
@@ -417,9 +473,9 @@ huxtable::as_hux(m_list)%>%
 
 When you run a regression with missing data, R automateically deletes the missing cases.
 
-Let's look at the results from therow-wise deleted data:
+Let's look at the results from the row-wise deleted data:
 
-```{r row_wise_deleted}
+```{r row_wise_deleted, cache=TRUE}
 # prepare data as we did for the imputated dataset
 df2 <- df %>%
   dplyr::mutate(
@@ -472,7 +528,12 @@ df %>%
   
 ```
 
-No, the intution is wrong....
+No, the intution was wrong. However, it is important to realise that missingness might not be completely at random conditional on variables in the model. In this case, you dataset cannot avoid its biases by multiple imputation. 
+
+Recall that it is generally useful to include more variables for accurate prediction. For this reason, when multiply imputing outcomes it is generally useful to include more variables. 
+
+
+### Appendix 1: Imputation using BRMS
 
 ### Multiple imputation in BRMS (warning: these models take 10x longer)
 
@@ -501,6 +562,29 @@ brmdat <- list(
   
   out$imputations$imp10
 )
+
+
+brmdat1 <- list(
+  out.1$imputations$imp1,
+  
+  out.1$imputations$imp2,
+  
+  out.1$imputations$imp3,
+  
+  out.1$imputations$imp4,
+  
+  out.1$imputations$imp5,
+  
+  out.1$imputations$imp6,
+  
+  out.1$imputations$imp7,
+  
+  out.1$imputations$imp8,
+  
+  out.1$imputations$imp9,
+  
+  out.1$imputations$imp10
+)
 ```
 
 We write the model as follows:
@@ -526,7 +610,9 @@ summary(fit_imp1)
 plot(fit_imp1)  # VERY POOR MIXING
 ```
 
-Mixinng is a problem, and the coefficient plot reveals a mess:
+Mixing is a problem, indeed I don't think I have ever run a model that has mixed worse than this one. 
+
+We see the trouble in the coefficient plots:
 
 ```{r bayes-1-plot}
 #plot posteriors
@@ -538,14 +624,14 @@ plot_bayes_1 +
   plot_impute +
   plot_annotation(title = "Comparison of regressions using  (a) Bayesian Imputationand and (b) Lmer models",
                   tag_levels = 'a')
+
+
 ```
 
-We can model missing-ness in BRMS in one step (for continuous missing variables)
+We can model missing-ness in BRMS in one step (for continuous missing variables). Let's try that next:
 
 
-
-
-```{r one-step-brms-impute}
+```{r one-step-brms-impute-22}
 # Emp.JobSecure_S  + Employed + Age_in_Decades_C +  Male  +  years_s
 
 #Note that BRMS can only impute continuous data. That's not a problem. Your factors are converted to integars anyway.
@@ -576,12 +662,50 @@ bform <-
 fit_imp2 <- brm(bform, 
                 data = df3, 
                 file = here::here("models", "bayes-imp-2"))
-
+summary(fit_imp2)
 ```
 
-## Appendix: probability --\>
+Again, the model is a all over the place:
 
-### Probability
+```{r}
+plot(fit_imp2)
+```
+
+Mixing was a problem. Minimally we'd need to include more variables. However there might be deeper problems with the data, or our approach.  Analysis is iterative. We need to return to the data and scrutinise it more carefully. 
+
+```{r one-step-brms-impute}
+plot_bayes_2 <- brms::mcmc_plot(fit_imp2,
+                                type = "areas",
+                                prob = .89)
+
+plot_bayes_2
+
+# again we run into trouble. 
+plot(fit_imp2)
+```
+
+
+## Try wthout imputing outcome and allow for overdispersion
+
+```{r}
+fit_imp3 <-
+  brm_multiple(
+    bf_mod_eq,
+    data = brmdat1,
+    family = "zero_inflated_negbinomial",
+    file = here::here("models", "bayes-imp-3")
+  )
+
+# table
+summary(fit_imp1)
+plot(fit_imp1)  # VERY POOR MIXING
+```
+
+
+
+
+
+### Appendix 2. Probability
 
 We have been working with probability throughout this course.
 
@@ -610,7 +734,7 @@ Pr_Positive <- Pr_Positive_COVID * Pr_COVID + Pr_Positive_Healthy * ( 1 - Pr_COV
 # Now calculated your probability of testing positive
 
 Pr_COVID_Positive <- Pr_Positive_COVID * Pr_COVID / (Pr_Positive )
-
+Pr_COVID_Positive # 1 in 1000
 ```
 
 <!-- library(tidyverse) -->
