@@ -1152,17 +1152,18 @@ ggdag_adjustment_set(dag_sel)
 
 ## Workflow
 
-1. Import yourraw data
-2. Graph your raw data and check that data types are correct
-3. Consider your question
-4. If causal, draw your DAG/S
-5. Explain your DAG's
-6. Write your model
-7. Run your model
-8. Graph and interpret your results
-9. Return to your question and assess what you have learned. 
+1. Import your data
+2. Check that data types are correct
+3. Graph your data
+4. Consider your question
+5. If causal, draw your DAG/S
+6. Explain your DAG's
+7. Write your model
+8. Run your model
+9. Graph and interpret your results
+10. Return to your question, and assess what you have learned. 
 
-(Often there are many interations between these steps. Keep track of your decisions.)
+(Typically there are multiple iterations between these steps in your workflow. Annotate your scripts; keep track of your decisions; allow GitHub to track changes; embrace uncertainty.)
 
 
 ## Summary
