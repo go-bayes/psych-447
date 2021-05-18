@@ -1148,7 +1148,7 @@ However we have an adjustment set
 
 ```{r}
 ggdag_adjustment_set(dag_sel)
-```
+``` 
 
 ## Workflow
 
