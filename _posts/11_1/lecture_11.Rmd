@@ -29,7 +29,7 @@ Required readings are as follows:
 -   @barrett2021 [link](https://cran.r-project.org/package=ggdag)
 -   @mcelreath2020[link](https://tewaharoa.victoria.ac.nz/discovery/fulldisplay?docid=alma99179374299902386&context=L&vid=64VUW_INST:VUWNUI&search_scope=MyInst_and_CI&tab=all&lang=en)
 
-```{r echo = TRUE, include = TRUE}
+```{r code_folding = TRUE}
 # packages
 # install_rethinking
 # function for installing dependencies
@@ -89,7 +89,13 @@ knitr::opts_chunk$set(
 
 Up to this point in the course, we have been using regression for prediction, asking:
 
-> what is the expected change in why conditional on different levels or increments of x
+> What is the expected change in y conditional on different levels of x?
+
+When there are two or more predictors
+
+> What is the expected change in y conditional on different levels of x1 and x2, and what additional information do we learn from x1 given x2 (and x2, given x1).
+
+Prediction is possible when there are regularities in the world that make y more predictable when we have information about x1 (x2, x3 ...).
 
 Prediction is useful for many practical questions:
 
@@ -97,31 +103,31 @@ Prediction is useful for many practical questions:
 -   "Are people getting happier as they get older?"
 -   "Does having meaning and purpose in life predict lower psychological distress.
 
-However, scientists seek causal explanations:
+However, for the most part, scientists seek *causal* explanations. The topic of causation is tricky. We will think about causation by thinking about the effects of interventions. What would happen to y if we were to change x1 (or x2)?  For example:
 
--   Why did people who in 2012 voted for Barack Obama switch party vote in 2016 to support Donald Trump? (If the pattern of variation of stability and change is not random what causes the pattern?)
+Most theories in psychological science are causal explanations: they make claims about how people think and why they act. 
 
-To address the question of stability and change in political allegiance we need a theory of political motivation, and we must test its predictions.
+  - Why did those who voted for Barack Obama in 2012 switch party vote for Donald Trump in 2016?  
 
--   Observing that people who are older are happier does not settle clarify why older people are happier. Similarly we need a theory to test.
-
--   Observing that meaning of life is associated with lower distress does not clarify the direction of causation.
-
-Most of the theories in psychological science are causal explanations: they make claims about how people think and why they act. Regression enables use to examine the correlations outcome variables and predictor variables. As such, it is an exquisite crystal ball into the future. However, to use regression to answer "Why" causal inference we need to understand how regression enables us to test causal theories, and we need to address the pitfalls.
+Political psychology differs from polling because political psychology seeks to clarify the operations of the psychological, social, economic, and behavioral mechanisms that underpin voting behaviour, among other questions. To posit that inequality caused change is to imply that if inequality had been different voting behaviour would have been different. Sometimes we can use regression to test such predictions. However, often we can't. Whether we can or cannot is rarely transparent.  Although regression can be useful as a tool for evaluating causal theories, it is a dangerous tool. Think of today's lecture as a health and saftey induction (so to speak). We will clarify how to use regression as a tool for causal inference while alerting you to common hazards. We will begin on familiar ground.
 
 ## Omitted variable bias
 
-Familiar case:
+Often when researchers include additional co-variates into their regression into their regression model they are worried about confounding from omitted variable bias. They use the word "control" to indicate that they are addressing this hazard.  The case is familiar.  X and Y are uncorrelated. However a lurking third variable is responsible for their apparent correlation. 
+
 
 ```{r}
 library(ggdag)
 theme_set(theme_dag())
+
 # create confounded triangle
-confounder_triangle() %>%
+d1 <- confounder_triangle() %>%
   ggdag_dconnected()
+
+d1
 ```
 
-What do we need to do if there is an omitted variable linking x to y?
+We can simulate date that have this causal relationship and ask what would happen were we to regress X on Y without accounting for Z. 
 
 ```{r}
 set.seed(123)
@@ -131,55 +137,96 @@ x <- rnorm(N , -z) # sim z -> x
 y <- rnorm(N , z) # sim z -> y
 df <- data.frame(x, z, y)
 
-# There appears to be a relationship between x --> y
+# note there is a predictive relationship between X to Y
 plot(x, y)
 ```
 
-We can regress x on y:
+Regressing X on Y: 
 
 ```{r}
 m0 <- lm(y ~ x, data = df)
 parameters::model_parameters(m0)
 ```
 
-We are familiar with this need to "control for" z. When we included the omitted variable, z, it breaks the association between x and y:
+X and Y are correlated. If we know X we can better predict Y. However our ability to predict arises from a process outside of X and Y. Put metaphorically,  X "listens to" Z and Y "listens to" Z because Z influences both X and Y. If Z were to change, then so too would X and so too would Y. However X does not cause Y. If we were to intervene in the world and change X this would not change Y. Put yet another way, once we know Z, we do not gain any additional information about Y from X. 
+
+To understand the implications of information flow with in a regression model we will use directed acylical graphs or DAGS
+
+## Directed Acyclical Graphs 
+
+A directed acyclical graph (DAGS) is heuristic tools for investigating causal inference in a regression model. A DAG is a graph that has nodes and edges. The edges point in the direction of a causal influence. The flows are "acyclical" because a cause is not at the same time an effect. The `ggdag` package is useful for identifying potential confounding in your dataset and we will rely heavily on that package today.
+
+**Warning: assessing causal inference using a DAG typically requires assumptions that are *not* part of your dataset. A poorly specified DAG will lead to poor inference. There is _no_ working around this!**
+
+
+#### Aside 
+
+In the causal inference literature, we evaluate dependencies using the langauge of "conditional independence."  
+
+Once we condition on Z, the link between X and Y is broken.
+
 
 ```{r}
-m1 <- lm(y ~ x + z, data = df)
-parameters::model_parameters(m1)
+# we can use the language of conditional independence
+g <- dagitty( "dag{ x <- z -> y }" )
+impliedConditionalIndependencies( g )
 ```
 
-The `ggdag` package is useful for identifying potential confounding in your dataset. Warning: assessing causal inference requires assumptions that are *not* in your dataset.
+We can use implied conditional independencies to test whether our DAG is right. For example, if X were to remain reliably predictive of Y, then we would know that the DAG we have drawn here is not correct. 
 
-For now, let's use ggdag to identify confounding arising from omitting z in our regression of x on y.
+#### Resume
+
+
+Many applied scientists equate omitted variable bias with confounding.  For this reason, they seek to "control" for every variable that might be associated with both X and Y.  If the relationship between X and Y holds after including such "controls," many applied scientist will infer that there is a causal relationship between X and Y.  We will see that this is not the case; quite the opposite, controlling for many variables is an invitation to confounding, leading to erroneous causal inference.  Do not adopt a "causal salad" approach to regression.
+
+> “But the approach which dominates in many parts of biology and the social sciences is instead CAUSAL SALAD.36 Causal salad means tossing various “control” variables into a statistical model, observing changes in estimates, and then telling a story about causation. Causal salad seems founded on the notion that only omitted variables can mislead us about causation. But included variables can just as easily confound us. When tossing a causal salad, a model that makes good predictions may still mislead about causation. If we use the model to plan an intervention, it will get everything wrong. Richard McElreath “Statistical Rethinking" Chapter 1, p46.
+
+
+### Omitted variable DAG
+
+Let's use `ggdag` to identify confounding arising from omitting Z in our regression of X on Y.
 
 First we write out the DAG as follows:
 
 ```{r}
 # code for creating a DAG
-ggdag_0_full <- dagify(y ~ z,
+ggdag_ov <- dagify(y ~ z,
                        x ~ z,
                        exposure = "x",
                        outcome = "y") %>%
   tidy_dagitty(layout = "tree")
 
 # plot the DAG
-ggdag_0_full %>%
+ggdag_ov %>%
   ggdag()
 ```
 
-Next we ask ggdag which variables we need to condition on to obtain an unbiased estimate of the outcome from the exposure:
+Next we ask `ggdag` which variables we need to include if we are to obtain an unbiased estimate of the outcome from the exposure:
 
 ```{r}
 # use this code
-ggdag::ggdag_adjustment_set(ggdag_0_full)
+
+ggdag::ggdag_adjustment_set( ggdag_ov )
+
 ```
 
-The graph tells us to obtain an unbiased estimate of y on x we must condition on z.
+The graph tells us to obtain an unbiased estimate of Y on X we must condition on Z.
+
+And indeed, when we included the omitted variable Z in our simulated dateset it breaks the association between X and Y:
+
+```{r}
+m1 <- lm(y ~ x + z, data = df)
+
+parameters::model_parameters(m1)
+```
+
+
+
 
 ## Mediation and causation
 
-Suppose we are interested in the causal effect of x on y. We have a direct effect of x on y as well as an indirect effect of x on y through m.
+Suppose we were interested in the causal effect of X on Y.  We have a direct effect of X on Y as well as an indirect effect of X on Y through M. We use `ggdag` to draw the DAG:
+
 
 ```{r}
 dag_1 <- dagify(y ~ x + m,
@@ -192,30 +239,41 @@ dag_1 %>%
   ggdag()
 ```
 
-What should we condition on if we are interested in the causal effect of changes in x on changes in y?
+What should we condition on if we are interested in the causal effect of changes in X on changes in Y?
 
-We can pose the question to ggdag:
+We can pose the question to `ggdag`:
 
 ```{r}
+# ask ggdag which variables to condition on:
+
 ggdag::ggdag_adjustment_set(dag_1)
+
 ```
 
-The answer is we just regress y on x. There is no backdoor path from x to y that would bias our estimate.
+'Backdoor Paths Unconditionally Closed' means that, assuming the DAG we have drawn is correct, we may obtain an unbiased estimate of X on Y without including additional variables. 
 
-Putting this another way, x and y are `d-connected`:
+Later we shall understand why this is the case.^[We shall see there is no "backdoor path" from X to Y that would bias our estimate, hence the estimate X->Y is an unbiased causal estimate -- again, conditional on our DAG.]
+
+For now, we can enrich our language for causal inference by considering the concept of `d-connected` and `d-separated`:
+
+Two variables are `d-connected` if information flows between them (condional on the graph), and they are `d-separated` if they are conditionally independent of each other.
 
 ```{r}
+# use this code to examine d-connectedness
 ggdag::ggdag_dconnected(dag_1)
 ```
 
-To test this, we can simulate the DAG
+In this case, d-connection is a good thing because we can estimate the causal effect of X on Y. In other cases, d-connection will spoil the model. We have seen this for omitted variable bias. X and Y are d-separated conditional on Z, and that's our motivation for including Z! These concepts are tricky, but they get easier with practice. 
+
+To add some grit to our exploration of mediation lets simulate data that are consistent with our mediation DAG
+
 
 ```{r echo = FALSE, include = FALSE}
 set.seed(123)
 N <- 100
 x <- rnorm(N)# sim x
-m <- rnorm(N , x) # sim A -> M
-y <- rnorm(N , x + m) # sim A -> D
+m <- rnorm(N , x) # sim X -> M
+y <- rnorm(N , x + m) # sim M -> Y
 df2 <- data.frame(x, m, y)
 
 df2 <- df2 %>%
@@ -223,21 +281,27 @@ df2 <- df2 %>%
                 m_s = scale(m))
 ```
 
-The model
+
+First we ask, is X is related to Y?
 
 ```{r}
 m2 <- lm(y ~ x_s, data = df2)
 parameters::model_parameters(m2)
 ```
 
-And if we include both x_s and m_s, we recover both the direct effect of x on y, as well as the mediation effect of m on y:
+Yes.
+
+Next we ask, Is X related to Y conditional on M? 
 
 ```{r}
 m2 <- lm(y ~ x_s + m_s, data = df2)
 parameters::model_parameters(m2)
 ```
 
-Recall that we could write a mediation model
+Yes, but notice this is a different question. The effect of X is attenuated because M contributes to the causal effect of Y. 
+
+A mediation model would tell us the same. Recall from lecture 9 we can write a mediation model as follows:
+
 
 ```{r}
 path_m <- brms::bf(m_s ~ x_s)
@@ -246,7 +310,7 @@ path_y <- brms::bf(y ~ x_s + m_s)
 m1 <- brms::brm(
   path_m + path_y + set_rescor(FALSE),
   data = df2,
-  file = here::here("models","mediation-lect11-1")
+  file = here::here("models", "mediation-lect11-1")
 )
 
 parameters::model_parameters(m1)
@@ -260,42 +324,57 @@ bmlm::mlm_path_plot(xlab = "Focal\n(X)",
               ylab = "Outcome\n(Y)")
 ```
 
-We recover the indirect, direct and total effects as follow:
+For a mediation model we may recover the indirect, direct and total effects as follow:
 
 ```{r}
+# get posterior distributions
 post <- brms::posterior_samples(m1)
+
+# sum and multiply the posterior distributions to obain parameter estimates
 post2 <- post %>% 
   transmute(
     a = b_ms_x_s ,
     b = b_y_m_s,
     cp = b_y_x_s,
     me = a * b,
-    c = cp + me,
-    pme = me / c
+    c = cp + me#,
+   # pme = me / c
   )
-mcmc_intervals(post2)
+
+# plot the results
+mcmc_intervals(post2) 
 ```
 
-So we can ask how x affected y in relation to x's effect on m. However, to obtain an unbiased causal estimate of x on y we only needed to include x_s. We didn't need to condition on m to estimate the *causal* effect of x.
+So we can ask how X affects Y  in relation to X's effect on M. 
+
+However, to obtain an unbiased causal estimate of X on Y we only needed to include X We didn't need to condition on M to estimate the *causal* effect of X.
 
 ## Pipe confounding (full mediation)
 
 Suppose we are interested in the effect of x on y, in a scenario when m fully mediates the relationship of x on y.
 
 ```{r}
-mediation_triangle(x = NULL, y = NULL, m = NULL, x_y_associated = FALSE)%>%
+mediation_triangle(
+  x = NULL,
+  y = NULL,
+  m = NULL,
+  x_y_associated = FALSE
+) %>%
   ggdag()
 ```
 
-What variables do we need to include to obtain an unbiased estimate of x on y?
+What variables do we need to include to obtain an unbiased estimate of X on Y?
 
-Let's fill out this example out by imagining an experiment. We want to know whether a ritual action condition (x) influences charity (y), and assume this happens entirely through perceived social cohesion:
+Let's fill out this example out by imagining an experiment. 
 
+Suppose we want to know whether a ritual action condition (X) influences charity (Y). We have good reason to assume the effect of X on Y happens *entirely* through perceived social cohesion (M):  
+
+X$\to$M$\to$Z or 
 ritual $\to$ social cohesion $\to$ charity
 
 Lets simulate some data
 
-```{r echo = FALSE, include = FALSE}
+```{r}
 set.seed(123)
 # Participants
 N <-100
@@ -359,6 +438,7 @@ dag_m1 <- dagify(K ~ C + R,
                  outcome = "K") %>%
   tidy_dagitty(layout = "tree")
 
+# graph
 dag_m1%>%
   ggdag()
 ```
@@ -387,7 +467,7 @@ plot(ms1)
 ms1
 ```
 
-Next only religion:
+Next, only religion:
 
 ```{r}
 ms2<- parameters::model_parameters(
@@ -396,7 +476,7 @@ ms2<- parameters::model_parameters(
 plot(ms2)
 ```
 
-We we add both, we see them "pop," as is typical of masking:
+When we add both C and R, we see them "pop" in opposite directions, as is typical of masking:
 
 ```{r}
 ms3<- parameters::model_parameters(
@@ -428,7 +508,7 @@ bmlm::mlm_path_plot(xlab = "Focal\n(X)",
               ylab = "Outcome\n(Y)")
 ```
 
-We recover the indirect, direct and total effects as follow:
+We recover the indirect, direct and total effects as follows:
 
 ```{r}
 post <- brms::posterior_samples(m2)
@@ -444,7 +524,7 @@ post2 <- post %>%
 mcmc_intervals(post2)
 ```
 
-Note that when you ask ggdag to assess how to obtain an unbiased estimate of C on K it will tell you you don't need to condition on R.
+Note that when you ask `ggdag` to assess how to obtain an unbiased estimate of C on K it will tell you you don't need to condition on R.
 
 ```{r}
 dag_m1%>%
@@ -457,9 +537,11 @@ Yet recall when we just assessed the relationship of C on K we got this:
 plot(ms1)
 ```
 
-Is the DAG wrong? No. The fact that C$\to$R is positive and R$\to$K is negative means that if we were to increase C, we wouldn't reliably increase K. The total effect of C just isn't reliable.
+Is the DAG wrong? 
 
-## Collider Confounding.
+No. The fact that C$\to$R is positive and R$\to$K is negative means that if we were to increase C, we wouldn't reliably increase K. The total effect of C just isn't reliable!
+
+## Collider Confounding
 
 The selection-distortion effect (Berkson's paradox) (From Statistical Rethinking).
 
@@ -475,11 +557,14 @@ dag_sd <- dagify(S ~ N,
                             "T" = "Trustworthy")) %>%
   tidy_dagitty(layout = "nicely")
 
+# Graph
 dag_sd %>%
   ggdag(text = FALSE, use_labels = "label")
 ```
 
 When two arrows enter into an variable, it opens a path of information between the two variables.
+
+Very often this openning of information has disasterous implications. *In the human sciences, included variable bias is a woefully underrated problem*.
 
 ```{r  code_folding = TRUE}
 ggdag_dseparated(
@@ -495,6 +580,8 @@ ggdag_dseparated(
 We can use the `ggdag package` to find colliders among our variables:
 
 ```{r}
+# code for finding colliders
+
 ggdag::ggdag_collider(dag_sd,
                       text = FALSE,
                       use_labels = "label")
@@ -634,7 +721,7 @@ ggdag_adjustment_set(dag_ex3)
 
 ## Taxonomy of confounding
 
-Good news. There are only four basic types of confounding
+There is good news. Ultimately are only four basic types of confounding:
 
 ### The Fork (omitted variable bias)
 
@@ -646,7 +733,7 @@ confounder_triangle(x = "Coffee",
                    use_labels = "label")
 ```
 
-### The Pipe
+### The Pipe (fully mediated effects)
 
 ```{r}
 mediation_triangle(
@@ -668,7 +755,7 @@ collider_triangle() %>%
 
 ### The Descendant
 
-If we "control for" a descendant of a collider we will introduce collider bias.
+If we "control for" a descendant of a collider, we will introduce collider bias.
 
 ```{r}
 dag_sd <- dagify(
@@ -710,7 +797,7 @@ From *Statistical Rethinking*, p.286
 
 > If there are any open backdoor paths, decide which variable(s) to condition on to close it (if possible).
 
-Practically speaking this can be a nightmare. Why? because there are typically so many paths to consider:
+Practically speaking this can be very difficult.We often have many paths to consider:
 
 Briefly, here is an example from a cross cultural experiment I was part of this year:
 
@@ -744,8 +831,8 @@ dg_1 <- ggdag::dagify(
     "ses" = "perceived SES",
     "edu" = "education",
     "age" = "age"
-   )
-)%>%
+  )
+) %>%
   control_for("rel")
 ```
 
@@ -765,15 +852,13 @@ p3 <- ggdag::ggdag_dseparated(
 p3
 ```
 
-How do we fix the problem? I let ggdag do the work.
+How do we fix the problem? Think hard about the causal network and let `ggdag` do the work.
 
 ```{r}
 # find adjustment set
-p2 <- ggdag::ggdag_adjustment_set(
-  dg_1,
-  text = FALSE,
-  use_labels  = "label"
-) +
+p2 <- ggdag::ggdag_adjustment_set(dg_1,
+                                  text = FALSE,
+                                  use_labels  = "label") +
   theme_dag_blank() +
   labs(title = "Adjustment set",
        subtite = "Model for Source credibility from belief ")
@@ -782,13 +867,12 @@ p2
 
 ## Inference depends on assumptions that are not contained in the data.
 
-> regression itself does not provide the evidence you need to justify a causal model. Instead, you need some science." -- Richard McElreath: "Statistical Rethinking, chapter 6"
+> regression itself does not provide the evidence you need to justify a causal model. Instead, you need some science." -- Richard McElreath: "Statistical Rethinking, Chapter 6"
 
-> "...the data alone can never tell you which causal model is correct"- Richard McElreath: "Statistical Rethinking" chapter 5
+> "...the data alone can never tell you which causal model is correct"- Richard McElreath: "Statistical Rethinking" Chapter 5
 
-> "The parameter estimates will always depend upon what you believe about the causal model, because typically several (or very many) causal models are consistent with any one set of parameter estimates." "Statistical Rethinking" chapter 5
+> "The parameter estimates will always depend upon what you believe about the causal model, because typically several (or very many) causal models are consistent with any one set of parameter estimates." "Statistical Rethinking" Chapter 5
 
-Excerpt From: McElreath, Richard;. "Statistical Rethinking." Apple Books.
 
 Suppose we assume that the source condition affects religion, say through priming. We then have the following dag:
 
@@ -861,6 +945,7 @@ tidy_ggdag <- dagify(
   outcome =   "WB")%>%
   tidy_dagitty()
 
+# graph
 tidy_ggdag %>%
   ggdag()
 ```
@@ -880,9 +965,6 @@ time.} We report the second set because employment is likely to contain
 more measurement error: some are not employed because they cannot find
 employment, others because they are not seeking employment (e.g.
 retirement).
-
-
-See [here](https://ggdag.malco.io/)
 
 ### Unmeasured causes
 
@@ -926,7 +1008,8 @@ d_sim3 <- data.frame(K = K, R = R, U = U, C = C )
 
 ### What is the relationship between smoking and cardiac arrest?
 
-This example is from the ggdag package, by Malcolm Barrett
+
+This example is from the `ggdag` package, by Malcolm Barrett [here](https://ggdag.malco.io/)
 
 ```{r}
 smoking_ca_dag <- dagify(
@@ -1047,7 +1130,8 @@ Notice that "retained" falls downstream from a collider, "home ownership"
 ggdag_collider(dag_sel)
 ```
 
-Because we are stratifying on "retained" we introduce collider bias in our estimate of ethnicity on ecological values.
+Because we are stratifying on "retained", we introduce collider bias in our estimate of ethnicity on ecological values.
+
 
 ```{r}
 ggdag_dseparated(
@@ -1059,13 +1143,32 @@ ggdag_dseparated(
 )
 ```
 
+
+However we have an adjustment set
+
 ```{r}
 ggdag_adjustment_set(dag_sel)
 ```
 
+## Workflow
+
+1. Import yourraw data
+2. Graph your raw data and check that data types are correct
+3. Consider your question
+4. If causal, draw your DAG/S
+5. Explain your DAG's
+6. Write your model
+7. Run your model
+8. Graph and interpret your results
+9. Return to your question and assess what you have learned. 
+
+(Often there are many interations between these steps.)
+
+
 ## Summary
 
--   We control for variables to avoid omitted variable bias
--   Omitted variable bias is real, but a commonplace is included variable bias
--   Included variable biases arise from "pipes", "colliders", and conditioning on descendant of colliders.
--   
+-  We control for variables to avoid omitted variable bias
+-  Omitted variable bias is real, but also commonplace is included variable bias
+-  Included variable biases arise from "pipes", "colliders", and conditioning on descendant of colliders.
+-  The `ggdag` package can help you to obtain causal inference, but it relies on assumptions that are not part of your data. 
+-  Clarify your assumption.
