@@ -697,8 +697,8 @@ fit_imp3 <-
   )
 
 # table
-summary(fit_imp1)
-plot(fit_imp1)  # VERY POOR MIXING
+summary(fit_imp3)
+plot(fit_imp3)  
 ```
 
 
