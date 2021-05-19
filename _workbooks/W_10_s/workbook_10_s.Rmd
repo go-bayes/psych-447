@@ -284,7 +284,6 @@ p_m2b
 
 # What is this? 
 hist(nzl1$CharityDonate_log)
-
 m3 <-
   brms::brm(
     CharityDonate_log ~  yearS + Relid_within + Relid_between_c  +
