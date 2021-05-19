@@ -155,7 +155,7 @@ nzl <- nz_cr %>%
 
 ```{r include = FALSE}
 # inspect data
-dplyr::glimpse(nzl)
+#dplyr::glimpse(nzl)
 ```
 
 ## Assessment
@@ -213,7 +213,7 @@ summary(m1)
 
 Note poor mixing. This is a sign of a problem:
 
-```{r cache=TRUE}
+```{r cache=TRUE, eval=FALSE}
 # results
 parameters::model_parameters(
   m1,
@@ -226,7 +226,7 @@ parameters::model_parameters(
 
 ```{r cache=TRUE}
 # graph
-p_m1 <- plot(conditional_effects(m1,
+p_m1 <- plot(brms::conditional_effects(m1,
                             "Relid_c",
                             spaghetti = TRUE,
                             nsamples = 100)
@@ -239,7 +239,6 @@ p_m1
 
 
 ```{r}
-library(lme4)
 m2 <-
   brms::brm(
     CharityDonate ~ yearS + Relid_within + Relid_between_c  + 
@@ -253,13 +252,13 @@ m2 <-
 We can see that people are rounding in their estimates:
 
 ```{r}
-summary(m2, prior = TRUE)\
+summary(m2, prior = TRUE)
 brms::pp_check(m2) + scale_x_continuous(limits = c(0,10000))
 ```
 
 ```{r cache=TRUE}
 # graph
-p_m2a <- plot(conditional_effects(m2,
+p_m2a <- plot(brms::conditional_effects(m2,
                             c("Relid_within"),
                             spaghetti = TRUE,
                             re_formula = NULL,
@@ -268,7 +267,7 @@ p_m2a <- plot(conditional_effects(m2,
 p_m2a
 ```
 ```{r}
-p_m2b <- plot(conditional_effects(m2,
+p_m2b <- plot(brms::conditional_effects(m2,
                             c("Relid_between_c"),
                             spaghetti = TRUE,
                             re_formula = NULL, # all group-level effects
@@ -279,7 +278,7 @@ p_m2b
 # Log transform outcomes
 
 
-```{r}
+```{r eval=FALSE}
 # Response distributions in brms
 #https://cran.r-project.org/web/packages/brms/vignettes/brms_families.html
 
