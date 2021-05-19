@@ -158,49 +158,49 @@ nzl <- nz_cr %>%
 dplyr::glimpse(nzl)
 ```
 
-## Assessment
+## Assessment: briefly answer three of the following five questions. 
 
-1. What is the difference between prediction and causal inference: give an example for how regression is useful for each task. 
+1. What is the difference between prediction and causal inference: give an example of how regression may be use useful for each task. Make sure your explanation includes a DAG.
 
-2. Explain "collider confounding" (or "collider bias"), and give an example of how collider bias might spoil inference.
+2. Explain "collider confounding" (or "collider bias"), and explain how collider bias can spoil inference. Make sure that your explanation includes a DAG.
 
-3. Using the `nz` data, select at least five demongraphic/ideological variables that might be related to an exposure variable and outcome variable. Create a DAG and identify which variables we should condition on to obtain an unbiased estimate of the causal effect of the exposure variable on the outcome variable. 
+3. Using the `nzl` dataset, select at least five demongraphic/ideological variables that might be related to an exposure variable and and outcome variable of your choice. Create a DAG and identify which variables you should include to obtain an unbiased estimate of the causal effect of your exposure variable on your outcome variable. Test your model and interpret the results.
 
-4. Write a DAG for one of your previous workbook regression analyses; explain your DAG, and use it to clarify which variables you should conditioning on to obtain an unbiased causal inference (conditional on your DAG) . Compare the results of your current model with your previous model and note any differences. 
+4. Write a DAG for one of your previous workbook regression analyses; Explain your DAG.  Redo your analysis to obtain an unbiased causal inference (conditional on your DAG). Compare the results of your current model with the results of your previous model and note any differences in interpretation. 
 
-5. Explain `masking` relationships and using the methods in lecture and/or the readings, simulate data and interpret the results of a regression model in which you causally assess the effect of X on Y in a setting where X also affects Y through and effect on Z. 
-
-6.  Import this dataset: 
-
-According to a psychological theory that one of you is working on, "prototypicality of Māori group membership moderates the effect of perceived discrimination on ethnic identity in Māori."
-
-Using at least the following three variables are from *Wave 4* from the dataset address the causal claims in this theory, noting ways in which the theory might be improved up.  Make sure to include a DAG and make sure to clarify the DAGs assumptions (no need to draw on previous psychological theories.)
-
--   T4.MAORI.GME (Māori Group membership and evaluation)
-
--   T4.MAORI.VEM (Māori Perceived Appearance)
-
--   Perc.Discrim.T04 (Perceived discrimination - ethnicity)
-
-    -   I Feel that I am often discriminated against because of my ethnicity.
-    -   I feel that I am often discriminated against because of my ethnicity.
+5. Examine the causal assumptions of a psychological theory for which you have data. Test the causal assumptions of this model. Make sure to draw a DAG. Consider simulating data if/where relevant. 
 
 
-### Additional information: 
+<!-- 6.  Import this dataset:  -->
 
-Link to the NZAVS data dictionary is [here](https://dl.dropboxusercontent.com/s/but0pz9h4jdpy6f/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+<!-- According to a psychological theory that one of you is working on, "prototypicality of Māori group membership moderates the effect of perceived discrimination on ethnic identity in Māori." -->
 
-Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucvo/nzavs-data-dictionary.htm?dl=0)
+<!-- Using the following three variables are from *Wave 4* of the NZAVS-jitter dataset, assess the causal claims of this theory, noting ways in which the theory might be improved.  Make sure to include a your DAG and make sure to clarify your DAG's assumptions. [Here, there is no need to draw on previous psychological theories.] -->
+
+<!-- -   T4.MAORI.GME (Māori Group membership and evaluation) -->
+
+<!-- -   T4.MAORI.VEM (Māori Perceived Appearance) -->
+
+<!-- -   Perc.Discrim.T04 (Perceived discrimination - ethnicity) -->
+
+<!--     -   I Feel that I am often discriminated against because of my ethnicity. -->
+<!--     -   I feel that I am often discriminated against because of my ethnicity. -->
+
 
 
 ## Marking criteria
 
-1.  Clarity and organisation in the descriptive component of your work.
+1.  Clarity, accuracy, initiative, and organisation in the descriptive component of your work.
 
-2.  Clarity and organisation in description of your regression model.
+2.  Clarity, accuracy, initiative, and organisation in your DAG and, if relevant, your regression model(s).
 
-3.  Accuracy and insight in the interpretation of your regression model.
+3.  Accuracy and insight in the interpretation of DAG, and if relevant, your regression model(s).
 
-### Reports I've been doing FYI
 
-<https://go-bayes.github.io/reports/>
+
+
+## Supplement: NZ-jitter information: 
+
+Link to the NZAVS data dictionary is [here](https://dl.dropboxusercontent.com/s/but0pz9h4jdpy6f/NZAVS-Technical-Documents-e02-Data-Dictionary.xlsx?dl=0)
+
+Link to questions only [here](https://dl.dropboxusercontent.com/s/cv256sbjal4ucvo/nzavs-data-dictionary.htm?dl=0)
