@@ -17,7 +17,7 @@ output:
   distill::distill_article:
   self_contained: false
   toc: true
-  code_folding: false
+  code_folding: true
   highlight: kate
 bibliography: bib.bib
 ---
@@ -158,11 +158,40 @@ knitr::include_graphics("op.png")
 
 <https://gking.harvard.edu/category/research-interests/methods/missing-data>
 
-Missing data poses a problem. Missingness biases inference. However missingness it is not intractable problem if we assume that the mechanism giving rise to the missing data is random *conditional on known features of the datset*. Statistitians call this assumption "MAR: Missing at Random".[^1]
+Missing data poses a problem. Missingness biases inference. However missingness it is not an intractable problem. If we assume that the mechanism giving rise to the missing data is random *conditional on known features of the data,* we can multiply impute datasets - which involves predicting missing values. Statisticians call the assumption of multiple imputation: "MAR: Missing at Random" [\^1]. The language is admittedly confusing -- what statisticians mean is "missing conditional on predictors" however, practically speaking the key point is that we can use the sample to predict outcomes for the population from which the sample is drawn. Not only do we better integrate over our uncertainty about the population better when we multiply impute outcomes, doing so enables us to address selection bias arise from stratifying on only that portion of the population that returns responses. Before proceeding with the mechanics of mutliple imputation, take a moment to consider some critical general observations that we have been discussing throughout this course:
 
-[^1]: For a wonderful explanation, see: [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4121561/#:~:text='Missing%20completely%20at%20random'%20means,missing%20and%20observed%20blood%20pressures.)
+1.  The practice of statistical inference is, at its most general level, inherently an attempt to move from known observations in our sample to inferences about unknown parameters of a population that is not observed. Statistical inference is guesswork; the practice of multiple imputation is continuous with a data-scientists larger mission to guess wisely[\^1]: For a wonderful explanation, see: [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4121561/#:~:text='Missing%20completely%20at%20random'%20means,missing%20and%20observed%20blood%20pressures.)
 
-Let us visualise in a subset of the the longitudional NZ dataset
+2.  We have made a distinction between regression for prediction and regression for causal inference. When we regress to predict it is generally useful to include all indicators in our dataset that might be related to the outcome. We have discussed strategies for assessing improvements in model fit using specific fit criteria like the BIC criterion, the WAIC criterion, and LOO.
+
+Gelman and Hill give the following advice about inclusion of variables when we are using regression to predict [@gelman2006 p.69]:
+
+> Our general principles for building regression models for prediction are as follows:
+
+> 1.  Include all input variables that, for substantive reasons, might be expected to be important in predicting the outcome.
+
+> 2.  It is not always necessary to include these inputs as separate predictors---for example, sometimes several inputs can be averaged or summed to create a "total score" that can be used as a single predictor in the model.
+
+> 3.  For inputs that have large effects, consider including their interactions as well.
+
+> 4.  We suggest the following strategy for decisions regarding whether to exclude a variable from a prediction model based on expected sign and statistical significance (typically measured at the 5% level; that is, a coefficient is "statistically significant" if its estimate is more than 2 standard errors from zero):
+>
+> (a) If a predictor is not statistically significant and has the expected sign, it is generally fine to keep it in. It may not help predictions dramatically but is also probably not hurting them.
+> (b) If a predictor is not statistically significant and does not have the expected sign (for example, incumbency having a negative effect on vote share), consider removing it from the model (that is, setting its coefficient to zero).
+> (c) If a predictor is statistically significant and does not have the expected sign, then think hard if it makes sense. (For example, perhaps this is a country such as India in which incumbents are generally unpopular; see Linden, 2006.) Try to gather data on potential lurking variables and include them in the analysis.
+> (d) If a predictor is statistically significant and has the expected sign, then by all means keep it in the model. These strategies do not completely solve our problems but they help keep us from making mistakes such as discarding important information. They are predicated on having thought hard about these relationships before fitting the model. It's always easier to justify a coefficient's sign after the fact than to think hard ahead of time about what we expect. On the other hand, an explanation that is determined after running the model can still be valid. We should be able to adjust our theories in light of new information [@gelman2006 p.69].
+
+Gelman and Hill give this advice for *prediction*. However, for causal inference we must avoid confounding and obtain an unbaised estimate of an exposure's causal effect on the outcome(s) of interest. As we have seen in lecture 11, causal inference is difficult, and often counter-intuitive. For causal inference we absolutely do not want to take the "Causal Salad" approach that we would take were we interested in prediction. As Richard McElreath writes [\@mcelreath2020a, p.46]:
+
+> \> But the approach which dominates in many parts of biology and the social sciences is instead CAUSAL SALAD.36 Causal salad means tossing various "control" variables into a statistical model, observing changes in estimates, and then telling a story about causation. Causal salad seems founded on the notion that only omitted variables can mislead us about causation. But included variables can just as easily confound us. When tossing a causal salad, a model that makes good predictions may still mislead about causation. If we use the model to plan an intervention, it will get everything wrong. [\@mcelreath2020a, p.46]
+
+To help assist us with the problems of obtaining unbiased causal inference we have discussed the utility of building causal DAGs, noting that inference is always conditional on the DAG that we have drawn. Frequently, the data under-determine the DAG. There are many DAGs consistent with our observations. Regression is a powerful tool for reliable causal inference but it is not sufficient for reliable inference. \
+\
+Returning to multiple imputation, when we are imputing we are are *predicting* features of a population, and for this purpose, it is generally useful to follow the Gelman and Hill advice about stratifying across all those indicators of the population that might predict what the responses for the population would have been had they been observed.
+
+### Visualising missingness
+
+Let us visualise in a subset of the the longitudinal NZ dataset
 
 First how many Id's per wave in this dataset:
 
@@ -278,10 +307,30 @@ prep2.1 <- Amelia::amelia(
 
 ```
 
-
 We can center and scale our variables using the following code head(df)
 
 ```{r  imputation_make_data}
+
+# prepare data with imputed outcome
+prep3 <- Amelia::transform.amelia(
+  prep2,
+  Id = as.factor(Id),
+  # redundant
+  Age.10yrs = (Age / 10),
+  years_s = scale(yearS, center = TRUE, scale = TRUE),
+  years = yearS,
+  KESSLER6sum_S = scale(KESSLER6sum, center = TRUE, scale =TRUE),
+  Employed = factor(Employed),
+  Relid = scale(Relid, scale = TRUE, center = TRUE),
+  Male = as.factor(Male),
+  Emp.JobSecure_S = scale(Emp.JobSecure, center = TRUE, scale = FALSE),
+  CharityDonate = as.integer(CharityDonate)
+)
+
+# center an d scale age
+out <- Amelia::transform.amelia(prep3, Age_in_Decades_C = scale(Age.10yrs,scale =FALSE, center=TRUE))
+
+
 prep3.1 <- Amelia::transform.amelia(
   prep2.1,
   Id = as.factor(Id),
@@ -300,7 +349,6 @@ prep3.1 <- Amelia::transform.amelia(
 # center an d scale age
 out.1 <- Amelia::transform.amelia(prep3.1, Age_in_Decades_C = scale(Age.10yrs,scale =FALSE, center=TRUE))
 ```
-
 
 We can use trace plots to examine how Amelia imputed and with how much uncertainty:
 
@@ -374,7 +422,7 @@ loop_glmer_model <-
     m <- 10
     mod <- NULL
     for (i in 1:m) {
-      mod[[i]] <- glmer(x, data = y$imputations[[i]], family = "poisson")
+      mod[[i]] <- lme4::glmer(x, data = y$imputations[[i]], family = "poisson")
     }
     return(mod)
   }
@@ -432,8 +480,6 @@ graph_predictions_imputed <- function(x, y) {
 graph_predictions_imputed(m_list,"Effect of Jobsecurity on Charity (not reliable")
 ```
 
-
-
 ```{r cache =TRUE}
 loop_lmer_model_tab <- function(x) {
   mp <- lapply(x, model_parameters)
@@ -452,8 +498,6 @@ library(patchwork)
 
 plot_impute + plot_impute1 + plot_annotation()
 ```
-
-
 
 If you want a LaTeX table, you can use this code:
 
@@ -477,6 +521,7 @@ Let's look at the results from the row-wise deleted data:
 
 ```{r row_wise_deleted, cache=TRUE}
 # prepare data as we did for the imputated dataset
+
 df2 <- df %>%
   dplyr::mutate(
     Age.10yrs = (Age / 10),
@@ -490,7 +535,7 @@ df2 <- df %>%
     Emp.JobSecure_S = scale(Emp.JobSecure, center = TRUE, scale = FALSE)
   )
 
-# run model
+# run the row-wise deletion model
 m_no_impute <- glmer(mod_eq, data = df2, family = "poisson")
 
 # create table
@@ -510,14 +555,13 @@ Multiple imputation is sometimes avoided because people don't like to "invent" d
 ```{r comparison_graph}
 library(patchwork)
 
+# compare models graphically
 plot_impute / plot_no +
-  plot_annotation(title = "Comparison of regressions using (a) multiple-imputed  and (b) row-wise deleted datasets",
-                  tag_levels = 'a')
+  plot_annotation(title = "Comparison of regressions using (a) multiple-imputed  and (b) row-wise deleted datasets", tag_levels = 'a')
 
 ```
 
 However it would be a mistake to think that multiple imputation is sufficient. Note that the case-wise deleted data is confident that men give less to charity than do women and other genders. However the model is tending to inflate estimates for men, perhaps because men tend to disproportionately leave this question unanswered. Let's check this intuition:
-
 
 ```{r}
 df %>%
@@ -528,214 +572,269 @@ df %>%
   
 ```
 
-No, the intution was wrong. However, it is important to realise that missingness might not be completely at random conditional on variables in the model. In this case, you dataset cannot avoid its biases by multiple imputation. 
+No, the intuition was wrong. However, it is important to realise that missingness might not be completely at random conditional on variables in the model. In this case, you dataset cannot avoid its biases by multiple imputation.
 
-Recall that it is generally useful to include more variables for accurate prediction. For this reason, when multiply imputing outcomes it is generally useful to include more variables. 
+Recall that it is generally useful to include more variables for accurate prediction. For this reason, when multiply imputing outcomes it is generally useful to include more variables.
 
+<!-- ### Appendix 1: Imputation using BRMS -->
 
-### Appendix 1: Imputation using BRMS
+<!-- ### Multiple imputation in BRMS (warning: these models take 10x longer) -->
 
-### Multiple imputation in BRMS (warning: these models take 10x longer)
+<!-- ```{r prepare_bayesian_dataset} -->
 
-```{r prepare_bayesian_dataset}
-# prepare data
-# you must create a list of the imputed datasets, like so:
+<!-- # prepare data -->
 
-brmdat <- list(
-  out$imputations$imp1,
-  
-  out$imputations$imp2,
-  
-  out$imputations$imp3,
-  
-  out$imputations$imp4,
-  
-  out$imputations$imp5,
-  
-  out$imputations$imp6,
-  
-  out$imputations$imp7,
-  
-  out$imputations$imp8,
-  
-  out$imputations$imp9,
-  
-  out$imputations$imp10
-)
+<!-- # you must create a list of the imputed datasets, like so: -->
 
+<!-- brmdat <- list( -->
 
-brmdat1 <- list(
-  out.1$imputations$imp1,
-  
-  out.1$imputations$imp2,
-  
-  out.1$imputations$imp3,
-  
-  out.1$imputations$imp4,
-  
-  out.1$imputations$imp5,
-  
-  out.1$imputations$imp6,
-  
-  out.1$imputations$imp7,
-  
-  out.1$imputations$imp8,
-  
-  out.1$imputations$imp9,
-  
-  out.1$imputations$imp10
-)
-```
+<!--   out$imputations$imp1, -->
 
-We write the model as follows:
+<!--   out$imputations$imp2, -->
 
-```{r Bayesian_impuation_model}
-# model equation
-# note the `bf` command
+<!--   out$imputations$imp3, -->
 
-bf_mod_eq <- bf(mod_eq)
+<!--   out$imputations$imp4, -->
 
-# we use the `brm_multiple` syntax and feed in the brmdat
+<!--   out$imputations$imp5, -->
 
-fit_imp1 <-
-  brm_multiple(
-    bf_mod_eq,
-    data = brmdat,
-    family = "poisson",
-    file = here::here("models", "bayes-imp-1")
-  )
+<!--   out$imputations$imp6, -->
 
-# table
-summary(fit_imp1)
-plot(fit_imp1)  # VERY POOR MIXING
-```
+<!--   out$imputations$imp7, -->
 
-Mixing is a problem, indeed I don't think I have ever run a model that has mixed worse than this one. 
+<!--   out$imputations$imp8, -->
 
-We see the trouble in the coefficient plots:
+<!--   out$imputations$imp9, -->
 
-```{r bayes-1-plot}
-#plot posteriors
-plot_bayes_1 <- brms::mcmc_plot(fit_imp1,
-                                type = "areas",
-                                prob = .89)
+<!--   out$imputations$imp10 -->
 
-plot_bayes_1 +
-  plot_impute +
-  plot_annotation(title = "Comparison of regressions using  (a) Bayesian Imputationand and (b) Lmer models",
-                  tag_levels = 'a')
+<!-- ) -->
 
+<!-- brmdat1 <- list( -->
 
-```
+<!--   out.1$imputations$imp1, -->
 
-We can model missing-ness in BRMS in one step (for continuous missing variables). Let's try that next:
+<!--   out.1$imputations$imp2, -->
 
+<!--   out.1$imputations$imp3, -->
 
-```{r one-step-brms-impute-22}
-# Emp.JobSecure_S  + Employed + Age_in_Decades_C +  Male  +  years_s
+<!--   out.1$imputations$imp4, -->
 
-#Note that BRMS can only impute continuous data. That's not a problem. Your factors are converted to integars anyway.
-df3 <- df2%>%
-  dplyr::mutate(Employed = as.numeric(as.character(Employed)),
-         Male = as.numeric((Male))-1) # male as zero or 1
+<!--   out.1$imputations$imp5, -->
 
-glimpse(df3)
+<!--   out.1$imputations$imp6, -->
 
+<!--   out.1$imputations$imp7, -->
 
-df3%>%
-  dplyr::count(CharityDonate ==0)
+<!--   out.1$imputations$imp8, -->
 
-## Write the model, note the `mi`s: each `mi` needs to appear as the outcome of a model. 
-## note that for simplicity, these models claim that mi is random conditional on year and individual. We might obtain better predictions of missingness by including more information. 
+<!--   out.1$imputations$imp9, -->
 
-# Note that brms can only take identity link functions when handling missing data. The "lognormal" is better than the normal because the variances are estimated using a log link. 
+<!--   out.1$imputations$imp10 -->
 
-bform <- 
-  bf(CharityDonate + 1 | mi() ~ mi(Emp.JobSecure_S) + mi(Employed) + mi(Age_in_Decades_C)  + mi(Male)  + (1 + years_s | Id), family = "lognormal") +
-  bf(Emp.JobSecure_S | mi() ~ mi(Employed) + mi(Age_in_Decades_C)  + mi(Male)  + (1 + years_s| Id)) +
-  bf(Employed | mi() ~ (1 + years_s| Id)) +
-  bf(Age_in_Decades_C | mi() ~  (1 + years_s| Id))+
-  bf(Male | mi() ~ (1 + years_s | Id)) +
-  set_rescor(FALSE)
+<!-- ) -->
 
-## fit the model 
-fit_imp2 <- brm(bform, 
-                data = df3, 
-                file = here::here("models", "bayes-imp-2"))
-summary(fit_imp2)
-```
+<!-- ``` -->
 
-Again, the model is a all over the place:
+<!-- We write the model as follows: -->
 
-```{r}
-plot(fit_imp2)
-```
+<!-- ```{r Bayesian_impuation_model} -->
 
-Mixing was a problem. Minimally we'd need to include more variables. However there might be deeper problems with the data, or our approach.  Analysis is iterative. We need to return to the data and scrutinise it more carefully. 
+<!-- # model equation -->
 
-```{r one-step-brms-impute}
-plot_bayes_2 <- brms::mcmc_plot(fit_imp2,
-                                type = "areas",
-                                prob = .89)
+<!-- # note the `bf` command -->
 
-plot_bayes_2
+<!-- bf_mod_eq <- bf(mod_eq) -->
 
-# again we run into trouble. 
-plot(fit_imp2)
-```
+<!-- # we use the `brm_multiple` syntax and feed in the brmdat -->
 
+<!-- fit_imp1 <- -->
 
-## Try wthout imputing outcome and allow for overdispersion
+<!--   brm_multiple( -->
 
-```{r}
-fit_imp3 <-
-  brm_multiple(
-    bf_mod_eq,
-    data = brmdat1,
-    family = "zero_inflated_negbinomial",
-    file = here::here("models", "bayes-imp-3")
-  )
+<!--     bf_mod_eq, -->
 
-# table
-summary(fit_imp3)
-plot(fit_imp3)  
-```
+<!--     data = brmdat, -->
 
+<!--     family = "poisson", -->
 
+<!--     file = here::here("models", "bayes-imp-1") -->
 
+<!--   ) -->
 
+<!-- # table -->
 
-### Appendix 2. Probability
+<!-- summary(fit_imp1) -->
 
-We have been working with probability throughout this course.
+<!-- plot(fit_imp1)  # VERY POOR MIXING -->
 
-Suppose there is a test that is 99% accurate at detecting COVID if you have it.
+<!-- ``` -->
 
-Very rarely it throws up a false positive,say one in a thousand.
+<!-- Mixing is a problem, indeed I don't think I have ever run a model that has mixed worse than this one.  -->
 
-You just tested positve. What is the probability that you have COVID? Our intuition is that we probably have COVID. However, let's assume COVID is rare. Currently in NZ, there are about 50 cases, so 1 in 100,000. The background rate matters.
+<!-- We see the trouble in the coefficient plots: -->
 
-Bayes rule says
+<!-- ```{r bayes-1-plot} -->
 
-$$ Pr(COVID|Positive) = \frac{Pr(Positive|COVID)\times Pr (COVID}{Pr(Positive)}
-$$
+<!-- #plot posteriors -->
 
-We plug in the numbers:
+<!-- plot_bayes_1 <- brms::mcmc_plot(fit_imp1, -->
 
-```{r}
-Pr_Positive_COVID <- 0.99
-Pr_Positive_Healthy <- 0.01
-Pr_COVID <- 0.00001
+<!--                                 type = "areas", -->
 
-# Calculate the background probability of testing positive
+<!--                                 prob = .89) -->
 
-Pr_Positive <- Pr_Positive_COVID * Pr_COVID + Pr_Positive_Healthy * ( 1 - Pr_COVID )
+<!-- plot_bayes_1 + -->
 
-# Now calculated your probability of testing positive
+<!--   plot_impute + -->
 
-Pr_COVID_Positive <- Pr_Positive_COVID * Pr_COVID / (Pr_Positive )
-Pr_COVID_Positive # 1 in 1000
-```
+<!--   plot_annotation(title = "Comparison of regressions using  (a) Bayesian Imputationand and (b) Lmer models", -->
+
+<!--                   tag_levels = 'a') -->
+
+<!-- ``` -->
+
+<!-- We can model missing-ness in BRMS in one step (for continuous missing variables). Let's try that next: -->
+
+<!-- ```{r one-step-brms-impute-22} -->
+
+<!-- # Emp.JobSecure_S  + Employed + Age_in_Decades_C +  Male  +  years_s -->
+
+<!-- #Note that BRMS can only impute continuous data. That's not a problem. Your factors are converted to integars anyway. -->
+
+<!-- df3 <- df2%>% -->
+
+<!--   dplyr::mutate(Employed = as.numeric(as.character(Employed)), -->
+
+<!--          Male = as.numeric((Male))-1) # male as zero or 1 -->
+
+<!-- glimpse(df3) -->
+
+<!-- df3%>% -->
+
+<!--   dplyr::count(CharityDonate ==0) -->
+
+<!-- ## Write the model, note the `mi`s: each `mi` needs to appear as the outcome of a model.  -->
+
+<!-- ## note that for simplicity, these models claim that mi is random conditional on year and individual. We might obtain better predictions of missingness by including more information.  -->
+
+<!-- # Note that brms can only take identity link functions when handling missing data. The "lognormal" is better than the normal because the variances are estimated using a log link.  -->
+
+<!-- bform <-  -->
+
+<!--   bf(CharityDonate + 1 | mi() ~ mi(Emp.JobSecure_S) + mi(Employed) + mi(Age_in_Decades_C)  + mi(Male)  + (1 + years_s | Id), family = "lognormal") + -->
+
+<!--   bf(Emp.JobSecure_S | mi() ~ mi(Employed) + mi(Age_in_Decades_C)  + mi(Male)  + (1 + years_s| Id)) + -->
+
+<!--   bf(Employed | mi() ~ (1 + years_s| Id)) + -->
+
+<!--   bf(Age_in_Decades_C | mi() ~  (1 + years_s| Id))+ -->
+
+<!--   bf(Male | mi() ~ (1 + years_s | Id)) + -->
+
+<!--   set_rescor(FALSE) -->
+
+<!-- ## fit the model  -->
+
+<!-- fit_imp2 <- brm(bform,  -->
+
+<!--                 data = df3,  -->
+
+<!--                 file = here::here("models", "bayes-imp-2")) -->
+
+<!-- summary(fit_imp2) -->
+
+<!-- ``` -->
+
+<!-- Again, the model is a all over the place: -->
+
+<!-- ```{r} -->
+
+<!-- plot(fit_imp2) -->
+
+<!-- ``` -->
+
+<!-- Mixing was a problem. Minimally we'd need to include more variables. However there might be deeper problems with the data, or our approach.  Analysis is iterative. We need to return to the data and scrutinise it more carefully.  -->
+
+<!-- ```{r one-step-brms-impute} -->
+
+<!-- plot_bayes_2 <- brms::mcmc_plot(fit_imp2, -->
+
+<!--                                 type = "areas", -->
+
+<!--                                 prob = .89) -->
+
+<!-- plot_bayes_2 -->
+
+<!-- # again we run into trouble.  -->
+
+<!-- plot(fit_imp2) -->
+
+<!-- ``` -->
+
+<!-- ## Try wthout imputing outcome and allow for overdispersion -->
+
+<!-- ```{r} -->
+
+<!-- fit_imp3 <- -->
+
+<!--   brm_multiple( -->
+
+<!--     bf_mod_eq, -->
+
+<!--     data = brmdat1, -->
+
+<!--     family = "zero_inflated_negbinomial", -->
+
+<!--     file = here::here("models", "bayes-imp-3") -->
+
+<!--   ) -->
+
+<!-- # table -->
+
+<!-- summary(fit_imp3) -->
+
+<!-- plot(fit_imp3)   -->
+
+<!-- ``` -->
+
+<!-- ### Appendix 2. Probability -->
+
+<!-- We have been working with probability throughout this course. -->
+
+<!-- Suppose there is a test that is 99% accurate at detecting COVID if you have it. -->
+
+<!-- Very rarely it throws up a false positive,say one in a thousand. -->
+
+<!-- You just tested positve. What is the probability that you have COVID? Our intuition is that we probably have COVID. However, let's assume COVID is rare. Currently in NZ, there are about 50 cases, so 1 in 100,000. The background rate matters. -->
+
+<!-- Bayes rule says -->
+
+<!-- $$ Pr(COVID|Positive) = \frac{Pr(Positive|COVID)\times Pr (COVID}{Pr(Positive)} -->
+
+<!-- $$ -->
+
+<!-- We plug in the numbers: -->
+
+<!-- ```{r} -->
+
+<!-- Pr_Positive_COVID <- 0.99 -->
+
+<!-- Pr_Positive_Healthy <- 0.01 -->
+
+<!-- Pr_COVID <- 0.00001 -->
+
+<!-- # Calculate the background probability of testing positive -->
+
+<!-- Pr_Positive <- Pr_Positive_COVID * Pr_COVID + Pr_Positive_Healthy * ( 1 - Pr_COVID ) -->
+
+<!-- # Now calculated your probability of testing positive -->
+
+<!-- Pr_COVID_Positive <- Pr_Positive_COVID * Pr_COVID / (Pr_Positive ) -->
+
+<!-- Pr_COVID_Positive # 1 in 1000 -->
+
+<!-- ``` -->
 
 <!-- library(tidyverse) -->
 
