@@ -15,16 +15,16 @@ author:
 date: 2021-MAY-25
 output:
   distill::distill_article:
-  self_contained: false
-  toc: true
-  code_folding: true
-  highlight: kate
+    self_contained: false
+    toc: true
+    code_folding: true
+    highlight: kate
 bibliography: bib.bib
 ---
 
 ```{r setup, echo = FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE,
+ # echo = TRUE,
   warning = FALSE,
   message = FALSE,
   layout = "l-body-outset",
@@ -580,6 +580,28 @@ plot_impute / plot_no +
 
 However it would be a mistake to think that multiple imputation is sufficient. Missingness might not have been completely at random conditional on variables in your model. In this case, your multiple imputation cannot help your dataset to avoid bias.
 
+## FAQ for Multiple Imputation
+
+Q: Is multiple imputation inventing data? 
+A: Yes, in the same way that everything in science invents data, namely, through self-conscious, educated guesswork. 
+
+Q: Do I need to multiple-impute missing values?
+A: If your data satisfies the assumptions of MAR, you should multiply impute missing values. However, in many cases it makes no practical difference. That said, you cannot know in advance whether your decision not to multiply impute will make a difference, so you should. 
+
+Q: How many missing datasets should I impute? 
+A: King suggests five is sufficient. More is even better. Here we used 10. 
+
+Q: How do I handle time series data? 
+A: Here we have used the `cs` and `ts` commands in the `Amelia` package
+
+Q: Can I use multiple imputation with Bayesian estimation packages. 
+A: Yes, I present code below. The models however mixed poorly. See me if you wish to attempt this. 
+
+Q: Where can I go for help? 
+A: See the resources provided at the introduction to this section. 
+
+
+
 ## Course wrap up
 
 You've come very far in only twelve weeks. Among other things, you have acquired the following skills:
@@ -601,9 +623,11 @@ You've come very far in only twelve weeks. Among other things, you have acquired
 15. You understand metanalysis as a form of multi-level modelling
 16. You understand the difference between regression for prediction and regression for inference.
 17. You understand how to reduce the dimensions of your data.
-18  You understand how to check for counfounding by writing a DAG
-19  You can create a distill website for free on Github
-20  You can multiply impute to handle missingness in your dataset, and you understand why this is a good thing. 
+18.  You understand how to check for counfounding by writing a DAG
+19.  You can create a distill website for free on Github
+20.  You can multiply impute to handle missingness in your dataset, and you understand why this is a good thing. 
+
+And much much else ... Most of all, you've learned how to continue learning, a skill that will serve you well because the tools of science are constantly improving. 
 
 
 <!-- ```{r} -->
