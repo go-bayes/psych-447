@@ -56,7 +56,7 @@ options(mc.cores=parallel::detectCores ())
 theme_set(theme_classic())
 ```
 
-```{r  nzdata, cache=TRUE, include=FALSE}
+```{r  nzdata, cache=FALSE, include=FALSE}
 # read data
 
 nz_0 <- as.data.frame(readr::read_csv2(
@@ -115,20 +115,17 @@ nz <- nz_0 %>%
     FeelDepressed_int =  as.integer(FeelDepressed)
   )
     
-
-    
 # Filter wave 10 of the NZAVS
 
 
 ## Convert the factors to integer: 
-
-
 dplyr::glimpse(nz)
+nz<-as.data.frame(nz)
 ```
 
-```{r figopen, echo=F}
-knitr::include_graphics("op.png")
-```
+<!-- ```{r figopen, echo=F} -->
+<!-- knitr::include_graphics("op2.png") -->
+<!-- ``` -->
 
 ## Objectives
 

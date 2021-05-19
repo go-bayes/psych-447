@@ -20,19 +20,18 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -52,7 +51,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
@@ -104,14 +103,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="The purpose of this week is to get you set up to write in R markdown"/>
 <meta property="og:url" content="https://vuw-psych-447.netlify.app/posts/1_3/"/>
+<meta property="og:image" content="https://vuw-psych-447.netlify.app/posts/1_3/rmark.png"/>
+<meta property="og:image:width" content="3584"/>
+<meta property="og:image:height" content="2240"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Psych 447"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary"/>
+<meta property="twitter:card" content="summary_large_image"/>
 <meta property="twitter:title" content="Psych 447: Set up"/>
 <meta property="twitter:description" content="The purpose of this week is to get you set up to write in R markdown"/>
 <meta property="twitter:url" content="https://vuw-psych-447.netlify.app/posts/1_3/"/>
+<meta property="twitter:image" content="https://vuw-psych-447.netlify.app/posts/1_3/rmark.png"/>
+<meta property="twitter:image:width" content="3584"/>
+<meta property="twitter:image:height" content="2240"/>
 <meta property="twitter:site" content="@go_bayes"/>
 <meta property="twitter:creator" content="@go_bayes"/>
 
@@ -134,7 +139,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["03-setup_files/anchor-4.2.2/anchor.min.js","03-setup_files/bowser-1.9.3/bowser.min.js","03-setup_files/distill-2.2.21/template.v2.js","03-setup_files/jquery-1.11.3/jquery.min.js","03-setup_files/popper-2.6.0/popper.min.js","03-setup_files/tippy-6.2.7/tippy-bundle.umd.min.js","03-setup_files/tippy-6.2.7/tippy-light-border.css","03-setup_files/tippy-6.2.7/tippy.css","03-setup_files/tippy-6.2.7/tippy.umd.min.js","03-setup_files/webcomponents-2.0.0/webcomponents.js","f1.png","rmark.png"]}
+  {"type":"character","attributes":{},"value":["03-setup_files/anchor-4.2.2/anchor.min.js","03-setup_files/bowser-1.9.3/bowser.min.js","03-setup_files/distill-2.2.21/template.v2.js","03-setup_files/jquery-1.11.3/jquery.min.js","03-setup_files/popper-2.6.0/popper.min.js","03-setup_files/tippy-6.2.7/tippy-bundle.umd.min.js","03-setup_files/tippy-6.2.7/tippy-light-border.css","03-setup_files/tippy-6.2.7/tippy.css","03-setup_files/tippy-6.2.7/tippy.umd.min.js","03-setup_files/webcomponents-2.0.0/webcomponents.js","rmark.png","Screen Shot 2021-02-27 at 3.03.35 PM.png","Screen Shot 2021-02-27 at 3.03.36 PM.png","Screen Shot 2021-02-27 at 3.03.41 PM.png","Screen Shot 2021-03-21 at 4.27.23 PM.png","Screen Shot 2021-04-09 at 4.34.08 PM.png","Screen Shot 2021-04-11 at 4.15.45 PM.png","Screen Shot 2021-04-11 at 4.16.01 PM.png","Touch Bar Shot 2021-02-22 at 3.42.33.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2069,6 +2074,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   color: var(--hover-color, white);
 }</style>
 <!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.8.1/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />

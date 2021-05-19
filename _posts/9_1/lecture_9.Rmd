@@ -549,7 +549,7 @@ Typically our model has clustering. Often this clustering arises from dependenci
 
 However, recall a fundamental assumption of regression:
 
-> The simple regression model assumes that the errors from the prediction line are independent, an assumption that is violated in time series, spatial, and multilevel settings [@gelman_regression_2020, p.153]
+> The simple regression model assumes that the errors from the prediction line are independent, an assumption that is violated in time series, spatial, and multilevel settings [@gelman2020, p.153]
 
 Let's look at environmental concern as predicted by religious group membership:
 

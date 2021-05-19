@@ -108,6 +108,7 @@ code span.wa { color: #bf0303; } /* Warning */
 
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=Regression and other stories;citation_publication_date=2020;citation_publisher=Cambridge University Press;citation_author=Andrew Gelman;citation_author=Jennifer Hill;citation_author=Aki Vehtari"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -1434,7 +1435,7 @@ code span.wa { color: #bf0303; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="lecture_9_files/header-attrs-2.7.8/header-attrs.js"></script>
+  <script src="lecture_9_files/header-attrs-2.8.1/header-attrs.js"></script>
   <script src="lecture_9_files/jquery-1.11.3/jquery.min.js"></script>
   <script src="lecture_9_files/popper-2.6.0/popper.min.js"></script>
   <link href="lecture_9_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1500,7 +1501,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <li><a href="#random-intercept-fatigue">Random intercept: Fatigue</a></li>
 <li><a href="#multiple-response-models">Multiple response models</a>
 <ul>
-<li><a href="#model-equation">Model equation</a></li>
+<li><a href="#model-equation-imagining-a-random-intercept-multiple-response-model">Model equation (imagining a random intercept multiple response model)</a></li>
 </ul></li>
 <li><a href="#mediation">Mediation</a></li>
 <li><a href="#assumptions">Assumptions</a></li>
@@ -1599,8 +1600,8 @@ Show code
 <h3 id="model-equation-for-an-ordinal-response-model">Model equation for an ordinal response model</h3>
 <p>We can write the model equation for an ordinal (or cumulative logistic) model of Fatigue s follows</p>
 <p><span class="math display">\[\begin{align}
-y_{i}^c \sim \text{Ordered}(p_i) \\
-\text{CumLogit}(\boldsymbol{p_i}) = \alpha^c +\beta X_i \\
+y_{i}\sim \text{Ordered}(p_i) \\
+\text{CumLogit}(\boldsymbol{p_i}) = \alpha^c +\beta x_i \\
 \alpha^c \sim Normal(0,10)\\
 \boldsymbol{\beta}\sim \text{Normal}(0,1) 
 \end{align}\]</span></p>
@@ -1733,7 +1734,7 @@ Show code
 <li><span class="math inline">\(b^c\)</span> locates the direction and size of effect, as with an ordinary regression solution. We consider <span class="math inline">\(b^c\)</span> as the expected average difference between two adjacent categories of the ordinal predictor.</li>
 <li><span class="math inline">\(\zeta^c\)</span> locates the normalized distances between consecutive predictor categories, producing the shape of the monotonic effect</li>
 </ul>
-<p><span class="math display">\[g(y_i) = \alpha + b^c \zeta^c \]</span></p>
+<p><span class="math display">\[g(y_i) = \alpha + b^c \zeta^c x_i\]</span></p>
 <p>Suppose we wanted to assess whether fatigue predicts psychological distress. We’ll use a smaller sub-sample of the NZAVS jitter dataset to speed up computing time:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2017,7 +2018,7 @@ Show code
 <p>Typically our model has clustering. Often this clustering arises from dependencies owning to unmeasured grouping factors, students within schools, or repeated measures within students.</p>
 <p>However, recall a fundamental assumption of regression:</p>
 <blockquote>
-<p>The simple regression model assumes that the errors from the prediction line are independent, an assumption that is violated in time series, spatial, and multilevel settings <span class="citation" data-cites="gelman_regression_2020">(<a href="#ref-gelman_regression_2020" role="doc-biblioref"><strong>gelman_regression_2020?</strong></a>)</span></p>
+<p>The simple regression model assumes that the errors from the prediction line are independent, an assumption that is violated in time series, spatial, and multilevel settings <span class="citation" data-cites="gelman2020">(<a href="#ref-gelman2020" role="doc-biblioref">Gelman, Hill, and Vehtari 2020, 153</a>)</span></p>
 </blockquote>
 <p>Let’s look at environmental concern as predicted by religious group membership:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
@@ -2069,7 +2070,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <h3 id="model-equation-for-a-random-intercept-model">Model equation for a random intercept model</h3>
 <p><span class="math display">\[ g(y_{ig}) \sim N(\mu_{ig}, \sigma)\\
-\mu_i = \boldsymbol{\alpha} + \beta x_{ig}\\
+\mu_{ig} = \boldsymbol{\alpha} + \beta x_{i}\\
  \boldsymbol{\alpha} = \alpha_o + \alpha_g\\
  \alpha_o \sim N(3.5,10)\\
  \alpha_g \sim N(0,\sigma_g)\\
@@ -2112,8 +2113,8 @@ Show code
 <p>With longitudinal data, we have repeated measures within individuals. This leads to clustering. We can adjust for this clustering by including group-level intercept for individuals.</p>
 <p>Let’s return to the Fatigue ~ Covid_Timeline model.</p>
 <p><span class="math display">\[\begin{align}
-y_{ij}^c \sim \text{Ordered}(\mu_{ij}^c) \\
-\text{CumLogit}(\mu_{ij}^c) = \boldsymbol{\alpha}^c +\beta X_i \\
+y_{ij} \sim \text{Ordered}(\mu_{ij}) \\
+\text{CumLogit}(\mu_{ij}) = \boldsymbol{\alpha}^c +\beta X_i \\
 \boldsymbol{\alpha}^c  = \alpha_{0}^c +\alpha_j\\
 \alpha_{0}^c \sim N(0,10)\\
 \alpha_j \sim N(0,\sigma_j)\\
@@ -2205,25 +2206,26 @@ Show code
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-23-1.png" width="1152" /></p>
 </div>
 <h2 id="multiple-response-models">Multiple response models</h2>
-<h3 id="model-equation">Model equation</h3>
-<p><span class="math display">\[ g(y^n_{ig}) \sim N(\mu^n_{ig}, \sigma^n)\\
-\mu^n_i = \boldsymbol{\alpha^n} + \beta^n x_{ig}\\
+<h3 id="model-equation-imagining-a-random-intercept-multiple-response-model">Model equation (imagining a random intercept multiple response model)</h3>
+<p><span class="math display">\[ g(y^n_{ij}) \sim N(\mu_{ij}^n, \sigma^n)\\
+\mu_{ij}^n = \boldsymbol{\alpha^n} + \beta^n x_{i}\\
  \boldsymbol{\alpha} = \alpha_o + \alpha_g\\
  \alpha^n_o \sim N(3.5,10)\\
  \alpha^n_g \sim N(0,\sigma_g^n)\\
  \sigma_g^n \sim exp(1)\\
  \sigma^{n_1} \sim exp(1)\\
  \sigma^{n_2}\sim exp(1) \\
+\sigma\sim exp(1) \\
 \begin{bmatrix}
 \sigma^{n_1} \\
 \sigma^{n_2} 
 \end{bmatrix}
 \sim 
-\boldsymbol{RESCOR} \begin{pmatrix}
+\boldsymbol{R} \begin{pmatrix}
 1 &amp;  \sigma^{n_1}\sigma^{n_2} \rho    \\
 \sigma^{n_1}\sigma^{n_2}\rho   &amp;  1
 \end{pmatrix}\\
-\boldsymbol{RESCOR}\sim \text{LKJcorr}(2)
+\boldsymbol{R}\sim \text{LKJcorr}(2)
 \]</span></p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
@@ -2521,6 +2523,11 @@ Show code
 <p><img src="lecture_9_files/figure-html5/unnamed-chunk-34-1.png" width="1152" /></p>
 </div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-gelman2020" class="csl-entry" role="doc-biblioentry">
+Gelman, Andrew, Jennifer Hill, and Aki Vehtari. 2020. <em>Regression and Other Stories</em>. Cambridge University Press.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
