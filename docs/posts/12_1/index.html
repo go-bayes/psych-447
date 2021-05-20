@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -145,7 +146,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["bib.bib","distill-preview.png","lecture_12_files/anchor-4.2.2/anchor.min.js","lecture_12_files/bowser-1.9.3/bowser.min.js","lecture_12_files/distill-2.2.21/template.v2.js","lecture_12_files/figure-html5/amelia_trace_3-1.png","lecture_12_files/figure-html5/amelia_trace2-1.png","lecture_12_files/figure-html5/bayes-1-plot-1.png","lecture_12_files/figure-html5/Bayesian_impuation_model-1.png","lecture_12_files/figure-html5/Bayesian_impuation_model-2.png","lecture_12_files/figure-html5/comparison_graph-1.png","lecture_12_files/figure-html5/dag-1.png","lecture_12_files/figure-html5/graph_impute-1.png","lecture_12_files/figure-html5/one-step-brms-impute-1.png","lecture_12_files/figure-html5/one-step-brms-impute-2.png","lecture_12_files/figure-html5/one-step-brms-impute-3.png","lecture_12_files/figure-html5/one-step-brms-impute-4.png","lecture_12_files/figure-html5/one-step-brms-impute-5.png","lecture_12_files/figure-html5/one-step-brms-impute-6.png","lecture_12_files/figure-html5/one-step-brms-impute-7.png","lecture_12_files/figure-html5/one-step-brms-impute-8.png","lecture_12_files/figure-html5/row_wise_deleted-1.png","lecture_12_files/figure-html5/table_impute-1.png","lecture_12_files/figure-html5/unnamed-chunk-3-1.png","lecture_12_files/figure-html5/unnamed-chunk-7-1.png","lecture_12_files/figure-html5/unnamed-chunk-8-1.png","lecture_12_files/figure-html5/unnamed-chunk-8-2.png","lecture_12_files/figure-html5/unnamed-chunk-8-3.png","lecture_12_files/figure-html5/unnamed-chunk-8-4.png","lecture_12_files/figure-html5/unnamed-chunk-8-5.png","lecture_12_files/figure-html5/unnamed-chunk-8-6.png","lecture_12_files/figure-html5/unnamed-chunk-8-7.png","lecture_12_files/header-attrs-2.8.1/header-attrs.js","lecture_12_files/jquery-1.11.3/jquery.min.js","lecture_12_files/popper-2.6.0/popper.min.js","lecture_12_files/table1-1.0/table1_defaults.css","lecture_12_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_12_files/tippy-6.2.7/tippy-light-border.css","lecture_12_files/tippy-6.2.7/tippy.css","lecture_12_files/tippy-6.2.7/tippy.umd.min.js","lecture_12_files/webcomponents-2.0.0/webcomponents.js","op.jpeg","op.png","op2.png"]}
+  {"type":"character","attributes":{},"value":["bib.bib","distill-preview.png","lecture_12_files/anchor-4.2.2/anchor.min.js","lecture_12_files/bowser-1.9.3/bowser.min.js","lecture_12_files/distill-2.2.21/template.v2.js","lecture_12_files/figure-html5/amelia_trace_3-1.png","lecture_12_files/figure-html5/amelia_trace2-1.png","lecture_12_files/figure-html5/comparison_graph-1.png","lecture_12_files/figure-html5/dag-1.png","lecture_12_files/figure-html5/graph_impute-1.png","lecture_12_files/figure-html5/row_wise_deleted-1.png","lecture_12_files/figure-html5/table_impute-1.png","lecture_12_files/figure-html5/unnamed-chunk-3-1.png","lecture_12_files/figure-html5/unnamed-chunk-7-1.png","lecture_12_files/header-attrs-2.7.10/header-attrs.js","lecture_12_files/jquery-1.11.3/jquery.min.js","lecture_12_files/popper-2.6.0/popper.min.js","lecture_12_files/table1-1.0/table1_defaults.css","lecture_12_files/tippy-6.2.7/tippy-bundle.umd.min.js","lecture_12_files/tippy-6.2.7/tippy-light-border.css","lecture_12_files/tippy-6.2.7/tippy.css","lecture_12_files/tippy-6.2.7/tippy.umd.min.js","lecture_12_files/webcomponents-2.0.0/webcomponents.js","op.jpeg","op.png","op2.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2080,7 +2081,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   color: var(--hover-color, white);
 }</style>
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.8.1/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.7.10/header-attrs.js"></script>
   <link href="../../site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
@@ -2160,10 +2161,10 @@ gtag('config', 'G-GQF269N0S4');
 <ul>
 <li><a href="#reading-for-multiple-imputation">Reading for Multiple-Imputation:</a></li>
 <li><a href="#visualising-missingness">Visualising missingness</a></li>
-<li><a href="#compare-imputation-results-with-row-wise-deleted-results">Compare imputation results with row-wise deleted results</a></li>
+<li><a href="#compare-multiple-imputation-results-with-row-wise-deleted-results">Compare multiple imputation results with row-wise deleted results</a></li>
 </ul></li>
 <li><a href="#faq-for-multiple-imputation">FAQ for Multiple Imputation</a></li>
-<li><a href="#course-wrap-up">Course wrap up</a></li>
+<li><a href="#course-wrap-up-21-skills-youve-acquired">Course wrap up: 21 skills you’ve acquired</a></li>
 </ul>
 </nav>
 </div>
@@ -2206,7 +2207,7 @@ Show code
 <span class='op'>}</span>
 
 <span class='co'># installed from previous lectures</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://tidyverse.tidyverse.org'>"tidyverse"</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/malcolmbarrett/ggdag'>"ggdag"</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/paul-buerkner/brms'>"brms"</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstan'>"rstan"</a></span><span class='op'>)</span>
@@ -2354,6 +2355,7 @@ Show code
 <ol start="4" type="1">
 <li>We suggest the following strategy for decisions regarding whether to exclude a variable from a prediction model based on expected sign and statistical significance (typically measured at the 5% level; that is, a coefficient is “statistically significant” if its estimate is more than 2 standard errors from zero):</li>
 </ol>
+<!-- -->
 <ol type="a">
 <li>If a predictor is not statistically significant and has the expected sign, it is generally fine to keep it in. It may not help predictions dramatically but is also probably not hurting them.</li>
 <li>If a predictor is not statistically significant and does not have the expected sign (for example, incumbency having a negative effect on vote share), consider removing it from the model (that is, setting its coefficient to zero).</li>
@@ -3017,16 +3019,14 @@ Show code
 </details>
 <pre><code># Fixed Effects
 
-Parameter         | Coefficient |   SE |         95% CI | Statistic |      p
-----------------------------------------------------------------------------
-(Intercept)       |        6.34 | 0.59 | [ 5.18,  7.50] |     10.72 | &lt; .001
-Emp.JobSecure_S   |        0.01 | 0.03 | [-0.05,  0.07] |      0.41 | 0.678 
-Employed [1]      |        0.15 | 0.02 | [ 0.10,  0.20] |      5.95 | &lt; .001
-Age_in_Decades_C  |       -4.79 | 1.29 | [-7.31, -2.26] |     -3.72 | &lt; .001
-Male [Not_Male]   |       -1.48 | 0.80 | [-3.04,  0.08] |     -1.86 | 0.063 
-years_s           |        1.38 | 0.38 | [ 0.63,  2.12] |      3.63 | &lt; .001
-SD (Intercept)    |        6.79 |      |                |           |       
-SD (Observations) |        1.00 |      |                |           |       </code></pre>
+Parameter        | Coefficient |   SE |         95% CI | Statistic |      p
+---------------------------------------------------------------------------
+(Intercept)      |        6.27 | 0.50 | [ 5.28,  7.26] |     12.42 | &lt; .001
+Emp.JobSecure_S  |        0.03 | 0.03 | [-0.03,  0.08] |      0.95 | 0.342 
+Employed [1]     |        0.16 | 0.03 | [ 0.09,  0.23] |      4.56 | &lt; .001
+Age_in_Decades_C |       -4.41 | 1.27 | [-6.90, -1.92] |     -3.47 | &lt; .001
+Male [Not_Male]  |       -1.33 | 0.69 | [-2.69,  0.02] |     -1.92 | 0.054 
+years_s          |        1.26 | 0.37 | [ 0.53,  1.98] |      3.41 | &lt; .001</code></pre>
 <details>
 <summary>
 Show code
@@ -3096,16 +3096,14 @@ Show code
 </details>
 <pre><code># Fixed Effects
 
-Parameter         | Coefficient |   SE |         95% CI | Statistic |      p
-----------------------------------------------------------------------------
-(Intercept)       |        6.04 | 0.47 | [ 5.12,  6.97] |     12.84 | &lt; .001
-Emp.JobSecure_S   |        0.02 | 0.04 | [-0.06,  0.10] |      0.48 | 0.629 
-Employed [1]      |        0.11 | 0.03 | [ 0.06,  0.17] |      3.86 | &lt; .001
-Age_in_Decades_C  |       -4.58 | 0.38 | [-5.34, -3.83] |    -11.92 | &lt; .001
-Male [Not_Male]   |       -1.50 | 0.59 | [-2.65, -0.35] |     -2.55 | 0.011 
-years_s           |        1.29 | 0.11 | [ 1.08,  1.50] |     12.10 | &lt; .001
-SD (Intercept)    |        6.65 |      |                |           |       
-SD (Observations) |        1.00 |      |                |           |       </code></pre>
+Parameter        | Coefficient |   SE |         95% CI | Statistic |      p
+---------------------------------------------------------------------------
+(Intercept)      |        6.04 | 0.47 | [ 5.12,  6.97] |     12.84 | &lt; .001
+Emp.JobSecure_S  |        0.02 | 0.04 | [-0.06,  0.10] |      0.48 | 0.629 
+Employed [1]     |        0.11 | 0.03 | [ 0.06,  0.17] |      3.86 | &lt; .001
+Age_in_Decades_C |       -4.58 | 0.38 | [-5.34, -3.83] |    -11.92 | &lt; .001
+Male [Not_Male]  |       -1.50 | 0.59 | [-2.65, -0.35] |     -2.55 | 0.011 
+years_s          |        1.29 | 0.11 | [ 1.08,  1.50] |     12.10 | &lt; .001</code></pre>
 <details>
 <summary>
 Show code
@@ -3117,7 +3115,7 @@ Show code
 
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://patchwork.data-imaginist.com'>patchwork</a></span><span class='op'>)</span>
 
-<span class='va'>plot_impute</span> <span class='op'>/</span> <span class='va'>plot_impute1</span> <span class='op'>+</span> <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_annotation.html'>plot_annotation</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>plot_impute</span> <span class='op'>/</span> <span class='va'>plot_impute1</span> <span class='op'>+</span> <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_annotation.html'>plot_annotation</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"(a) Multiply imputed outcome vs (b) No-multiple imputation for the outcome"</span>, tag_levels <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </details>
@@ -3143,7 +3141,7 @@ Show code
 </div>
 </details>
 </div>
-<h3 id="compare-imputation-results-with-row-wise-deleted-results">Compare imputation results with row-wise deleted results</h3>
+<h3 id="compare-multiple-imputation-results-with-row-wise-deleted-results">Compare multiple imputation results with row-wise deleted results</h3>
 <p>When you run a regression with missing data, R automateically deletes the missing cases.</p>
 <p>Let’s look at the results from the row-wise deleted data:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
@@ -3168,7 +3166,7 @@ Show code
   <span class='op'>)</span>
 
 <span class='co'># run the row-wise deletion model</span>
-<span class='va'>m_no_impute</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>glmer</a></span><span class='op'>(</span><span class='va'>mod_eq</span>, data <span class='op'>=</span> <span class='va'>df2</span>, family <span class='op'>=</span> <span class='st'>"poisson"</span><span class='op'>)</span>
+<span class='va'>m_no_impute</span> <span class='op'>&lt;-</span> <span class='fu'>glmer</span><span class='op'>(</span><span class='va'>mod_eq</span>, data <span class='op'>=</span> <span class='va'>df2</span>, family <span class='op'>=</span> <span class='st'>"poisson"</span><span class='op'>)</span>
 
 <span class='co'># create table</span>
 <span class='va'>tab_no</span> <span class='op'>&lt;-</span>
@@ -3201,15 +3199,11 @@ Show code
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class='co'># create graph</span>
-<span class='va'>plot_no</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/ggeffects/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>tab_no</span><span class='op'>)</span>
-<span class='va'>plot_no</span>
+<span class='va'>plot_no</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tab_no</span><span class='op'>)</span>
 </code></pre>
 </div>
 </details>
-<p><img src="lecture_12_files/figure-html5/row_wise_deleted-1.png" width="1152" /></p>
 </div>
-<p>When we compare the graphs, we see that the multiply imputed datasets shrink estimates towards zero.</p>
-<p>Multiple imputation is sometimes avoided because people don’t like to “invent” data. However, creating multiply imputed datasets and integrating over their uncertainty during model tends to increase uncertainty in a model. That’s generally a good thing when we want to predict features of the population.</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
 <summary>
@@ -3226,15 +3220,17 @@ Show code
 </details>
 <p><img src="lecture_12_files/figure-html5/comparison_graph-1.png" width="1152" /></p>
 </div>
+<p>When we compare the graphs, we see that the multiply imputed datasets shrink estimates towards zero.</p>
+<p>Multiple imputation is sometimes avoided because people don’t like to “invent” data. However, creating multiply imputed datasets and integrating over their uncertainty during model tends to increase uncertainty in a model. That’s generally a good thing when we want to predict features of the population.</p>
 <p>However it would be a mistake to think that multiple imputation is sufficient. Missingness might not have been completely at random conditional on variables in your model. In this case, your multiple imputation cannot help your dataset to avoid bias.</p>
 <h2 id="faq-for-multiple-imputation">FAQ for Multiple Imputation</h2>
-<p>Q: Is multiple imputation inventing data? A: Yes, in the same way that everything in science invents data, namely, through self-conscious, educated guesswork.</p>
-<p>Q: Do I need to multiple-impute missing values? A: If your data satisfies the assumptions of MAR, you should multiply impute missing values. However, in many cases it makes no practical difference. That said, you cannot know in advance whether your decision not to multiply impute will make a difference, so you should.</p>
-<p>Q: How many missing datasets should I impute? A: King suggests five is sufficient. More is even better. Here we used 10.</p>
+<p>Q: Is multiple imputation inventing data? MI is educated guesswork about the population from which your data are drawn. It is no different from ordinary statistical inference.</p>
+<p>Q: Do I need to multiple-impute missing values? A: If your data satisfies the assumptions of MAR, you should multiply impute missing values. However, in many cases it makes no practical difference. Whether MI makes a difference is something you can’t know in advance of trying, so to be safe, you should use MI.</p>
+<p>Q: How many missing datasets should I impute? A: The documentation to Amelia suggests n = 5 datasets is sufficient. Here we used 10.</p>
 <p>Q: How do I handle time series data? A: Here we have used the <code>cs</code> and <code>ts</code> commands in the <code>Amelia</code> package</p>
-<p>Q: Can I use multiple imputation with Bayesian estimation packages. A: Yes, I present code below. The models however mixed poorly. See me if you wish to attempt this.</p>
+<p>Q: Can I use multiple imputation with Bayesian estimation packages. A: Yes, see me.</p>
 <p>Q: Where can I go for help? A: See the resources provided at the introduction to this section.</p>
-<h2 id="course-wrap-up">Course wrap up</h2>
+<h2 id="course-wrap-up-21-skills-youve-acquired">Course wrap up: 21 skills you’ve acquired</h2>
 <p>You’ve come very far in only twelve weeks. Among other things, you have acquired the following skills:</p>
 <ol type="1">
 <li>You can use Rstudio, GitHub, and R-markdown to do data-science</li>
@@ -3256,8 +3252,9 @@ Show code
 <li>You understand how to check for counfounding by writing a DAG</li>
 <li>You can create a distill website for free on Github</li>
 <li>You can multiply impute to handle missingness in your dataset, and you understand why this is a good thing.</li>
+<li>You’ve learned about measurement reliability and measurement validity, and you understand how to reduce highly dimensional data.</li>
+<li>Most of all we hope you’ve learned how to continue learning: this is the most important skill for data science.</li>
 </ol>
-<p>And much much else … Most of all, you’ve learned how to continue learning, a skill that will serve you well because the tools of science are constantly improving.</p>
 <!-- ```{r} -->
 <!-- df %>% -->
 <!--   dplyr::mutate(CharityNa = is.na(CharityDonate)) %>% -->

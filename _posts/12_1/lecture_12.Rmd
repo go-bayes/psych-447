@@ -158,12 +158,15 @@ knitr::include_graphics("op.png")
 
 <https://gking.harvard.edu/category/research-interests/methods/missing-data>
 
-Missing data poses a problem. Missingness biases inference. However, missingness need not be intractable. We can use regression to predict missing values when the missing data are random *conditional on known features of the data,*^[Statisticians call the assumption of of conditional randomness in missingness: "MAR: Missing at Random." The language is admittedly confusing -- what statisticians mean is "missing conditional on known predictors."]
-Where MAR assumptions are satisfied we predict the missing observations using regression. Because regression is uncertain, we must generate multiple datasets with observations. This process of generating multiple datasets is called *multiple imputation.* Before proceeding with an explanation of the mechanics of multiple imputation, we take a moment to recollect two fundamental principles of datascience that we have been discussing throughout this course:
+Missing data poses a problem. Missingness biases inference. However, missingness need not be intractable. We can use regression to predict missing values when the missing data are random *conditional on known features of the data,*[^1] Where MAR assumptions are satisfied we predict the missing observations using regression. Because regression is uncertain, we must generate multiple datasets with observations. This process of generating multiple datasets is called *multiple imputation.* Before proceeding with an explanation of the mechanics of multiple imputation, we take a moment to recollect two fundamental principles of datascience that we have been discussing throughout this course:
 
-1.  The practice of statistical inference is educated guesswork. We never observe population parameters, we only observe samples.  We assume that our samples are drawn randomly from an unobserved population. We we move from measured features of our sample to unmeasured features of a population we are projecting with uncertainty. Multiply imputing missing data is no different. ultiple imputation is continuous with a data-scientist's larger mission of guessing wisely[\^1]: For a explanation, see: [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4121561/#:~:text='Missing%20completely%20at%20random'%20means,missing%20and%20observed%20blood%20pressures.)
+[^1]: Statisticians call the assumption of of conditional randomness in missingness: "MAR: Missing at Random." The language is admittedly confusing -- what statisticians mean is "missing conditional on known predictors."
 
-2.  Regression is a tool prediction and regression is also a tool for causal inference. How we go about using regression differs depnding on wheher we want to predict or whether we want to explain. When we regress to predict it is generally useful to include all relevant indicators in our dataset that might be related to the outcome and that are not collinear with other indicators in our dataset ^[Although it generally does no harm to include collinear indicators if our task is prediction].
+1.  The practice of statistical inference is educated guesswork. We never observe population parameters, we only observe samples. We assume that our samples are drawn randomly from an unobserved population. We we move from measured features of our sample to unmeasured features of a population we are projecting with uncertainty. Multiply imputing missing data is no different. ultiple imputation is continuous with a data-scientist's larger mission of guessing wisely[\^1]: For a explanation, see: [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4121561/#:~:text='Missing%20completely%20at%20random'%20means,missing%20and%20observed%20blood%20pressures.)
+
+2.  Regression is a tool prediction and regression is also a tool for causal inference. How we go about using regression differs depnding on wheher we want to predict or whether we want to explain. When we regress to predict it is generally useful to include all relevant indicators in our dataset that might be related to the outcome and that are not collinear with other indicators in our dataset [^2].
+
+[^2]: Although it generally does no harm to include collinear indicators if our task is prediction
 
 **Prediction**: we have discussed strategies for assessing improvements in model fit for prediction using criteria such as the BIC criterion, the WAIC criterion, and LOO.
 
@@ -179,6 +182,9 @@ Gelman and Hill offer the following advice about inclusion of variables when usi
 
 > 4.  We suggest the following strategy for decisions regarding whether to exclude a variable from a prediction model based on expected sign and statistical significance (typically measured at the 5% level; that is, a coefficient is "statistically significant" if its estimate is more than 2 standard errors from zero):
 >
+> ```{=html}
+> <!-- -->
+> ```
 > (a) If a predictor is not statistically significant and has the expected sign, it is generally fine to keep it in. It may not help predictions dramatically but is also probably not hurting them.
 > (b) If a predictor is not statistically significant and does not have the expected sign (for example, incumbency having a negative effect on vote share), consider removing it from the model (that is, setting its coefficient to zero).
 > (c) If a predictor is statistically significant and does not have the expected sign, then think hard if it makes sense. (For example, perhaps this is a country such as India in which incumbents are generally unpopular; see Linden, 2006.) Try to gather data on potential lurking variables and include them in the analysis.
@@ -188,16 +194,15 @@ Gelman and Hill offer the following advice about inclusion of variables when usi
 
 > But the approach which dominates in many parts of biology and the social sciences is instead CAUSAL SALAD.36 Causal salad means tossing various "control" variables into a statistical model, observing changes in estimates, and then telling a story about causation. Causal salad seems founded on the notion that only omitted variables can mislead us about causation. But included variables can just as easily confound us. When tossing a causal salad, a model that makes good predictions may still mislead about causation. If we use the model to plan an intervention, it will get everything wrong. [\@mcelreath2020a, p.46]
 
-To help assist us with the problems of unbiased causal inference we have discussed the utility of building causal DAGs, noting that inference is always conditional on the DAG that we have drawn. Frequently, the data under-determine the DAG. There are many DAGs consistent with our observations. Regression is a powerful tool for reliable causal inference but it is not sufficient for reliable inference. 
+To help assist us with the problems of unbiased causal inference we have discussed the utility of building causal DAGs, noting that inference is always conditional on the DAG that we have drawn. Frequently, the data under-determine the DAG. There are many DAGs consistent with our observations. Regression is a powerful tool for reliable causal inference but it is not sufficient for reliable inference.
 
-So which approach to regression should we use for multiple imputation. The answer is that we should use the predictive approach. When we are imputing we are are *predicting* features of a population. We shoudl therefore follow the Gelman and Hill's advice to stratifying across all indicators that might improve predictive accuracy. 
+So which approach to regression should we use for multiple imputation. The answer is that we should use the predictive approach. When we are imputing we are are *predicting* features of a population. We shoudl therefore follow the Gelman and Hill's advice to stratifying across all indicators that might improve predictive accuracy.
 
 ### Visualising missingness
 
-When you are examining your data, make sure to assessing missing responses.  A handy tool for assessing missingess is a missingness graph. 
+When you are examining your data, make sure to assessing missing responses. A handy tool for assessing missingess is a missingness graph.
 
-
-Let's consider subsample of the `nz-jitter` longitudional dataset that has responded to multiple waves. Today we will ask whether employment insecurity is causally related to charitable donations. To predict missingness we should probably include other indicators besides those that I have included here, but these indicators will be sufficient for our purposes. 
+Let's consider subsample of the `nz-jitter` longitudional dataset that has responded to multiple waves. Today we will ask whether employment insecurity is causally related to charitable donations. To predict missingness we should probably include other indicators besides those that I have included here, but these indicators will be sufficient for our purposes.
 
 ```{r}
 
@@ -225,7 +230,7 @@ df <- nz12 %>%
 glimpse(df)
 ```
 
-How many individuals? 
+How many individuals?
 
 ```{r}
 nz12 %>%
@@ -513,7 +518,7 @@ plot_impute1 <- plot(tab_impute1)
 
 library(patchwork)
 
-plot_impute / plot_impute1 + plot_annotation()
+plot_impute / plot_impute1 + plot_annotation(title = "(a) Multiply imputed outcome vs (b) No-multiple imputation for the outcome", tag_levels = "a")
 ```
 
 If you want a LaTeX table, you can use this code:
@@ -530,7 +535,7 @@ huxtable::as_hux( your_model_here ) %>%
 
 ```
 
-### Compare imputation results with row-wise deleted results
+### Compare multiple imputation results with row-wise deleted results
 
 When you run a regression with missing data, R automateically deletes the missing cases.
 
@@ -562,12 +567,7 @@ tab_no
 
 # create graph
 plot_no <- plot(tab_no)
-plot_no
 ```
-
-When we compare the graphs, we see that the multiply imputed datasets shrink estimates towards zero.
-
-Multiple imputation is sometimes avoided because people don't like to "invent" data. However, creating multiply imputed datasets and integrating over their uncertainty during model tends to increase uncertainty in a model. That's generally a good thing when we want to predict features of the population.
 
 ```{r comparison_graph}
 library(patchwork)
@@ -578,66 +578,66 @@ plot_impute / plot_no +
 
 ```
 
+When we compare the graphs, we see that the multiply imputed datasets shrink estimates towards zero.
+
+Multiple imputation is sometimes avoided because people don't like to "invent" data. However, creating multiply imputed datasets and integrating over their uncertainty during model tends to increase uncertainty in a model. That's generally a good thing when we want to predict features of the population.
+
 However it would be a mistake to think that multiple imputation is sufficient. Missingness might not have been completely at random conditional on variables in your model. In this case, your multiple imputation cannot help your dataset to avoid bias.
 
 ## FAQ for Multiple Imputation
 
-Q: Is multiple imputation inventing data? 
-A: Yes, in the same way that everything in science invents data, namely, through self-conscious, educated guesswork. 
+Q: Is multiple imputation inventing data? MI is educated guesswork about the population from which your data are drawn. It is no different from ordinary statistical inference.
 
-Q: Do I need to multiple-impute missing values?
-A: If your data satisfies the assumptions of MAR, you should multiply impute missing values. However, in many cases it makes no practical difference. That said, you cannot know in advance whether your decision not to multiply impute will make a difference, so you should. 
+Q: Do I need to multiple-impute missing values? A: If your data satisfies the assumptions of MAR, you should multiply impute missing values. However, in many cases it makes no practical difference. Whether MI makes a difference is something you can't know in advance of trying, so to be safe, you should use MI.
 
-Q: How many missing datasets should I impute? 
-A: King suggests five is sufficient. More is even better. Here we used 10. 
+Q: How many missing datasets should I impute? A: The documentation to Amelia suggests n = 5 datasets is sufficient. Here we used 10.
 
-Q: How do I handle time series data? 
-A: Here we have used the `cs` and `ts` commands in the `Amelia` package
+Q: How do I handle time series data? A: Here we have used the `cs` and `ts` commands in the `Amelia` package
 
-Q: Can I use multiple imputation with Bayesian estimation packages. 
-A: Yes, I present code below. The models however mixed poorly. See me if you wish to attempt this. 
+Q: Can I use multiple imputation with Bayesian estimation packages. A: Yes, see me.
 
-Q: Where can I go for help? 
-A: See the resources provided at the introduction to this section. 
+Q: Where can I go for help? A: See the resources provided at the introduction to this section.
 
-
-
-## Course wrap up
+## Course wrap up: 21 skills you've acquired
 
 You've come very far in only twelve weeks. Among other things, you have acquired the following skills:
 
-1. You can use Rstudio, GitHub, and R-markdown to do data-science
-2. You can get your data-into shape through data-wrangling in R.
-3. You can create publication-ready descriptive graphs and tables for your samples
-4. You can do the same for your regression models. 
-5. You can search for anomalies in your samples and in your regression ouputs
-6. You can compare model fits
-7. You can select family distributions that are appropriate for your data
-8. You can model ordinal predictors and ordinal outcomes
-9. You can model outcomes that have an abundance of zeros
-10 You an write non-linear models
-11. You can simulate data
-12. You can perform ANOVA, ANOVCA, and MANOVA in a regression setting
-13. You can perform model checks 
-14. You can write multilevel models and interpret them. 
-15. You understand metanalysis as a form of multi-level modelling
-16. You understand the difference between regression for prediction and regression for inference.
-17. You understand how to reduce the dimensions of your data.
-18.  You understand how to check for counfounding by writing a DAG
-19.  You can create a distill website for free on Github
-20.  You can multiply impute to handle missingness in your dataset, and you understand why this is a good thing. 
-
-And much much else ... Most of all, you've learned how to continue learning, a skill that will serve you well because the tools of science are constantly improving. 
-
+1.  You can use Rstudio, GitHub, and R-markdown to do data-science
+2.  You can get your data-into shape through data-wrangling in R.
+3.  You can create publication-ready descriptive graphs and tables for your samples
+4.  You can do the same for your regression models.
+5.  You can search for anomalies in your samples and in your regression ouputs
+6.  You can compare model fits
+7.  You can select family distributions that are appropriate for your data
+8.  You can model ordinal predictors and ordinal outcomes
+9.  You can model outcomes that have an abundance of zeros 10 You an write non-linear models
+10. You can simulate data
+11. You can perform ANOVA, ANOVCA, and MANOVA in a regression setting
+12. You can perform model checks
+13. You can write multilevel models and interpret them.
+14. You understand metanalysis as a form of multi-level modelling
+15. You understand the difference between regression for prediction and regression for inference.
+16. You understand how to reduce the dimensions of your data.
+17. You understand how to check for counfounding by writing a DAG
+18. You can create a distill website for free on Github
+19. You can multiply impute to handle missingness in your dataset, and you understand why this is a good thing.
+20. You've learned about measurement reliability and measurement validity, and you understand how to reduce highly dimensional data.
+21. Most of all we hope you've learned how to continue learning: this is the most important skill for data science.
 
 <!-- ```{r} -->
+
 <!-- df %>% -->
+
 <!--   dplyr::mutate(CharityNa = is.na(CharityDonate)) %>% -->
+
 <!--   count(Male, CharityNa) %>% -->
+
 <!--   group_by(Male) %>% -->
+
 <!--   mutate(freq = n / sum(n)) -->
 
 <!-- ``` -->
+
 <!-- ### Appendix 1: Imputation using BRMS -->
 
 <!-- ### Multiple imputation in BRMS (warning: these models take 10x longer) -->
