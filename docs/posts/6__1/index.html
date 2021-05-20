@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -136,7 +137,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["bibpng1.png","Lecture-6_files/anchor-4.2.2/anchor.min.js","Lecture-6_files/bowser-1.9.3/bowser.min.js","Lecture-6_files/distill-2.2.21/template.v2.js","Lecture-6_files/figure-html5/unnamed-chunk-20-1.png","Lecture-6_files/figure-html5/unnamed-chunk-21-1.png","Lecture-6_files/figure-html5/unnamed-chunk-22-1.png","Lecture-6_files/figure-html5/unnamed-chunk-23-1.png","Lecture-6_files/figure-html5/unnamed-chunk-24-1.png","Lecture-6_files/figure-html5/unnamed-chunk-25-1.png","Lecture-6_files/figure-html5/unnamed-chunk-26-1.png","Lecture-6_files/figure-html5/unnamed-chunk-27-1.png","Lecture-6_files/figure-html5/unnamed-chunk-28-1.png","Lecture-6_files/figure-html5/unnamed-chunk-35-1.png","Lecture-6_files/figure-html5/unnamed-chunk-36-1.png","Lecture-6_files/figure-html5/unnamed-chunk-37-1.png","Lecture-6_files/figure-html5/unnamed-chunk-38-1.png","Lecture-6_files/figure-html5/unnamed-chunk-39-1.png","Lecture-6_files/figure-html5/unnamed-chunk-4-1.png","Lecture-6_files/figure-html5/unnamed-chunk-40-1.png","Lecture-6_files/figure-html5/unnamed-chunk-41-1.png","Lecture-6_files/figure-html5/unnamed-chunk-43-1.png","Lecture-6_files/figure-html5/unnamed-chunk-44-1.png","Lecture-6_files/figure-html5/unnamed-chunk-8-1.png","Lecture-6_files/figure-html5/unnamed-chunk-9-1.png","Lecture-6_files/header-attrs-2.7.8/header-attrs.js","Lecture-6_files/jquery-1.11.3/jquery.min.js","Lecture-6_files/popper-2.6.0/popper.min.js","Lecture-6_files/tippy-6.2.7/tippy-bundle.umd.min.js","Lecture-6_files/tippy-6.2.7/tippy-light-border.css","Lecture-6_files/tippy-6.2.7/tippy.css","Lecture-6_files/tippy-6.2.7/tippy.umd.min.js","Lecture-6_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["bibpng1.png","Lecture-6_files/anchor-4.2.2/anchor.min.js","Lecture-6_files/bowser-1.9.3/bowser.min.js","Lecture-6_files/distill-2.2.21/template.v2.js","Lecture-6_files/figure-html5/unnamed-chunk-20-1.png","Lecture-6_files/figure-html5/unnamed-chunk-21-1.png","Lecture-6_files/figure-html5/unnamed-chunk-22-1.png","Lecture-6_files/figure-html5/unnamed-chunk-23-1.png","Lecture-6_files/figure-html5/unnamed-chunk-24-1.png","Lecture-6_files/figure-html5/unnamed-chunk-25-1.png","Lecture-6_files/figure-html5/unnamed-chunk-26-1.png","Lecture-6_files/figure-html5/unnamed-chunk-27-1.png","Lecture-6_files/figure-html5/unnamed-chunk-28-1.png","Lecture-6_files/figure-html5/unnamed-chunk-35-1.png","Lecture-6_files/figure-html5/unnamed-chunk-36-1.png","Lecture-6_files/figure-html5/unnamed-chunk-37-1.png","Lecture-6_files/figure-html5/unnamed-chunk-38-1.png","Lecture-6_files/figure-html5/unnamed-chunk-39-1.png","Lecture-6_files/figure-html5/unnamed-chunk-4-1.png","Lecture-6_files/figure-html5/unnamed-chunk-40-1.png","Lecture-6_files/figure-html5/unnamed-chunk-41-1.png","Lecture-6_files/figure-html5/unnamed-chunk-43-1.png","Lecture-6_files/figure-html5/unnamed-chunk-44-1.png","Lecture-6_files/figure-html5/unnamed-chunk-8-1.png","Lecture-6_files/figure-html5/unnamed-chunk-9-1.png","Lecture-6_files/header-attrs-2.7.10/header-attrs.js","Lecture-6_files/jquery-1.11.3/jquery.min.js","Lecture-6_files/popper-2.6.0/popper.min.js","Lecture-6_files/tippy-6.2.7/tippy-bundle.umd.min.js","Lecture-6_files/tippy-6.2.7/tippy-light-border.css","Lecture-6_files/tippy-6.2.7/tippy.css","Lecture-6_files/tippy-6.2.7/tippy.umd.min.js","Lecture-6_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2071,7 +2072,7 @@ d-appendix d-footnote-list a.footnote-backlink {
   color: var(--hover-color, white);
 }</style>
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.8.1/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.7.10/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2616,8 +2617,8 @@ F-statistic: 4.006 on 1 and 8 DF,  p-value: 0.08034</code></pre>
 
 Parameter   | Median |        95% CI |     pd |          ROPE | % in ROPE |  Rhat |     ESS
 -------------------------------------------------------------------------------------------
-(Intercept) |   0.17 | [-0.54, 0.83] | 69.67% | [-0.10, 0.10] |    23.10% | 1.000 | 3014.00
-x           |   0.62 | [-0.12, 1.37] | 95.70% | [-0.10, 0.10] |     4.21% | 1.001 | 2639.00</code></pre>
+(Intercept) |   0.18 | [-0.52, 0.85] | 71.28% | [-0.10, 0.10] |    23.13% | 1.000 | 2864.00
+x           |   0.64 | [-0.08, 1.42] | 95.60% | [-0.10, 0.10] |     4.87% | 1.000 | 2716.00</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># find the coefficient does not cross zero!</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span> <span class='fu'>parameters</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/parameters/reference/model_parameters.html'>model_parameters</a></span><span class='op'>(</span> <span class='va'>bad_bayes</span> <span class='op'>)</span> <span class='op'>)</span>
