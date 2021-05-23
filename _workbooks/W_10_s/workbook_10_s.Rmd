@@ -199,7 +199,11 @@ nzl1 <- cbind(nzl1,
                   c("Relid"),
                   group = "Id")
            )
+```
 
+Model:
+
+```{r eval = FALSE}
 nzl1 <- nzl1 %>%
   dplyr::mutate(Relid_between_c = scale(Relid_between, center = TRUE, scale = FALSE))  
 # test dataset
@@ -213,7 +217,7 @@ summary(m1)
 
 Note poor mixing. This is a sign of a problem:
 
-```{r cache=TRUE, eval=FALSE}
+```{r eval=FALSE}
 # results
 parameters::model_parameters(
   m1,
@@ -224,7 +228,7 @@ parameters::model_parameters(
 )%>% print_md()
 ```
 
-```{r cache=TRUE}
+```{r  eval = F}
 # graph
 p_m1 <- plot(brms::conditional_effects(m1,
                             "Relid_c",
@@ -238,7 +242,7 @@ p_m1
 
 
 
-```{r}
+```{r eval = F}
 m2 <-
   brms::brm(
     CharityDonate ~ yearS + Relid_within + Relid_between_c  + 
@@ -251,12 +255,12 @@ m2 <-
 
 We can see that people are rounding in their estimates:
 
-```{r}
+```{r eval = FALSE}
 summary(m2, prior = TRUE)
 brms::pp_check(m2) + scale_x_continuous(limits = c(0,10000))
 ```
 
-```{r cache=TRUE}
+```{r eval = FALSE}
 # graph
 p_m2a <- plot(brms::conditional_effects(m2,
                             c("Relid_within"),
@@ -266,7 +270,7 @@ p_m2a <- plot(brms::conditional_effects(m2,
              )
 p_m2a
 ```
-```{r}
+```{r eval = FALSE}
 p_m2b <- plot(brms::conditional_effects(m2,
                             c("Relid_between_c"),
                             spaghetti = TRUE,
@@ -275,27 +279,73 @@ p_m2b <- plot(brms::conditional_effects(m2,
              )
 p_m2b
 ```
+
 # Log transform outcomes
 
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # Response distributions in brms
 #https://cran.r-project.org/web/packages/brms/vignettes/brms_families.html
 
+set.seed(123)
+nm <- sample(nzl1$Id, size = 1000)
+length(unique(nzl1$Id))
+
+nzl2 <- nzl1 %>%
+ filter(Id %in% nm) %>%
+  droplevels()
+
+# 825
+length(unique(nzl2$Id))
+  
 # What is this? 
 hist(nzl1$CharityDonate_log)
+# sum(nzl1$CharityDonate_log == 0, na.rm=TRUE)/nrow(nzl1) # 14% zero
 m3 <-
   brms::brm(
     CharityDonate_log ~  yearS + Relid_within + Relid_between_c  +
       (1 + Relid_within | Id),
     family = "hurdle_lognormal",
     file = here::here("models", "workbook_10_ex3"),
-    data = nzl1
+    data = nzl2
   )
 ```
 
 
+Mixing is not great, model should be run for longer, however 
+
+```{r eval = FALSE}
+summary(m3, prior = TRUE)
+brms::pp_check(m3)# + scale_x_continuous(limits = c(0,10000))
 ```
+
+Within person effects are not, on this model, sample, clear. 
+
+```{r}
+# graph
+p_m3a <- plot(brms::conditional_effects(m3,
+                            c("Relid_within"),
+                            spaghetti = TRUE,
+                            re_formula = NULL,
+                            nsamples = 100)
+             )
+p_m3a
+```
+
+The religion charity effect is evident
+
+```{r }
+p_m3b <- plot(brms::conditional_effects(m3,
+                            c("Relid_between_c"),
+                            spaghetti = TRUE,
+                            re_formula = NULL, # all group-level effects
+                            nsamples = 100)
+             )
+p_m3b
+```
+
+
+
 
 ## Marking criteria
 

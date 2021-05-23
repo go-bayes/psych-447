@@ -219,7 +219,7 @@ print(ufs::scaleStructure(bfi[paste0("E", 1:5)]))
 
 ## Some alternatives to the latent variable perspective
 
-In recent years network statistics have found increased use in psychology as conceptual alternatives to the latent variable model (even thought they are mathematical equivalents). Importantly, networks are also the underlying assumption of DAGs. In the network approach we assume that communities of items arise due to their interaction and not due to an underlying latent variable. The network approach commonly uses regularized partial correlations between variables to model the network. What this means is that first all variables are correlated while controling for all other variables in the dataset. Subsequently, we use a mathematical approach aimed at iteratively shrinking correlations that are close to 0 to exactely 0, reducing the complexity of the structure.
+In recent years network statistics have found increased use in psychology as conceptual alternatives to the latent variable model (even thought they are mathematical equivalents). In the network approach we assume that communities of items arise due to their interaction and not due to an underlying latent variable. The network approach commonly uses regularized partial correlations between variables to model the network. What this means is that first all variables are correlated while controling for all other variables in the dataset. Subsequently, we use a mathematical approach aimed at iteratively shrinking correlations that are close to 0 to exactely 0, reducing the complexity of the structure.
 
 ```{r bot_est, cache = TRUE}
 net_mdl <- bootnet::estimateNetwork(select(bfi, -age, -education, -gender), "EBICglasso")
