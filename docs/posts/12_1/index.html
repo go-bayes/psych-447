@@ -2506,9 +2506,11 @@ Show code
 </details>
 <p><img src="lecture_12_files/figure-html5/measurement_error_confound-1.png" width="1152" /></p>
 </div>
-<h4 id="measurment-error-in-panel-studies">Measurment error in panel studies</h4>
-<p>The Centers for Epidemiologic Studies–Depression (CES-D) scale assess depression but it is known to have measurement error.</p>
-<p>Does completing Psych 477 affect change in depression changes after the course is finished. Assume no relationship. Nevertheless, conditioning on the baseline CES-D will create bias from measurement error:</p>
+<h4 id="measurement-error-in-panel-studies">Measurement error in panel studies</h4>
+<p>The Centers for Epidemiological Studies–Depression (CES-D) scale assess depression, but the scale is known to have measurement error.</p>
+<p>Question. Does completing Psych 477 affect change in depression changes after the course is finished. Assume no relationship. Nevertheless, conditioning on the baseline measure of CES-D will create bias in our model that arises from from measurement error.</p>
+<p><br />
+Here is Barrett’s example:</p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <details>
 <summary>
@@ -2537,14 +2539,14 @@ Show code
     honors <span class='op'>=</span> <span class='st'>"447 Completion"</span>,
     depression <span class='op'>=</span> <span class='st'>"Depression"</span>,
     cesd <span class='op'>=</span> <span class='st'>"CES-D"</span>,
-    cesd_change <span class='op'>=</span> <span class='st'>"Change \nin CES-D"</span>,
+    cesd_change <span class='op'>=</span> <span class='st'>"Change CES-D"</span>,
     depression_change <span class='op'>=</span> <span class='st'>"Change in \nDepression"</span>,
     baseline_error <span class='op'>=</span> <span class='st'>"Measurement Error, \nBaseline"</span>,
     followup_error <span class='op'>=</span> <span class='st'>"Measurement Error, \nFollow-up"</span>
   <span class='op'>)</span>,
   coords <span class='op'>=</span> <span class='va'>coords</span>
 <span class='op'>)</span><span class='co'># %&gt;%</span>
- <span class='co'># control_for("cesd")</span>
+ <span class='co'># control_for(c("baseline_error","followup_error"))</span>
 
 <span class='va'>cesd_dag</span> <span class='op'>%&gt;%</span>
   <span class='fu'>ggdag_dconnected</span><span class='op'>(</span>
