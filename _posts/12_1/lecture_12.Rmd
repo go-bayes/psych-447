@@ -270,6 +270,7 @@ See also the work of Eiko Fried: <https://eiko-fried.com/>
 Barrett's recall of vitimans example: Does taking vitamins in childhood protect against bladder cancer? If people who have bladder cancer are more likely to recall vitam taking, then this can support the inference that vitams cause bladder cancer even if the opposite is true:
 
 ```{r measurement_error_confound, code_folding = TRUE}
+library(ggdag)
 coords <- tibble::tribble(
   ~name,            ~x,  ~y,
   "bladder_cancer",    1,   0,
@@ -285,6 +286,9 @@ bladder_dag <- dagify(
   diagnosed_bc ~ bc_error + bladder_cancer,
   recalled_vits ~ vitamins + vits_error,
   vits_error ~ bladder_cancer,
+  exposure = "recalled_vits",
+  outcome = "bladder_cancer",
+  latent = c("bc_error","vits_error"),
   labels = c(
     bladder_cancer = "Bladder Cancer",
     vitamins = "Childhood Vitamin \nIntake",
@@ -298,13 +302,20 @@ bladder_dag <- dagify(
 ggdag(bladder_dag, text = FALSE, use_labels = "label", node_size = 20) + theme_dag_blank()
 ```
 
+
+In this DAG, we can obtain an unbiased estimate when we do not adjust for baseline CES-D scores:
+
+```{r adjust_blad_rror}
+ggdag_adjustment_set(bladder_dag,
+                     text = FALSE, use_labels = "label") + theme_dag_blank()
+```
+
 #### Measurement error in panel studies
 
 The Centers for Epidemiological Studies--Depression (CES-D) scale assess depression, but the scale is known to have measurement error.
 
 Question. Does completing Psych 477 affect change in depression changes after the course is finished. Assume no relationship. Nevertheless, conditioning on the baseline measure of CES-D will create bias in our model that arises from from measurement error.
 
-\
 Here is Barrett's example:
 
 ```{r measurement_error_longitudinal_confound, code_folding = TRUE}
@@ -326,6 +337,7 @@ cesd_dag <- dagify(
   cesd_change ~ depression_change + followup_error + baseline_error,
   outcome = "cesd_change",
   exposure  = "honors",
+  latent = c("followup_error","baseline_error"),
   labels = c(
     honors = "447 Completion",
     depression = "Depression",
@@ -350,7 +362,7 @@ cesd_dag %>%
   ) + theme_dag_blank()
 ```
 
-In this DAG, we can obtain an unbiased estimate when we do not adjust for baseline CES-D scores:
+The DAG reveals we can obtain an unbiased estimate when we do not adjust for baseline CES-D scores:
 
 ```{r adjust_meas_error}
 ggdag_adjustment_set(cesd_dag,
