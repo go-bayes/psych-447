@@ -293,14 +293,17 @@ bladder_dag <- dagify(
   ),
   coords = coords
 )
-ggdag(bladder_dag, text = FALSE, use_labels = "label")
+ggdag(bladder_dag, text = FALSE, use_labels = "label", node_size = 20) + theme_dag_blank()
 ```
 
-#### Measurment error in panel studies
+#### Measurement error in panel studies
 
-The Centers for Epidemiologic Studies--Depression (CES-D) scale assess depression but it is known to have measurement error.
+The Centers for Epidemiological Studies--Depression (CES-D) scale assess depression, but the scale is known to have measurement error.
 
-Does completing Psych 477 affect change in depression changes after the course is finished. Assume no relationship. Nevertheless, conditioning on the baseline CES-D will create bias from measurement error:
+Question. Does completing Psych 477 affect change in depression changes after the course is finished. Assume no relationship. Nevertheless, conditioning on the baseline measure of CES-D will create bias in our model that arises from from measurement error.
+
+\
+Here is Barrett's example:
 
 ```{r measurement_error_longitudinal_confound, code_folding = TRUE}
 # set coordinates
@@ -325,14 +328,14 @@ cesd_dag <- dagify(
     honors = "447 Completion",
     depression = "Depression",
     cesd = "CES-D",
-    cesd_change = "Change \nin CES-D",
+    cesd_change = "Change CES-D",
     depression_change = "Change in \nDepression",
     baseline_error = "Measurement Error, \nBaseline",
     followup_error = "Measurement Error, \nFollow-up"
   ),
   coords = coords
 )# %>%
- # control_for("cesd")
+ # control_for(c("baseline_error","followup_error"))
 
 cesd_dag %>%
   ggdag_dconnected(
@@ -636,7 +639,7 @@ dg <-
   ) %>%
   tidy_dagitty(layout = "nicely")
 
-ggdag::ggdag_adjustment_set(dg)
+ggdag::ggdag_adjustment_set(dg) + theme_dag_blank()
 ```
 
 To obtain an unbiased estimate of jobsecurity on charity we must condition on employed, male, age, and years.
