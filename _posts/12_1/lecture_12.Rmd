@@ -335,7 +335,7 @@ cesd_dag <- dagify(
   depression ~ honors,
   cesd ~ depression + baseline_error,
   cesd_change ~ depression_change + followup_error + baseline_error,
-  outcome = "cesd_change",
+  outcome = "depression_change",
   exposure  = "honors",
   latent = c("followup_error","baseline_error"),
   labels = c(
