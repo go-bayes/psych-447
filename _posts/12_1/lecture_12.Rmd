@@ -238,24 +238,26 @@ ega_out <-
 
 ## Measurement and validity
 
-Do your measures describe facts about how people are? This is **very important** topic However, we can only cover some highlights.
+Do your measures describe facts about how people are? This is a mission critical question.  Yet there has been very little attention. 
 
-This advice from Jessica Flake is helpful: <https://www.youtube.com/watch?v=Cq6n7AS_r8w>
+We find this advice from Jessica Flake is helpful: <https://www.youtube.com/watch?v=Cq6n7AS_r8w>
 
-Have a plan (pre-register)
+To summarise: 
 
-1.  What is your construct? (What are you trying to measure)
-2.  Why and how did you select measures
+Include measurement in your research plan & pre-register that plan. Ask yourself:
 
--   Jingle fallacy: two different contructs are the same if they have different names
--   Jangle fallacy: two identical constracts are different because they have different names)
+1.  What is your construct? (What are you trying to measure?)
+2.  Why and how did you select measures?
+
+-   Jingle fallacy: two different contructs are the same if they have different names.
+-   Jangle fallacy: two identical constructs are different because they have different names.
 
 3.  How do you use and operationalise your construct?
 4.  How do you quantify your measure?
-5.  Did you modify your measure?
-6.  Justify all measure modifications
+5.  Did you modify your measure, if so, why? Report...
+6.  Justify all measure modifications...
 
-Points develped in this paper: <https://psyarxiv.com/c45t9/>
+Points developed in this paper: <https://psyarxiv.com/c45t9/>
 
 See also the work of Eiko Fried: <https://eiko-fried.com/>
 
