@@ -267,7 +267,7 @@ See also the work of Eiko Fried: <https://eiko-fried.com/>
 
 > Measurement error is the degree to which we mismeasure a variable, which can lead to bias in a number of ways. If the error is dependent on the exposure or the outcome, (e.g. we measure the exposure with less accuracy for a group without a disease than with it), it is called differential measurement error. If the error has nothing to do with the exposure or outcome, it's called non-differential measurement error. Under most conditions, non-differential error will bias the estimate of effect towards the null. In this way, it's at least predictable, but for small effects or inadequately powered studies, it can make a true effect disappear. If there is error in both the exposure and outcome, the errors themselves can also be associated, opening a back-door path between the exposure and outcome. - Malcolm Barrett: <https://ggdag.malco.io/articles/bias-structures.html>
 
-Barrett's recall of vitimans example: Does taking vitamins in childhood protect against bladder cancer? If people who have bladder cancer are more likely to recall vitam taking, then this can support the inference that vitams cause bladder cancer even if the opposite is true:
+Barrett's recall of vitamins example: Does taking vitamins in childhood protect against bladder cancer? If people who have bladder cancer are more likely to recall vitam taking, then this can support the inference that vitamins cause bladder cancer even if the opposite is true:
 
 ```{r measurement_error_confound, code_folding = TRUE}
 library(ggdag)
@@ -426,7 +426,7 @@ Gelman and Hill offer the following advice about inclusion of variables when usi
 
 To help assist us with the problems of unbiased causal inference we have discussed the utility of building causal DAGs, noting that inference is always conditional on the DAG that we have drawn. Frequently, the data under-determine the DAG. There are many DAGs consistent with our observations. Regression is a powerful tool for reliable causal inference but it is not sufficient for reliable inference.
 
-So which approach to regression should we use for multiple imputation. The answer is that we should use the predictive approach. When we are imputing we are are *predicting* features of a population. We shoudl therefore follow the Gelman and Hill's advice to stratifying across all indicators that might improve predictive accuracy.
+So which approach to regression should we use for multiple imputation. The answer is that we should use the predictive approach. When we are imputing we are are *predicting* features of a population. We should therefore follow the Gelman and Hill's advice to stratifying across all indicators that might improve predictive accuracy.
 
 ### Visualising missingness
 
