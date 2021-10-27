@@ -295,7 +295,7 @@ Next we ask, Is X related to Y conditional on M?
 
 ```{r}
 m2 <- lm(y ~ x_s + m_s, data = df2)
-parameters::model_parameters(m2)
+parameters::model_parameters(m2) %>% print_html()
 ```
 
 Yes, but notice this is a different question. The effect of X is attenuated because M contributes to the causal effect of Y. 
@@ -834,6 +834,8 @@ dg_1 <- ggdag::dagify(
   )
 ) %>%
   control_for("rel")
+
+ggdag::ggdag_collider(dg_1, text = FALSE, use_labels = "label")
 ```
 
 Note the colliders induced from the "controls" that we had included in the study:
